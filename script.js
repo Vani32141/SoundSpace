@@ -1,85 +1,32 @@
-const moodData = {
-  calm: { title:"Stay in your calm", desc:"Soft, spacious sounds to preserve a peaceful atmosphere.", keywords:"calm relaxing instrumental" },
-  anxious: { title:"A gentle reset", desc:"Slower, less intense sounds designed to create a quieter atmosphere.", keywords:"calm anxiety relaxation instrumental" },
-  angry: { title:"Cool the moment", desc:"Start with steady, low-intensity sounds and let the energy come down gradually.", keywords:"calm down relaxing music" },
-  sad: { title:"A little comfort", desc:"Warm, gentle music that gives you space to feel without overwhelming you.", keywords:"comforting acoustic relaxing music" },
-  stressed: { title:"Take a breath", desc:"Minimal and peaceful sounds for a quieter break from a busy moment.", keywords:"stress relief relaxing music" },
-  tired: { title:"Slow the world down", desc:"Soft, unhurried sounds for winding down and resting.", keywords:"sleep ambient relaxing music" },
-  happy: { title:"Keep the good energy", desc:"Light, positive sounds that help you enjoy the moment.", keywords:"happy chill music" },
-  energetic: { title:"Chill your energy", desc:"Smooth, rhythmic sounds that keep your energy positive without making things hectic.", keywords:"chill upbeat music" }
-};
+const moods={
+calm:{label:"Calm",emoji:"😌",desc:"You're already in a peaceful place.",calm:"stay calm",match:"peaceful",lift:"light upbeat"},
+anxious:{label:"Anxious",emoji:"😟",desc:"Let's give your mind a quieter musical space.",calm:"deep relaxation",match:"gentle ambient",lift:"warm uplifting"},
+angry:{label:"Angry",emoji:"😡",desc:"Let's bring the intensity down gradually.",calm:"calm down",match:"steady instrumental",lift:"positive chill"},
+sad:{label:"Sad",emoji:"😢",desc:"Let's choose something gentle and comforting.",calm:"comforting relaxation",match:"soft emotional",lift:"hopeful uplifting"},
+stressed:{label:"Stressed",emoji:"😣",desc:"Let's create a little breathing room.",calm:"stress relief",match:"minimal ambient",lift:"light positive"},
+tired:{label:"Tired",emoji:"😴",desc:"Let's slow things down and make the moment softer.",calm:"sleep ambient",match:"slow relaxing",lift:"gentle acoustic"},
+happy:{label:"Happy",emoji:"😊",desc:"Let's keep the good feeling going.",calm:"chill happy",match:"feel good",lift:"upbeat happy"},
+energetic:{label:"Energetic",emoji:"🤩",desc:"Let's shape that energy without overwhelming the moment.",calm:"chill energetic",match:"rhythmic chill",lift:"upbeat energetic"}};
+const styles={instrumental:"instrumental",lofi:"lo-fi",acoustic:"acoustic",classical:"classical",afrobeats:"Afrobeat",nature:"nature sounds"};
+const goals={calm:"Calm me",match:"Match my mood",lift:"Lift my mood"};
+let selectedMood=null,selectedGoal="calm",selectedStyle="instrumental";
+const $=id=>document.getElementById(id);
 
-const styleKeywords = {
-  instrumental:"instrumental",
-  lofi:"lofi",
-  acoustic:"acoustic",
-  classical:"classical",
-  afrobeats:"afrobeat",
-  nature:"nature sounds"
-};
+document.querySelectorAll(".mood-card").forEach(card=>card.addEventListener("click",()=>{
+selectedMood=card.dataset.mood;document.querySelectorAll(".mood-card").forEach(c=>c.classList.remove("selected"));card.classList.add("selected");
+const m=moods[selectedMood];$("moodSummary").textContent=`You're feeling ${m.label.toLowerCase()} ${m.emoji}. Choose where you'd like the music to take you.`;$("preferences").classList.remove("hidden");$("preferences").scrollIntoView({behavior:"smooth",block:"start"});
+}));
+document.querySelectorAll(".goal-card").forEach(card=>card.addEventListener("click",()=>{selectedGoal=card.dataset.goal;document.querySelectorAll(".goal-card").forEach(c=>c.classList.remove("active"));card.classList.add("active")}));
+document.querySelectorAll(".style-choice").forEach(card=>card.addEventListener("click",()=>{selectedStyle=card.dataset.style;document.querySelectorAll(".style-choice").forEach(c=>c.classList.remove("active"));card.classList.add("active")}));
 
-let selectedMood = null;
-let selectedGoal = "calm";
-let selectedStyle = "instrumental";
-
-const moodGrid = document.getElementById("moodGrid");
-const preferences = document.getElementById("preferences");
-const result = document.getElementById("result");
-const checkin = document.getElementById("checkin");
-
-moodGrid.addEventListener("click", e => {
-  const card = e.target.closest(".mood-card");
-  if (!card) return;
-  selectedMood = card.dataset.mood;
-  document.querySelectorAll(".mood-card").forEach(c => c.classList.remove("selected"));
-  card.classList.add("selected");
-  preferences.classList.remove("hidden");
-  preferences.scrollIntoView({behavior:"smooth", block:"start"});
+$("recommend").addEventListener("click",()=>{
+if(!selectedMood)return;const m=moods[selectedMood],energy=Number($("energy").value),energyWords=["very gentle","gentle","balanced","lively","high-energy"];
+const titleMap={calm:{calm:"Stay in your calm",match:"Peaceful flow",lift:"A little brighter"},anxious:{calm:"A gentle reset",match:"Soft space",lift:"A warmer direction"},angry:{calm:"Cool the moment",match:"Steady release",lift:"Positive energy"},sad:{calm:"A little comfort",match:"Meet the feeling",lift:"A brighter direction"},stressed:{calm:"Take a breath",match:"Quiet focus",lift:"Lighten the load"},tired:{calm:"Slow the world down",match:"Soft landing",lift:"Gentle recharge"},happy:{calm:"Keep it easy",match:"Stay in the good",lift:"Keep the energy going"},energetic:{calm:"Chill your energy",match:"Smooth momentum",lift:"Ride the energy"}};
+$("route").textContent=`${m.emoji} → ${selectedGoal==="calm"?"😌":selectedGoal==="lift"?"😊":m.emoji}`;$("resultTitle").textContent=titleMap[selectedMood][selectedGoal];
+$("resultDescription").textContent=`${m.desc} Your ${styles[selectedStyle]} direction is set to a ${energyWords[energy-1]} energy level.`;
+$("moodChip").textContent=m.label;$("goalChip").textContent=goals[selectedGoal];$("styleChip").textContent=styles[selectedStyle];
+const query=encodeURIComponent(`${m[selectedGoal]} ${styles[selectedStyle]} ${energyWords[energy-1]} music`);$("spotifyButton").href=`https://open.spotify.com/search/${query}`;
+$("session").classList.remove("hidden");$("session").scrollIntoView({behavior:"smooth",block:"start"});
 });
-
-document.querySelectorAll(".choice").forEach(btn => {
-  btn.addEventListener("click", () => {
-    selectedGoal = btn.dataset.goal;
-    document.querySelectorAll(".choice").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-  });
-});
-
-document.querySelectorAll(".style-choice").forEach(btn => {
-  btn.addEventListener("click", () => {
-    selectedStyle = btn.dataset.style;
-    document.querySelectorAll(".style-choice").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-  });
-});
-
-document.getElementById("recommend").addEventListener("click", () => {
-  const m = moodData[selectedMood];
-  let title = m.title;
-  if (selectedGoal === "match") title = "Music that meets you there";
-  if (selectedGoal === "lift") title = "A brighter direction";
-
-  document.getElementById("resultTitle").textContent = title;
-  document.getElementById("resultDescription").textContent = m.desc;
-  document.getElementById("moodChip").textContent = selectedMood[0].toUpperCase() + selectedMood.slice(1);
-  document.getElementById("styleChip").textContent = styleKeywords[selectedStyle];
-
-  const query = encodeURIComponent(`${m.keywords} ${styleKeywords[selectedStyle]}`);
-  document.getElementById("spotifyButton").href = `https://open.spotify.com/search/${query}`;
-
-  result.classList.remove("hidden");
-  checkin.classList.remove("hidden");
-  result.scrollIntoView({behavior:"smooth", block:"start"});
-});
-
-document.getElementById("again").addEventListener("click", () => {
-  result.classList.add("hidden");
-  checkin.classList.add("hidden");
-  preferences.scrollIntoView({behavior:"smooth"});
-});
-
-document.querySelectorAll(".checkin-buttons button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.getElementById("thanks").classList.remove("hidden");
-  });
-});
+$("again").addEventListener("click",()=>{$("session").classList.add("hidden");$("preferences").scrollIntoView({behavior:"smooth",block:"start"})});
+document.querySelectorAll(".checkin-buttons button").forEach(button=>button.addEventListener("click",()=>{$("thanks").classList.remove("hidden");document.querySelectorAll(".checkin-buttons button").forEach(b=>b.disabled=true)}));

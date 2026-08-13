@@ -1,102 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoundSpace — Music for Your Mood</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SoundSpace connects your mood with music that can match, calm, or lift your moment.">
+<title>SoundSpace — Find Your Sound</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="nav">
-    <a class="logo" href="#">Sound<span>Space</span></a>
-    <span class="tagline">Music for how you feel</span>
-  </header>
-
-  <main>
-    <section class="hero">
-      <p class="eyebrow">YOUR MOOD • YOUR MOMENT • YOUR MUSIC</p>
-      <h1>What are you<br><em>feeling?</em></h1>
-      <p class="intro">Tell us how you're feeling and we'll suggest a musical direction to help you stay there, slow down, or shift your mood.</p>
-
-      <div class="mood-grid" id="moodGrid">
-        <button class="mood-card" data-mood="calm"><span>😌</span><b>Calm</b><small>Peaceful & steady</small></button>
-        <button class="mood-card" data-mood="anxious"><span>😟</span><b>Anxious</b><small>Need some calm</small></button>
-        <button class="mood-card" data-mood="angry"><span>😡</span><b>Angry</b><small>Need to cool off</small></button>
-        <button class="mood-card" data-mood="sad"><span>😢</span><b>Sad</b><small>Need comfort</small></button>
-        <button class="mood-card" data-mood="stressed"><span>😣</span><b>Stressed</b><small>Need to unwind</small></button>
-        <button class="mood-card" data-mood="tired"><span>😴</span><b>Tired</b><small>Need to recharge</small></button>
-        <button class="mood-card" data-mood="happy"><span>😊</span><b>Happy</b><small>Keep it going</small></button>
-        <button class="mood-card" data-mood="energetic"><span>🤩</span><b>Energetic</b><small>Full of energy</small></button>
-      </div>
-    </section>
-
-    <section class="preferences hidden" id="preferences">
-      <div class="section-heading">
-        <p class="eyebrow">ONE MORE STEP</p>
-        <h2>What should the music do?</h2>
-      </div>
-
-      <div class="option-group">
-        <button class="choice active" data-goal="calm">🌿 Help me calm down</button>
-        <button class="choice" data-goal="match">🎵 Match my mood</button>
-        <button class="choice" data-goal="lift">☀️ Lift my mood</button>
-      </div>
-
-      <h3>Choose a sound</h3>
-      <div class="style-grid">
-        <button class="style-choice active" data-style="instrumental">🎹 Instrumental</button>
-        <button class="style-choice" data-style="lofi">🎧 Lo-fi</button>
-        <button class="style-choice" data-style="acoustic">🎸 Acoustic</button>
-        <button class="style-choice" data-style="classical">🎻 Classical</button>
-        <button class="style-choice" data-style="afrobeats">🥁 Afrobeat</button>
-        <button class="style-choice" data-style="nature">🌊 Nature sounds</button>
-      </div>
-
-      <button class="recommend" id="recommend">Find my music →</button>
-    </section>
-
-    <section class="result hidden" id="result">
-      <div class="result-card">
-        <div class="result-copy">
-          <p class="eyebrow">YOUR SOUNDSPACE</p>
-          <h2 id="resultTitle">A peaceful reset</h2>
-          <p id="resultDescription">Gentle sounds selected to create a calmer atmosphere.</p>
-          <div class="chips">
-            <span id="moodChip">Mood</span>
-            <span id="styleChip">Style</span>
-          </div>
-          <a id="spotifyButton" class="spotify" href="#" target="_blank" rel="noopener">Open on Spotify ↗</a>
-          <button class="again" id="again">Try another mood</button>
-        </div>
-        <div class="visual">
-          <div class="orb"></div>
-          <div class="note n1">♪</div>
-          <div class="note n2">♫</div>
-          <div class="note n3">♪</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="checkin hidden" id="checkin">
-      <h2>How do you feel now?</h2>
-      <p>Your answer can help make future recommendations more useful.</p>
-      <div class="checkin-buttons">
-        <button data-check="better">😊 Better</button>
-        <button data-check="same">😌 About the same</button>
-        <button data-check="different">🔄 Different</button>
-      </div>
-      <p class="thanks hidden" id="thanks">Thanks — your feedback has been recorded for this session. 💛</p>
-    </section>
-  </main>
-
-  <footer>
-    <span>SoundSpace</span>
-    <span>Music recommendations are for relaxation and enjoyment, not medical treatment.</span>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+<header class="nav"><a class="logo" href="#">Sound<span>Space</span></a><nav><a href="#how">How it works</a><a href="#session">Your session</a></nav></header>
+<main>
+<section class="hero">
+<p class="eyebrow">YOUR MOOD • YOUR MOMENT • YOUR MUSIC</p>
+<h1>How do you want<br><em>to feel?</em></h1>
+<p class="intro">Start with where you are. SoundSpace helps you choose a musical direction that can match your mood, help you settle, or gently lift your energy.</p>
+<div class="mood-grid" id="moodGrid">
+<button class="mood-card" data-mood="calm"><span>😌</span><b>Calm</b><small>Peaceful & steady</small></button>
+<button class="mood-card" data-mood="anxious"><span>😟</span><b>Anxious</b><small>Need some calm</small></button>
+<button class="mood-card" data-mood="angry"><span>😡</span><b>Angry</b><small>Need to cool off</small></button>
+<button class="mood-card" data-mood="sad"><span>😢</span><b>Sad</b><small>Need comfort</small></button>
+<button class="mood-card" data-mood="stressed"><span>😣</span><b>Stressed</b><small>Need to unwind</small></button>
+<button class="mood-card" data-mood="tired"><span>😴</span><b>Tired</b><small>Need to recharge</small></button>
+<button class="mood-card" data-mood="happy"><span>😊</span><b>Happy</b><small>Keep it going</small></button>
+<button class="mood-card" data-mood="energetic"><span>🤩</span><b>Energetic</b><small>Full of energy</small></button>
+</div>
+</section>
+<section class="preferences hidden" id="preferences">
+<div class="section-heading"><p class="eyebrow">YOUR MOOD SHIFT</p><h2>Where do you want your mood to go?</h2><p id="moodSummary" class="section-subtitle"></p></div>
+<div class="goal-grid">
+<button class="goal-card active" data-goal="calm"><span>🌿</span><strong>Help me calm down</strong><small>Lower the intensity gently</small></button>
+<button class="goal-card" data-goal="match"><span>🎵</span><strong>Match my mood</strong><small>Meet me where I am</small></button>
+<button class="goal-card" data-goal="lift"><span>☀️</span><strong>Lift my mood</strong><small>Move toward lighter energy</small></button>
+</div>
+<h3>Choose a sound</h3>
+<div class="style-grid">
+<button class="style-choice active" data-style="instrumental">🎹 Instrumental</button><button class="style-choice" data-style="lofi">🎧 Lo-fi</button>
+<button class="style-choice" data-style="acoustic">🎸 Acoustic</button><button class="style-choice" data-style="classical">🎻 Classical</button>
+<button class="style-choice" data-style="afrobeats">🥁 Afrobeat</button><button class="style-choice" data-style="nature">🌊 Nature sounds</button>
+</div>
+<div class="energy"><div><span>Gentle</span><span>More energy</span></div><input id="energy" type="range" min="1" max="5" value="2" aria-label="Music energy"></div>
+<button class="recommend" id="recommend">Build my SoundSpace →</button>
+</section>
+<section class="result hidden" id="session">
+<div class="result-card"><div class="result-copy"><p class="eyebrow">YOUR SOUNDSPACE</p><div class="route" id="route">😟 → 😌</div><h2 id="resultTitle">A gentle reset</h2><p id="resultDescription"></p>
+<div class="chips"><span id="moodChip">Mood</span><span id="goalChip">Goal</span><span id="styleChip">Style</span></div>
+<a id="spotifyButton" class="spotify" href="#" target="_blank" rel="noopener">Find this sound on Spotify ↗</a><button class="again" id="again">Start again</button>
+</div><div class="visual"><div class="orb"></div><div class="wave w1"></div><div class="wave w2"></div><div class="wave w3"></div><div class="note n1">♪</div><div class="note n2">♫</div><div class="note n3">♪</div></div></div>
+<div class="checkin"><p class="eyebrow">AFTER YOUR SESSION</p><h2>How do you feel now?</h2><p>There is no right answer. Your feedback is just for this session.</p>
+<div class="checkin-buttons"><button data-check="better">😊 Better</button><button data-check="same">😌 About the same</button><button data-check="different">🔄 Different</button></div><p class="thanks hidden" id="thanks">Thanks for checking in. 💛</p></div>
+</section>
+<section class="how" id="how"><p class="eyebrow">HOW IT WORKS</p><h2>Three simple steps.</h2><div class="steps">
+<article><span>01</span><h3>Tell us how you feel</h3><p>Choose the mood that feels closest to your current moment.</p></article>
+<article><span>02</span><h3>Choose your direction</h3><p>Decide whether you want to calm, match, or lift your mood.</p></article>
+<article><span>03</span><h3>Find your sound</h3><p>Pick a style and energy level, then explore the result on Spotify.</p></article>
+</div></section>
+</main>
+<footer><strong>SoundSpace</strong><span>Music recommendations are for relaxation and enjoyment, not medical treatment.</span></footer>
+<script src="script.js"></script>
+</body></html>
