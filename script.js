@@ -1,96 +1,88 @@
 const moodData = {
   happiness: {
     title: "Music for your happiness",
-    text: "Let's keep the positive energy going with bright, feel-good sounds.",
-    songs: [
-      {
-        name: "Golden Morning",
-        artist: "Feel Good Pop",
-        search: "feel good happy pop"
-      },
-      {
-        name: "Sunshine Vibes",
-        artist: "Afrobeats",
-        search: "happy afrobeats"
-      },
-      {
-        name: "Smile Again",
-        artist: "Upbeat Indie",
-        search: "upbeat indie happy"
-      }
-    ]
+    text: "Keep the positive energy going with bright, upbeat and joyful music.",
+    musicTitle: "Feel-Good & Upbeat",
+    musicDescription: "Upbeat pop, dance, Afrobeats and feel-good music.",
+    spotifySearch: "happy upbeat feel good music"
   },
 
   sadness: {
     title: "Music for your sadness",
-    text: "Gentle music can create comfort and warmth.",
-    songs: [
-      {
-        name: "Soft Rain Piano",
-        artist: "Peaceful Piano",
-        search: "soft piano relaxing"
-      },
-      {
-        name: "Hopeful Strings",
-        artist: "Instrumental",
-        search: "hopeful instrumental"
-      },
-      {
-        name: "Quiet Comfort",
-        artist: "Acoustic",
-        search: "comforting acoustic"
-      }
-    ]
+    text: "Give yourself a gentle musical space with comforting and peaceful sounds.",
+    musicTitle: "Comfort & Warmth",
+    musicDescription: "Gentle acoustic music, soft piano and comforting songs.",
+    spotifySearch: "comfort relaxing sad music"
   },
 
   anger: {
-    title: "Music to cool down",
-    text: "Slow, calming music can help create a quieter moment.",
-    songs: [
-      {
-        name: "Deep Breath",
-        artist: "Lo-fi",
-        search: "calm lofi"
-      },
-      {
-        name: "Ocean Waves",
-        artist: "Ambient",
-        search: "ocean ambient"
-      },
-      {
-        name: "Evening Calm",
-        artist: "Chill Piano",
-        search: "calm piano"
-      }
-    ]
+    title: "Music for your anger",
+    text: "Let the intensity settle with music that helps you slow down and release tension.",
+    musicTitle: "Cool Down",
+    musicDescription: "Calm instrumentals, mellow beats and slower music.",
+    spotifySearch: "calm music to cool down"
   },
 
   anxiety: {
-    title: "Music for a calmer moment",
-    text: "Create a quieter atmosphere with peaceful sounds.",
-    songs: [
-      {
-        name: "Still Mind",
-        artist: "Ambient",
-        search: "ambient relaxing"
-      },
-      {
-        name: "Gentle Focus",
-        artist: "Lo-fi",
-        search: "lofi focus"
-      },
-      {
-        name: "Peace Within",
-        artist: "Piano",
-        search: "peaceful piano"
-      }
-    ]
+    title: "Music for your anxiety",
+    text: "Slow things down with peaceful sounds and gentle musical patterns.",
+    musicTitle: "Peace & Calm",
+    musicDescription: "Ambient music, soft piano, nature sounds and relaxing instrumentals.",
+    spotifySearch: "calm relaxing music anxiety"
   },
 
   irritation: {
-    title: "Music to help you reset",
-    text: "Step back from the irritation and settle into something gentler.",
-    songs: [
-      {
+    title: "Music for your irritation",
+    text: "Take a moment to reset with gentle music and relaxed rhythms.",
+    musicTitle: "Chill & Reset",
+    musicDescription: "Lo-fi, mellow beats and relaxed instrumental music.",
+    spotifySearch: "chill relaxing music"
+  }
+};
 
+const cards = document.querySelectorAll(".emotion-card");
+
+const recommendation = document.querySelector("#recommendation");
+const title = document.querySelector("#recommendation-title");
+const text = document.querySelector("#recommendation-text");
+
+const musicTitle = document.querySelector("#music-title");
+const musicDescription = document.querySelector("#music-description");
+
+const spotifyButton = document.querySelector("#spotify-button");
+const changeButton = document.querySelector("#change-button");
+
+cards.forEach((card) => {
+  card.addEventListener("click", () => {
+    const emotion = card.dataset.emotion;
+    const data = moodData[emotion];
+
+    if (!data) return;
+
+    title.textContent = data.title;
+    text.textContent = data.text;
+
+    musicTitle.textContent = data.musicTitle;
+    musicDescription.textContent = data.musicDescription;
+
+    const spotifyBase = ["https:", "", "open.spotify.com", "search"].join("/");
+    spotifyButton.href =
+      spotifyBase + "/" + encodeURIComponent(data.spotifySearch);
+
+    recommendation.hidden = false;
+
+    recommendation.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+});
+
+changeButton.addEventListener("click", () => {
+  recommendation.hidden = true;
+
+  document.querySelector("#session").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 });
