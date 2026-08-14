@@ -1,13 +1,96 @@
-const moodData={happiness:{title:"Music for your happiness",text:"Let's keep the positive energy going with bright, feel-good sounds.",music:"Feel-Good & Uplifting",description:"Upbeat pop, cheerful acoustic music and positive playlists.",search:"feel good happy upbeat music"},sadness:{title:"Music for your sadness",text:"You don't have to force the feeling away. Try gentle music that creates comfort and warmth.",music:"Comfort & Gentle Uplift",description:"Soft piano, acoustic sounds and comforting music.",search:"comforting peaceful acoustic music"},anger:{title:"Music to cool down",text:"Let's create some space between you and the tension with slower, calmer sounds.",music:"Calm & Release",description:"Chill instrumentals, ambient sounds and slow relaxing music.",search:"calm chill instrumental relaxation"},anxiety:{title:"Music for a calmer moment",text:"Slow, steady sounds can create a quieter atmosphere around you.",music:"Calm & Grounding",description:"Ambient music, soft piano and peaceful instrumental playlists.",search:"calm ambient relaxing instrumental music"},irritation:{title:"Music to help you reset",text:"Take a moment to step back from the irritation and settle into something gentler.",music:"Chill & Reset",description:"Lo-fi, mellow beats and relaxed instrumental music.",search:"lofi chill mellow relaxing music"}};
+const moodData = {
+  happiness: {
+    title: "Music for your happiness",
+    text: "Let's keep the positive energy going with bright, feel-good sounds.",
+    songs: [
+      {
+        name: "Golden Morning",
+        artist: "Feel Good Pop",
+        search: "feel good happy pop"
+      },
+      {
+        name: "Sunshine Vibes",
+        artist: "Afrobeats",
+        search: "happy afrobeats"
+      },
+      {
+        name: "Smile Again",
+        artist: "Upbeat Indie",
+        search: "upbeat indie happy"
+      }
+    ]
+  },
 
-const cards=document.querySelectorAll(".emotion-card");
-const recommendation=document.querySelector("#recommendation");
-const title=document.querySelector("#recommendation-title");
-const text=document.querySelector("#recommendation-text");
-const musicTitle=document.querySelector("#music-title");
-const musicDescription=document.querySelector("#music-description");
-const spotifyButton=document.querySelector("#spotify-button");
-const changeButton=document.querySelector("#change-button");
+  sadness: {
+    title: "Music for your sadness",
+    text: "Gentle music can create comfort and warmth.",
+    songs: [
+      {
+        name: "Soft Rain Piano",
+        artist: "Peaceful Piano",
+        search: "soft piano relaxing"
+      },
+      {
+        name: "Hopeful Strings",
+        artist: "Instrumental",
+        search: "hopeful instrumental"
+      },
+      {
+        name: "Quiet Comfort",
+        artist: "Acoustic",
+        search: "comforting acoustic"
+      }
+    ]
+  },
 
-cards.forEach(card=>{card.addEventListener("click",()=>{const data=moodData[card.dataset.emotion];title.textContent=data.title;text.textContent=data.text;musicTitle.textContent=data.music;musicDescription.textContent=data.description;spotifyButton.href="https://open.spotify.com/search/"+encodeURIComponent(data.search);recommendation.hidden=false;recommendation.scrollIntoView({behavior:"smooth",block:"center"});});});
-changeButton.addEventListener("click",()=>{recommendation.hidden=true;document.querySelector("#session").scrollIntoView({behavior:"smooth"});});
+  anger: {
+    title: "Music to cool down",
+    text: "Slow, calming music can help create a quieter moment.",
+    songs: [
+      {
+        name: "Deep Breath",
+        artist: "Lo-fi",
+        search: "calm lofi"
+      },
+      {
+        name: "Ocean Waves",
+        artist: "Ambient",
+        search: "ocean ambient"
+      },
+      {
+        name: "Evening Calm",
+        artist: "Chill Piano",
+        search: "calm piano"
+      }
+    ]
+  },
+
+  anxiety: {
+    title: "Music for a calmer moment",
+    text: "Create a quieter atmosphere with peaceful sounds.",
+    songs: [
+      {
+        name: "Still Mind",
+        artist: "Ambient",
+        search: "ambient relaxing"
+      },
+      {
+        name: "Gentle Focus",
+        artist: "Lo-fi",
+        search: "lofi focus"
+      },
+      {
+        name: "Peace Within",
+        artist: "Piano",
+        search: "peaceful piano"
+      }
+    ]
+  },
+
+  irritation: {
+    title: "Music to help you reset",
+    text: "Step back from the irritation and settle into something gentler.",
+    songs: [
+      {
+
+});
