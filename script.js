@@ -170,14 +170,12 @@ function displaySongs() {
 
       </div>
 
-      <a
-        class="listen-button"
-        href="${createListeningLink(song[0], song[1])}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        🎵 Listen
-      </a>
+  <button
+  class="listen-button"
+  onclick="playSong('${song[0].replace(/'/g, "\\'")}')"
+>
+  🎵 Listen
+</button>
 
     `;
 
@@ -311,39 +309,39 @@ console.log(
   "SoundSpace loaded successfully — 50 songs ready!"
 );
 // ----------------------------------------
-// SPOTIFY EMBED TEST
+// SOUNDSPACE SPOTIFY PLAYER
 // ----------------------------------------
 
-let spotifyController = null;
+const spotifyTracks = {
+  "Happy": "60nZcImufyMA1MKQY3dcCH"
+};
 
-window.onSpotifyIframeApiReady = (IFrameAPI) => {
+function playSong(songTitle) {
 
-  const element =
-    document.getElementById("spotify-player");
+  const player = document.getElementById("spotify-player");
 
-  if (!element) {
+  if (!player) {
     console.log("Spotify player container not found.");
     return;
   }
 
-  const options = {
-    width: "100%",
-    height: "160",
-    uri: "spotify:episode:7makk4oTQel546B0PZlDM5"
-  };
+  const trackId = spotifyTracks[songTitle];
 
-  const callback = (EmbedController) => {
+  if (!trackId) {
+    console.log("Spotify track not added yet:", songTitle);
+    return;
+  }
 
-    spotifyController = EmbedController;
-
-    console.log("Spotify player is ready!");
-
-  };
-
-  IFrameAPI.createController(
-    element,
-    options,
-    callback
-  );
-
-};
+  player.innerHTML = `
+    <iframe
+      style="border-radius:12px"
+      src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator"
+      width="100%"
+      height="152"
+      frameBorder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  `;
+}
