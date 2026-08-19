@@ -1,1 +1,547 @@
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f8f6ff;color:#211a35}.nav{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px 7%;background:#f8f6ffee;border-bottom:1px solid #e5def2}.logo{font-size:1.35rem;font-weight:800}.logo span{color:#7856d6}nav{display:flex;gap:22px}nav a{color:#5f5478;text-decoration:none;font-weight:600}.hero,.recommendation,.how,.science{max-width:1100px;margin:auto;padding:65px 7%}.hero{text-align:center}.eyebrow{font-size:.75rem;letter-spacing:.16em;font-weight:800;color:#7856d6}.hero h1{font-size:clamp(3rem,8vw,6rem);line-height:.95;margin:15px 0}.hero h1 span{color:#7856d6}.intro{max-width:720px;margin:0 auto 30px;color:#665d78;line-height:1.7}.emotion-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.emotion-card{border:1px solid #e3dcf2;border-radius:22px;background:white;padding:22px 12px;cursor:pointer;box-shadow:0 8px 28px #37235f10;transition:.2s}.emotion-card:hover{transform:translateY(-4px)}.emotion-card div{font-size:2.4rem}.emotion-card h2{font-size:1rem}.emotion-card p{color:#766d88;font-size:.82rem}.recommendation{border-top:1px solid #e7e0f2}.recommendation h2,.how h2,.science h2{font-size:2.4rem;margin:8px 0}.recommendation>p:not(.eyebrow),.science p{color:#6c627e;line-height:1.7}.controls{display:flex;gap:10px;margin:22px 0}.controls button,.feedback-buttons button{border:0;border-radius:11px;padding:12px 16px;font-weight:750;cursor:pointer}.controls button:first-child{background:#7856d6;color:white}.controls button:last-child{background:#eee9f8;color:#493d60}.song-list{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.song-card{background:white;border:1px solid #e5def2;border-radius:18px;padding:18px;display:flex;align-items:center;justify-content:space-between;gap:15px}.song-title{font-weight:800;margin:0 0 5px}.artist{margin:0;color:#756b86}.song-meta{font-size:.72rem;color:#948ba2}.listen{background:#211a35;color:white;text-decoration:none;border-radius:10px;padding:10px 13px;font-weight:700;white-space:nowrap}.feedback{margin-top:25px;background:#eee9f8;border-radius:20px;padding:22px}.feedback-buttons{display:flex;gap:10px;flex-wrap:wrap}.feedback-buttons button{background:white}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.steps>div,.science{background:white;border:1px solid #e5def2;border-radius:20px;padding:23px}.steps b{color:#7856d6}.steps p{color:#70667e;line-height:1.6}footer{text-align:center;padding:30px;color:#776d85;border-top:1px solid #e5def2}@media(max-width:800px){.emotion-grid,.song-list,.steps{grid-template-columns:repeat(2,1fr)}}@media(max-width:500px){.emotion-grid,.song-list,.steps{grid-template-columns:1fr}nav{font-size:.8rem;gap:10px}.song-card{flex-direction:column;align-items:flex-start}.listen{width:100%;text-align:center}.controls{flex-direction:column}}
+/* =========================================
+   SOUNDSPACE — 50 SONG VERSION
+   ========================================= */
+
+
+/* ---------- BASIC RESET ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #211d32;
+  background:
+    linear-gradient(
+      135deg,
+      #faf8ff,
+      #f1edff,
+      #effaf8
+    );
+  line-height: 1.5;
+}
+
+
+/* ---------- NAVIGATION ---------- */
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 22px 6%;
+
+  position: sticky;
+  top: 0;
+
+  background: rgba(250, 248, 255, 0.95);
+
+  z-index: 100;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.logo span {
+  color: #7452e8;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  color: #625b73;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+
+/* ---------- MAIN ---------- */
+
+main {
+  max-width: 1150px;
+  margin: auto;
+}
+
+
+/* ---------- HERO ---------- */
+
+.hero {
+  padding: 80px 5%;
+  text-align: center;
+}
+
+.eyebrow {
+  color: #7452e8;
+
+  font-weight: 800;
+
+  letter-spacing: 3px;
+
+  font-size: 13px;
+
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(
+    55px,
+    9vw,
+    100px
+  );
+
+  line-height: 0.95;
+
+  margin: 20px 0;
+}
+
+.hero h1 span {
+  color: #7452e8;
+}
+
+.intro {
+  max-width: 780px;
+
+  margin: 0 auto 45px;
+
+  font-size: 20px;
+
+  color: #716a7e;
+}
+
+
+/* ---------- EMOTION CARDS ---------- */
+
+.emotion-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 20px;
+
+  max-width: 1000px;
+
+  margin: auto;
+}
+
+.emotion-card {
+  background: white;
+
+  border: 1px solid #ded7f2;
+
+  border-radius: 25px;
+
+  padding: 30px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+
+  font-family: inherit;
+}
+
+.emotion-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #7452e8;
+
+  box-shadow:
+    0 12px 30px
+    rgba(60, 40, 120, 0.12);
+}
+
+.emoji {
+  font-size: 45px;
+
+  margin-bottom: 10px;
+}
+
+.emotion-card h2 {
+  margin: 8px 0;
+
+  font-size: 22px;
+}
+
+.emotion-card p {
+  color: #766f83;
+
+  margin: 0;
+}
+
+
+/* ---------- RECOMMENDATION SECTION ---------- */
+
+.recommendation {
+  background: white;
+
+  border-radius: 30px;
+
+  margin: 30px 5%;
+
+  padding: 50px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(61, 40, 100, 0.10);
+}
+
+.recommendation h2 {
+  font-size: 36px;
+
+  margin-top: 10px;
+}
+
+.recommendation p {
+  color: #716a7e;
+}
+
+
+/* ---------- BUTTON AREA ---------- */
+
+.controls {
+  display: flex;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  margin: 30px 0;
+}
+
+.controls button {
+  border: none;
+
+  border-radius: 999px;
+
+  padding: 13px 20px;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: transform 0.2s;
+}
+
+.controls button:hover {
+  transform: translateY(-2px);
+}
+
+.surprise-button {
+  background: #7452e8;
+
+  color: white;
+}
+
+.change-button {
+  background: #eee9fa;
+
+  color: #403957;
+}
+
+
+/* ---------- SONG LIST ---------- */
+
+#song-list {
+  margin-top: 25px;
+}
+
+
+/* ---------- SONG CARD ---------- */
+
+.song-card {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 18px 20px;
+
+  margin: 12px 0;
+
+  background: #faf9ff;
+
+  border: 1px solid #e1dcef;
+
+  border-radius: 18px;
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.song-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(60, 40, 120, 0.08);
+}
+
+
+/* ---------- SONG INFORMATION ---------- */
+
+.song-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.song-number {
+  width: 35px;
+
+  height: 35px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eee9fa;
+
+  color: #7452e8;
+
+  font-weight: 800;
+
+  margin: 0;
+}
+
+.song-title {
+  margin: 0;
+
+  color: #211d32;
+
+  font-size: 17px;
+}
+
+.artist {
+  margin: 4px 0 0;
+
+  color: #716a7e;
+
+  font-size: 14px;
+}
+
+
+/* ---------- LISTEN BUTTON ---------- */
+
+.listen-button {
+  background: #211d32;
+
+  color: white;
+
+  text-decoration: none;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition:
+    transform 0.2s,
+    opacity 0.2s;
+}
+
+.listen-button:hover {
+  transform: scale(1.04);
+
+  opacity: 0.9;
+}
+
+
+/* ---------- MUSIC NOTE ---------- */
+
+.music-note {
+  margin-top: 30px;
+
+  font-size: 14px;
+
+  color: #766f83;
+}
+
+
+/* ---------- HOW IT WORKS ---------- */
+
+.how {
+  padding: 80px 5%;
+}
+
+.how h2 {
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 45px;
+
+  margin-top: 10px;
+}
+
+.steps {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 20px;
+
+  margin-top: 35px;
+}
+
+.step {
+  background: white;
+
+  padding: 28px;
+
+  border-radius: 22px;
+
+  border: 1px solid #ded7f2;
+}
+
+.step b {
+  color: #7452e8;
+
+  font-size: 18px;
+}
+
+.step h3 {
+  margin-bottom: 8px;
+}
+
+.step p {
+  color: #766f83;
+}
+
+
+/* ---------- FOOTER ---------- */
+
+footer {
+  text-align: center;
+
+  padding: 40px 20px;
+
+  color: #716a7e;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   IPAD / MOBILE RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 750px) {
+
+  .nav {
+    padding: 18px 5%;
+  }
+
+  .logo {
+    font-size: 25px;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+  }
+
+
+  .hero {
+    padding:
+      55px 5%;
+  }
+
+
+  .emotion-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .recommendation {
+    padding: 30px 20px;
+
+    margin:
+      20px 3%;
+  }
+
+
+  .recommendation h2 {
+    font-size: 30px;
+  }
+
+
+  .song-card {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+
+  .listen-button {
+    width: 100%;
+
+    text-align: center;
+  }
+
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+
+  .how h2 {
+    font-size: 36px;
+  }
+
+}
+
+
+/* ---------- VERY SMALL SCREENS ---------- */
+
+@media (max-width: 450px) {
+
+  .nav-links a {
+    font-size: 11px;
+  }
+
+  .hero h1 {
+    font-size: 55px;
+  }
+
+  .intro {
+    font-size: 17px;
+  }
+
+  .emotion-card {
+    padding: 25px 20px;
+  }
+
+}
