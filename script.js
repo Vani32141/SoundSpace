@@ -310,3 +310,40 @@ if (changeButton) {
 console.log(
   "SoundSpace loaded successfully — 50 songs ready!"
 );
+// ----------------------------------------
+// SPOTIFY EMBED TEST
+// ----------------------------------------
+
+let spotifyController = null;
+
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+
+  const element =
+    document.getElementById("spotify-player");
+
+  if (!element) {
+    console.log("Spotify player container not found.");
+    return;
+  }
+
+  const options = {
+    width: "100%",
+    height: "160",
+    uri: "spotify:episode:7makk4oTQel546B0PZlDM5"
+  };
+
+  const callback = (EmbedController) => {
+
+    spotifyController = EmbedController;
+
+    console.log("Spotify player is ready!");
+
+  };
+
+  IFrameAPI.createController(
+    element,
+    options,
+    callback
+  );
+
+};
