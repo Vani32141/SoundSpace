@@ -1,52 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>SoundSpace — Music for How You Feel</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
+
 <body>
+
+
 <header class="nav">
-  <div class="logo">Sound<span>Space</span></div>
-  <div class="nav-links"><a href="#how">How it works</a><a href="#session">Your session</a></div>
+
+<div class="logo">
+Sound<span>Space</span>
+</div>
+
+<div class="nav-links">
+
+<a href="#how">
+How it works
+</a>
+
+<a href="#session">
+Your session
+</a>
+
+</div>
+
 </header>
 
+
+
 <main>
-<section class="hero" id="session">
-<p class="eyebrow">YOUR MOOD • YOUR MOMENT • YOUR MUSIC</p>
-<h1>How are you<br><span>feeling?</span></h1>
-<p class="intro">Choose an emotion and SoundSpace will suggest a musical direction to help you relax, settle, or gently shift your mood.</p>
+
+
+<!-- HERO SECTION -->
+
+<section
+class="hero"
+id="session"
+>
+
+<p class="eyebrow">
+YOUR MOOD • YOUR MOMENT • YOUR MUSIC
+</p>
+
+
+<h1>
+
+How are you
+<br>
+
+<span>feeling?</span>
+
+</h1>
+
+
+<p class="intro">
+
+Choose an emotion and SoundSpace will
+suggest real music that matches the
+emotional direction you want to explore.
+
+</p>
+
+
+
+<!-- FIVE EMOTIONS -->
 
 <div class="emotion-grid">
-<button class="emotion-card" data-emotion="happiness"><div class="emoji">😊</div><h2>Happiness</h2><p>Keep the good feeling going</p></button>
-<button class="emotion-card" data-emotion="sadness"><div class="emoji">😢</div><h2>Sadness</h2><p>Find comfort and gentle warmth</p></button>
-<button class="emotion-card" data-emotion="anger"><div class="emoji">😡</div><h2>Anger</h2><p>Cool down and release tension</p></button>
-<button class="emotion-card" data-emotion="anxiety"><div class="emoji">😟</div><h2>Anxiety</h2><p>Slow down and find calm</p></button>
-<button class="emotion-card" data-emotion="irritation"><div class="emoji">😤</div><h2>Irritation</h2><p>Ease tension and reset</p></button>
+
+
+<button
+class="emotion-card"
+data-emotion="happiness"
+>
+
+<div class="emoji">
+😊
 </div>
+
+<h2>
+Happiness
+</h2>
+
+<p>
+Keep the good feeling going
+</p>
+
+</button>
+
+
+
+<button
+class="emotion-card"
+data-emotion="sadness"
+>
+
+<div class="emoji">
+😢
+</div>
+
+<h2>
+Sadness
+</h2>
+
+<p>
+Find comfort and gentle warmth
+</p>
+
+</button>
+
+
+
+<button
+class="emotion-card"
+data-emotion="anger"
+>
+
+<div class="emoji">
+😡
+</div>
+
+<h2>
+Anger
+</h2>
+
+<p>
+Cool down and release tension
+</p>
+
+</button>
+
+
+
+<button
+class="emotion-card"
+data-emotion="anxiety"
+>
+
+<div class="emoji">
+😟
+</div>
+
+<h2>
+Anxiety
+</h2>
+
+<p>
+Slow down and find calm
+</p>
+
+</button>
+
+
+
+<button
+class="emotion-card"
+data-emotion="irritation"
+>
+
+<div class="emoji">
+😤
+</div>
+
+<h2>
+Irritation
+</h2>
+
+<p>
+Ease tension and reset
+</p>
+
+</button>
+
+
+</div>
+
 </section>
 
-<section class="recommendation" id="recommendation" hidden>
-<p class="eyebrow">YOUR SOUNDSPACE</p>
-<h2 id="recommendation-title">Your music direction</h2>
-<p id="recommendation-text"></p>
-<div class="music-box"><div class="music-icon">🎧</div><div><h3 id="music-title"></h3><p id="music-description"></p></div></div>
-<a id="spotify-button" class="spotify-button" href="#" target="_blank" rel="noopener">🎵 Listen on Spotify</a>
-<button id="change-button" class="change-button">Choose another emotion</button>
+
+
+<!-- RECOMMENDATION SECTION -->
+
+<section
+class="recommendation"
+id="recommendation"
+hidden
+>
+
+
+<p class="eyebrow">
+YOUR SOUNDSPACE
+</p>
+
+
+<h2 id="recommendation-title">
+
+Your music
+
+</h2>
+
+
+<p id="recommendation-text">
+
+Choose an emotion to begin.
+
+</p>
+
+
+
+<!-- BUTTONS -->
+
+<div class="controls">
+
+
+<button
+id="surprise-button"
+class="surprise-button"
+>
+
+🎲 Surprise Me
+
+</button>
+
+
+<button
+id="change-button"
+class="change-button"
+>
+
+Choose another emotion
+
+</button>
+
+
+</div>
+
+
+
+<!-- SONGS APPEAR HERE -->
+
+<div id="song-list">
+
+</div>
+
+
+
+<p class="music-note">
+
+🎵 Each emotion contains 10 songs —
+50 songs in total.
+
+</p>
+
+
 </section>
 
-<section class="how" id="how">
-<p class="eyebrow">HOW IT WORKS</p>
-<h2>Three simple steps.</h2>
+
+
+<!-- HOW IT WORKS -->
+
+<section
+class="how"
+id="how"
+>
+
+
+<p class="eyebrow">
+
+HOW IT WORKS
+
+</p>
+
+
+<h2>
+
+Three simple steps.
+
+</h2>
+
+
+
 <div class="steps">
-<div class="step"><b>01</b><h3>Choose an emotion</h3><p>Tell SoundSpace how you feel right now.</p></div>
-<div class="step"><b>02</b><h3>Get a music direction</h3><p>SoundSpace matches your emotion with a suitable musical atmosphere.</p></div>
-<div class="step"><b>03</b><h3>Listen</h3><p>Open Spotify and enjoy music selected for your moment.</p></div>
+
+
+<div class="step">
+
+<b>
+01
+</b>
+
+<h3>
+Choose an emotion
+</h3>
+
+<p>
+
+Tell SoundSpace how you feel
+right now.
+
+</p>
+
 </div>
+
+
+
+<div class="step">
+
+<b>
+02
+</b>
+
+<h3>
+Explore your songs
+</h3>
+
+<p>
+
+SoundSpace gives you 10 songs
+for your selected emotion.
+
+</p>
+
+</div>
+
+
+
+<div class="step">
+
+<b>
+03
+</b>
+
+<h3>
+Listen
+</h3>
+
+<p>
+
+Choose a song and listen to it.
+
+</p>
+
+</div>
+
+
+</div>
+
 </section>
+
+
 </main>
-<footer>SoundSpace — Music for how you feel.</footer>
+
+
+
+<footer>
+
+SoundSpace — Music for how you feel.
+
+</footer>
+
+
+
 <script src="script.js"></script>
+
 </body>
+
 </html>
