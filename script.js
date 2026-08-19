@@ -121,12 +121,43 @@ let currentEmotion = "";
 // CREATE A LISTENING LINK
 // --------------------------------------------------
 
-function createListeningLink(song, artist) {
+function playSong(song, artist) {
 
-  const search =
-    encodeURIComponent(song + " " + artist + " official audio");
+  const player = document.getElementById("spotify-player");
 
-  return "https://www.youtube.com/results?search_query=" + search;
+  if (!player) {
+    console.log("Spotify player container not found.");
+    return;
+  }
+
+  const spotifyTracks = {
+    "Happy": "60nZcImufyMA1MKQY3dcCH"
+  };
+
+  const trackId = spotifyTracks[song];
+
+  if (!trackId) {
+    alert("This song has not been connected to Spotify yet.");
+    return;
+  }
+
+  player.innerHTML = `
+    <iframe
+      style="border-radius:12px"
+      src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator"
+      width="100%"
+      height="152"
+      frameborder="0"
+      allowfullscreen
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  `;
+
+  player.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 }
 
 
