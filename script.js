@@ -203,7 +203,7 @@ function displaySongs() {
 
   <button
   class="listen-button"
-  onclick="playSong('${song[0].replace(/'/g, "\\'")}')"
+onclick="playSong('${song[0].replace(/'/g, "\\'")}', '${song[1].replace(/'/g, "\\'")}')"
 >
   🎵 Listen
 </button>
