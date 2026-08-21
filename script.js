@@ -340,39 +340,60 @@ console.log(
   "SoundSpace loaded successfully — 50 songs ready!"
 );
 // ----------------------------------------
-// SOUNDSPACE SPOTIFY PLAYER
+// SOUNDSPACE MUSIC PLAYER
 // ----------------------------------------
 
 const spotifyTracks = {
   "Happy": "60nZcImufyMA1MKQY3dcCH"
 };
 
-function playSong(songTitle) {
+const youtubeSearch = (song, artist) => {
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(song + " " + artist + " official audio")}`;
+};
+
+function playSong(songTitle, artist) {
 
   const player = document.getElementById("spotify-player");
 
   if (!player) {
-    console.log("Spotify player container not found.");
+    console.log("Music player container not found.");
     return;
   }
 
-  const trackId = spotifyTracks[songTitle];
-
-  if (!trackId) {
-    console.log("Spotify track not added yet:", songTitle);
-    return;
-  }
+  const spotifyTrackId = spotifyTracks[songTitle];
 
   player.innerHTML = `
-    <iframe
-      style="border-radius:12px"
-      src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator"
-      width="100%"
-      height="152"
-      frameBorder="0"
-      allowfullscreen=""
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy">
-    </iframe>
+    <div class="music-choice">
+
+      <h3>🎵 ${songTitle}</h3>
+      <p>${artist}</p>
+
+      <a
+        href="${youtubeSearch(songTitle, artist)}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="youtube-button"
+      >
+        ▶️ Play on YouTube
+      </a>
+
+      ${
+        spotifyTrackId
+          ? `
+            <iframe
+              style="border-radius:12px; margin-top:15px;"
+              src="https://open.spotify.com/embed/track/${spotifyTrackId}?utm_source=generator"
+              width="100%"
+              height="152"
+              frameborder="0"
+              allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy">
+            </iframe>
+          `
+          : ""
+      }
+
+    </div>
   `;
 }
