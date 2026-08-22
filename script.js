@@ -1,4 +1,4 @@
-```javascript
+
 const moodData = {
   happiness: {
     title: "😊 Happiness",
@@ -143,7 +143,7 @@ function displaySongs() {
   });
 }
 
-```javascript
+
 function playSong(songTitle, artist) {
 
   const player =
@@ -200,7 +200,7 @@ function playSong(songTitle, artist) {
   });
 
 }
-```
+
 
 
 function showEmotion(emotion) {
