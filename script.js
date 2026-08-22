@@ -221,26 +221,30 @@ songList.appendChild(songCard);
 
 
 // --------------------------------------------------
-// SHOW AN EMOTION
-// --------------------------------------------------
-
 function showEmotion(emotion) {
-
   currentEmotion = emotion;
 
-  const data =
-    moodData[emotion];
+  const data = moodData[emotion];
 
-  recommendationTitle.textContent =
-    data.title;
+  recommendationTitle.textContent = data.title;
+  recommendationText.textContent = data.description;
 
-  recommendationText.textContent =
-    data.description;
+  // Hide the list of 10 songs
+  songList.innerHTML = "";
 
-  displaySongs();
+  // Choose one random song from the emotion
+  const randomIndex = Math.floor(Math.random() * data.songs.length);
+  const selectedSong = data.songs[randomIndex];
 
   recommendation.hidden = false;
 
+  // Play the selected song directly
+  playSong(selectedSong[0], selectedSong[1]);
+
+  recommendation.scrollIntoView({
+    behavior: "smooth"
+  });
+}
   recommendation.scrollIntoView({
     behavior: "smooth"
   });
@@ -350,11 +354,55 @@ const spotifyTracks = {
   "Happy": "60nZcImufyMA1MKQY3dcCH"
 };
 
-const youtubeSearch = (song, artist) => {
-  return `https://www.youtube.com/results?search_query=${encodeURIComponent(song + " " + artist + " official audio")}`;
+const youtubeTracks = {
+  "Happy": "ZbZSe6N_BXs",
+  "Can't Stop the Feeling!": "ru0K8uYEZWw",
+  "Levitating": "TUVcZfQe-Kw",
+  "Uptown Funk": "OPf0YbXqDm0",
+  "Good as Hell": "vuq-VAiW9kw",
+  "Flowers": "G7KNmW9a75Y",
+  "Roar": "CevxZvSJLk"
+};
 };
 
 function playSong(songTitle, artist) {
+  const player = document.getElementById("spotify-player");
+
+  if (!player) {
+    console.log("Music player container not found.");
+    return;
+  }
+
+  const videoId = youtubeTracks[songTitle];
+
+  if (!videoId) {
+    player.innerHTML = `
+      <div class="music-choice">
+        <h3>🎵 ${songTitle}</h3>
+        <p>${artist}</p>
+        <p>This song does not have a direct video link added yet.</p>
+      </div>
+    `;
+    return;
+  }
+
+  player.innerHTML = `
+    <div class="music-choice">
+      <h3>🎵 ${songTitle}</h3>
+      <p>${artist}</p>
+
+      <iframe
+        width="100%"
+        height="315"
+        src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+        title="${songTitle}"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+      </iframe>
+    </div>
+  `;
+}
 
   const player = document.getElementById("spotify-player");
 
