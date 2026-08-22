@@ -95,7 +95,18 @@ const changeButton = document.querySelector("#change-button");
 const surpriseButton = document.querySelector("#surprise-button");
 
 let currentEmotion = "";
-
+const spotifyTracks = {
+  "Happy|Pharrell Williams": "1j8tiOfpmZgrIfAyzFjWhg",
+  "Can't Stop the Feeling!|Justin Timberlake": "6JV2JOEocMgcZxYSZelKcc",
+  "Levitating|Dua Lipa": "6F0baA5t58AtAS9uFVe4su",
+  "Uptown Funk|Mark Ronson ft. Bruno Mars": "32OlwWuMpZ6b0aN2RZOeMS",
+  "Good as Hell|Lizzo": "748YZyCEd5kOkw2T7h5yvC",
+  "Lush Life|Zara Larsson": "6X7FkSTfluwAtaCNM3NzBz",
+  "APT.|ROSÉ & Bruno Mars": "4tnlmdoBgvha5nlZA9RzE1",
+  "Golden|HUNTR/X, EJAE, Audrey Nuna & REI AMI": "4OxcN1TcUDdLxRNW0JCULh",
+  "Flowers|Miley Cyrus": "1WOAFgoEHQLR0yLMkddJhJ",
+  "Roar|Katy Perry": "27tNWlhdAryQY04Gb2ZhUI"
+};
 function displaySongs() {
   songList.innerHTML = "";
 
@@ -132,19 +143,54 @@ function displaySongs() {
   });
 }
 
+```javascript
 function playSong(songTitle, artist) {
-  const player = document.querySelector("#spotify-player");
+
+  const player =
+    document.querySelector("#spotify-player");
 
   if (!player) {
-    console.log("Player container not found.");
+    console.log("Spotify player container not found.");
+    return;
+  }
+
+  const songKey =
+    songTitle + "|" + artist;
+
+  const trackId =
+    spotifyTracks[songKey];
+
+  if (!trackId) {
+
+    player.innerHTML = `
+      <div class="music-choice">
+        <h3>🎵 ${songTitle}</h3>
+        <p>${artist}</p>
+        <p>This song has not been connected yet.</p>
+      </div>
+    `;
+
     return;
   }
 
   player.innerHTML = `
     <div class="music-choice">
+
       <h3>🎵 ${songTitle}</h3>
+
       <p>${artist}</p>
-      <p>Selecting this song works correctly. Direct playback will be connected next.</p>
+
+      <iframe
+        style="border-radius:12px"
+        src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator"
+        width="100%"
+        height="152"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+
     </div>
   `;
 
@@ -152,7 +198,10 @@ function playSong(songTitle, artist) {
     behavior: "smooth",
     block: "center"
   });
+
 }
+```
+
 
 function showEmotion(emotion) {
   currentEmotion = emotion;
