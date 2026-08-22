@@ -1,5 +1,5 @@
 /* =========================================
-   SOUNDSPACE — PREMIUM VISUAL DESIGN
+   SOUNDSPACE — WARM & MODERN DESIGN
    ========================================= */
 
 * {
@@ -13,15 +13,32 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
   background:
-    radial-gradient(circle at 15% 10%, rgba(124, 92, 255, 0.18), transparent 30%),
-    radial-gradient(circle at 85% 20%, rgba(0, 214, 201, 0.12), transparent 28%),
-    #080811;
-  color: #f7f7fb;
+    radial-gradient(
+      circle at 10% 5%,
+      rgba(255, 190, 120, 0.12),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(160, 130, 255, 0.13),
+      transparent 30%
+    ),
+    #111116;
+
+  color: #f7f4f0;
   min-height: 100vh;
   line-height: 1.6;
+
   overflow-x: hidden;
 }
 
@@ -31,15 +48,18 @@ body {
 
 .nav {
   width: 100%;
-  padding: 22px 7%;
+  padding: 18px 6%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   position: sticky;
   top: 0;
   z-index: 1000;
 
-  background: rgba(8, 8, 17, 0.72);
+  background: rgba(17, 17, 22, 0.82);
+
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 
@@ -47,13 +67,18 @@ body {
 }
 
 .logo {
-  font-size: 1.55rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.7px;
 }
 
 .logo span {
-  background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+  background: linear-gradient(
+    90deg,
+    #b48cff,
+    #7fd9d2
+  );
+
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -61,15 +86,17 @@ body {
 
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: 28px;
 }
 
 .nav-links a {
-  color: #aaaabd;
+  color: #b8b4bd;
   text-decoration: none;
-  font-size: 0.92rem;
+
+  font-size: 0.9rem;
   font-weight: 600;
-  transition: 0.3s ease;
+
+  transition: color 0.25s ease;
 }
 
 .nav-links a:hover {
@@ -89,70 +116,112 @@ main {
    ========================================= */
 
 .hero {
-  min-height: 90vh;
-  padding: 110px 7% 100px;
+  min-height: auto;
+
+  padding: 90px 6% 85px;
+
   text-align: center;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   position: relative;
 }
 
 .hero::before {
   content: "";
+
   position: absolute;
-  width: 500px;
-  height: 500px;
-  background: rgba(124, 92, 255, 0.12);
-  filter: blur(100px);
-  border-radius: 50%;
-  top: 70px;
+
+  width: 480px;
+  height: 480px;
+
+  top: 10px;
   left: 50%;
+
   transform: translateX(-50%);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(175, 135, 255, 0.13),
+      transparent 68%
+    );
+
+  filter: blur(30px);
+
   pointer-events: none;
 }
 
+/* =========================================
+   EYEBROW
+   ========================================= */
+
 .eyebrow {
   position: relative;
-  color: #9c8cff;
-  font-size: 0.72rem;
+
+  color: #b49cff;
+
+  font-size: 0.7rem;
   font-weight: 800;
-  letter-spacing: 3px;
-  margin-bottom: 20px;
+
+  letter-spacing: 2.5px;
+
+  margin-bottom: 17px;
+
+  text-transform: uppercase;
 }
+
+/* =========================================
+   HERO TITLE
+   ========================================= */
 
 .hero h1 {
   position: relative;
-  font-size: clamp(4rem, 9vw, 7.5rem);
-  line-height: 0.95;
-  letter-spacing: -5px;
-  font-weight: 900;
-  margin-bottom: 30px;
+
+  font-size: clamp(3.1rem, 7vw, 5.6rem);
+
+  line-height: 1.02;
+
+  letter-spacing: -3px;
+
+  font-weight: 850;
+
+  margin-bottom: 23px;
 }
 
 .hero h1 span {
-  background: linear-gradient(
-    100deg,
-    #8b5cf6,
-    #c084fc,
-    #22d3ee
-  );
+  background:
+    linear-gradient(
+      100deg,
+      #b38cff,
+      #d09cff,
+      #7edbd4
+    );
 
   -webkit-background-clip: text;
   background-clip: text;
+
   color: transparent;
 }
 
+/* =========================================
+   INTRO
+   ========================================= */
+
 .intro {
   position: relative;
-  max-width: 650px;
-  color: #aaaabc;
-  font-size: 1.05rem;
-  line-height: 1.8;
-  margin-bottom: 55px;
+
+  max-width: 620px;
+
+  color: #aaa6b0;
+
+  font-size: 1rem;
+
+  line-height: 1.75;
+
+  margin-bottom: 48px;
 }
 
 /* =========================================
@@ -164,93 +233,197 @@ main {
   max-width: 1050px;
 
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 15px;
 
   position: relative;
 }
 
+/* =========================================
+   EMOTION CARDS
+   ========================================= */
+
 .emotion-card {
-  min-height: 205px;
-  padding: 25px 18px;
+  min-height: 195px;
+
+  padding: 24px 16px;
 
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
+
+  border-radius: 22px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.075),
       rgba(255, 255, 255, 0.025)
     );
 
-  color: white;
+  color: #ffffff;
+
   cursor: pointer;
 
-  transition:
-    transform 0.35s ease,
-    border-color 0.35s ease,
-    background 0.35s ease,
-    box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .emotion-card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(139, 92, 246, 0.55);
+  transform: translateY(-7px);
+
+  border-color: rgba(190, 160, 255, 0.45);
 
   background:
     linear-gradient(
       145deg,
-      rgba(139, 92, 246, 0.18),
-      rgba(255, 255, 255, 0.04)
+      rgba(180, 145, 255, 0.14),
+      rgba(255, 255, 255, 0.045)
     );
 
   box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.35),
-    0 0 35px rgba(139, 92, 246, 0.12);
+    0 18px 40px rgba(0, 0, 0, 0.25),
+    0 0 25px rgba(170, 140, 255, 0.08);
 }
 
 .emotion-card:active {
-  transform: translateY(-5px) scale(0.98);
+  transform: translateY(-3px) scale(0.98);
 }
 
-.emoji {
-  width: 62px;
-  height: 62px;
+/* =========================================
+   EMOTION ICON
+   ========================================= */
 
-  margin: 0 auto 18px;
+.emoji {
+  width: 58px;
+  height: 58px;
+
+  margin-bottom: 16px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 20px;
+  border-radius: 18px;
 
-  font-size: 2rem;
+  font-size: 1.85rem;
 
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.075);
 
-  transition: 0.35s ease;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
 }
 
 .emotion-card:hover .emoji {
-  transform: scale(1.12) rotate(-4deg);
-  background: rgba(139, 92, 246, 0.2);
+  transform: scale(1.08);
+
+  background: rgba(255, 255, 255, 0.11);
 }
 
+/* =========================================
+   EMOTION TEXT
+   ========================================= */
+
 .emotion-card h2 {
-  font-size: 1.08rem;
-  margin-bottom: 7px;
+  font-size: 1rem;
+
+  font-weight: 750;
+
+  margin-bottom: 5px;
 }
 
 .emotion-card p {
-  color: #9696aa;
-  font-size: 0.82rem;
-  line-height: 1.5;
+  color: #9c98a3;
+
+  font-size: 0.79rem;
+
+  line-height: 1.45;
+
+  max-width: 150px;
+}
+
+/* =========================================
+   INDIVIDUAL EMOTION COLORS
+   ========================================= */
+
+/* Happiness */
+
+.emotion-card[data-emotion="happiness"]:hover {
+  border-color: rgba(255, 193, 92, 0.5);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 193, 92, 0.13),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+/* Sadness */
+
+.emotion-card[data-emotion="sadness"]:hover {
+  border-color: rgba(101, 170, 255, 0.5);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(101, 170, 255, 0.13),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+/* Anger */
+
+.emotion-card[data-emotion="anger"]:hover {
+  border-color: rgba(255, 105, 105, 0.5);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 105, 105, 0.13),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+/* Anxiety */
+
+.emotion-card[data-emotion="anxiety"]:hover {
+  border-color: rgba(120, 215, 195, 0.5);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(120, 215, 195, 0.13),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+/* Irritation */
+
+.emotion-card[data-emotion="irritation"]:hover {
+  border-color: rgba(205, 145, 255, 0.5);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(205, 145, 255, 0.13),
+      rgba(255, 255, 255, 0.035)
+    );
 }
 
 /* =========================================
@@ -259,23 +432,31 @@ main {
 
 .recommendation {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1050px;
 
   margin: 0 auto;
-  padding: 100px 7%;
+
+  padding: 90px 6%;
 
   text-align: center;
 }
 
 .recommendation h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.3rem, 5vw, 3.7rem);
+
+  line-height: 1.05;
+
   letter-spacing: -2px;
+
   margin-bottom: 12px;
 }
 
 #recommendation-text {
-  color: #9999ad;
-  margin-bottom: 35px;
+  color: #a29eaa;
+
+  font-size: 0.98rem;
+
+  margin-bottom: 30px;
 }
 
 /* =========================================
@@ -284,41 +465,68 @@ main {
 
 .controls {
   display: flex;
+
   justify-content: center;
-  gap: 14px;
+
+  gap: 12px;
+
   flex-wrap: wrap;
-  margin-bottom: 45px;
+
+  margin-bottom: 38px;
 }
 
 .controls button {
   border: none;
+
   border-radius: 999px;
-  padding: 13px 22px;
-  font-size: 0.9rem;
+
+  padding: 12px 20px;
+
+  font-size: 0.86rem;
+
   font-weight: 700;
+
   cursor: pointer;
-  transition: 0.3s ease;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .surprise-button {
-  color: white;
-  background: linear-gradient(100deg, #7c3aed, #8b5cf6);
-  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.25);
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      100deg,
+      #8c63d9,
+      #a579e8
+    );
+
+  box-shadow:
+    0 8px 22px rgba(140, 99, 217, 0.22);
 }
 
 .surprise-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 28px rgba(140, 99, 217, 0.32);
 }
 
 .change-button {
-  color: #dddde8;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  color: #ddd9e2;
+
+  background: rgba(255, 255, 255, 0.055);
+
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 .change-button:hover {
-  background: rgba(255, 255, 255, 0.11);
+  transform: translateY(-2px);
+
+  background: rgba(255, 255, 255, 0.09);
 }
 
 /* =========================================
@@ -327,51 +535,65 @@ main {
 
 #song-list {
   display: grid;
-  gap: 13px;
+
+  gap: 12px;
+
   text-align: left;
 }
 
-/* These styles work with common song-card
-   structures from the existing JavaScript. */
-
 .song-card {
   display: flex;
+
   align-items: center;
-  gap: 18px;
 
-  padding: 18px 20px;
+  gap: 17px;
 
-  border-radius: 20px;
+  padding: 16px 18px;
 
-  background: rgba(255, 255, 255, 0.045);
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
   border: 1px solid rgba(255, 255, 255, 0.07);
 
-  transition: 0.3s ease;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .song-card:hover {
-  transform: translateX(5px);
+  transform: translateX(4px);
 
-  background: rgba(255, 255, 255, 0.075);
+  background:
+    rgba(255, 255, 255, 0.07);
 
-  border-color: rgba(139, 92, 246, 0.3);
+  border-color:
+    rgba(180, 150, 255, 0.25);
 }
 
 .song-card img {
-  width: 60px;
-  height: 60px;
-  border-radius: 14px;
+  width: 58px;
+  height: 58px;
+
+  border-radius: 13px;
+
   object-fit: cover;
 }
 
 .song-card h3 {
-  font-size: 1rem;
-  margin-bottom: 3px;
+  font-size: 0.98rem;
+
+  font-weight: 700;
+
+  margin-bottom: 2px;
 }
 
 .song-card p {
-  color: #8f8fa2;
-  font-size: 0.82rem;
+  color: #918d98;
+
+  font-size: 0.8rem;
 }
 
 /* =========================================
@@ -379,16 +601,17 @@ main {
    ========================================= */
 
 .audio-player-section {
-  margin-top: 45px;
-  padding: 35px;
+  margin-top: 40px;
 
-  border-radius: 28px;
+  padding: 30px;
+
+  border-radius: 25px;
 
   background:
     linear-gradient(
       135deg,
-      rgba(139, 92, 246, 0.12),
-      rgba(34, 211, 238, 0.06)
+      rgba(179, 140, 255, 0.1),
+      rgba(126, 219, 212, 0.055)
     );
 
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -397,13 +620,15 @@ main {
 }
 
 .audio-player-section h3 {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+  font-size: 1.08rem;
+
+  margin-bottom: 10px;
 }
 
 #now-playing {
-  color: #aaaabd;
-  font-size: 0.95rem;
+  color: #a9a4af;
+
+  font-size: 0.88rem;
 }
 
 /* =========================================
@@ -411,9 +636,11 @@ main {
    ========================================= */
 
 .music-note {
-  margin-top: 25px;
-  color: #77778a;
-  font-size: 0.78rem;
+  margin-top: 20px;
+
+  color: #77737e;
+
+  font-size: 0.76rem;
 }
 
 /* =========================================
@@ -421,78 +648,98 @@ main {
    ========================================= */
 
 .how {
-  padding: 120px 7%;
+  padding: 100px 6%;
 
   background:
     linear-gradient(
       180deg,
       transparent,
-      rgba(255, 255, 255, 0.025)
+      rgba(255, 255, 255, 0.018)
     );
 
   text-align: center;
 }
 
 .how > h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.2rem, 5vw, 3.7rem);
+
+  line-height: 1.05;
+
   letter-spacing: -2px;
-  margin-bottom: 65px;
+
+  margin-bottom: 55px;
 }
 
 .steps {
   max-width: 1050px;
+
   margin: 0 auto;
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 18px;
 }
 
 .step {
-  padding: 35px 28px;
+  padding: 30px 26px;
 
-  border-radius: 25px;
+  border-radius: 22px;
 
-  background: rgba(255, 255, 255, 0.035);
+  background:
+    rgba(255, 255, 255, 0.035);
+
   border: 1px solid rgba(255, 255, 255, 0.07);
 
   text-align: left;
 
-  transition: 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .step:hover {
-  transform: translateY(-7px);
-  border-color: rgba(139, 92, 246, 0.3);
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(180, 150, 255, 0.25);
 }
 
 .step b {
   display: inline-flex;
 
-  width: 45px;
-  height: 45px;
+  width: 42px;
+  height: 42px;
 
   align-items: center;
   justify-content: center;
 
-  border-radius: 14px;
+  border-radius: 13px;
 
-  color: #c4b5fd;
-  background: rgba(139, 92, 246, 0.12);
+  color: #c7b2ff;
 
-  font-size: 0.8rem;
+  background:
+    rgba(180, 150, 255, 0.11);
 
-  margin-bottom: 25px;
+  font-size: 0.76rem;
+
+  margin-bottom: 21px;
 }
 
 .step h3 {
-  font-size: 1.15rem;
-  margin-bottom: 10px;
+  font-size: 1.05rem;
+
+  margin-bottom: 8px;
 }
 
 .step p {
-  color: #8f8fa2;
-  font-size: 0.9rem;
+  color: #8f8a96;
+
+  font-size: 0.85rem;
+
+  line-height: 1.6;
 }
 
 /* =========================================
@@ -500,24 +747,26 @@ main {
    ========================================= */
 
 footer {
-  padding: 35px 20px;
+  padding: 30px 20px;
 
   text-align: center;
 
-  color: #6f6f81;
+  color: #6e6a74;
 
-  font-size: 0.8rem;
+  font-size: 0.78rem;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top:
+    1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* =========================================
-   SELECTION
+   TEXT SELECTION
    ========================================= */
 
 ::selection {
-  background: rgba(139, 92, 246, 0.35);
-  color: white;
+  background: rgba(180, 145, 255, 0.3);
+
+  color: #ffffff;
 }
 
 /* =========================================
@@ -525,101 +774,142 @@ footer {
    ========================================= */
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #080811;
+  background: #111116;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #343443;
+  background: #3b3742;
+
   border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #55556a;
+  background: #57515f;
 }
 
 /* =========================================
-   RESPONSIVE — TABLET
+   TABLET
    ========================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
 
   .emotion-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    max-width: 700px;
   }
 
   .emotion-card:last-child {
     grid-column: span 2;
+
     max-width: 50%;
-    justify-self: center;
+
     width: 100%;
+
+    justify-self: center;
   }
 
   .steps {
     grid-template-columns: 1fr;
+    max-width: 650px;
   }
-
 }
 
 /* =========================================
-   RESPONSIVE — PHONE
+   MOBILE
    ========================================= */
 
 @media (max-width: 600px) {
 
   .nav {
-    padding: 18px 5%;
+    padding: 17px 5%;
+  }
+
+  .logo {
+    font-size: 1.3rem;
   }
 
   .nav-links {
-    gap: 15px;
+    gap: 14px;
   }
 
   .nav-links a {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
   }
 
   .hero {
-    padding: 80px 5% 70px;
+    padding: 70px 5% 65px;
+  }
+
+  .eyebrow {
+    font-size: 0.62rem;
+
+    letter-spacing: 2px;
   }
 
   .hero h1 {
-    font-size: clamp(3.5rem, 17vw, 5rem);
-    letter-spacing: -3px;
+    font-size:
+      clamp(3rem, 15vw, 4.5rem);
+
+    letter-spacing: -2.5px;
   }
 
   .intro {
-    font-size: 0.92rem;
+    font-size: 0.9rem;
+
+    line-height: 1.7;
+
+    margin-bottom: 38px;
   }
 
   .emotion-grid {
     grid-template-columns: 1fr;
+
+    gap: 12px;
   }
 
   .emotion-card {
-    min-height: 175px;
+    min-height: 165px;
+
+    padding: 22px;
   }
 
   .emotion-card:last-child {
     grid-column: auto;
+
     max-width: none;
   }
 
   .recommendation {
-    padding: 80px 5%;
+    padding: 70px 5%;
+  }
+
+  .recommendation h2 {
+    font-size: 2.4rem;
   }
 
   .audio-player-section {
-    padding: 25px 18px;
+    padding: 24px 18px;
   }
 
   .how {
-    padding: 80px 5%;
+    padding: 75px 5%;
   }
 
+  .how > h2 {
+    font-size: 2.4rem;
+
+    margin-bottom: 40px;
+  }
+
+  .step {
+    padding: 26px 22px;
+  }
 }
 
 /* =========================================
@@ -628,7 +918,9 @@ footer {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #a78bfa;
+  outline:
+    2px solid #b99aff;
+
   outline-offset: 4px;
 }
 
@@ -642,7 +934,7 @@ a:focus-visible {
   *::before,
   *::after {
     scroll-behavior: auto !important;
+
     transition: none !important;
   }
-
 }
