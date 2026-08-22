@@ -201,16 +201,19 @@ function displaySongs() {
 
       </div>
 
-  <button
-  class="listen-button"
-onclick="playSong('${song[0].replace(/'/g, "\\'")}', '${song[1].replace(/'/g, "\\'")}')"
->
+  <button class="listen-button" data-index="${index}">
   🎵 Listen
 </button>
 
     `;
 
-    songList.appendChild(songCard);
+    const listenButton = songCard.querySelector(".listen-button");
+
+listenButton.addEventListener("click", function () {
+  playSong(song[0], song[1]);
+});
+
+songList.appendChild(songCard);
 
   });
 
