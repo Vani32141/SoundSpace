@@ -1,6 +1,4 @@
-// SOUNDSPACE — 50 SONG VERSION
-// 5 emotions × 10 songs each
-
+```javascript
 const moodData = {
   happiness: {
     title: "😊 Happiness",
@@ -88,154 +86,34 @@ const moodData = {
   }
 };
 
-
-// ----------------------------------------
-// YOUTUBE VIDEO IDS
-// ----------------------------------------
-
-const youtubeTracks = {
-  "Happy": "ZbZSe6N_BXs",
-  "Can't Stop the Feeling!": "ru0K8uYEZWw",
-  "Levitating": "TUVcZfQe-Kw",
-  "Uptown Funk": "OPf0YbXqDm0",
-  "Good as Hell": "vuq-VAiW9kw",
-  "Flowers": "G7KNmW9a75Y",
-  "Roar": "CevxZvSJLk"
-};
-
-
-// ----------------------------------------
-// FIND ELEMENTS
-// ----------------------------------------
-
 const emotionCards = document.querySelectorAll(".emotion-card");
-
-const recommendation =
-  document.querySelector("#recommendation");
-
-const recommendationTitle =
-  document.querySelector("#recommendation-title");
-
-const recommendationText =
-  document.querySelector("#recommendation-text");
-
-const songList =
-  document.querySelector("#song-list");
-
-const changeButton =
-  document.querySelector("#change-button");
-
-const surpriseButton =
-  document.querySelector("#surprise-button");
+const recommendation = document.querySelector("#recommendation");
+const recommendationTitle = document.querySelector("#recommendation-title");
+const recommendationText = document.querySelector("#recommendation-text");
+const songList = document.querySelector("#song-list");
+const changeButton = document.querySelector("#change-button");
+const surpriseButton = document.querySelector("#surprise-button");
 
 let currentEmotion = "";
 
-
-// ----------------------------------------
-// PLAY SONG
-// ----------------------------------------
-
-function playSong(songTitle, artist) {
-
-  const player =
-    document.getElementById("spotify-player");
-
-  if (!player) {
-    console.log("Music player container not found.");
-    return;
-  }
-
-  const videoId =
-    youtubeTracks[songTitle];
-
-  if (!videoId) {
-
-    player.innerHTML = `
-      <div class="music-choice">
-        <h3>🎵 ${songTitle}</h3>
-        <p>${artist}</p>
-        <p>
-          This song has not been connected to its
-          direct YouTube player yet.
-        </p>
-      </div>
-    `;
-
-    player.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-
-    return;
-  }
-
-  player.innerHTML = `
-    <div class="music-choice">
-
-      <h3>🎵 ${songTitle}</h3>
-
-      <p>${artist}</p>
-
-      <iframe
-        width="100%"
-        height="315"
-        src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-        title="${songTitle}"
-        frameborder="0"
-        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-
-    </div>
-  `;
-
-  player.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-
-}
-
-
-// ----------------------------------------
-// DISPLAY THE 10 SONGS
-// ----------------------------------------
-
 function displaySongs() {
-
   songList.innerHTML = "";
 
-  const songs =
-    moodData[currentEmotion].songs;
+  const songs = moodData[currentEmotion].songs;
 
   songs.forEach(function(song, index) {
+    const songCard = document.createElement("div");
 
-    const songCard =
-      document.createElement("div");
-
-    songCard.className =
-      "song-card";
+    songCard.className = "song-card";
 
     songCard.innerHTML = `
-
       <div class="song-info">
-
-        <p class="song-number">
-          ${index + 1}
-        </p>
+        <p class="song-number">${index + 1}</p>
 
         <div>
-
-          <h3 class="song-title">
-            ${song[0]}
-          </h3>
-
-          <p class="artist">
-            ${song[1]}
-          </p>
-
+          <h3 class="song-title">${song[0]}</h3>
+          <p class="artist">${song[1]}</p>
         </div>
-
       </div>
 
       <button class="listen-button">
@@ -246,36 +124,43 @@ function displaySongs() {
     const listenButton =
       songCard.querySelector(".listen-button");
 
-    listenButton.addEventListener(
-      "click",
-      function() {
-        playSong(song[0], song[1]);
-      }
-    );
+    listenButton.addEventListener("click", function() {
+      playSong(song[0], song[1]);
+    });
 
     songList.appendChild(songCard);
-
   });
-
 }
 
+function playSong(songTitle, artist) {
+  const player = document.querySelector("#spotify-player");
 
-// ----------------------------------------
-// SHOW EMOTION
-// ----------------------------------------
+  if (!player) {
+    console.log("Player container not found.");
+    return;
+  }
+
+  player.innerHTML = `
+    <div class="music-choice">
+      <h3>🎵 ${songTitle}</h3>
+      <p>${artist}</p>
+      <p>Selecting this song works correctly. Direct playback will be connected next.</p>
+    </div>
+  `;
+
+  player.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
 
 function showEmotion(emotion) {
-
   currentEmotion = emotion;
 
-  const data =
-    moodData[emotion];
+  const data = moodData[emotion];
 
-  recommendationTitle.textContent =
-    data.title;
-
-  recommendationText.textContent =
-    data.description;
+  recommendationTitle.textContent = data.title;
+  recommendationText.textContent = data.description;
 
   displaySongs();
 
@@ -284,91 +169,38 @@ function showEmotion(emotion) {
   recommendation.scrollIntoView({
     behavior: "smooth"
   });
-
 }
-
-
-// ----------------------------------------
-// EMOTION BUTTONS
-// ----------------------------------------
 
 emotionCards.forEach(function(card) {
-
-  card.addEventListener(
-    "click",
-    function() {
-
-      const emotion =
-        card.dataset.emotion;
-
-      showEmotion(emotion);
-
-    }
-  );
-
+  card.addEventListener("click", function() {
+    showEmotion(card.dataset.emotion);
+  });
 });
 
-
-// ----------------------------------------
-// SURPRISE ME
-// ----------------------------------------
-
 if (surpriseButton) {
+  surpriseButton.addEventListener("click", function() {
+    if (!currentEmotion) return;
 
-  surpriseButton.addEventListener(
-    "click",
-    function() {
+    const songs = moodData[currentEmotion].songs;
 
-      if (!currentEmotion) {
-        return;
-      }
+    const randomNumber =
+      Math.floor(Math.random() * songs.length);
 
-      const songs =
-        moodData[currentEmotion].songs;
+    const selectedSong = songs[randomNumber];
 
-      const randomNumber =
-        Math.floor(
-          Math.random() * songs.length
-        );
-
-      const selectedSong =
-        songs[randomNumber];
-
-      playSong(
-        selectedSong[0],
-        selectedSong[1]
-      );
-
-    }
-  );
-
+    playSong(selectedSong[0], selectedSong[1]);
+  });
 }
-
-
-// ----------------------------------------
-// CHOOSE ANOTHER EMOTION
-// ----------------------------------------
 
 if (changeButton) {
+  changeButton.addEventListener("click", function() {
+    recommendation.hidden = true;
 
-  changeButton.addEventListener(
-    "click",
-    function() {
-
-      recommendation.hidden = true;
-
-      document
-        .querySelector("#session")
-        .scrollIntoView({
-          behavior: "smooth"
-        });
-
-    }
-  );
-
+    document.querySelector("#session").scrollIntoView({
+      behavior: "smooth"
+    });
+  });
 }
 
-
-console.log(
-  "SoundSpace loaded successfully!"
-);
+console.log("SoundSpace loaded successfully!");
+```
