@@ -1,3 +1,8 @@
+
+// ==========================================
+// SOUNDSPACE — MUSIC WEBSITE
+// ==========================================
+
 const moodData = {
   happiness: {
     title: "😊 Happiness",
@@ -86,6 +91,52 @@ const moodData = {
 };
 
 
+// ==========================================
+// YOUTUBE VIDEO IDs
+// ==========================================
+
+const youtubeTracks = {
+
+  // HAPPINESS
+
+  "Happy|Pharrell Williams": "ZbZSe6N_BXs",
+  "Can't Stop the Feeling!|Justin Timberlake": "ru0K8uYEZWw",
+  "Levitating|Dua Lipa": "TUVcZfQe-Kw",
+  "Uptown Funk|Mark Ronson ft. Bruno Mars": "OPf0YbXqDm0",
+  "Good as Hell|Lizzo": "vuq-VAiW9kw",
+  "Lush Life|Zara Larsson": "MysKegBRtaA",
+  "APT.|ROSÉ & Bruno Mars": "ekr2nIex040",
+  "Golden|HUNTR/X, EJAE, Audrey Nuna & REI AMI": "4OxcN1TcUDdLxRNW0JCULh",
+  "Flowers|Miley Cyrus": "G7KNmW9a75Y",
+  "Roar|Katy Perry": "CevxZvSJLk",
+
+  // SADNESS
+
+  "Beautiful Things|Benson Boone": "Oa_RSwwpPaA",
+  "Someone You Loved|Lewis Capaldi": "zABLecsR5UE",
+  "The Night We Met|Lord Huron": "KtlgYxa6BMU",
+  "When We Were Young|Adele": "DDWKuo3gXMQ",
+  "Iris|Goo Goo Dolls": "NdYWuo9OFAw",
+  "Lovely|Billie Eilish & Khalid": "V1Pl8CzNzCw",
+  "What Was I Made For?|Billie Eilish": "cW8VLC9nnU0",
+  "Ocean Eyes|Billie Eilish": "viimfQi_pUw",
+  "Die With A Smile|Lady Gaga & Bruno Mars": "kPa7bsKwL-c",
+  "Back To Friends|sombr": "6lYn2RzqvVo",
+
+  // ANGER — FIRST FIVE NEW SONGS
+
+  "Believer|Imagine Dragons": "7wtfhZwyrcc",
+  "Stronger|Kelly Clarkson": "Xn676-fLq7I",
+  "Titanium|David Guetta ft. Sia": "JRfuAukYTKg",
+  "Unstoppable|Sia": "YaEG2aWJnZ8",
+  "Shake It Off|Taylor Swift": "nfWlot6h_JM"
+};
+
+
+// ==========================================
+// PAGE ELEMENTS
+// ==========================================
+
 const emotionCards = document.querySelectorAll(".emotion-card");
 const recommendation = document.querySelector("#recommendation");
 const recommendationTitle = document.querySelector("#recommendation-title");
@@ -93,9 +144,14 @@ const recommendationText = document.querySelector("#recommendation-text");
 const songList = document.querySelector("#song-list");
 const changeButton = document.querySelector("#change-button");
 const surpriseButton = document.querySelector("#surprise-button");
+const nowPlaying = document.querySelector("#now-playing");
 
 let currentEmotion = "";
 
+
+// ==========================================
+// DISPLAY SONGS
+// ==========================================
 
 function displaySongs() {
 
@@ -105,6 +161,9 @@ function displaySongs() {
 
   songs.forEach(function(song, index) {
 
+    const songTitle = song[0];
+    const artist = song[1];
+
     const songCard = document.createElement("div");
 
     songCard.className = "song-card";
@@ -112,18 +171,11 @@ function displaySongs() {
     songCard.innerHTML = `
       <div class="song-info">
 
-        <p class="song-number">
-          ${index + 1}
-        </p>
+        <p class="song-number">${index + 1}</p>
 
         <div>
-          <h3 class="song-title">
-            ${song[0]}
-          </h3>
-
-          <p class="artist">
-            ${song[1]}
-          </p>
+          <h3 class="song-title">${songTitle}</h3>
+          <p class="artist">${artist}</p>
         </div>
 
       </div>
@@ -137,7 +189,9 @@ function displaySongs() {
       songCard.querySelector(".listen-button");
 
     listenButton.addEventListener("click", function() {
-      playSong(song[0], song[1]);
+
+      playSong(songTitle, artist);
+
     });
 
     songList.appendChild(songCard);
@@ -147,58 +201,61 @@ function displaySongs() {
 }
 
 
+// ==========================================
+// PLAY SONG
+// ==========================================
+
 function playSong(songTitle, artist) {
 
-  const player =
-    document.querySelector("#now-playing");
+  const songKey = songTitle + "|" + artist;
 
-  if (!player) {
-    console.log("Now playing section not found.");
+  const videoId = youtubeTracks[songKey];
+
+  if (!videoId) {
+
+    nowPlaying.innerHTML = `
+      <h3>🎵 ${songTitle}</h3>
+      <p>${artist}</p>
+      <p>This track has not been connected yet.</p>
+    `;
+
     return;
+
   }
 
-  const searchQuery =
-    encodeURIComponent(songTitle + " " + artist);
+  nowPlaying.innerHTML = `
+    <div class="music-choice">
 
-  player.innerHTML = `
-    <h3>🎵 ${songTitle}</h3>
+      <h3>🎧 Now Playing</h3>
 
-    <p>${artist}</p>
+      <h2>🎵 ${songTitle}</h2>
 
-    <p>
-      Select a music service to listen to the full song.
-    </p>
+      <p>${artist}</p>
 
-    <div class="music-buttons">
-
-      <a
-        href="https://open.spotify.com/search/${searchQuery}"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="listen-service-button"
-      >
-        🎵 Listen on Spotify
-      </a>
-
-      <a
-        href="https://music.youtube.com/search?q=${searchQuery}"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="listen-service-button"
-      >
-        ▶ Listen on YouTube Music
-      </a>
+      <iframe
+        width="100%"
+        height="315"
+        src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+        title="${songTitle}"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen>
+      </iframe>
 
     </div>
   `;
 
-  player.scrollIntoView({
+  nowPlaying.scrollIntoView({
     behavior: "smooth",
     block: "center"
   });
 
 }
 
+
+// ==========================================
+// SHOW EMOTION
+// ==========================================
 
 function showEmotion(emotion) {
 
@@ -207,9 +264,7 @@ function showEmotion(emotion) {
   const data = moodData[emotion];
 
   recommendationTitle.textContent = data.title;
-
-  recommendationText.textContent =
-    data.description;
+  recommendationText.textContent = data.description;
 
   displaySongs();
 
@@ -223,35 +278,37 @@ function showEmotion(emotion) {
 }
 
 
+// ==========================================
+// EMOTION BUTTONS
+// ==========================================
+
 emotionCards.forEach(function(card) {
 
   card.addEventListener("click", function() {
 
-    const emotion = card.dataset.emotion;
-
-    showEmotion(emotion);
+    showEmotion(card.dataset.emotion);
 
   });
 
 });
 
 
+// ==========================================
+// SURPRISE ME
+// ==========================================
+
 if (surpriseButton) {
 
   surpriseButton.addEventListener("click", function() {
 
-    if (!currentEmotion) {
-      return;
-    }
+    if (!currentEmotion) return;
 
-    const songs =
-      moodData[currentEmotion].songs;
+    const songs = moodData[currentEmotion].songs;
 
     const randomNumber =
       Math.floor(Math.random() * songs.length);
 
-    const selectedSong =
-      songs[randomNumber];
+    const selectedSong = songs[randomNumber];
 
     playSong(
       selectedSong[0],
@@ -262,6 +319,10 @@ if (surpriseButton) {
 
 }
 
+
+// ==========================================
+// CHOOSE ANOTHER EMOTION
+// ==========================================
 
 if (changeButton) {
 
@@ -280,4 +341,6 @@ if (changeButton) {
 }
 
 
-console.log("SoundSpace loaded successfully!");
+console.log(
+  "SoundSpace loaded successfully!"
+);
