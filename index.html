@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,8 +45,8 @@
       </h1>
 
       <p class="intro">
-        Choose an emotion and SoundSpace will suggest real music
-        that matches the emotional direction you want to explore.
+        Choose an emotion and SoundSpace will suggest real music that matches
+        the emotional direction you want to explore.
       </p>
 
 
@@ -60,11 +60,13 @@
           <p>Keep the good feeling going</p>
         </button>
 
+
         <button class="emotion-card" data-emotion="sadness">
           <div class="emoji">😢</div>
           <h2>Sadness</h2>
           <p>Find comfort and gentle warmth</p>
         </button>
+
 
         <button class="emotion-card" data-emotion="anger">
           <div class="emoji">😡</div>
@@ -72,11 +74,13 @@
           <p>Cool down and release tension</p>
         </button>
 
+
         <button class="emotion-card" data-emotion="anxiety">
           <div class="emoji">😟</div>
           <h2>Anxiety</h2>
           <p>Slow down and find calm</p>
         </button>
+
 
         <button class="emotion-card" data-emotion="irritation">
           <div class="emoji">😤</div>
@@ -91,11 +95,7 @@
 
     <!-- RECOMMENDATION SECTION -->
 
-    <section
-      class="recommendation"
-      id="recommendation"
-      hidden
-    >
+    <section class="recommendation" id="recommendation" hidden>
 
       <p class="eyebrow">
         YOUR SOUNDSPACE
@@ -114,46 +114,41 @@
 
       <div class="controls">
 
-        <button
-          id="surprise-button"
-          class="surprise-button"
-        >
+        <button id="surprise-button" class="surprise-button">
           🎲 Surprise Me
         </button>
 
-        <button
-          id="change-button"
-          class="change-button"
-        >
+        <button id="change-button" class="change-button">
           Choose another emotion
         </button>
 
       </div>
 
 
-      <!-- SONGS APPEAR HERE -->
+      <!-- SONG LIST -->
 
       <div id="song-list"></div>
 
 
-      <!-- LISTENING OPTIONS -->
+      <!-- MUSIC PLAYER -->
 
-      <div class="spotify-player-section">
+      <div class="audio-player-section">
 
-        <h3>🎧 Choose where to listen</h3>
+        <h3>🎧 Now Playing</h3>
 
-        <p>
-          Choose a song above, then select your preferred music service.
-        </p>
+        <div id="now-playing">
+          Choose a song to begin.
+        </div>
 
-        <div id="spotify-player"></div>
+        <audio id="audio-player" controls>
+          Your browser does not support audio playback.
+        </audio>
 
       </div>
 
 
       <p class="music-note">
-        🎵 Each emotion contains 10 songs —
-        50 songs in total.
+        🎵 Each emotion contains 10 songs — 50 songs in total.
       </p>
 
     </section>
@@ -171,10 +166,10 @@
         Three simple steps.
       </h2>
 
-
       <div class="steps">
 
         <div class="step">
+
           <b>01</b>
 
           <h3>
@@ -184,10 +179,12 @@
           <p>
             Tell SoundSpace how you feel right now.
           </p>
+
         </div>
 
 
         <div class="step">
+
           <b>02</b>
 
           <h3>
@@ -197,10 +194,12 @@
           <p>
             SoundSpace gives you 10 songs for your selected emotion.
           </p>
+
         </div>
 
 
         <div class="step">
+
           <b>03</b>
 
           <h3>
@@ -208,8 +207,9 @@
           </h3>
 
           <p>
-            Choose a song and select where you want to listen.
+            Choose a song and listen to it.
           </p>
+
         </div>
 
       </div>
@@ -227,5 +227,6 @@
   <script src="script.js"></script>
 
 </body>
+
 </html>
 ```
