@@ -1,4 +1,4 @@
-
+```javascript
 const moodData = {
   happiness: {
     title: "😊 Happiness",
@@ -86,6 +86,9 @@ const moodData = {
   }
 };
 
+
+// FIND PAGE ELEMENTS
+
 const emotionCards = document.querySelectorAll(".emotion-card");
 const recommendation = document.querySelector("#recommendation");
 const recommendationTitle = document.querySelector("#recommendation-title");
@@ -95,8 +98,10 @@ const changeButton = document.querySelector("#change-button");
 const surpriseButton = document.querySelector("#surprise-button");
 
 let currentEmotion = "";
-const spotifyTracks = {
-  
+
+
+// DISPLAY SONGS
+
 function displaySongs() {
   songList.innerHTML = "";
 
@@ -134,7 +139,8 @@ function displaySongs() {
 }
 
 
-```javascript
+// SHOW LISTENING OPTIONS
+
 function playSong(songTitle, artist) {
   const player = document.querySelector("#spotify-player");
 
@@ -186,9 +192,9 @@ function playSong(songTitle, artist) {
     block: "center"
   });
 }
-```
 
 
+// SHOW SELECTED EMOTION
 
 function showEmotion(emotion) {
   currentEmotion = emotion;
@@ -207,11 +213,17 @@ function showEmotion(emotion) {
   });
 }
 
+
+// EMOTION BUTTONS
+
 emotionCards.forEach(function(card) {
   card.addEventListener("click", function() {
     showEmotion(card.dataset.emotion);
   });
 });
+
+
+// SURPRISE ME
 
 if (surpriseButton) {
   surpriseButton.addEventListener("click", function() {
@@ -228,6 +240,9 @@ if (surpriseButton) {
   });
 }
 
+
+// CHOOSE ANOTHER EMOTION
+
 if (changeButton) {
   changeButton.addEventListener("click", function() {
     recommendation.hidden = true;
@@ -238,5 +253,7 @@ if (changeButton) {
   });
 }
 
+
 console.log("SoundSpace loaded successfully!");
+```
 
