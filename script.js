@@ -1,10 +1,4 @@
-
-// ==========================================
-// SOUNDSPACE — MUSIC DATA
-// ==========================================
-
 const moodData = {
-
   happiness: {
     title: "😊 Happiness",
     description: "Keep the good feeling going with upbeat and energetic music.",
@@ -89,16 +83,14 @@ const moodData = {
       ["So Easy (To Fall in Love)", "Olivia Dean"]
     ]
   }
-
 };
 
 
-// ==========================================
-// PAGE ELEMENTS
-// ==========================================
+/* =========================================
+   PAGE ELEMENTS
+========================================= */
 
-const emotionCards =
-  document.querySelectorAll(".emotion-card");
+const emotionCards = document.querySelectorAll(".emotion-card");
 
 const recommendation =
   document.querySelector("#recommendation");
@@ -118,15 +110,21 @@ const changeButton =
 const surpriseButton =
   document.querySelector("#surprise-button");
 
-const nowPlaying =
-  document.querySelector("#now-playing");
+
+/* =========================================
+   SHUFFLE SESSION VARIABLES
+========================================= */
 
 let currentEmotion = "";
 
+let shuffleQueue = [];
 
-// ==========================================
-// DISPLAY SONGS
-// ==========================================
+let currentSongIndex = -1;
+
+
+/* =========================================
+   DISPLAY SONGS
+========================================= */
 
 function displaySongs() {
 
@@ -135,15 +133,15 @@ function displaySongs() {
   const songs =
     moodData[currentEmotion].songs;
 
-  songs.forEach(function(song, index) {
 
-    const songTitle = song[0];
-    const artist = song[1];
+  songs.forEach(function(song, index) {
 
     const songCard =
       document.createElement("div");
 
-    songCard.className = "song-card";
+    songCard.className =
+      "song-card";
+
 
     songCard.innerHTML = `
 
@@ -156,34 +154,40 @@ function displaySongs() {
         <div>
 
           <h3 class="song-title">
-            ${songTitle}
+            ${song[0]}
           </h3>
 
           <p class="artist">
-            ${artist}
+            ${song[1]}
           </p>
 
         </div>
 
       </div>
 
+
       <button class="listen-button">
-        🎵 Listen
+
+        🎵 Play
+
       </button>
 
     `;
 
+
     const listenButton =
       songCard.querySelector(".listen-button");
+
 
     listenButton.addEventListener(
       "click",
       function() {
 
-        playSong(songTitle, artist);
+        startShuffleFromSong(song);
 
       }
     );
+
 
     songList.appendChild(songCard);
 
@@ -192,116 +196,557 @@ function displaySongs() {
 }
 
 
-// ==========================================
-// PLAY SONG
-// ==========================================
+/* =========================================
+   SHUFFLE FUNCTION
+========================================= */
 
-function playSong(songTitle, artist) {
+function shuffleSongs(array) {
 
-  if (!nowPlaying) return;
+  const shuffled =
+    [...array];
+
+
+  for (
+    let i = shuffled.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const randomIndex =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+
+    const temporary =
+      shuffled[i];
+
+
+    shuffled[i] =
+      shuffled[randomIndex];
+
+
+    shuffled[randomIndex] =
+      temporary;
+
+  }
+
+
+  return shuffled;
+
+}
+
+
+/* =========================================
+   START SHUFFLE FROM SELECTED SONG
+========================================= */
+
+function startShuffleFromSong(selectedSong) {
+
+  const songs =
+    moodData[currentEmotion].songs;
+
+
+  const otherSongs =
+    songs.filter(function(song) {
+
+      return !(
+        song[0] === selectedSong[0] &&
+        song[1] === selectedSong[1]
+      );
+
+    });
+
+
+  const shuffledOthers =
+    shuffleSongs(otherSongs);
+
+
+  /*
+    Selected song plays first.
+    The remaining 9 songs are shuffled.
+  */
+
+  shuffleQueue = [
+
+    selectedSong,
+
+    ...shuffledOthers
+
+  ];
+
+
+  currentSongIndex = 0;
+
+
+  playCurrentSong();
+
+}
+
+
+/* =========================================
+   PLAY CURRENT SONG
+========================================= */
+
+function playCurrentSong() {
+
+  if (
+    currentSongIndex < 0 ||
+    currentSongIndex >= shuffleQueue.length
+  ) {
+
+    return;
+
+  }
+
+
+  const song =
+    shuffleQueue[currentSongIndex];
+
+
+  showMusicPlayer(
+    song[0],
+    song[1]
+  );
+
+}
+
+
+/* =========================================
+   MUSIC PLAYER
+========================================= */
+
+function showMusicPlayer(
+  songTitle,
+  artist
+) {
+
+  const player =
+    document.querySelector("#now-playing");
+
+
+  if (!player) {
+
+    console.log(
+      "Now playing section not found."
+    );
+
+    return;
+
+  }
+
 
   const searchQuery =
     encodeURIComponent(
       songTitle + " " + artist
     );
 
-  nowPlaying.innerHTML = `
 
-    <div class="music-choice">
+  const nextSong =
+    shuffleQueue[
+      currentSongIndex + 1
+    ];
 
-      <h3>🎧 Now Playing</h3>
 
-      <h2>🎵 ${songTitle}</h2>
+  player.innerHTML = `
 
-      <p>${artist}</p>
+    <div class="soundspace-player">
 
-      <p class="listen-message">
-        Choose your preferred music service to play the full track.
+
+      <p class="now-playing-label">
+
+        🎧 NOW PLAYING
+
       </p>
+
+
+      <h2 class="current-song">
+
+        ${songTitle}
+
+      </h2>
+
+
+      <p class="current-artist">
+
+        ${artist}
+
+      </p>
+
+
+      <div class="shuffle-status">
+
+        🔀 Shuffle session
+        • Song ${currentSongIndex + 1}
+        of ${shuffleQueue.length}
+
+      </div>
+
 
       <div class="music-buttons">
 
-        <a
-          href="https://open.spotify.com/search/${searchQuery}"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="listen-service-button"
-        >
-          🎵 Play Full Track on Spotify
-        </a>
 
         <a
-          href="https://music.youtube.com/search?q=${searchQuery}"
+
+          href="https://open.spotify.com/search/${searchQuery}"
+
           target="_blank"
+
           rel="noopener noreferrer"
+
           class="listen-service-button"
+
         >
-          ▶ Play Full Track on YouTube Music
+
+          🎵 Play Full Song
+
         </a>
+
+
+        <a
+
+          href="https://music.youtube.com/search?q=${searchQuery}"
+
+          target="_blank"
+
+          rel="noopener noreferrer"
+
+          class="listen-service-button"
+
+        >
+
+          ▶ YouTube Music
+
+        </a>
+
 
       </div>
+
+
+      <div class="queue-controls">
+
+
+        <button
+          id="next-song-button"
+          class="next-song-button"
+        >
+
+          ⏭ Next Song
+
+        </button>
+
+
+        <button
+          id="reshuffle-button"
+          class="reshuffle-button"
+        >
+
+          🔀 Reshuffle
+
+        </button>
+
+
+      </div>
+
+
+      <div class="up-next">
+
+
+        <h3>
+
+          📋 Up Next
+
+        </h3>
+
+
+        <div id="queue-list">
+
+          ${createQueueHTML()}
+
+        </div>
+
+
+      </div>
+
 
     </div>
 
   `;
 
-  nowPlaying.scrollIntoView({
+
+  const nextButton =
+    document.querySelector(
+      "#next-song-button"
+    );
+
+
+  if (nextButton) {
+
+    if (!nextSong) {
+
+      nextButton.textContent =
+        "✓ Shuffle Complete";
+
+
+      nextButton.disabled =
+        true;
+
+    }
+
+
+    nextButton.addEventListener(
+      "click",
+      function() {
+
+        playNextSong();
+
+      }
+    );
+
+  }
+
+
+  const reshuffleButton =
+    document.querySelector(
+      "#reshuffle-button"
+    );
+
+
+  if (reshuffleButton) {
+
+    reshuffleButton.addEventListener(
+      "click",
+      function() {
+
+        reshuffleRemainingSongs();
+
+      }
+    );
+
+  }
+
+
+  player.scrollIntoView({
+
     behavior: "smooth",
+
     block: "center"
+
   });
 
 }
 
 
-// ==========================================
-// SHOW EMOTION
-// ==========================================
+/* =========================================
+   CREATE QUEUE DISPLAY
+========================================= */
+
+function createQueueHTML() {
+
+  const remainingSongs =
+    shuffleQueue.slice(
+      currentSongIndex + 1
+    );
+
+
+  if (
+    remainingSongs.length === 0
+  ) {
+
+    return `
+
+      <p class="queue-empty">
+
+        🎉 You've reached the end
+        of this shuffle session!
+
+      </p>
+
+    `;
+
+  }
+
+
+  return remainingSongs
+    .map(
+      function(song, index) {
+
+        return `
+
+          <div class="queue-song">
+
+            <span class="queue-number">
+
+              ${index + 1}
+
+            </span>
+
+
+            <div>
+
+              <strong>
+
+                ${song[0]}
+
+              </strong>
+
+
+              <p>
+
+                ${song[1]}
+
+              </p>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* =========================================
+   NEXT SONG
+========================================= */
+
+function playNextSong() {
+
+  if (
+    currentSongIndex <
+    shuffleQueue.length - 1
+  ) {
+
+    currentSongIndex++;
+
+    playCurrentSong();
+
+  }
+
+}
+
+
+/* =========================================
+   RESHUFFLE REMAINING SONGS
+========================================= */
+
+function reshuffleRemainingSongs() {
+
+  const currentSong =
+    shuffleQueue[currentSongIndex];
+
+
+  const remainingSongs =
+    shuffleQueue.slice(
+      currentSongIndex + 1
+    );
+
+
+  const reshuffledSongs =
+    shuffleSongs(
+      remainingSongs
+    );
+
+
+  shuffleQueue = [
+
+    ...shuffleQueue.slice(
+      0,
+      currentSongIndex + 1
+    ),
+
+    ...reshuffledSongs
+
+  ];
+
+
+  playCurrentSong();
+
+}
+
+
+/* =========================================
+   SHOW EMOTION
+========================================= */
 
 function showEmotion(emotion) {
 
-  currentEmotion = emotion;
+  currentEmotion =
+    emotion;
 
-  const data = moodData[emotion];
+
+  const data =
+    moodData[emotion];
+
 
   recommendationTitle.textContent =
     data.title;
 
+
   recommendationText.textContent =
     data.description;
 
+
+  /*
+    Reset shuffle session
+  */
+
+  shuffleQueue = [];
+
+  currentSongIndex = -1;
+
+
   displaySongs();
 
-  recommendation.hidden = false;
+
+  recommendation.hidden =
+    false;
+
 
   recommendation.scrollIntoView({
+
     behavior: "smooth",
+
     block: "start"
+
   });
 
 }
 
 
-// ==========================================
-// EMOTION BUTTONS
-// ==========================================
+/* =========================================
+   EMOTION CARD CLICKS
+========================================= */
 
-emotionCards.forEach(function(card) {
+emotionCards.forEach(
+  function(card) {
 
-  card.addEventListener(
-    "click",
-    function() {
+    card.addEventListener(
+      "click",
+      function() {
 
-      showEmotion(card.dataset.emotion);
-
-    }
-  );
-
-});
+        const emotion =
+          card.dataset.emotion;
 
 
-// ==========================================
-// SURPRISE ME
-// ==========================================
+        showEmotion(
+          emotion
+        );
+
+      }
+    );
+
+  }
+);
+
+
+/* =========================================
+   SURPRISE ME
+========================================= */
 
 if (surpriseButton) {
 
@@ -309,22 +754,34 @@ if (surpriseButton) {
     "click",
     function() {
 
-      if (!currentEmotion) return;
+      if (
+        !currentEmotion
+      ) {
+
+        return;
+
+      }
+
 
       const songs =
-        moodData[currentEmotion].songs;
+        moodData[
+          currentEmotion
+        ].songs;
+
 
       const randomNumber =
         Math.floor(
-          Math.random() * songs.length
+          Math.random() *
+          songs.length
         );
+
 
       const selectedSong =
         songs[randomNumber];
 
-      playSong(
-        selectedSong[0],
-        selectedSong[1]
+
+      startShuffleFromSong(
+        selectedSong
       );
 
     }
@@ -333,9 +790,9 @@ if (surpriseButton) {
 }
 
 
-// ==========================================
-// CHANGE EMOTION
-// ==========================================
+/* =========================================
+   CHANGE EMOTION
+========================================= */
 
 if (changeButton) {
 
@@ -343,12 +800,23 @@ if (changeButton) {
     "click",
     function() {
 
-      recommendation.hidden = true;
+      recommendation.hidden =
+        true;
+
+
+      shuffleQueue = [];
+
+
+      currentSongIndex =
+        -1;
+
 
       document
         .querySelector("#session")
         .scrollIntoView({
+
           behavior: "smooth"
+
         });
 
     }
@@ -358,6 +826,5 @@ if (changeButton) {
 
 
 console.log(
-  "SoundSpace premium experience loaded!"
+  "SoundSpace loaded successfully! 🎵"
 );
-
