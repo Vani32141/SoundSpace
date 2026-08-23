@@ -1,0 +1,263 @@
+# SoundSpace Feedback Page
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Feedback — SoundSpace</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="nav">
+
+    <a href="index.html" class="logo">
+      Sound<span>Space</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="why-it-works.html">Why It Works</a>
+      <a href="about.html">About</a>
+      <a href="feedback.html" class="active">Feedback</a>
+    </nav>
+
+  </header>
+
+
+  <main class="feedback-page">
+
+    <section class="feedback-hero">
+
+      <p class="eyebrow">YOUR VOICE MATTERS</p>
+
+      <h1>
+        Help us make
+        <span>SoundSpace better.</span>
+      </h1>
+
+      <p>
+        Your feedback helps us understand what people enjoy,
+        which emotions they explore, and how SoundSpace can improve.
+      </p>
+
+    </section>
+
+
+    <section class="feedback-card">
+
+      <form id="feedback-form">
+
+        <div class="feedback-question">
+
+          <label for="feedback-emotion">
+            Which emotion did you explore?
+          </label>
+
+          <select id="feedback-emotion" required>
+
+            <option value="">
+              Select an emotion
+            </option>
+
+            <option value="happiness">
+              😊 Happiness
+            </option>
+
+            <option value="sadness">
+              😢 Sadness
+            </option>
+
+            <option value="anger">
+              😡 Anger
+            </option>
+
+            <option value="anxiety">
+              😟 Anxiety
+            </option>
+
+            <option value="irritation">
+              😤 Irritation
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="feedback-question">
+
+          <p class="question-title">
+            Did SoundSpace help you feel calmer?
+          </p>
+
+          <div class="feedback-options">
+
+            <label>
+              <input
+                type="radio"
+                name="calmer"
+                value="Yes, definitely"
+                required
+              >
+              <span>😊 Yes, definitely</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="calmer"
+                value="A little"
+              >
+              <span>🙂 A little</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="calmer"
+                value="Not really"
+              >
+              <span>😐 Not really</span>
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <div class="feedback-question">
+
+          <label for="liked">
+            What did you like about SoundSpace?
+          </label>
+
+          <textarea
+            id="liked"
+            placeholder="For example: I liked how easy it was to choose music based on my mood..."
+            rows="5"
+          ></textarea>
+
+        </div>
+
+
+        <div class="feedback-question">
+
+          <label for="disliked">
+            What could we improve?
+          </label>
+
+          <textarea
+            id="disliked"
+            placeholder="Tell us what you think could make SoundSpace better..."
+            rows="5"
+          ></textarea>
+
+        </div>
+
+
+        <div class="feedback-question">
+
+          <label for="additional-feedback">
+            Anything else you would like us to know?
+          </label>
+
+          <textarea
+            id="additional-feedback"
+            placeholder="Share any other thoughts..."
+            rows="4"
+          ></textarea>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="submit-feedback"
+        >
+          Submit Feedback ✨
+        </button>
+
+
+        <p
+          id="feedback-success"
+          class="feedback-success"
+          hidden
+        ></p>
+
+      </form>
+
+    </section>
+
+
+    <section class="feedback-info">
+
+      <div class="feedback-info-card">
+
+        <span>🎵</span>
+
+        <h3>
+          Better music experiences
+        </h3>
+
+        <p>
+          Your feedback can help us improve how SoundSpace
+          organizes and recommends music.
+        </p>
+
+      </div>
+
+
+      <div class="feedback-info-card">
+
+        <span>💜</span>
+
+        <h3>
+          Designed around users
+        </h3>
+
+        <p>
+          Understanding what people like helps SoundSpace
+          become more useful and enjoyable.
+        </p>
+
+      </div>
+
+
+      <div class="feedback-info-card">
+
+        <span>📊</span>
+
+        <h3>
+          Learn and improve
+        </h3>
+
+        <p>
+          We use feedback patterns to identify areas
+          where the SoundSpace experience can improve.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    SoundSpace — Music for how you feel.
+
+  </footer>
+
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
+
