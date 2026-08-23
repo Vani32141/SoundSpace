@@ -513,7 +513,7 @@ emotionCards.forEach(function(card) {
 
       currentEmotion =
         card.dataset.emotion;
-
+trackEmotion(card.dataset.emotion);
       displayEmotionPage();
 
       showPage("emotion-page");
@@ -943,3 +943,266 @@ document
 console.log(
   "SoundSpace loaded successfully!"
 );
+# SoundSpace Feedback and Analytics JavaScript
+
+
+/* =========================================
+   SOUNDSPACE FEEDBACK + LOCAL ANALYTICS
+   ========================================= */
+
+
+/* VISITOR COUNT */
+
+function trackVisitor() {
+
+  const alreadyVisited =
+    localStorage.getItem("soundspace-visitor");
+
+  if (!alreadyVisited) {
+
+    const currentVisitors =
+      Number(
+        localStorage.getItem(
+          "soundspace-visitor-count"
+        ) || 0
+      );
+
+    localStorage.setItem(
+      "soundspace-visitor-count",
+      currentVisitors + 1
+    );
+
+    localStorage.setItem(
+      "soundspace-visitor",
+      "true"
+    );
+  }
+
+}
+
+trackVisitor();
+
+
+
+/* EMOTION TRACKING */
+
+function trackEmotion(emotion) {
+
+  const emotionData =
+    JSON.parse(
+      localStorage.getItem(
+        "soundspace-emotion-data"
+      ) || "{}"
+    );
+
+  if (!emotionData[emotion]) {
+    emotionData[emotion] = 0;
+  }
+
+  emotionData[emotion]++;
+
+  localStorage.setItem(
+    "soundspace-emotion-data",
+    JSON.stringify(emotionData)
+  );
+
+}
+
+
+
+/*
+  IMPORTANT:
+
+  Find your existing showEmotion function.
+
+  Inside it, add this line:
+
+  trackEmotion(emotion);
+
+  directly after:
+
+  currentEmotion = emotion;
+*/
+
+
+
+/* FEEDBACK FORM */
+
+const feedbackForm =
+  document.querySelector("#feedback-form");
+
+
+if (feedbackForm) {
+
+  feedbackForm.addEventListener(
+    "submit",
+    function(event) {
+
+      event.preventDefault();
+
+
+      const selectedEmotion =
+        document.querySelector(
+          "#feedback-emotion"
+        ).value;
+
+
+      const calmerAnswer =
+        document.querySelector(
+          'input[name="calmer"]:checked'
+        );
+
+
+      const liked =
+        document.querySelector(
+          "#liked"
+        ).value.trim();
+
+
+      const disliked =
+        document.querySelector(
+          "#disliked"
+        ).value.trim();
+
+
+      const additionalFeedback =
+        document.querySelector(
+          "#additional-feedback"
+        ).value.trim();
+
+
+      const feedbackEntry = {
+
+        emotion: selectedEmotion,
+
+        feltCalmer:
+          calmerAnswer
+            ? calmerAnswer.value
+            : "",
+
+        liked: liked,
+
+        disliked: disliked,
+
+        additionalFeedback:
+          additionalFeedback,
+
+        date:
+          new Date().toISOString()
+
+      };
+
+
+      const allFeedback =
+        JSON.parse(
+          localStorage.getItem(
+            "soundspace-all-feedback"
+          ) || "[]"
+        );
+
+
+      allFeedback.push(
+        feedbackEntry
+      );
+
+
+      localStorage.setItem(
+        "soundspace-all-feedback",
+        JSON.stringify(allFeedback)
+      );
+
+
+      const successMessage =
+        document.querySelector(
+          "#feedback-success"
+        );
+
+
+      successMessage.textContent =
+        "✨ Thank you! Your feedback has been saved. Your voice can help SoundSpace improve.";
+
+      successMessage.hidden = false;
+
+
+      feedbackForm.reset();
+
+
+      successMessage.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }
+  );
+
+}
+
+
+
+/* =========================================
+   SOUNDSPACE INSIGHTS
+   =========================================
+
+   These functions allow you to inspect
+   information stored on the current browser.
+*/
+
+
+function getSoundSpaceInsights() {
+
+  const visitors =
+    Number(
+      localStorage.getItem(
+        "soundspace-visitor-count"
+      ) || 0
+    );
+
+
+  const emotions =
+    JSON.parse(
+      localStorage.getItem(
+        "soundspace-emotion-data"
+      ) || "{}"
+    );
+
+
+  const feedback =
+    JSON.parse(
+      localStorage.getItem(
+        "soundspace-all-feedback"
+      ) || "[]"
+    );
+
+
+  console.log(
+    "SOUNDSPACE INSIGHTS"
+  );
+
+  console.log(
+    "Visitors:",
+    visitors
+  );
+
+  console.log(
+    "Emotion selections:",
+    emotions
+  );
+
+  console.log(
+    "Feedback:",
+    feedback
+  );
+
+
+  return {
+
+    visitors: visitors,
+
+    emotions: emotions,
+
+    feedback: feedback
+
+  };
+
+}
+
