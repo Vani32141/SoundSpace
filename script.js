@@ -22,7 +22,6 @@ const moodData = {
     ]
   },
 
-
   sadness: {
     title: "😢 Sadness",
     description: "Find comfort, emotional connection and gentle warmth through music.",
@@ -39,7 +38,6 @@ const moodData = {
       ["Back To Friends", "sombr"]
     ]
   },
-
 
   anger: {
     title: "😡 Anger",
@@ -58,7 +56,6 @@ const moodData = {
     ]
   },
 
-
   anxiety: {
     title: "😟 Anxiety",
     description: "Explore slower, familiar and soothing songs that may help create a calmer atmosphere.",
@@ -75,7 +72,6 @@ const moodData = {
       ["What Was I Made For?", "Billie Eilish"]
     ]
   },
-
 
   irritation: {
     title: "😤 Irritation",
@@ -147,8 +143,7 @@ function displaySongs() {
     const songCard =
       document.createElement("div");
 
-    songCard.className =
-      "song-card";
+    songCard.className = "song-card";
 
     songCard.innerHTML = `
 
@@ -179,18 +174,13 @@ function displaySongs() {
     `;
 
     const listenButton =
-      songCard.querySelector(
-        ".listen-button"
-      );
+      songCard.querySelector(".listen-button");
 
     listenButton.addEventListener(
       "click",
       function() {
 
-        playSong(
-          songTitle,
-          artist
-        );
+        playSong(songTitle, artist);
 
       }
     );
@@ -203,47 +193,31 @@ function displaySongs() {
 
 
 // ==========================================
-// PLAY SONG — OFFICIAL MUSIC SERVICES
+// PLAY SONG
 // ==========================================
 
 function playSong(songTitle, artist) {
 
-  if (!nowPlaying) {
-
-    console.log(
-      "Now playing section not found."
-    );
-
-    return;
-
-  }
+  if (!nowPlaying) return;
 
   const searchQuery =
     encodeURIComponent(
       songTitle + " " + artist
     );
 
-
   nowPlaying.innerHTML = `
 
     <div class="music-choice">
 
-      <h3>
-        🎧 Now Playing
-      </h3>
+      <h3>🎧 Now Playing</h3>
 
-      <h2>
-        🎵 ${songTitle}
-      </h2>
+      <h2>🎵 ${songTitle}</h2>
 
-      <p>
-        ${artist}
-      </p>
+      <p>${artist}</p>
 
       <p class="listen-message">
-        Choose a music service to play the full track.
+        Choose your preferred music service to play the full track.
       </p>
-
 
       <div class="music-buttons">
 
@@ -251,17 +225,16 @@ function playSong(songTitle, artist) {
           href="https://open.spotify.com/search/${searchQuery}"
           target="_blank"
           rel="noopener noreferrer"
-          class="listen-service-button spotify-button"
+          class="listen-service-button"
         >
           🎵 Play Full Track on Spotify
         </a>
-
 
         <a
           href="https://music.youtube.com/search?q=${searchQuery}"
           target="_blank"
           rel="noopener noreferrer"
-          class="listen-service-button youtube-button"
+          class="listen-service-button"
         >
           ▶ Play Full Track on YouTube Music
         </a>
@@ -272,29 +245,23 @@ function playSong(songTitle, artist) {
 
   `;
 
-
   nowPlaying.scrollIntoView({
-
     behavior: "smooth",
-
     block: "center"
-
   });
 
 }
 
 
 // ==========================================
-// SHOW SELECTED EMOTION
+// SHOW EMOTION
 // ==========================================
 
 function showEmotion(emotion) {
 
   currentEmotion = emotion;
 
-  const data =
-    moodData[emotion];
-
+  const data = moodData[emotion];
 
   recommendationTitle.textContent =
     data.title;
@@ -302,26 +269,20 @@ function showEmotion(emotion) {
   recommendationText.textContent =
     data.description;
 
-
   displaySongs();
-
 
   recommendation.hidden = false;
 
-
   recommendation.scrollIntoView({
-
     behavior: "smooth",
-
     block: "start"
-
   });
 
 }
 
 
 // ==========================================
-// EMOTION CARD BUTTONS
+// EMOTION BUTTONS
 // ==========================================
 
 emotionCards.forEach(function(card) {
@@ -330,10 +291,7 @@ emotionCards.forEach(function(card) {
     "click",
     function() {
 
-      const emotion =
-        card.dataset.emotion;
-
-      showEmotion(emotion);
+      showEmotion(card.dataset.emotion);
 
     }
   );
@@ -351,27 +309,18 @@ if (surpriseButton) {
     "click",
     function() {
 
-      if (!currentEmotion) {
-
-        return;
-
-      }
-
+      if (!currentEmotion) return;
 
       const songs =
         moodData[currentEmotion].songs;
 
-
       const randomNumber =
         Math.floor(
-          Math.random() *
-          songs.length
+          Math.random() * songs.length
         );
-
 
       const selectedSong =
         songs[randomNumber];
-
 
       playSong(
         selectedSong[0],
@@ -385,7 +334,7 @@ if (surpriseButton) {
 
 
 // ==========================================
-// CHOOSE ANOTHER EMOTION
+// CHANGE EMOTION
 // ==========================================
 
 if (changeButton) {
@@ -396,13 +345,10 @@ if (changeButton) {
 
       recommendation.hidden = true;
 
-
       document
         .querySelector("#session")
         .scrollIntoView({
-
           behavior: "smooth"
-
         });
 
     }
@@ -411,10 +357,7 @@ if (changeButton) {
 }
 
 
-// ==========================================
-// SUCCESS MESSAGE
-// ==========================================
-
 console.log(
-  "SoundSpace loaded successfully!"
+  "SoundSpace premium experience loaded!"
 );
+
