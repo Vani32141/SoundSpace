@@ -1,564 +1,375 @@
+# script.js
+
+/* =========================================
+   SOUNDSPACE — COMPLETE MULTI-PAGE SCRIPT
+   ========================================= */
+
+
+/* =========================================
+   1. ALL 50 SONGS + WHY THEY FIT
+   ========================================= */
 
 const moodData = {
 
   happiness: {
-
     title: "😊 Happiness",
-
-    emoji: "😊",
-
     description:
-      "Keep the good feeling going with upbeat and energetic music.",
+      "Keep the good feeling going with upbeat, energetic and positive music.",
 
     songs: [
 
       {
         title: "Happy",
         artist: "Pharrell Williams",
-        reason:
-          "Its bright production, energetic rhythm and strongly positive lyrical theme make it suitable for maintaining an upbeat mood."
+        why: "Its fast, upbeat rhythm, bright production and strongly positive message make it well suited to maintaining an already positive emotional state."
       },
 
       {
         title: "Can't Stop the Feeling!",
         artist: "Justin Timberlake",
-        reason:
-          "The fast tempo, dance-oriented rhythm and joyful message create an energetic and celebratory atmosphere."
+        why: "The lively tempo, danceable rhythm and joyful lyrics create an energetic listening experience associated with positive and high-energy emotions."
       },
 
       {
         title: "Levitating",
         artist: "Dua Lipa",
-        reason:
-          "Its upbeat disco-inspired rhythm and light, energetic production support a playful and uplifting atmosphere."
+        why: "Its disco-inspired beat, steady rhythm and energetic production give the song a playful and uplifting character."
       },
 
       {
         title: "Uptown Funk",
         artist: "Mark Ronson ft. Bruno Mars",
-        reason:
-          "The strong groove, high energy and confident delivery make this song naturally suited to excitement and positive energy."
+        why: "The strong funk groove, energetic tempo and confident delivery make it highly danceable and stimulating."
       },
 
       {
         title: "Good as Hell",
         artist: "Lizzo",
-        reason:
-          "Its confident message and upbeat musical energy encourage positive self-expression and celebration."
+        why: "Its upbeat production and encouraging, self-affirming message support feelings of confidence and positivity."
       },
 
       {
         title: "Lush Life",
         artist: "Zara Larsson",
-        reason:
-          "The lively pop production and energetic rhythm give the song a carefree and optimistic feel."
+        why: "The bright pop production, energetic rhythm and carefree tone create a lively and enjoyable atmosphere."
       },
 
       {
         title: "APT.",
         artist: "ROSÉ & Bruno Mars",
-        reason:
-          "Its energetic rhythm, catchy hooks and playful performance create a lively atmosphere suited to excitement."
+        why: "Its catchy rhythm, playful structure and high-energy pop-rock production make it suitable for an energetic and upbeat mood."
       },
 
       {
         title: "Golden",
         artist: "HUNTR/X, EJAE, Audrey Nuna & REI AMI",
-        reason:
-          "Its bright energy and confident sound give it an uplifting and motivational emotional direction."
+        why: "The energetic production and confident vocal delivery give the song a bold, uplifting and celebratory emotional direction."
       },
 
       {
         title: "Flowers",
         artist: "Miley Cyrus",
-        reason:
-          "The song focuses on independence and self-confidence while maintaining a bright, accessible pop sound."
+        why: "Its confident message of independence and its bright, steady pop production can reinforce feelings of empowerment and self-assurance."
       },
 
       {
         title: "Roar",
         artist: "Katy Perry",
-        reason:
-          "Its powerful chorus and message of finding confidence create an energizing and empowering listening experience."
+        why: "The powerful build-up, energetic chorus and message of finding one's voice make it an uplifting and motivating song."
       }
 
     ]
-
   },
 
 
   sadness: {
-
     title: "😢 Sadness",
-
-    emoji: "😢",
-
     description:
-      "Find comfort, emotional connection and gentle warmth through music.",
+      "Find comfort, emotional connection and gentle warmth through reflective music.",
 
     songs: [
 
       {
         title: "Beautiful Things",
         artist: "Benson Boone",
-        reason:
-          "Its emotional vocal delivery and reflective themes create a strong connection with feelings of vulnerability and loss."
+        why: "Its emotional vocal delivery and themes of appreciating meaningful relationships create space for reflection and emotional connection."
       },
 
       {
         title: "Someone You Loved",
         artist: "Lewis Capaldi",
-        reason:
-          "The slow emotional build and lyrics about missing someone create space for reflection and emotional connection."
+        why: "The slow pace, emotional vocals and lyrics about loss and longing can help listeners connect with and process feelings of sadness."
       },
 
       {
         title: "The Night We Met",
         artist: "Lord Huron",
-        reason:
-          "Its atmospheric sound and nostalgic lyrical themes make it suited to reflective or emotionally vulnerable moments."
+        why: "Its slow, atmospheric sound and nostalgic lyrics create a reflective environment suited to quiet emotional processing."
       },
 
       {
         title: "When We Were Young",
         artist: "Adele",
-        reason:
-          "The song's nostalgic theme and powerful emotional vocal delivery connect strongly with memories and reflection."
+        why: "Its nostalgic themes, expressive vocals and gradual musical build create a strong sense of reflection and emotional connection."
       },
 
       {
         title: "Iris",
         artist: "Goo Goo Dolls",
-        reason:
-          "Its expressive vocals and longing themes give the song an emotionally intense and reflective atmosphere."
+        why: "The emotional melody and vulnerable lyrics give the song an expressive quality that can resonate with feelings of longing and sadness."
       },
 
       {
         title: "Lovely",
         artist: "Billie Eilish & Khalid",
-        reason:
-          "The restrained production and vulnerable vocal style create a quiet atmosphere for emotional reflection."
+        why: "Its restrained production, darker atmosphere and emotionally vulnerable lyrics make it suitable for reflective listening."
       },
 
       {
         title: "What Was I Made For?",
         artist: "Billie Eilish",
-        reason:
-          "Its soft arrangement and introspective lyrics create space for reflection and questions about identity."
+        why: "Its soft arrangement and introspective lyrics encourage quiet reflection and emotional awareness."
       },
 
       {
         title: "Ocean Eyes",
         artist: "Billie Eilish",
-        reason:
-          "The gentle production and dreamy vocal style create a calm and emotionally reflective atmosphere."
+        why: "The gentle production, slow pacing and dreamy atmosphere create a calm and introspective listening experience."
       },
 
       {
         title: "Die With A Smile",
         artist: "Lady Gaga & Bruno Mars",
-        reason:
-          "Its emotional vocals and themes about valuing loved ones create a sentimental and reflective listening experience."
+        why: "Its emotional ballad structure and themes of love and appreciating important relationships encourage heartfelt reflection."
       },
 
       {
         title: "Back To Friends",
         artist: "sombr",
-        reason:
-          "Its reflective relationship themes and intimate tone suit moments of emotional processing and nostalgia."
+        why: "Its reflective relationship themes and emotional delivery make it suitable for listeners exploring feelings of loss, distance or longing."
       }
 
     ]
-
   },
 
 
   anger: {
-
     title: "😡 Anger",
-
-    emoji: "😡",
-
     description:
-      "Use powerful music as a way to release energy and shift your mood.",
+      "Use powerful music as a structured way to release energy and shift your emotional direction.",
 
     songs: [
 
       {
         title: "Believer",
         artist: "Imagine Dragons",
-        reason:
-          "The heavy percussion and intense vocal delivery transform themes of pain and struggle into a powerful release of energy."
+        why: "Its intense percussion, powerful vocals and message of turning pain into strength provide an energetic outlet for strong emotions."
       },
 
       {
         title: "Stronger",
         artist: "Kelly Clarkson",
-        reason:
-          "Its energetic production and message of resilience can redirect frustration toward confidence and strength."
+        why: "The powerful vocals and message of overcoming difficulty can help redirect frustration toward resilience and confidence."
       },
 
       {
         title: "Titanium",
         artist: "David Guetta ft. Sia",
-        reason:
-          "The dramatic build and powerful vocals create an intense but empowering atmosphere."
+        why: "Its strong electronic production and resilient message create an intense but empowering emotional experience."
       },
 
       {
         title: "Unstoppable",
         artist: "Sia",
-        reason:
-          "The song's strong vocal performance and themes of resilience create an empowering outlet for intense emotions."
+        why: "The dramatic build and confident lyrics can help shift feelings of frustration toward determination and personal strength."
       },
 
       {
         title: "Roar",
         artist: "Katy Perry",
-        reason:
-          "Its message of speaking up and finding strength can channel frustration into confidence."
+        why: "Its energetic chorus and message of standing up for oneself provide a more constructive direction for intense emotions."
       },
 
       {
         title: "Shake It Off",
         artist: "Taylor Swift",
-        reason:
-          "Its energetic rhythm and message of letting go offer a lighter way to move away from negative energy."
+        why: "Its upbeat rhythm and message of letting go of criticism can encourage emotional release and a shift away from irritation."
       },
 
       {
         title: "Flowers",
         artist: "Miley Cyrus",
-        reason:
-          "Its independent and self-affirming message can help shift emotional energy toward self-confidence."
+        why: "Its confident and independent message can help redirect frustration toward self-reliance and emotional strength."
       },
 
       {
         title: "I Will Survive",
         artist: "Gloria Gaynor",
-        reason:
-          "The powerful disco rhythm and resilience-focused message make it an iconic song of strength and recovery."
+        why: "Its strong rhythm and message of overcoming hardship make it a classic example of transforming negative experiences into resilience."
       },
 
       {
         title: "Since U Been Gone",
         artist: "Kelly Clarkson",
-        reason:
-          "Its strong vocals and explosive pop-rock energy provide an intense musical release."
+        why: "Its high-energy pop-rock sound and themes of release provide an expressive outlet for intense feelings."
       },
 
       {
         title: "The Man",
         artist: "The Killers",
-        reason:
-          "Its bold instrumentation and confident attitude create a strong, high-energy emotional atmosphere."
+        why: "Its energetic rock sound and confident delivery provide a strong musical outlet that matches high-arousal emotional states."
       }
 
     ]
-
   },
 
 
   anxiety: {
-
     title: "😟 Anxiety",
-
-    emoji: "😟",
-
     description:
-      "Explore slower, familiar and soothing songs that may help create a calmer atmosphere.",
+      "Explore slower, familiar and emotionally gentle songs that may help create a calmer atmosphere.",
 
     songs: [
 
       {
         title: "A Thousand Years",
         artist: "Christina Perri",
-        reason:
-          "Its slow tempo, soft piano and gentle vocal delivery create a calm and steady listening environment."
+        why: "Its slow tempo, flowing melody and gentle arrangement create a softer listening environment that may support relaxation."
       },
 
       {
         title: "Perfect",
         artist: "Ed Sheeran",
-        reason:
-          "The relaxed tempo and warm acoustic production create a gentle and familiar atmosphere."
+        why: "The smooth melody, moderate pace and familiar structure provide a gentle and emotionally warm listening experience."
       },
 
       {
         title: "Photograph",
         artist: "Ed Sheeran",
-        reason:
-          "Its soft acoustic sound and reflective tone encourage slower, quieter listening."
+        why: "Its acoustic-led sound and reflective pacing create a quieter atmosphere suited to slowing down and focusing."
       },
 
       {
         title: "Yellow",
         artist: "Coldplay",
-        reason:
-          "Its steady tempo, melodic guitar and warm vocal tone create a comforting and familiar atmosphere."
+        why: "Its warm melodic structure and familiar, steady progression can create a comforting and emotionally reassuring atmosphere."
       },
 
       {
         title: "Ocean Eyes",
         artist: "Billie Eilish",
-        reason:
-          "The airy production and soft vocal style create a spacious and gentle listening experience."
+        why: "Its soft vocals, gentle production and spacious sound create a calm, dreamy listening environment."
       },
 
       {
         title: "Lovely",
         artist: "Billie Eilish & Khalid",
-        reason:
-          "Its minimal production and restrained vocals create a slower atmosphere that may support reflection."
+        why: "Its restrained instrumentation and slower pacing allow for reflective listening without an overly intense musical build."
       },
 
       {
         title: "Until I Found You",
         artist: "Stephen Sanchez",
-        reason:
-          "The nostalgic arrangement and slower rhythm give the song a warm and gentle emotional tone."
+        why: "Its nostalgic style, smooth vocals and slower rhythm create a gentle and familiar atmosphere."
       },
 
       {
         title: "Adore You",
         artist: "Harry Styles",
-        reason:
-          "Its smooth rhythm and bright but relaxed production create an easygoing atmosphere."
+        why: "Its warm production, smooth melody and positive emotional tone can provide a comfortable and reassuring listening experience."
       },
 
       {
         title: "Sunflower",
         artist: "Post Malone & Swae Lee",
-        reason:
-          "The laid-back groove and melodic vocals make it feel relaxed and easy to listen to."
+        why: "Its relaxed groove and melodic vocals give it an easy-going quality that may help create a less tense atmosphere."
       },
 
       {
         title: "What Was I Made For?",
         artist: "Billie Eilish",
-        reason:
-          "Its quiet arrangement and introspective delivery encourage slower and more reflective listening."
+        why: "Its quiet arrangement and slow pace encourage stillness and reflection, making it suitable for calm, low-stimulation listening."
       }
 
     ]
-
   },
 
 
   irritation: {
-
     title: "😤 Irritation",
-
-    emoji: "😤",
-
     description:
-      "Take a musical reset with songs that have a lighter and more relaxed feel.",
+      "Take a musical reset with lighter, warmer and more relaxed songs.",
 
     songs: [
 
       {
         title: "Sunday Best",
         artist: "Surfaces",
-        reason:
-          "Its relaxed groove and cheerful production create a light and easygoing atmosphere."
+        why: "Its relaxed rhythm, bright production and optimistic tone create an easy-going atmosphere that can help support a mental reset."
       },
 
       {
         title: "Put Your Records On",
         artist: "Corinne Bailey Rae",
-        reason:
-          "Its warm instrumentation and relaxed message encourage slowing down and enjoying the moment."
+        why: "Its warm vocals, relaxed groove and encouraging tone create a gentle, comforting listening experience."
       },
 
       {
         title: "Lovely Day",
         artist: "Bill Withers",
-        reason:
-          "The positive groove and warm vocals create a simple and uplifting musical atmosphere."
+        why: "The smooth groove and optimistic vocal delivery create a warm and positive atmosphere without overwhelming intensity."
       },
 
       {
         title: "Sunflower",
         artist: "Post Malone & Swae Lee",
-        reason:
-          "Its smooth melody and relaxed beat create an easygoing listening experience."
+        why: "Its laid-back rhythm and melodic flow give the song a relaxed quality that suits a low-pressure listening experience."
       },
 
       {
         title: "Adore You",
         artist: "Harry Styles",
-        reason:
-          "The flowing rhythm and warm pop production create a light and comfortable atmosphere."
+        why: "Its warm production and smooth rhythm create a lighter emotional atmosphere that can help move attention away from frustration."
       },
 
       {
         title: "Best Part",
         artist: "Daniel Caesar ft. H.E.R.",
-        reason:
-          "Its gentle rhythm and smooth vocal interplay create a calm and intimate musical environment."
+        why: "Its soft instrumentation, slow groove and gentle vocal delivery create a calm and intimate atmosphere."
       },
 
       {
         title: "Location",
         artist: "Khalid",
-        reason:
-          "Its laid-back production and smooth vocal delivery give the song a relaxed emotional tone."
+        why: "Its mellow production and unhurried rhythm make it suitable for relaxed listening and stepping away from overstimulation."
       },
 
       {
         title: "Golden Hour",
         artist: "JVKE",
-        reason:
-          "Its warm melodic progression and atmospheric production create a gentle sense of ease."
+        why: "Its warm piano-led melody and uplifting atmosphere create a soothing and pleasant emotional tone."
       },
 
       {
         title: "Sweet Creature",
         artist: "Harry Styles",
-        reason:
-          "The acoustic sound and soft vocal delivery create a quiet and calming atmosphere."
+        why: "Its acoustic sound and gentle vocal delivery create a quiet and low-intensity listening experience."
       },
 
       {
         title: "So Easy (To Fall in Love)",
         artist: "Olivia Dean",
-        reason:
-          "Its warm rhythm and light vocal delivery create an easygoing and pleasant listening experience."
+        why: "Its smooth vocals and light, warm production create an easy-going atmosphere suited to relaxing and resetting emotionally."
       }
 
     ]
-
   }
 
 };
 
 
-/* ================= VARIABLES ================= */
-
-const pages =
-  document.querySelectorAll(".page");
-
-const navigationButtons =
-  document.querySelectorAll("[data-page]");
-
-const emotionCards =
-  document.querySelectorAll(".emotion-card");
-
-const songList =
-  document.querySelector("#song-list");
-
-let currentEmotion = "";
-
-let queue = [];
-
-let currentSongIndex = 0;
-
-
-/* ================= PAGE NAVIGATION ================= */
-
-function showPage(pageId) {
-
-  pages.forEach(function(page) {
-
-    page.classList.remove("active-page");
-
-  });
-
-
-  const selectedPage =
-    document.querySelector(
-      "#" + pageId
-    );
-
-
-  if (selectedPage) {
-
-    selectedPage.classList.add(
-      "active-page"
-    );
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  }
-
-}
-
-
-navigationButtons.forEach(function(button) {
-
-  button.addEventListener(
-    "click",
-    function() {
-
-      showPage(
-        button.dataset.page
-      );
-
-    }
-  );
-
-});
-
-
 /* =========================================
-   SOUNDSPACE — EMOTION SELECTION + TRACKING
-   ========================================= */
-
-const emotionCards = document.querySelectorAll(".emotion-card");
-
-
-/* TRACK WHICH EMOTIONS USERS SELECT */
-
-function trackEmotion(emotion) {
-
-  const emotionData = JSON.parse(
-    localStorage.getItem("soundspace-emotion-data") || "{}"
-  );
-
-  if (!emotionData[emotion]) {
-    emotionData[emotion] = 0;
-  }
-
-  emotionData[emotion]++;
-
-  localStorage.setItem(
-    "soundspace-emotion-data",
-    JSON.stringify(emotionData)
-  );
-
-}
-
-
-/* WHEN A USER CLICKS AN EMOTION */
-
-emotionCards.forEach(function(card) {
-
-  card.addEventListener("click", function() {
-
-    const emotion = card.dataset.emotion;
-
-    // Track the emotion
-    trackEmotion(emotion);
-
-    // Save the selected emotion for the next page
-    localStorage.setItem(
-      "soundspace-selected-emotion",
-      emotion
-    );
-
-    // Go to the emotion page
-    window.location.href = "emotion.html";
-
-  });
-
-});
-
-
-/* =========================================
-   COUNT WEBSITE VISITORS
+   2. VISITOR TRACKING
    ========================================= */
 
 function trackVisitor() {
@@ -569,7 +380,7 @@ function trackVisitor() {
 
   if (!alreadyVisited) {
 
-    const visitorCount = Number(
+    const currentCount = Number(
       localStorage.getItem(
         "soundspace-visitor-count"
       ) || 0
@@ -577,7 +388,7 @@ function trackVisitor() {
 
     localStorage.setItem(
       "soundspace-visitor-count",
-      visitorCount + 1
+      currentCount + 1
     );
 
     localStorage.setItem(
@@ -593,12 +404,374 @@ trackVisitor();
 
 
 /* =========================================
-   FEEDBACK SYSTEM
+   3. EMOTION TRACKING
+   ========================================= */
+
+function trackEmotion(emotion) {
+
+  const emotionData = JSON.parse(
+    localStorage.getItem(
+      "soundspace-emotion-data"
+    ) || "{}"
+  );
+
+  emotionData[emotion] =
+    (emotionData[emotion] || 0) + 1;
+
+  localStorage.setItem(
+    "soundspace-emotion-data",
+    JSON.stringify(emotionData)
+  );
+
+}
+
+
+/* =========================================
+   4. HOME PAGE — EMOTION CLICKS
+   ========================================= */
+
+const emotionCards =
+  document.querySelectorAll(".emotion-card");
+
+emotionCards.forEach(function(card) {
+
+  card.addEventListener("click", function() {
+
+    const emotion = card.dataset.emotion;
+
+    trackEmotion(emotion);
+
+    localStorage.setItem(
+      "soundspace-selected-emotion",
+      emotion
+    );
+
+    window.location.href = "emotion.html";
+
+  });
+
+});
+
+
+/* =========================================
+   5. EMOTION PAGE — DISPLAY SONGS + WHY
+   ========================================= */
+
+const selectedEmotion =
+  localStorage.getItem(
+    "soundspace-selected-emotion"
+  );
+
+const emotionTitle =
+  document.querySelector("#emotion-title");
+
+const emotionDescription =
+  document.querySelector("#emotion-description");
+
+const songList =
+  document.querySelector("#song-list");
+
+
+if (
+  selectedEmotion &&
+  moodData[selectedEmotion] &&
+  emotionTitle &&
+  songList
+) {
+
+  const emotionData =
+    moodData[selectedEmotion];
+
+  emotionTitle.textContent =
+    emotionData.title;
+
+  if (emotionDescription) {
+
+    emotionDescription.textContent =
+      emotionData.description;
+
+  }
+
+
+  emotionData.songs.forEach(
+    function(song, index) {
+
+      const songCard =
+        document.createElement("button");
+
+      songCard.type = "button";
+
+      songCard.className =
+        "song-card";
+
+
+      songCard.innerHTML = `
+
+        <span class="song-number">
+          ${index + 1}
+        </span>
+
+        <span class="song-details">
+
+          <strong>
+            ${song.title}
+          </strong>
+
+          <small>
+            ${song.artist}
+          </small>
+
+          <span class="song-why">
+
+            <b>Why this song fits:</b>
+
+            ${song.why}
+
+          </span>
+
+        </span>
+
+        <span class="song-arrow">
+          →
+        </span>
+
+      `;
+
+
+      songCard.addEventListener(
+        "click",
+        function() {
+
+          localStorage.setItem(
+            "soundspace-selected-song",
+            JSON.stringify(song)
+          );
+
+          window.location.href =
+            "player.html";
+
+        }
+      );
+
+
+      songList.appendChild(songCard);
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   6. PLAYER PAGE
+   ========================================= */
+
+const selectedSong = JSON.parse(
+  localStorage.getItem(
+    "soundspace-selected-song"
+  ) || "null"
+);
+
+const nowPlayingTitle =
+  document.querySelector(
+    "#now-playing-title"
+  );
+
+const nowPlayingArtist =
+  document.querySelector(
+    "#now-playing-artist"
+  );
+
+const nowPlayingWhy =
+  document.querySelector(
+    "#now-playing-why"
+  );
+
+
+if (selectedSong) {
+
+  if (nowPlayingTitle) {
+    nowPlayingTitle.textContent =
+      selectedSong.title;
+  }
+
+  if (nowPlayingArtist) {
+    nowPlayingArtist.textContent =
+      selectedSong.artist;
+  }
+
+  if (nowPlayingWhy) {
+    nowPlayingWhy.textContent =
+      selectedSong.why ||
+      "A song selected for your SoundSpace session.";
+  }
+
+}
+
+
+/* =========================================
+   7. SHUFFLE QUEUE
+   ========================================= */
+
+function shuffleSongs(array) {
+
+  const shuffled = [...array];
+
+  for (
+    let i = shuffled.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const j = Math.floor(
+      Math.random() * (i + 1)
+    );
+
+    [shuffled[i], shuffled[j]] =
+      [shuffled[j], shuffled[i]];
+
+  }
+
+  return shuffled;
+
+}
+
+
+const shuffleButton =
+  document.querySelector("#shuffle-button");
+
+const queueList =
+  document.querySelector("#queue-list");
+
+
+if (
+  shuffleButton &&
+  selectedEmotion &&
+  moodData[selectedEmotion]
+) {
+
+  shuffleButton.addEventListener(
+    "click",
+    function() {
+
+      const shuffledSongs =
+        shuffleSongs(
+          moodData[selectedEmotion].songs
+        );
+
+      localStorage.setItem(
+        "soundspace-shuffle-queue",
+        JSON.stringify(shuffledSongs)
+      );
+
+      if (queueList) {
+
+        queueList.innerHTML = "";
+
+        shuffledSongs.forEach(
+          function(song, index) {
+
+            const queueItem =
+              document.createElement("div");
+
+            queueItem.className =
+              "queue-item";
+
+            queueItem.innerHTML = `
+
+              <span>${index + 1}</span>
+
+              <div>
+
+                <strong>
+                  ${song.title}
+                </strong>
+
+                <small>
+                  ${song.artist}
+                </small>
+
+              </div>
+
+            `;
+
+            queueItem.addEventListener(
+              "click",
+              function() {
+
+                localStorage.setItem(
+                  "soundspace-selected-song",
+                  JSON.stringify(song)
+                );
+
+                window.location.href =
+                  "player.html";
+
+              }
+            );
+
+            queueList.appendChild(
+              queueItem
+            );
+
+          }
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   8. SURPRISE SONG
+   ========================================= */
+
+const surpriseButton =
+  document.querySelector("#surprise-button");
+
+if (
+  surpriseButton &&
+  selectedEmotion &&
+  moodData[selectedEmotion]
+) {
+
+  surpriseButton.addEventListener(
+    "click",
+    function() {
+
+      const songs =
+        moodData[selectedEmotion].songs;
+
+      const randomSong =
+        songs[
+          Math.floor(
+            Math.random() * songs.length
+          )
+        ];
+
+      localStorage.setItem(
+        "soundspace-selected-song",
+        JSON.stringify(randomSong)
+      );
+
+      window.location.href =
+        "player.html";
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   9. FEEDBACK SYSTEM
    ========================================= */
 
 const feedbackForm =
   document.querySelector("#feedback-form");
-
 
 if (feedbackForm) {
 
@@ -608,53 +781,54 @@ if (feedbackForm) {
 
       event.preventDefault();
 
-
-      const selectedEmotion =
+      const selectedFeedbackEmotion =
         document.querySelector(
           "#feedback-emotion"
-        ).value;
-
+        );
 
       const calmerAnswer =
         document.querySelector(
           'input[name="calmer"]:checked'
         );
 
+      const likedInput =
+        document.querySelector("#liked");
 
-      const liked =
-        document.querySelector("#liked")
-        .value
-        .trim();
+      const dislikedInput =
+        document.querySelector("#disliked");
 
-
-      const disliked =
-        document.querySelector("#disliked")
-        .value
-        .trim();
-
-
-      const additionalFeedback =
+      const additionalInput =
         document.querySelector(
           "#additional-feedback"
-        )
-        .value
-        .trim();
+        );
 
 
       const feedbackEntry = {
 
-        emotion: selectedEmotion,
+        emotion:
+          selectedFeedbackEmotion
+            ? selectedFeedbackEmotion.value
+            : "",
 
-        feltCalmer: calmerAnswer
-          ? calmerAnswer.value
-          : "",
+        feltCalmer:
+          calmerAnswer
+            ? calmerAnswer.value
+            : "",
 
-        liked: liked,
+        liked:
+          likedInput
+            ? likedInput.value.trim()
+            : "",
 
-        disliked: disliked,
+        disliked:
+          dislikedInput
+            ? dislikedInput.value.trim()
+            : "",
 
         additionalFeedback:
-          additionalFeedback,
+          additionalInput
+            ? additionalInput.value.trim()
+            : "",
 
         date:
           new Date().toISOString()
@@ -668,11 +842,7 @@ if (feedbackForm) {
         ) || "[]"
       );
 
-
-      allFeedback.push(
-        feedbackEntry
-      );
-
+      allFeedback.push(feedbackEntry);
 
       localStorage.setItem(
         "soundspace-all-feedback",
@@ -685,17 +855,15 @@ if (feedbackForm) {
           "#feedback-success"
         );
 
-
       if (successMessage) {
 
         successMessage.textContent =
-          "✨ Thank you for your feedback! Your response has been saved.";
+          "✨ Thank you! Your feedback has been saved.";
 
         successMessage.hidden = false;
 
       }
 
-
       feedbackForm.reset();
 
     }
@@ -704,648 +872,37 @@ if (feedbackForm) {
 }
 
 
-console.log(
-  "SoundSpace loaded successfully!"
-);
-
-/* ================= SONG CARDS ================= */
-
-function displaySongs() {
-
-  songList.innerHTML = "";
-
-
-  const songs =
-    moodData[currentEmotion].songs;
-
-
-  songs.forEach(
-    function(song, index) {
-
-      const songCard =
-        document.createElement("button");
-
-
-      songCard.className =
-        "song-card";
-
-
-      songCard.innerHTML = `
-
-        <div class="song-number">
-
-          ${String(index + 1).padStart(2, "0")}
-
-        </div>
-
-
-        <div class="song-info">
-
-          <h3>
-            ${song.title}
-          </h3>
-
-          <p class="artist">
-            ${song.artist}
-          </p>
-
-
-          <div class="song-reason">
-
-            <strong>
-              ✨ Why this song fits
-            </strong>
-
-            ${song.reason}
-
-          </div>
-
-        </div>
-
-
-        <div class="play-arrow">
-          Play →
-        </div>
-
-      `;
-
-
-      songCard.addEventListener(
-        "click",
-        function() {
-
-          startSession(index);
-
-        }
-      );
-
-
-      songList.appendChild(
-        songCard
-      );
-
-    }
-  );
-
-}
-
-
-/* ================= SHUFFLE ================= */
-
-function shuffle(array) {
-
-  const newArray =
-    [...array];
-
-
-  for (
-    let i =
-      newArray.length - 1;
-
-    i > 0;
-
-    i--
-  ) {
-
-    const randomIndex =
-      Math.floor(
-        Math.random() *
-        (i + 1)
-      );
-
-
-    [
-      newArray[i],
-      newArray[randomIndex]
-    ] =
-    [
-      newArray[randomIndex],
-      newArray[i]
-    ];
-
-  }
-
-
-  return newArray;
-
-}
-
-
-/* ================= START SESSION ================= */
-
-function startSession(songIndex) {
-
-  const songs =
-    moodData[currentEmotion].songs;
-
-
-  const selectedSong =
-    songs[songIndex];
-
-
-  const remainingSongs =
-    songs.filter(
-      function(song, index) {
-
-        return index !== songIndex;
-
-      }
-    );
-
-
-  queue = [
-
-    selectedSong,
-
-    ...shuffle(remainingSongs)
-
-  ];
-
-
-  currentSongIndex = 0;
-
-
-  displayPlayer();
-
-  showPage("player-page");
-
-}
-
-
-/* ================= PLAYER ================= */
-
-function displayPlayer() {
-
-  const song =
-    queue[currentSongIndex];
-
-
-  const emotion =
-    moodData[currentEmotion];
-
-
-  document.querySelector(
-    "#player-emoji"
-  ).textContent =
-    emotion.emoji;
-
-
-  document.querySelector(
-    "#player-title"
-  ).textContent =
-    song.title;
-
-
-  document.querySelector(
-    "#player-artist"
-  ).textContent =
-    song.artist;
-
-
-  document.querySelector(
-    "#player-reason"
-  ).textContent =
-    song.reason;
-
-
-  document.querySelector(
-    "#song-position"
-  ).textContent =
-
-    `${currentSongIndex + 1} / ${queue.length}`;
-
-
-  const searchQuery =
-    encodeURIComponent(
-      song.title +
-      " " +
-      song.artist
-    );
-
-
-  document.querySelector(
-    "#spotify-link"
-  ).href =
-
-    `https://open.spotify.com/search/${searchQuery}`;
-
-
-  displayQueue();
-
-}
-
-
-/* ================= QUEUE ================= */
-
-function displayQueue() {
-
-  const queueList =
-    document.querySelector(
-      "#queue-list"
-    );
-
-
-  queueList.innerHTML = "";
-
-
-  queue
-    .slice(currentSongIndex + 1)
-    .forEach(
-      function(song, index) {
-
-        const queueItem =
-          document.createElement("div");
-
-
-        queueItem.className =
-          "queue-item";
-
-
-        queueItem.innerHTML = `
-
-          <span>
-
-            ${String(
-              index + 1
-            ).padStart(2, "0")}
-
-          </span>
-
-
-          <div>
-
-            <strong>
-              ${song.title}
-            </strong>
-
-            <p>
-              ${song.artist}
-            </p>
-
-          </div>
-
-        `;
-
-
-        queueList.appendChild(
-          queueItem
-        );
-
-      }
-    );
-
-}
-
-
-/* ================= NEXT SONG ================= */
-
-document
-  .querySelector("#next-button")
-  .addEventListener(
-    "click",
-    function() {
-
-      if (
-        currentSongIndex <
-        queue.length - 1
-      ) {
-
-        currentSongIndex++;
-
-        displayPlayer();
-
-      }
-
-      else {
-
-        currentSongIndex = 0;
-
-        queue =
-          shuffle(queue);
-
-        displayPlayer();
-
-      }
-
-    }
-  );
-
-
-/* ================= RESHUFFLE ================= */
-
-document
-  .querySelector("#reshuffle-button")
-  .addEventListener(
-    "click",
-    function() {
-
-      const currentSong =
-        queue[currentSongIndex];
-
-
-      const remainingSongs =
-        queue.slice(
-          currentSongIndex + 1
-        );
-
-
-      queue = [
-
-        ...queue.slice(
-          0,
-          currentSongIndex + 1
-        ),
-
-        ...shuffle(
-          remainingSongs
-        )
-
-      ];
-
-
-      displayPlayer();
-
-    }
-  );
-
-
-/* ================= BACK TO SONGS ================= */
-
-document
-  .querySelector("#back-to-emotion")
-  .addEventListener(
-    "click",
-    function() {
-
-      showPage("emotion-page");
-
-    }
-  );
-
-
-console.log(
-  "SoundSpace loaded successfully!"
-);
-# SoundSpace Feedback and Analytics JavaScript
-
-
 /* =========================================
-   SOUNDSPACE FEEDBACK + LOCAL ANALYTICS
+   10. INSIGHTS
    ========================================= */
-
-
-/* VISITOR COUNT */
-
-function trackVisitor() {
-
-  const alreadyVisited =
-    localStorage.getItem("soundspace-visitor");
-
-  if (!alreadyVisited) {
-
-    const currentVisitors =
-      Number(
-        localStorage.getItem(
-          "soundspace-visitor-count"
-        ) || 0
-      );
-
-    localStorage.setItem(
-      "soundspace-visitor-count",
-      currentVisitors + 1
-    );
-
-    localStorage.setItem(
-      "soundspace-visitor",
-      "true"
-    );
-  }
-
-}
-
-trackVisitor();
-
-
-
-/* EMOTION TRACKING */
-
-function trackEmotion(emotion) {
-
-  const emotionData =
-    JSON.parse(
-      localStorage.getItem(
-        "soundspace-emotion-data"
-      ) || "{}"
-    );
-
-  if (!emotionData[emotion]) {
-    emotionData[emotion] = 0;
-  }
-
-  emotionData[emotion]++;
-
-  localStorage.setItem(
-    "soundspace-emotion-data",
-    JSON.stringify(emotionData)
-  );
-
-}
-
-
-
-/*
-  IMPORTANT:
-
-  Find your existing showEmotion function.
-
-  Inside it, add this line:
-
-  trackEmotion(emotion);
-
-  directly after:
-
-  currentEmotion = emotion;
-*/
-
-
-
-/* FEEDBACK FORM */
-
-const feedbackForm =
-  document.querySelector("#feedback-form");
-
-
-if (feedbackForm) {
-
-  feedbackForm.addEventListener(
-    "submit",
-    function(event) {
-
-      event.preventDefault();
-
-
-      const selectedEmotion =
-        document.querySelector(
-          "#feedback-emotion"
-        ).value;
-
-
-      const calmerAnswer =
-        document.querySelector(
-          'input[name="calmer"]:checked'
-        );
-
-
-      const liked =
-        document.querySelector(
-          "#liked"
-        ).value.trim();
-
-
-      const disliked =
-        document.querySelector(
-          "#disliked"
-        ).value.trim();
-
-
-      const additionalFeedback =
-        document.querySelector(
-          "#additional-feedback"
-        ).value.trim();
-
-
-      const feedbackEntry = {
-
-        emotion: selectedEmotion,
-
-        feltCalmer:
-          calmerAnswer
-            ? calmerAnswer.value
-            : "",
-
-        liked: liked,
-
-        disliked: disliked,
-
-        additionalFeedback:
-          additionalFeedback,
-
-        date:
-          new Date().toISOString()
-
-      };
-
-
-      const allFeedback =
-        JSON.parse(
-          localStorage.getItem(
-            "soundspace-all-feedback"
-          ) || "[]"
-        );
-
-
-      allFeedback.push(
-        feedbackEntry
-      );
-
-
-      localStorage.setItem(
-        "soundspace-all-feedback",
-        JSON.stringify(allFeedback)
-      );
-
-
-      const successMessage =
-        document.querySelector(
-          "#feedback-success"
-        );
-
-
-      successMessage.textContent =
-        "✨ Thank you! Your feedback has been saved. Your voice can help SoundSpace improve.";
-
-      successMessage.hidden = false;
-
-
-      feedbackForm.reset();
-
-
-      successMessage.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-    }
-  );
-
-}
-
-
-
-/* =========================================
-   SOUNDSPACE INSIGHTS
-   =========================================
-
-   These functions allow you to inspect
-   information stored on the current browser.
-*/
-
 
 function getSoundSpaceInsights() {
 
-  const visitors =
-    Number(
+  return {
+
+    visitors: Number(
       localStorage.getItem(
         "soundspace-visitor-count"
       ) || 0
-    );
+    ),
 
-
-  const emotions =
-    JSON.parse(
+    emotions: JSON.parse(
       localStorage.getItem(
         "soundspace-emotion-data"
       ) || "{}"
-    );
+    ),
 
-
-  const feedback =
-    JSON.parse(
+    feedback: JSON.parse(
       localStorage.getItem(
         "soundspace-all-feedback"
       ) || "[]"
-    );
-
-
-  console.log(
-    "SOUNDSPACE INSIGHTS"
-  );
-
-  console.log(
-    "Visitors:",
-    visitors
-  );
-
-  console.log(
-    "Emotion selections:",
-    emotions
-  );
-
-  console.log(
-    "Feedback:",
-    feedback
-  );
-
-
-  return {
-
-    visitors: visitors,
-
-    emotions: emotions,
-
-    feedback: feedback
+    )
 
   };
 
 }
 
+
+console.log(
+  "SoundSpace loaded successfully!"
+);
