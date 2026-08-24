@@ -1,83 +1,48 @@
-```css
-/* =========================================================
-   SOUNDSPACE — INTERACTIVE AURORA DESIGN
-   ========================================================= */
 
-/* ------------------------------
-   1. THEME VARIABLES
------------------------------- */
+/* =========================================
+   SOUNDSPACE — ORIGINAL STYLE, UPGRADED
+   ========================================= */
+
+
+/* ---------- IMPORT FONT ---------- */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+
+
+/* =========================================
+   1. COLORS
+   ========================================= */
 
 :root {
-  --bg: #f5f7ff;
-  --bg-secondary: #eef1ff;
 
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-strong: rgba(255, 255, 255, 0.92);
+  --bg: #080812;
+  --bg-secondary: #10101f;
+  --card: #151527;
+  --card-light: #1d1d33;
 
-  --text: #17152a;
-  --text-soft: #68667a;
+  --text: #f8f7ff;
+  --text-soft: #aaa9bc;
 
-  --purple: #7257ff;
-  --purple-dark: #4d31d7;
+  --purple: #8b5cf6;
+  --purple-light: #a78bfa;
 
-  --pink: #ff5fa2;
-  --blue: #45a6ff;
-  --cyan: #3ed7d0;
-  --yellow: #ffbd59;
+  --pink: #ec4899;
+  --blue: #38bdf8;
+  --orange: #fb923c;
+  --green: #34d399;
 
-  --border: rgba(114, 87, 255, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
 
   --shadow:
-    0 25px 70px rgba(55, 40, 120, 0.14);
-
-  --shadow-hover:
-    0 35px 90px rgba(55, 40, 120, 0.24);
-
-  --nav: rgba(245, 247, 255, 0.78);
-}
-
-
-/* ------------------------------
-   DARK MODE
------------------------------- */
-
-@media (prefers-color-scheme: dark) {
-
-  :root {
-    --bg: #090b16;
-    --bg-secondary: #111426;
-
-    --surface: rgba(24, 27, 48, 0.72);
-    --surface-strong: rgba(29, 33, 58, 0.94);
-
-    --text: #f5f4ff;
-    --text-soft: #aaa9bd;
-
-    --purple: #9c8cff;
-    --purple-dark: #7866ff;
-
-    --pink: #ff76b7;
-    --blue: #63b4ff;
-    --cyan: #5ce4d7;
-    --yellow: #ffd071;
-
-    --border: rgba(255, 255, 255, 0.09);
-
-    --shadow:
-      0 30px 80px rgba(0, 0, 0, 0.38);
-
-    --shadow-hover:
-      0 40px 100px rgba(0, 0, 0, 0.55);
-
-    --nav: rgba(9, 11, 22, 0.78);
-  }
+    0 20px 60px
+    rgba(0, 0, 0, 0.35);
 
 }
 
 
-/* ------------------------------
-   RESET
------------------------------- */
+/* =========================================
+   2. RESET
+   ========================================= */
 
 * {
   margin: 0;
@@ -85,347 +50,312 @@
   box-sizing: border-box;
 }
 
+
 html {
   scroll-behavior: smooth;
 }
 
+
 body {
+
   min-height: 100vh;
 
   font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
+    "DM Sans",
+    Arial,
     sans-serif;
 
   color: var(--text);
 
-  overflow-x: hidden;
-
   background:
+
     radial-gradient(
       circle at 10% 10%,
-      rgba(114, 87, 255, 0.18),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(255, 95, 162, 0.16),
+      rgba(139, 92, 246, 0.18),
       transparent 30%
     ),
+
     radial-gradient(
-      circle at 50% 90%,
-      rgba(62, 215, 208, 0.14),
-      transparent 32%
+      circle at 90% 20%,
+      rgba(236, 72, 153, 0.12),
+      transparent 28%
     ),
+
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(56, 189, 248, 0.10),
+      transparent 35%
+    ),
+
     var(--bg);
 
-  transition:
-    background 0.35s ease,
-    color 0.35s ease;
-}
-
-body::before {
-  content: "";
-
-  position: fixed;
-
-  width: 500px;
-  height: 500px;
-
-  top: -250px;
-  left: -180px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(114, 87, 255, 0.16),
-      transparent 70%
-    );
-
-  pointer-events: none;
-
-  filter: blur(20px);
-
-  z-index: -1;
 }
 
 
-/* ------------------------------
-   BUTTON RESET
------------------------------- */
-
-button,
-a {
-  font-family: inherit;
-}
-
-button {
-  border: none;
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
+/* =========================================
+   3. NAVIGATION
+   ========================================= */
 
 .nav {
-  position: sticky;
 
+  position: sticky;
   top: 0;
 
   z-index: 1000;
-
-  width: 100%;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 18px 7%;
+  padding: 20px 7%;
 
-  background: var(--nav);
+  background:
+    rgba(8, 8, 18, 0.82);
+
+  backdrop-filter:
+    blur(18px);
 
   border-bottom:
     1px solid var(--border);
 
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
 
 .logo {
-  background: transparent;
+
+  border: none;
+  background: none;
 
   color: var(--text);
 
+  font-family:
+    "Outfit",
+    sans-serif;
+
+  font-size: 1.8rem;
+
+  font-weight: 800;
+
   cursor: pointer;
 
-  font-size: 1.65rem;
+  letter-spacing: -1px;
 
-  font-weight: 900;
-
-  letter-spacing: -1.5px;
 }
 
+
 .logo span {
+
   background:
     linear-gradient(
       135deg,
-      var(--purple),
+      var(--purple-light),
       var(--pink)
     );
 
   -webkit-background-clip: text;
-  background-clip: text;
 
   color: transparent;
+
 }
 
 
 .nav-links {
+
   display: flex;
+
   align-items: center;
-  gap: 10px;
+
+  gap: 30px;
+
 }
+
 
 .nav-links button,
 .nav-links a {
-  padding: 10px 16px;
 
-  border-radius: 999px;
+  border: none;
 
-  background: transparent;
+  background: none;
 
   color: var(--text-soft);
 
-  cursor: pointer;
-
   text-decoration: none;
 
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.95rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
 
   transition:
-    background 0.25s ease,
     color 0.25s ease,
     transform 0.25s ease;
+
 }
+
 
 .nav-links button:hover,
 .nav-links a:hover {
-  background: var(--surface-strong);
 
-  color: var(--purple);
+  color: var(--text);
 
-  transform: translateY(-2px);
+  transform:
+    translateY(-2px);
+
 }
 
 
-/* =========================================================
-   MAIN
-========================================================= */
+/* =========================================
+   4. MAIN
+   ========================================= */
 
 main {
-  width: min(1180px, 90%);
-  margin: auto;
+
+  width:
+    min(1180px, 90%);
+
+  margin:
+    auto;
+
 }
+
 
 .page {
+
   display: none;
+
+  min-height: 80vh;
+
 }
+
 
 .page.active-page {
+
   display: block;
 
-  animation: pageReveal 0.5s ease;
-}
-
-@keyframes pageReveal {
-
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-}
-
-section {
-  padding: 80px 0;
 }
 
 
-/* =========================================================
-   EYEBROW
-========================================================= */
-
-.eyebrow {
-  display: inline-flex;
-
-  align-items: center;
-
-  padding: 9px 16px;
-
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(114, 87, 255, 0.1),
-      rgba(255, 95, 162, 0.1)
-    );
-
-  border:
-    1px solid var(--border);
-
-  color: var(--purple);
-
-  font-size: 0.72rem;
-  font-weight: 900;
-
-  letter-spacing: 1.5px;
-
-  margin-bottom: 22px;
-}
-
-
-/* =========================================================
-   HOME HERO
-========================================================= */
+/* =========================================
+   5. HERO
+   ========================================= */
 
 .hero {
-  min-height: 85vh;
+
+  min-height: 82vh;
 
   display: flex;
+
   flex-direction: column;
 
   align-items: center;
+
   justify-content: center;
 
   text-align: center;
+
+}
+
+
+.eyebrow {
+
+  display: inline-block;
+
+  margin-bottom: 24px;
+
+  padding:
+    9px 17px;
+
+  border-radius: 100px;
+
+  border:
+    1px solid
+    rgba(167, 139, 250, 0.3);
+
+  background:
+    rgba(139, 92, 246, 0.08);
+
+  color:
+    var(--purple-light);
+
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
 }
 
 
 .hero h1 {
-  max-width: 900px;
 
-  margin-bottom: 26px;
+  font-family:
+    "Outfit",
+    sans-serif;
 
   font-size:
-    clamp(4rem, 9vw, 8rem);
+    clamp(4rem, 9vw, 7.5rem);
 
-  line-height: 0.9;
+  font-weight: 800;
 
-  letter-spacing: -6px;
+  line-height: 0.92;
 
-  font-weight: 900;
+  letter-spacing:
+    -5px;
+
+  margin-bottom: 28px;
+
 }
 
 
 .hero h1 span {
+
   background:
+
     linear-gradient(
       120deg,
-      var(--purple),
-      var(--blue),
-      var(--pink),
-      var(--yellow)
+      #a78bfa,
+      #ec4899,
+      #fb923c
     );
 
-  background-size: 300%;
-
   -webkit-background-clip: text;
-  background-clip: text;
 
   color: transparent;
-
-  animation: gradientMove 7s ease infinite;
-}
-
-
-@keyframes gradientMove {
-
-  0% {
-    background-position: 0%;
-  }
-
-  50% {
-    background-position: 100%;
-  }
-
-  100% {
-    background-position: 0%;
-  }
 
 }
 
 
 .intro {
-  max-width: 650px;
 
-  margin-bottom: 55px;
+  max-width:
+    620px;
 
-  color: var(--text-soft);
+  margin-bottom:
+    55px;
 
-  font-size: 1.08rem;
+  color:
+    var(--text-soft);
 
-  line-height: 1.8;
+  font-size:
+    1.1rem;
+
+  line-height:
+    1.8;
+
 }
 
 
-/* =========================================================
-   EMOTION CARDS
-========================================================= */
+/* =========================================
+   6. EMOTION CARDS
+   ========================================= */
 
 .emotion-grid {
+
   width: 100%;
 
   display: grid;
@@ -434,594 +364,690 @@ section {
     repeat(5, 1fr);
 
   gap: 18px;
+
 }
 
 
 .emotion-card {
-  position: relative;
 
-  min-height: 235px;
+  position: relative;
 
   overflow: hidden;
 
-  padding: 28px 20px;
-
-  border-radius: 28px;
+  min-height: 235px;
 
   border:
     1px solid var(--border);
-
-  background: var(--surface);
-
-  color: var(--text);
-
-  cursor: pointer;
-
-  text-align: left;
-
-  backdrop-filter: blur(15px);
-
-  box-shadow:
-    0 15px 40px rgba(40, 35, 90, 0.07);
-
-  transition:
-    transform 0.35s cubic-bezier(.2,.8,.2,1),
-    box-shadow 0.35s ease,
-    border 0.35s ease;
-}
-
-
-.emotion-card::after {
-  content: "";
-
-  position: absolute;
-
-  width: 150px;
-  height: 150px;
-
-  border-radius: 50%;
-
-  right: -65px;
-  top: -65px;
-
-  opacity: 0.45;
-
-  transition:
-    transform 0.4s ease;
-}
-
-
-/* Individual mood colors */
-
-.happiness::after {
-  background: var(--yellow);
-}
-
-.sadness::after {
-  background: var(--blue);
-}
-
-.anger::after {
-  background: #ff5d5d;
-}
-
-.anxiety::after {
-  background: var(--purple);
-}
-
-.irritation::after {
-  background: var(--cyan);
-}
-
-
-.emotion-card:hover {
-  transform:
-    translateY(-14px)
-    rotate(-1deg);
-
-  box-shadow:
-    var(--shadow-hover);
-
-  border-color:
-    rgba(114, 87, 255, 0.45);
-}
-
-.emotion-card:hover::after {
-  transform:
-    scale(1.5);
-}
-
-
-.emoji {
-  position: relative;
-
-  z-index: 2;
-
-  font-size: 3rem;
-
-  margin-bottom: 28px;
-
-  transition:
-    transform 0.35s ease;
-}
-
-.emotion-card:hover .emoji {
-  transform:
-    scale(1.2)
-    rotate(-8deg);
-}
-
-
-.emotion-card h2 {
-  position: relative;
-
-  z-index: 2;
-
-  margin-bottom: 8px;
-
-  font-size: 1.15rem;
-}
-
-
-.emotion-card p {
-  position: relative;
-
-  z-index: 2;
-
-  color: var(--text-soft);
-
-  font-size: 0.86rem;
-
-  line-height: 1.55;
-}
-
-
-.emotion-card span {
-  position: absolute;
-
-  bottom: 22px;
-  left: 20px;
-
-  z-index: 3;
-
-  color: var(--purple);
-
-  font-weight: 800;
-}
-
-
-/* =========================================================
-   PAGE HERO
-========================================================= */
-
-.page-hero,
-.emotion-page-hero {
-  max-width: 900px;
-
-  margin: auto;
-
-  text-align: center;
-
-  padding:
-    100px 0
-    50px;
-}
-
-
-.page-hero h1,
-.emotion-page-hero h1 {
-  font-size:
-    clamp(3rem, 7vw, 6rem);
-
-  line-height: 0.95;
-
-  letter-spacing: -4px;
-
-  margin-bottom: 24px;
-}
-
-
-.page-hero h1 span,
-.emotion-page-hero h1 span {
-  color: var(--purple);
-}
-
-
-.page-hero p:not(.eyebrow),
-.emotion-page-hero p:not(.eyebrow) {
-  max-width: 700px;
-
-  margin: auto;
-
-  color: var(--text-soft);
-
-  font-size: 1.05rem;
-
-  line-height: 1.85;
-}
-
-
-/* =========================================================
-   ABOUT PAGE
-========================================================= */
-
-.story-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 22px;
-
-  margin-top: 30px;
-}
-
-
-.story-card {
-  min-height: 300px;
-
-  padding: 35px;
-
-  border-radius: 30px;
-
-  background: var(--surface);
-
-  border:
-    1px solid var(--border);
-
-  box-shadow:
-    0 15px 45px rgba(40, 35, 90, 0.07);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-
-.story-card:hover {
-  transform:
-    translateY(-10px);
-
-  box-shadow:
-    var(--shadow);
-}
-
-
-.story-card span {
-  display: inline-grid;
-
-  place-items: center;
-
-  width: 48px;
-  height: 48px;
-
-  margin-bottom: 30px;
-
-  border-radius: 16px;
-
-  color: white;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--pink)
-    );
-
-  font-weight: 900;
-}
-
-
-.story-card h2 {
-  margin-bottom: 14px;
-
-  font-size: 1.5rem;
-}
-
-
-.story-card p {
-  color: var(--text-soft);
-
-  line-height: 1.8;
-}
-
-
-.feature-row {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 18px;
-
-  margin-top: 60px;
-
-  text-align: center;
-}
-
-
-.feature-row > div {
-  padding: 30px;
-
-  border-radius: 28px;
-
-  background: var(--surface);
-
-  border:
-    1px solid var(--border);
-}
-
-
-.feature-icon {
-  margin-bottom: 16px;
-
-  font-size: 2.5rem;
-}
-
-
-.feature-row h3 {
-  margin-bottom: 8px;
-}
-
-
-.feature-row p {
-  color: var(--text-soft);
-
-  line-height: 1.7;
-}
-
-
-/* =========================================================
-   HOW IT WORKS
-========================================================= */
-
-.process {
-  max-width: 900px;
-
-  margin: 40px auto 0;
-
-  display: grid;
-
-  gap: 20px;
-}
-
-
-.process-step {
-  display: grid;
-
-  grid-template-columns:
-    120px 1fr;
-
-  gap: 35px;
-
-  align-items: center;
-
-  padding: 35px;
-
-  border-radius: 30px;
-
-  background: var(--surface);
-
-  border:
-    1px solid var(--border);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-
-.process-step:hover {
-  transform:
-    translateX(10px);
-
-  box-shadow:
-    var(--shadow);
-}
-
-
-.step-number {
-  width: 85px;
-  height: 85px;
-
-  display: grid;
-
-  place-items: center;
 
   border-radius: 24px;
 
-  color: white;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--blue)
-    );
-
-  font-size: 1.5rem;
-
-  font-weight: 900;
-}
-
-
-.step-icon {
-  margin-bottom: 14px;
-
-  font-size: 2rem;
-}
-
-
-.step-content h2 {
-  margin-bottom: 10px;
-
-  font-size: 1.6rem;
-}
-
-
-.step-content p {
-  color: var(--text-soft);
-
-  line-height: 1.8;
-}
-
-
-/* =========================================================
-   EMOTION SONG PAGE
-========================================================= */
-
-.back-button {
-  display: inline-flex;
-
-  align-items: center;
-
-  padding: 12px 18px;
-
-  margin-bottom: 45px;
-
-  border-radius: 999px;
-
-  background: var(--surface);
-
-  color: var(--text);
-
-  border:
-    1px solid var(--border);
-
-  cursor: pointer;
-
-  font-weight: 700;
-
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease;
-}
-
-
-.back-button:hover {
-  transform:
-    translateX(-5px);
-
-  background: var(--surface-strong);
-}
-
-
-.large-emoji {
-  font-size: 6rem;
-
-  margin-bottom: 20px;
-
-  animation: floatEmoji 3s ease-in-out infinite;
-}
-
-
-@keyframes floatEmoji {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-12px);
-  }
-
-}
-
-
-.songs-section {
-  padding-top: 20px;
-}
-
-
-.songs-heading {
-  margin-bottom: 30px;
-
-  text-align: center;
-}
-
-
-.songs-heading h2 {
-  font-size:
-    clamp(2.5rem, 6vw, 4.5rem);
-
-  letter-spacing: -3px;
-}
-
-
-.songs-heading h2 span {
-  color: var(--purple);
-}
-
-
-#song-list {
-  display: grid;
-
-  gap: 16px;
-
-  max-width: 950px;
-
-  margin: auto;
-}
-
-
-.song-card {
-  width: 100%;
-
-  display: grid;
-
-  grid-template-columns:
-    55px 1fr 40px;
-
-  gap: 20px;
-
-  align-items: start;
-
-  padding: 24px;
-
-  border-radius: 25px;
-
-  border:
-    1px solid var(--border);
-
-  background: var(--surface);
-
-  color: var(--text);
+  padding:
+    28px 20px;
 
   text-align: left;
 
   cursor: pointer;
+
+  color:
+    var(--text);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.02)
+    );
 
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease,
     border 0.3s ease;
+
 }
 
 
-.song-card:hover {
+/* GLOW */
+
+.emotion-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  width: 160px;
+  height: 160px;
+
+  border-radius: 50%;
+
+  top: -70px;
+  right: -70px;
+
+  opacity: 0.7;
+
+  transition:
+    transform 0.4s ease;
+
+}
+
+
+.emotion-card:hover {
+
   transform:
-    translateY(-5px);
+    translateY(-12px);
 
   box-shadow:
     var(--shadow);
 
+}
+
+
+.emotion-card:hover::before {
+
+  transform:
+    scale(1.5);
+
+}
+
+
+/* HAPPINESS */
+
+.happiness::before {
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(251, 146, 60, 0.65),
+      transparent 70%
+    );
+
+}
+
+.happiness:hover {
+
+  border-color:
+    rgba(251, 146, 60, 0.6);
+
+}
+
+
+/* SADNESS */
+
+.sadness::before {
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(56, 189, 248, 0.6),
+      transparent 70%
+    );
+
+}
+
+.sadness:hover {
+
+  border-color:
+    rgba(56, 189, 248, 0.6);
+
+}
+
+
+/* ANGER */
+
+.anger::before {
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(239, 68, 68, 0.65),
+      transparent 70%
+    );
+
+}
+
+.anger:hover {
+
+  border-color:
+    rgba(239, 68, 68, 0.6);
+
+}
+
+
+/* ANXIETY */
+
+.anxiety::before {
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(139, 92, 246, 0.7),
+      transparent 70%
+    );
+
+}
+
+.anxiety:hover {
+
+  border-color:
+    rgba(139, 92, 246, 0.6);
+
+}
+
+
+/* IRRITATION */
+
+.irritation::before {
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(236, 72, 153, 0.65),
+      transparent 70%
+    );
+
+}
+
+.irritation:hover {
+
+  border-color:
+    rgba(236, 72, 153, 0.6);
+
+}
+
+
+/* CARD CONTENT */
+
+.emoji {
+
+  position: relative;
+
+  font-size:
+    2.7rem;
+
+  margin-bottom:
+    22px;
+
+  transition:
+    transform 0.3s ease;
+
+}
+
+
+.emotion-card:hover .emoji {
+
+  transform:
+    scale(1.2)
+    rotate(-8deg);
+
+}
+
+
+.emotion-card h2 {
+
+  position: relative;
+
+  font-family:
+    "Outfit",
+    sans-serif;
+
+  font-size:
+    1.25rem;
+
+  margin-bottom:
+    8px;
+
+}
+
+
+.emotion-card p {
+
+  position: relative;
+
+  color:
+    var(--text-soft);
+
+  font-size:
+    0.88rem;
+
+  line-height:
+    1.55;
+
+}
+
+
+.emotion-card span {
+
+  position: absolute;
+
+  bottom: 24px;
+
+  left: 20px;
+
+  font-size:
+    0.85rem;
+
+  font-weight:
+    700;
+
+  color:
+    var(--purple-light);
+
+}
+
+
+/* =========================================
+   7. ABOUT + HOW IT WORKS
+   ========================================= */
+
+.page-hero {
+
+  padding:
+    100px 0
+    60px;
+
+  text-align: center;
+
+}
+
+
+.page-hero h1 {
+
+  font-family:
+    "Outfit",
+    sans-serif;
+
+  font-size:
+    clamp(3rem, 6vw, 5.5rem);
+
+  line-height:
+    1;
+
+  letter-spacing:
+    -3px;
+
+  margin-bottom:
+    25px;
+
+}
+
+
+.page-hero h1 span {
+
+  color:
+    var(--purple-light);
+
+}
+
+
+.page-hero p {
+
+  max-width:
+    700px;
+
+  margin:
+    auto;
+
+  color:
+    var(--text-soft);
+
+  line-height:
+    1.8;
+
+  font-size:
+    1.05rem;
+
+}
+
+
+/* =========================================
+   8. STORY CARDS
+   ========================================= */
+
+.story-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap:
+    22px;
+
+  margin:
+    30px 0
+    70px;
+
+}
+
+
+.story-card {
+
+  padding:
+    35px;
+
+  border-radius:
+    24px;
+
+  background:
+    var(--card);
+
+  border:
+    1px solid var(--border);
+
+  transition:
+    transform 0.3s ease;
+
+}
+
+
+.story-card:hover {
+
+  transform:
+    translateY(-8px);
+
+}
+
+
+.story-card span {
+
+  color:
+    var(--purple-light);
+
+  font-family:
+    "Outfit";
+
+  font-size:
+    1.3rem;
+
+  font-weight:
+    700;
+
+}
+
+
+.story-card h2 {
+
+  font-family:
+    "Outfit";
+
+  margin:
+    18px 0
+    12px;
+
+}
+
+
+.story-card p {
+
+  color:
+    var(--text-soft);
+
+  line-height:
+    1.7;
+
+}
+
+
+/* =========================================
+   9. FEATURE ROW
+   ========================================= */
+
+.feature-row {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap:
+    18px;
+
+  padding-bottom:
+    80px;
+
+}
+
+
+.feature-row > div {
+
+  padding:
+    30px;
+
+  text-align:
+    center;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    24px;
+
+  background:
+    var(--card);
+
+}
+
+
+.feature-icon {
+
+  font-size:
+    2.3rem;
+
+  margin-bottom:
+    15px;
+
+}
+
+
+.feature-row h3 {
+
+  font-family:
+    "Outfit";
+
+  margin-bottom:
+    8px;
+
+}
+
+
+.feature-row p {
+
+  color:
+    var(--text-soft);
+
+  font-size:
+    0.9rem;
+
+}
+
+
+/* =========================================
+   10. SONG PAGE
+   ========================================= */
+
+.emotion-page-hero {
+
+  padding:
+    80px 0
+    50px;
+
+  text-align:
+    center;
+
+}
+
+
+.large-emoji {
+
+  font-size:
+    5rem;
+
+  margin-bottom:
+    20px;
+
+}
+
+
+#emotion-title {
+
+  font-family:
+    "Outfit";
+
+  font-size:
+    clamp(3rem, 6vw, 5rem);
+
+  margin-bottom:
+    20px;
+
+}
+
+
+.back-button {
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    100px;
+
+  padding:
+    11px 18px;
+
+  margin-bottom:
+    35px;
+
+  color:
+    var(--text);
+
+  background:
+    var(--card);
+
+  cursor:
+    pointer;
+
+}
+
+
+.songs-section {
+
+  padding-bottom:
+    100px;
+
+}
+
+
+.songs-heading {
+
+  margin-bottom:
+    30px;
+
+}
+
+
+.songs-heading h2 {
+
+  font-family:
+    "Outfit";
+
+  font-size:
+    2.5rem;
+
+}
+
+
+.songs-heading h2 span {
+
+  color:
+    var(--purple-light);
+
+}
+
+
+/* SONG LIST */
+
+#song-list {
+
+  display: grid;
+
+  gap:
+    15px;
+
+}
+
+
+.song-card {
+
+  width:
+    100%;
+
+  display: grid;
+
+  grid-template-columns:
+    55px 1fr 30px;
+
+  gap:
+    18px;
+
+  padding:
+    24px;
+
+  text-align:
+    left;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    22px;
+
+  color:
+    var(--text);
+
+  background:
+    var(--card);
+
+  cursor:
+    pointer;
+
+  transition:
+    transform 0.25s ease,
+    border 0.25s ease;
+
+}
+
+
+.song-card:hover {
+
+  transform:
+    translateX(8px);
+
   border-color:
     var(--purple);
+
 }
 
 
 .song-number {
-  width: 44px;
-  height: 44px;
 
-  display: grid;
+  width:
+    42px;
 
-  place-items: center;
+  height:
+    42px;
 
-  border-radius: 15px;
+  display:
+    grid;
 
-  color: white;
+  place-items:
+    center;
+
+  border-radius:
+    50%;
+
+  color:
+    white;
+
+  font-weight:
+    800;
 
   background:
     linear-gradient(
@@ -1030,255 +1056,261 @@ section {
       var(--pink)
     );
 
-  font-weight: 900;
 }
 
 
 .song-details {
-  display: flex;
 
-  flex-direction: column;
+  display:
+    flex;
 
-  gap: 5px;
+  flex-direction:
+    column;
+
+  gap:
+    5px;
+
 }
 
 
 .song-details strong {
-  font-size: 1.15rem;
+
+  font-size:
+    1.05rem;
+
 }
 
 
 .song-details small {
-  color: var(--text-soft);
+
+  color:
+    var(--text-soft);
+
 }
 
 
 .song-why {
-  margin-top: 12px;
 
-  padding: 14px 16px;
+  margin-top:
+    12px;
 
-  border-radius: 15px;
+  padding-top:
+    12px;
 
-  background:
-    rgba(114, 87, 255, 0.07);
+  border-top:
+    1px solid var(--border);
 
-  color: var(--text-soft);
+  color:
+    var(--text-soft);
 
-  line-height: 1.65;
+  font-size:
+    0.88rem;
 
-  font-size: 0.9rem;
+  line-height:
+    1.7;
+
 }
 
 
 .song-why b {
-  color: var(--purple);
+
+  color:
+    var(--purple-light);
+
 }
 
 
-.song-arrow {
-  align-self: center;
-
-  color: var(--purple);
-
-  font-size: 1.8rem;
-
-  transition:
-    transform 0.25s ease;
-}
-
-
-.song-card:hover .song-arrow {
-  transform:
-    translateX(6px);
-}
-
-
-/* =========================================================
-   PLAYER PAGE
-========================================================= */
+/* =========================================
+   11. PLAYER
+   ========================================= */
 
 .player-layout {
+
   display: grid;
 
   grid-template-columns:
     1.2fr 0.8fr;
 
-  gap: 24px;
+  gap:
+    25px;
 
-  padding: 70px 0;
+  padding:
+    70px 0;
+
 }
 
 
 .now-playing-panel,
 .queue-panel {
-  padding: 40px;
 
-  border-radius: 35px;
-
-  background: var(--surface);
+  padding:
+    38px;
 
   border:
     1px solid var(--border);
 
-  box-shadow:
-    var(--shadow);
-}
+  border-radius:
+    30px;
 
+  background:
+    var(--card);
 
-.now-playing-panel {
-  text-align: center;
 }
 
 
 .player-emoji {
-  width: 150px;
-  height: 150px;
 
-  display: grid;
-
-  place-items: center;
+  font-size:
+    4rem;
 
   margin:
-    15px auto
-    25px;
-
-  border-radius: 40px;
-
-  font-size: 4.5rem;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(114, 87, 255, 0.25),
-      rgba(255, 95, 162, 0.22)
-    );
-
-  animation: pulsePlayer 3s ease-in-out infinite;
-}
-
-
-@keyframes pulsePlayer {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.06);
-  }
+    25px 0;
 
 }
 
 
 #player-title {
+
+  font-family:
+    "Outfit";
+
   font-size:
-    clamp(2.5rem, 5vw, 4.5rem);
+    3rem;
 
-  letter-spacing: -3px;
-
-  margin-bottom: 10px;
 }
 
 
 .player-artist {
-  color: var(--text-soft);
 
-  font-size: 1.05rem;
+  color:
+    var(--text-soft);
 
-  margin-bottom: 25px;
+  margin:
+    10px 0
+    25px;
+
 }
 
 
 .shuffle-status {
-  display: inline-flex;
 
-  gap: 8px;
+  display:
+    inline-flex;
 
-  padding: 10px 16px;
+  gap:
+    8px;
 
-  border-radius: 999px;
+  padding:
+    10px 16px;
+
+  border-radius:
+    100px;
 
   background:
-    rgba(62, 215, 208, 0.12);
+    rgba(139, 92, 246, 0.12);
 
-  color: var(--cyan);
+  color:
+    var(--purple-light);
 
-  font-weight: 900;
+  font-size:
+    0.8rem;
 
-  font-size: 0.78rem;
+  font-weight:
+    700;
 
-  letter-spacing: 1px;
 }
 
 
 .player-reason {
-  margin-top: 28px;
 
-  padding: 25px;
+  margin:
+    30px 0;
 
-  border-radius: 25px;
+  padding:
+    22px;
 
-  text-align: left;
+  border-radius:
+    20px;
 
   background:
-    rgba(114, 87, 255, 0.08);
+    var(--bg-secondary);
+
 }
 
 
 .player-reason h3 {
-  margin-bottom: 12px;
+
+  margin-bottom:
+    10px;
+
 }
 
 
 .player-reason p {
-  color: var(--text-soft);
 
-  line-height: 1.8;
+  color:
+    var(--text-soft);
+
+  line-height:
+    1.7;
+
 }
 
 
+/* BUTTONS */
+
 .player-actions {
-  display: grid;
 
-  grid-template-columns:
-    1fr 1fr;
+  display:
+    flex;
 
-  gap: 12px;
+  gap:
+    12px;
 
-  margin-top: 25px;
+  flex-wrap:
+    wrap;
+
 }
 
 
 .listen-button-large,
 .next-song-button,
 .reshuffle-button {
-  display: flex;
 
-  justify-content: center;
-  align-items: center;
+  border:
+    none;
 
-  min-height: 55px;
+  border-radius:
+    14px;
 
-  padding: 14px 20px;
+  padding:
+    15px 20px;
 
-  border-radius: 17px;
+  font-family:
+    "DM Sans";
 
-  cursor: pointer;
+  font-weight:
+    700;
 
-  font-weight: 800;
+  cursor:
+    pointer;
 
-  text-decoration: none;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
 }
 
 
 .listen-button-large {
-  color: white;
+
+  flex:
+    1;
+
+  text-align:
+    center;
+
+  text-decoration:
+    none;
+
+  color:
+    white;
 
   background:
     linear-gradient(
@@ -1286,323 +1318,424 @@ section {
       var(--purple),
       var(--pink)
     );
+
 }
 
 
 .next-song-button {
-  color: var(--text);
 
-  background: var(--surface-strong);
+  background:
+    var(--card-light);
 
-  border:
-    1px solid var(--border);
+  color:
+    var(--text);
+
 }
 
 
 .reshuffle-button {
-  width: 100%;
 
-  margin-top: 12px;
+  width:
+    100%;
 
-  color: var(--purple);
+  margin-top:
+    15px;
 
   background:
-    rgba(114, 87, 255, 0.1);
+    transparent;
+
+  border:
+    1px solid var(--border);
+
+  color:
+    var(--purple-light);
+
 }
 
 
-.listen-button-large:hover,
-.next-song-button:hover,
-.reshuffle-button:hover {
-  transform:
-    translateY(-3px);
-
-  box-shadow:
-    var(--shadow);
-}
-
-
-/* =========================================================
-   QUEUE
-========================================================= */
-
-.queue-panel h2 {
-  margin-bottom: 25px;
-
-  font-size: 2rem;
-}
-
+/* QUEUE */
 
 #queue-list {
-  display: grid;
 
-  gap: 10px;
+  display:
+    grid;
+
+  gap:
+    10px;
+
+  margin-top:
+    25px;
+
 }
 
 
 .queue-item {
-  display: grid;
 
-  grid-template-columns:
-    30px 1fr;
+  display:
+    flex;
 
-  gap: 12px;
+  gap:
+    14px;
 
-  align-items: center;
+  align-items:
+    center;
 
-  padding: 15px;
+  padding:
+    14px;
 
-  border-radius: 17px;
+  border-radius:
+    14px;
 
   background:
-    rgba(114, 87, 255, 0.06);
+    var(--bg-secondary);
 
-  border:
-    1px solid transparent;
+  cursor:
+    pointer;
 
-  cursor: pointer;
-
-  transition:
-    transform 0.25s ease,
-    border 0.25s ease;
 }
 
 
-.queue-item:hover {
-  transform:
-    translateX(5px);
+.queue-item span {
 
-  border-color:
-    var(--border);
-}
+  color:
+    var(--purple-light);
 
+  font-weight:
+    800;
 
-.queue-item > span {
-  color: var(--purple);
-
-  font-weight: 900;
 }
 
 
 .queue-item small {
-  display: block;
 
-  margin-top: 3px;
+  display:
+    block;
 
-  color: var(--text-soft);
+  color:
+    var(--text-soft);
+
+  margin-top:
+    3px;
+
 }
 
 
-/* =========================================================
-   FOOTER
-========================================================= */
+/* =========================================
+   12. PROCESS
+   ========================================= */
+
+.process {
+
+  display:
+    grid;
+
+  gap:
+    20px;
+
+  padding-bottom:
+    80px;
+
+}
+
+
+.process-step {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    100px 1fr;
+
+  gap:
+    30px;
+
+  padding:
+    35px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    25px;
+
+  background:
+    var(--card);
+
+}
+
+
+.step-number {
+
+  font-family:
+    "Outfit";
+
+  font-size:
+    3rem;
+
+  color:
+    var(--purple);
+
+  font-weight:
+    800;
+
+}
+
+
+.step-icon {
+
+  font-size:
+    2.3rem;
+
+  margin-bottom:
+    12px;
+
+}
+
+
+.step-content h2 {
+
+  font-family:
+    "Outfit";
+
+  margin-bottom:
+    10px;
+
+}
+
+
+.step-content p {
+
+  color:
+    var(--text-soft);
+
+  line-height:
+    1.7;
+
+}
+
+
+/* =========================================
+   13. FOOTER
+   ========================================= */
 
 footer {
-  width: 100%;
 
-  display: flex;
+  display:
+    flex;
 
-  justify-content: space-between;
+  align-items:
+    center;
 
-  align-items: center;
+  justify-content:
+    space-between;
 
-  gap: 30px;
-
-  padding: 45px 7%;
-
-  margin-top: 60px;
+  padding:
+    45px 7%;
 
   border-top:
     1px solid var(--border);
 
-  color: var(--text-soft);
+  color:
+    var(--text-soft);
+
 }
 
 
 footer strong {
-  color: var(--text);
 
-  font-size: 1.15rem;
-}
+  font-family:
+    "Outfit";
 
+  font-size:
+    1.3rem;
 
-footer p {
-  margin-top: 6px;
+  color:
+    var(--text);
+
 }
 
 
 .footer-links {
-  display: flex;
 
-  gap: 20px;
+  display:
+    flex;
+
+  gap:
+    20px;
+
 }
 
 
 .footer-links button {
-  background: transparent;
 
-  color: var(--text-soft);
+  border:
+    none;
 
-  cursor: pointer;
+  background:
+    none;
 
-  font-weight: 700;
+  color:
+    var(--text-soft);
+
+  cursor:
+    pointer;
+
 }
 
 
-.footer-links button:hover {
-  color: var(--purple);
-}
+/* =========================================
+   RESPONSIVE
+   ========================================= */
 
-
-/* =========================================================
-   RESPONSIVE DESIGN
-========================================================= */
-
-@media (max-width: 1050px) {
+@media (max-width: 1000px) {
 
   .emotion-grid {
+
     grid-template-columns:
       repeat(3, 1fr);
+
   }
 
   .story-grid,
   .feature-row {
+
     grid-template-columns:
       1fr;
+
   }
 
   .player-layout {
+
     grid-template-columns:
       1fr;
+
   }
 
 }
 
 
-@media (max-width: 700px) {
-
-  main {
-    width: 92%;
-  }
+@media (max-width: 650px) {
 
   .nav {
+
     padding:
-      15px 4%;
+      16px 5%;
+
   }
 
   .nav-links {
-    gap: 2px;
+
+    gap:
+      14px;
+
   }
 
   .nav-links button,
   .nav-links a {
-    padding: 8px 9px;
 
-    font-size: 0.75rem;
+    font-size:
+      0.78rem;
+
   }
 
   .logo {
-    font-size: 1.3rem;
+
+    font-size:
+      1.4rem;
+
   }
 
-  section {
-    padding: 60px 0;
-  }
+  main {
 
-  .hero {
-    min-height: 75vh;
+    width:
+      92%;
+
   }
 
   .hero h1 {
-    font-size:
-      clamp(3.5rem, 16vw, 6rem);
 
-    letter-spacing: -4px;
+    font-size:
+      clamp(3.5rem, 17vw, 5.5rem);
+
+    letter-spacing:
+      -3px;
+
   }
 
   .emotion-grid {
+
     grid-template-columns:
       repeat(2, 1fr);
+
   }
 
   .emotion-card:last-child {
+
     grid-column:
       span 2;
+
   }
 
   .emotion-card {
-    min-height: 210px;
-  }
 
-  .page-hero,
-  .emotion-page-hero {
-    padding:
-      65px 0
-      35px;
-  }
+    min-height:
+      210px;
 
-  .page-hero h1,
-  .emotion-page-hero h1 {
-    letter-spacing: -3px;
   }
 
   .process-step {
+
     grid-template-columns:
       1fr;
 
-    gap: 20px;
+    gap:
+      15px;
+
   }
 
   .song-card {
-    grid-template-columns:
-      45px 1fr;
 
-    padding: 18px;
+    grid-template-columns:
+      45px 1fr 20px;
+
+    padding:
+      18px;
+
   }
 
-  .song-arrow {
-    display: none;
-  }
+  .player-layout {
 
-  .player-actions {
-    grid-template-columns:
-      1fr;
+    padding:
+      40px 0;
+
   }
 
   .now-playing-panel,
   .queue-panel {
-    padding: 25px 18px;
+
+    padding:
+      25px;
+
+  }
+
+  #player-title {
+
+    font-size:
+      2.2rem;
+
   }
 
   footer {
-    flex-direction: column;
 
-    text-align: center;
+    flex-direction:
+      column;
+
+    gap:
+      25px;
+
+    text-align:
+      center;
+
   }
 
 }
-
-
-@media (max-width: 430px) {
-
-  .emotion-grid {
-    grid-template-columns:
-      1fr;
-  }
-
-  .emotion-card:last-child {
-    grid-column: auto;
-  }
-
-  .nav {
-    align-items: flex-start;
-  }
-
-  .nav-links {
-    flex-wrap: wrap;
-
-    justify-content: flex-end;
-  }
-
-}
-```
