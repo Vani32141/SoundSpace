@@ -1,4 +1,61 @@
-/* =========================================
+/* =========================================================
+   SOUNDSPACE — SUPABASE ANALYTICS
+   ========================================================= */
+
+const SUPABASE_URL = "https://bjfmlknorxlztxkxlebd.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_NDHWFaIHfs6IqvmbZiHrCg_0H2ZXZbU";
+
+const SOUNDSPACE_SESSION_ID =
+  sessionStorage.getItem("soundspace_session_id") ||
+  (() => {
+    const id =
+      "ss_" +
+      Date.now() +
+      "_" +
+      Math.random().toString(36).substring(2, 10);
+
+    sessionStorage.setItem("soundspace_session_id", id);
+    return id;
+  })();
+
+async function trackSoundSpaceEvent(
+  eventType,
+  mood = null,
+  song = null,
+  helpful = null
+) {
+  try {
+    await fetch(
+      `${SUPABASE_URL}/rest/v1/usage_events' ,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`,
+          "Prefer": "return=minimal"
+        },
+
+        body: JSON.stringify({
+          event_type: eventType,
+          session_id: SOUNDSPACE_SESSION_ID,
+          page: window.location.pathname,
+          mood: mood,
+          song: song,
+          helpful: helpful
+        })
+      }
+    );
+  } catch (error) {
+    console.error("SoundSpace analytics error:", error);
+  }
+}
+
+/* Count a new website visit */
+trackSoundSpaceEvent("page_view");/* =========================================
    SOUNDSPACE — COMPLETE WORKING SCRIPT
    Matches the current index.html exactly
    ========================================= */
@@ -607,7 +664,7 @@ localStorage.setItem(
    ========================================= */
 
 function displayEmotion(emotion) {
-
+trackSoundSpaceEvent("mood_selected", emotion);
   if (!moodData[emotion]) return;
 
   currentEmotion = emotion;
