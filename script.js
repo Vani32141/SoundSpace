@@ -664,7 +664,7 @@ localStorage.setItem(
    ========================================= */
 
 function displayEmotion(emotion) {
-trackSoundSpaceEvent("mood_selected", emotion);
+
   if (!moodData[emotion]) return;
 
   currentEmotion = emotion;
