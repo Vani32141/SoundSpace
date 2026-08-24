@@ -21,13 +21,13 @@
       Sound<span>Space</span>
     </button>
 
-    <nav class="nav-links">
-      <button data-page="home">Home</button>
-      <button data-page="about">About</button>
-      <button data-page="how">How It Works</button>
-      <button data-page="feedback">Feedback</button>
-    </nav>
-
+  <nav class="nav-links">
+  <button data-page="home">Home</button>
+  <button data-page="about">About</button>
+  <button data-page="how">How It Works</button>
+  <button data-page="feedback">Feedback</button>
+  <button data-page="insights">📊 Insights</button>
+</nav>
   </header>
 
 
@@ -382,7 +382,229 @@
 
     </section>
 
+<main>
+  <!-- =========================================
+     INSIGHTS
+     ========================================= -->
 
+<section id="insights" class="page">
+
+  <div class="page-hero">
+
+    <p class="eyebrow">
+      SOUNDSPACE INSIGHTS
+    </p>
+
+    <h1>
+      See how people are
+      <br>
+      <span>using SoundSpace.</span>
+    </h1>
+
+    <p>
+      Your local SoundSpace activity dashboard.
+    </p>
+
+  </div>
+
+
+  <div class="insights-dashboard">
+
+
+    <!-- TOTAL SESSIONS -->
+
+    <div class="insight-card main-stat">
+
+      <div class="insight-icon">
+        👥
+      </div>
+
+      <p>
+        TOTAL SOUNDSPACE USES
+      </p>
+
+      <strong id="insight-total">
+        0
+      </strong>
+
+    </div>
+
+
+    <!-- HELPFUL -->
+
+    <div class="insight-card">
+
+      <div class="insight-icon">
+        💜
+      </div>
+
+      <h3>
+        Found helpful
+      </h3>
+
+      <strong id="insight-yes">
+        0
+      </strong>
+
+      <small>
+        users answered Yes
+      </small>
+
+    </div>
+
+
+    <!-- A LITTLE -->
+
+    <div class="insight-card">
+
+      <div class="insight-icon">
+        🙂
+      </div>
+
+      <h3>
+        A little
+      </h3>
+
+      <strong id="insight-little">
+        0
+      </strong>
+
+      <small>
+        users answered A little
+      </small>
+
+    </div>
+
+
+    <!-- NO -->
+
+    <div class="insight-card">
+
+      <div class="insight-icon">
+        ❌
+      </div>
+
+      <h3>
+        Not helpful
+      </h3>
+
+      <strong id="insight-no">
+        0
+      </strong>
+
+      <small>
+        users answered No
+      </small>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- EMOTION BREAKDOWN -->
+
+  <div class="insights-section">
+
+    <p class="eyebrow">
+      EMOTION ACTIVITY
+    </p>
+
+    <h2>
+      Which emotions are people
+      <span>exploring?</span>
+    </h2>
+
+
+    <div class="emotion-stats">
+
+      <div class="emotion-stat">
+        <span>😊 Happiness</span>
+        <strong id="stat-happiness">0</strong>
+      </div>
+
+      <div class="emotion-stat">
+        <span>😢 Sadness</span>
+        <strong id="stat-sadness">0</strong>
+      </div>
+
+      <div class="emotion-stat">
+        <span>😡 Anger</span>
+        <strong id="stat-anger">0</strong>
+      </div>
+
+      <div class="emotion-stat">
+        <span>😟 Anxiety</span>
+        <strong id="stat-anxiety">0</strong>
+      </div>
+
+      <div class="emotion-stat">
+        <span>😤 Irritation</span>
+        <strong id="stat-irritation">0</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DATES -->
+
+  <div class="insights-section">
+
+    <p class="eyebrow">
+      ACTIVITY HISTORY
+    </p>
+
+    <h2>
+      When was SoundSpace
+      <span>used?</span>
+    </h2>
+
+    <div id="insight-dates">
+      <p class="empty-insights">
+        No activity recorded yet.
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- FEEDBACK -->
+
+  <div class="insights-section">
+
+    <p class="eyebrow">
+      USER FEEDBACK
+    </p>
+
+    <h2>
+      What are people
+      <span>saying?</span>
+    </h2>
+
+    <div id="insight-feedback">
+
+      <p class="empty-insights">
+        No feedback submitted yet.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- RESET -->
+
+  <button
+    id="reset-insights"
+    class="reset-insights-button"
+    type="button"
+  >
+    Reset Local Insights
+  </button>
+
+</section>
     <!-- FEEDBACK -->
 
     <section id="feedback" class="page">
