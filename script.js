@@ -503,67 +503,210 @@ navigationButtons.forEach(function(button) {
 });
 
 
-/* ================= EMOTION PAGE ================= */
+/* =========================================
+   SOUNDSPACE — EMOTION SELECTION + TRACKING
+   ========================================= */
 
-emotionCards.forEach(function(card) {
+const emotionCards = document.querySelectorAll(".emotion-card");
 
-  card.addEventListener(
-    "click",
-    function() {
 
-      currentEmotion =
-        card.dataset.emotion;
-trackEmotion(card.dataset.emotion);
-      displayEmotionPage();
+/* TRACK WHICH EMOTIONS USERS SELECT */
 
-      showPage("emotion-page");
+function trackEmotion(emotion) {
 
-    }
+  const emotionData = JSON.parse(
+    localStorage.getItem("soundspace-emotion-data") || "{}"
   );
 
-});
+  if (!emotionData[emotion]) {
+    emotionData[emotion] = 0;
+  }
 
+  emotionData[emotion]++;
 
-function displayEmotionPage() {
-
-  const data =
-    moodData[currentEmotion];
-
-
-  document.querySelector(
-    "#emotion-emoji"
-  ).textContent =
-    data.emoji;
-
-
-  document.querySelector(
-    "#emotion-title"
-  ).textContent =
-    data.title;
-
-
-  document.querySelector(
-    "#emotion-description"
-  ).textContent =
-    data.description;
-
-
-  displaySongs();
+  localStorage.setItem(
+    "soundspace-emotion-data",
+    JSON.stringify(emotionData)
+  );
 
 }
 
 
-document
-  .querySelector("#back-home")
-  .addEventListener(
-    "click",
-    function() {
+/* WHEN A USER CLICKS AN EMOTION */
 
-      showPage("home");
+emotionCards.forEach(function(card) {
+
+  card.addEventListener("click", function() {
+
+    const emotion = card.dataset.emotion;
+
+    // Track the emotion
+    trackEmotion(emotion);
+
+    // Save the selected emotion for the next page
+    localStorage.setItem(
+      "soundspace-selected-emotion",
+      emotion
+    );
+
+    // Go to the emotion page
+    window.location.href = "emotion.html";
+
+  });
+
+});
+
+
+/* =========================================
+   COUNT WEBSITE VISITORS
+   ========================================= */
+
+function trackVisitor() {
+
+  const alreadyVisited = localStorage.getItem(
+    "soundspace-visitor"
+  );
+
+  if (!alreadyVisited) {
+
+    const visitorCount = Number(
+      localStorage.getItem(
+        "soundspace-visitor-count"
+      ) || 0
+    );
+
+    localStorage.setItem(
+      "soundspace-visitor-count",
+      visitorCount + 1
+    );
+
+    localStorage.setItem(
+      "soundspace-visitor",
+      "true"
+    );
+
+  }
+
+}
+
+trackVisitor();
+
+
+/* =========================================
+   FEEDBACK SYSTEM
+   ========================================= */
+
+const feedbackForm =
+  document.querySelector("#feedback-form");
+
+
+if (feedbackForm) {
+
+  feedbackForm.addEventListener(
+    "submit",
+    function(event) {
+
+      event.preventDefault();
+
+
+      const selectedEmotion =
+        document.querySelector(
+          "#feedback-emotion"
+        ).value;
+
+
+      const calmerAnswer =
+        document.querySelector(
+          'input[name="calmer"]:checked'
+        );
+
+
+      const liked =
+        document.querySelector("#liked")
+        .value
+        .trim();
+
+
+      const disliked =
+        document.querySelector("#disliked")
+        .value
+        .trim();
+
+
+      const additionalFeedback =
+        document.querySelector(
+          "#additional-feedback"
+        )
+        .value
+        .trim();
+
+
+      const feedbackEntry = {
+
+        emotion: selectedEmotion,
+
+        feltCalmer: calmerAnswer
+          ? calmerAnswer.value
+          : "",
+
+        liked: liked,
+
+        disliked: disliked,
+
+        additionalFeedback:
+          additionalFeedback,
+
+        date:
+          new Date().toISOString()
+
+      };
+
+
+      const allFeedback = JSON.parse(
+        localStorage.getItem(
+          "soundspace-all-feedback"
+        ) || "[]"
+      );
+
+
+      allFeedback.push(
+        feedbackEntry
+      );
+
+
+      localStorage.setItem(
+        "soundspace-all-feedback",
+        JSON.stringify(allFeedback)
+      );
+
+
+      const successMessage =
+        document.querySelector(
+          "#feedback-success"
+        );
+
+
+      if (successMessage) {
+
+        successMessage.textContent =
+          "✨ Thank you for your feedback! Your response has been saved.";
+
+        successMessage.hidden = false;
+
+      }
+
+
+      feedbackForm.reset();
 
     }
   );
 
+}
+
+
+console.log(
+  "SoundSpace loaded successfully!"
+);
 
 /* ================= SONG CARDS ================= */
 
