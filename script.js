@@ -1376,7 +1376,359 @@ function getSoundSpaceInsights() {
    ========================================= */
 
 loadSession();
+/* =========================================
+   SOUNDSPACE INSIGHTS DASHBOARD
+   ========================================= */
 
+function displayInsights() {
+
+  const data =
+    getAnalyticsData();
+
+
+  /* TOTAL */
+
+  const total =
+    document.querySelector(
+      "#insight-total"
+    );
+
+  if (total) {
+
+    total.textContent =
+      data.totalSessions;
+
+  }
+
+
+  /* HELPFUL */
+
+  const yes =
+    document.querySelector(
+      "#insight-yes"
+    );
+
+  if (yes) {
+
+    yes.textContent =
+      data.helpful.yes;
+
+  }
+
+
+  /* A LITTLE */
+
+  const little =
+    document.querySelector(
+      "#insight-little"
+    );
+
+  if (little) {
+
+    little.textContent =
+      data.helpful.little;
+
+  }
+
+
+  /* NO */
+
+  const no =
+    document.querySelector(
+      "#insight-no"
+    );
+
+  if (no) {
+
+    no.textContent =
+      data.helpful.no;
+
+  }
+
+
+  /* EMOTIONS */
+
+  const emotions =
+    data.emotions;
+
+
+  const emotionNames = [
+
+    "happiness",
+    "sadness",
+    "anger",
+    "anxiety",
+    "irritation"
+
+  ];
+
+
+  emotionNames.forEach(
+    function(emotion) {
+
+      const element =
+        document.querySelector(
+          "#stat-" + emotion
+        );
+
+      if (element) {
+
+        element.textContent =
+          emotions[emotion] || 0;
+
+      }
+
+    }
+  );
+
+
+  /* DATES */
+
+  const dates =
+    document.querySelector(
+      "#insight-dates"
+    );
+
+
+  if (dates) {
+
+    if (
+      data.sessions.length === 0
+    ) {
+
+      dates.innerHTML = `
+        <p class="empty-insights">
+          No activity recorded yet.
+        </p>
+      `;
+
+    } else {
+
+      const recentSessions =
+        [...data.sessions]
+          .reverse();
+
+
+      dates.innerHTML =
+        recentSessions
+          .map(
+            function(session) {
+
+              return `
+                <div class="date-row">
+
+                  <span>
+                    📅
+                    ${session.dateDisplay}
+                  </span>
+
+                  <strong>
+                    ${session.timeDisplay}
+                  </strong>
+
+                </div>
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+  }
+
+
+  /* FEEDBACK */
+
+  const feedbackContainer =
+    document.querySelector(
+      "#insight-feedback"
+    );
+
+
+  if (feedbackContainer) {
+
+    if (
+      data.feedback.length === 0
+    ) {
+
+      feedbackContainer.innerHTML = `
+        <p class="empty-insights">
+          No feedback submitted yet.
+        </p>
+      `;
+
+    } else {
+
+      feedbackContainer.innerHTML =
+        [...data.feedback]
+          .reverse()
+          .map(
+            function(item) {
+
+              return `
+
+                <article
+                  class="feedback-result"
+                >
+
+                  <div class="feedback-result-top">
+
+                    <strong>
+                      ${item.emotion || "No emotion selected"}
+                    </strong>
+
+                    <span>
+                      ${item.feltCalmer || "No answer"}
+                    </span>
+
+                  </div>
+
+
+                  ${
+                    item.liked
+                      ? `
+                        <p>
+                          <b>What they liked:</b><br>
+                          ${escapeHTML(item.liked)}
+                        </p>
+                      `
+                      : ""
+                  }
+
+
+                  ${
+                    item.disliked
+                      ? `
+                        <p>
+                          <b>What could improve:</b><br>
+                          ${escapeHTML(item.disliked)}
+                        </p>
+                      `
+                      : ""
+                  }
+
+
+                  ${
+                    item.additionalFeedback
+                      ? `
+                        <p>
+                          <b>Additional feedback:</b><br>
+                          ${escapeHTML(
+                            item.additionalFeedback
+                          )}
+                        </p>
+                      `
+                      : ""
+                  }
+
+
+                  <small>
+                    ${new Date(
+                      item.date
+                    ).toLocaleString()}
+                  </small>
+
+                </article>
+
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+  }
+
+}
+
+
+/* =========================================
+   PROTECT DASHBOARD FROM HTML IN FEEDBACK
+   ========================================= */
+
+function escapeHTML(value) {
+
+  return String(value)
+
+    .replaceAll("&", "&amp;")
+
+    .replaceAll("<", "&lt;")
+
+    .replaceAll(">", "&gt;")
+
+    .replaceAll('"', "&quot;")
+
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================
+   REFRESH INSIGHTS WHEN PAGE OPENS
+   ========================================= */
+
+const insightsButton =
+  document.querySelector(
+    '[data-page="insights"]'
+  );
+
+
+if (insightsButton) {
+
+  insightsButton.addEventListener(
+    "click",
+    function() {
+
+      displayInsights();
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   RESET INSIGHTS
+   ========================================= */
+
+const resetInsights =
+  document.querySelector(
+    "#reset-insights"
+  );
+
+
+if (resetInsights) {
+
+  resetInsights.addEventListener(
+    "click",
+    function() {
+
+      const confirmed =
+        confirm(
+          "Reset all SoundSpace local insights?"
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      localStorage.removeItem(
+        SOUNDSPACE_ANALYTICS_KEY
+      );
+
+
+      displayInsights();
+
+    }
+  );
+
+}
 console.log(
   "SoundSpace loaded successfully!"
 );
