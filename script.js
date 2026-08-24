@@ -325,35 +325,174 @@ let shuffleQueue = [];
 let currentSongIndex = 0;
 
 
-/* =========================================
-   3. VISITOR TRACKING
+ /* =========================================
+   SOUNDSPACE — LOCAL INSIGHTS SYSTEM
    ========================================= */
 
-function trackVisitor() {
-  const alreadyVisited =
-    localStorage.getItem("soundspace-visitor");
+const SOUNDSPACE_ANALYTICS_KEY =
+  "soundspace-local-analytics";
 
-  if (!alreadyVisited) {
-    const currentCount = Number(
-      localStorage.getItem(
-        "soundspace-visitor-count"
-      ) || 0
+
+function getAnalyticsData() {
+
+  const saved =
+    localStorage.getItem(
+      SOUNDSPACE_ANALYTICS_KEY
     );
 
-    localStorage.setItem(
-      "soundspace-visitor-count",
-      currentCount + 1
-    );
+  if (saved) {
 
-    localStorage.setItem(
-      "soundspace-visitor",
-      "true"
-    );
+    try {
+
+      return JSON.parse(saved);
+
+    } catch (error) {
+
+      console.warn(
+        "SoundSpace analytics data could not be read."
+      );
+
+    }
+
   }
+
+
+  return {
+
+    totalSessions: 0,
+
+    sessions: [],
+
+    emotions: {
+
+      happiness: 0,
+      sadness: 0,
+      anger: 0,
+      anxiety: 0,
+      irritation: 0
+
+    },
+
+    helpful: {
+
+      yes: 0,
+      little: 0,
+      no: 0
+
+    },
+
+    feedback: []
+
+  };
+
 }
 
-trackVisitor();
 
+function saveAnalyticsData(data) {
+
+  localStorage.setItem(
+
+    SOUNDSPACE_ANALYTICS_KEY,
+
+    JSON.stringify(data)
+
+  );
+
+}
+
+
+/* =========================================
+   RECORD A SOUNSPACE SESSION
+   ========================================= */
+
+function trackSoundSpaceSession() {
+
+  const data =
+    getAnalyticsData();
+
+  const now =
+    new Date();
+
+  const session = {
+
+    id:
+      Date.now(),
+
+    date:
+      now.toISOString(),
+
+    dateDisplay:
+      now.toLocaleDateString(),
+
+    timeDisplay:
+      now.toLocaleTimeString([], {
+
+        hour: "2-digit",
+        minute: "2-digit"
+
+      })
+
+  };
+
+
+  data.totalSessions++;
+
+  data.sessions.push(session);
+
+
+  saveAnalyticsData(data);
+
+}
+
+
+/* =========================================
+   RECORD EMOTION
+   ========================================= */
+
+function trackEmotion(emotion) {
+
+  const data =
+    getAnalyticsData();
+
+
+  if (
+    Object.prototype.hasOwnProperty.call(
+      data.emotions,
+      emotion
+    )
+  ) {
+
+    data.emotions[emotion]++;
+
+  }
+
+
+  saveAnalyticsData(data);
+
+}
+
+
+/* =========================================
+   START SESSION WHEN USER CHOOSES EMOTION
+   ========================================= */
+
+let soundSpaceSessionStarted = false;
+
+
+function startAnalyticsSession() {
+
+  if (soundSpaceSessionStarted) {
+
+    return;
+
+  }
+
+
+  soundSpaceSessionStarted = true;
+
+  trackSoundSpaceSession();
+
+}  
 
 /* =========================================
    4. EMOTION TRACKING
@@ -437,12 +576,21 @@ emotionCards.forEach(function(card) {
 
       currentEmotion = emotion;
 
-      trackEmotion(emotion);
 
-      localStorage.setItem(
-        "soundspace-selected-emotion",
-        emotion
-      );
+/* Record this as an actual SoundSpace use */
+
+startAnalyticsSession();
+
+
+/* Record the emotion */
+
+trackEmotion(emotion);
+
+
+localStorage.setItem(
+  "soundspace-selected-emotion",
+  emotion
+);
 
       displayEmotion(emotion);
 
@@ -1122,21 +1270,51 @@ if (feedbackForm) {
       };
 
 
-      const allFeedback =
-        JSON.parse(
-          localStorage.getItem(
-            "soundspace-all-feedback"
-          ) || "[]"
-        );
+   /* =========================================
+   SAVE FEEDBACK TO SOUNDSPACE INSIGHTS
+   ========================================= */
 
-      allFeedback.push(
-        feedbackEntry
-      );
+const analyticsData =
+  getAnalyticsData();
 
-      localStorage.setItem(
-        "soundspace-all-feedback",
-        JSON.stringify(allFeedback)
-      );
+
+analyticsData.feedback.push(
+  feedbackEntry
+);
+
+
+/* Count helpful responses */
+
+if (
+  feedbackEntry.feltCalmer === "Yes"
+) {
+
+  analyticsData.helpful.yes++;
+
+}
+
+
+if (
+  feedbackEntry.feltCalmer === "A little"
+) {
+
+  analyticsData.helpful.little++;
+
+}
+
+
+if (
+  feedbackEntry.feltCalmer === "No"
+) {
+
+  analyticsData.helpful.no++;
+
+}
+
+
+saveAnalyticsData(
+  analyticsData
+);   
 
 
       const successMessage =
