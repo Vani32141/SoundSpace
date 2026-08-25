@@ -1,10 +1,9 @@
-
 /* =========================================
-   SOUNDSPACE — ORIGINAL STYLE, UPGRADED
+   SOUNDSPACE — COMPLETE STYLE.CSS
+   DARK INTERACTIVE DESIGN
    ========================================= */
 
-
-/* ---------- IMPORT FONT ---------- */
+/* ---------- IMPORT FONTS ---------- */
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
 
@@ -14,7 +13,6 @@
    ========================================= */
 
 :root {
-
   --bg: #080812;
   --bg-secondary: #10101f;
   --card: #151527;
@@ -36,7 +34,6 @@
   --shadow:
     0 20px 60px
     rgba(0, 0, 0, 0.35);
-
 }
 
 
@@ -50,14 +47,11 @@
   box-sizing: border-box;
 }
 
-
 html {
   scroll-behavior: smooth;
 }
 
-
 body {
-
   min-height: 100vh;
 
   font-family:
@@ -68,27 +62,22 @@ body {
   color: var(--text);
 
   background:
-
     radial-gradient(
       circle at 10% 10%,
       rgba(139, 92, 246, 0.18),
       transparent 30%
     ),
-
     radial-gradient(
       circle at 90% 20%,
       rgba(236, 72, 153, 0.12),
       transparent 28%
     ),
-
     radial-gradient(
       circle at 50% 100%,
       rgba(56, 189, 248, 0.10),
       transparent 35%
     ),
-
     var(--bg);
-
 }
 
 
@@ -97,7 +86,6 @@ body {
    ========================================= */
 
 .nav {
-
   position: sticky;
   top: 0;
 
@@ -112,17 +100,14 @@ body {
   background:
     rgba(8, 8, 18, 0.82);
 
-  backdrop-filter:
-    blur(18px);
+  backdrop-filter: blur(18px);
 
   border-bottom:
     1px solid var(--border);
-
 }
 
 
 .logo {
-
   border: none;
   background: none;
 
@@ -139,12 +124,10 @@ body {
   cursor: pointer;
 
   letter-spacing: -1px;
-
 }
 
 
 .logo span {
-
   background:
     linear-gradient(
       135deg,
@@ -153,26 +136,23 @@ body {
     );
 
   -webkit-background-clip: text;
+  background-clip: text;
 
   color: transparent;
-
 }
 
 
 .nav-links {
-
   display: flex;
 
   align-items: center;
 
   gap: 30px;
-
 }
 
 
 .nav-links button,
 .nav-links a {
-
   border: none;
 
   background: none;
@@ -194,49 +174,39 @@ body {
   transition:
     color 0.25s ease,
     transform 0.25s ease;
-
 }
 
 
 .nav-links button:hover,
 .nav-links a:hover {
-
   color: var(--text);
 
   transform:
     translateY(-2px);
-
 }
 
 
 /* =========================================
-   4. MAIN
+   4. MAIN + PAGES
    ========================================= */
 
 main {
-
   width:
     min(1180px, 90%);
 
-  margin:
-    auto;
-
+  margin: auto;
 }
 
 
 .page {
-
   display: none;
 
   min-height: 80vh;
-
 }
 
 
 .page.active-page {
-
   display: block;
-
 }
 
 
@@ -245,7 +215,6 @@ main {
    ========================================= */
 
 .hero {
-
   min-height: 82vh;
 
   display: flex;
@@ -257,12 +226,10 @@ main {
   justify-content: center;
 
   text-align: center;
-
 }
 
 
 .eyebrow {
-
   display: inline-block;
 
   margin-bottom: 24px;
@@ -287,12 +254,10 @@ main {
   font-weight: 700;
 
   letter-spacing: 2px;
-
 }
 
 
 .hero h1 {
-
   font-family:
     "Outfit",
     sans-serif;
@@ -308,14 +273,11 @@ main {
     -5px;
 
   margin-bottom: 28px;
-
 }
 
 
 .hero h1 span {
-
   background:
-
     linear-gradient(
       120deg,
       #a78bfa,
@@ -324,14 +286,13 @@ main {
     );
 
   -webkit-background-clip: text;
+  background-clip: text;
 
   color: transparent;
-
 }
 
 
 .intro {
-
   max-width:
     620px;
 
@@ -346,7 +307,6 @@ main {
 
   line-height:
     1.8;
-
 }
 
 
@@ -355,7 +315,6 @@ main {
    ========================================= */
 
 .emotion-grid {
-
   width: 100%;
 
   display: grid;
@@ -364,12 +323,10 @@ main {
     repeat(5, 1fr);
 
   gap: 18px;
-
 }
 
 
 .emotion-card {
-
   position: relative;
 
   overflow: hidden;
@@ -402,14 +359,12 @@ main {
     transform 0.3s ease,
     box-shadow 0.3s ease,
     border 0.3s ease;
-
 }
 
 
-/* GLOW */
+/* CARD GLOW */
 
 .emotion-card::before {
-
   content: "";
 
   position: absolute;
@@ -426,138 +381,112 @@ main {
 
   transition:
     transform 0.4s ease;
-
 }
 
 
 .emotion-card:hover {
-
   transform:
     translateY(-12px);
 
   box-shadow:
     var(--shadow);
-
 }
 
 
 .emotion-card:hover::before {
-
   transform:
     scale(1.5);
-
 }
 
 
 /* HAPPINESS */
 
 .happiness::before {
-
   background:
     radial-gradient(
       circle,
       rgba(251, 146, 60, 0.65),
       transparent 70%
     );
-
 }
 
 .happiness:hover {
-
   border-color:
     rgba(251, 146, 60, 0.6);
-
 }
 
 
 /* SADNESS */
 
 .sadness::before {
-
   background:
     radial-gradient(
       circle,
       rgba(56, 189, 248, 0.6),
       transparent 70%
     );
-
 }
 
 .sadness:hover {
-
   border-color:
     rgba(56, 189, 248, 0.6);
-
 }
 
 
 /* ANGER */
 
 .anger::before {
-
   background:
     radial-gradient(
       circle,
       rgba(239, 68, 68, 0.65),
       transparent 70%
     );
-
 }
 
 .anger:hover {
-
   border-color:
     rgba(239, 68, 68, 0.6);
-
 }
 
 
 /* ANXIETY */
 
 .anxiety::before {
-
   background:
     radial-gradient(
       circle,
       rgba(139, 92, 246, 0.7),
       transparent 70%
     );
-
 }
 
 .anxiety:hover {
-
   border-color:
     rgba(139, 92, 246, 0.6);
-
 }
 
 
 /* IRRITATION */
 
 .irritation::before {
-
   background:
     radial-gradient(
       circle,
       rgba(236, 72, 153, 0.65),
       transparent 70%
     );
-
 }
 
 .irritation:hover {
-
   border-color:
     rgba(236, 72, 153, 0.6);
-
 }
 
 
 /* CARD CONTENT */
 
 .emoji {
-
   position: relative;
 
   font-size:
@@ -568,21 +497,17 @@ main {
 
   transition:
     transform 0.3s ease;
-
 }
 
 
 .emotion-card:hover .emoji {
-
   transform:
     scale(1.2)
     rotate(-8deg);
-
 }
 
 
 .emotion-card h2 {
-
   position: relative;
 
   font-family:
@@ -594,12 +519,10 @@ main {
 
   margin-bottom:
     8px;
-
 }
 
 
 .emotion-card p {
-
   position: relative;
 
   color:
@@ -610,12 +533,10 @@ main {
 
   line-height:
     1.55;
-
 }
 
 
 .emotion-card span {
-
   position: absolute;
 
   bottom: 24px;
@@ -630,27 +551,23 @@ main {
 
   color:
     var(--purple-light);
-
 }
 
 
 /* =========================================
-   7. ABOUT + HOW IT WORKS
+   7. PAGE HERO
    ========================================= */
 
 .page-hero {
-
   padding:
     100px 0
     60px;
 
   text-align: center;
-
 }
 
 
 .page-hero h1 {
-
   font-family:
     "Outfit",
     sans-serif;
@@ -666,20 +583,16 @@ main {
 
   margin-bottom:
     25px;
-
 }
 
 
 .page-hero h1 span {
-
   color:
     var(--purple-light);
-
 }
 
 
 .page-hero p {
-
   max-width:
     700px;
 
@@ -694,7 +607,6 @@ main {
 
   font-size:
     1.05rem;
-
 }
 
 
@@ -703,7 +615,6 @@ main {
    ========================================= */
 
 .story-grid {
-
   display: grid;
 
   grid-template-columns:
@@ -715,12 +626,10 @@ main {
   margin:
     30px 0
     70px;
-
 }
 
 
 .story-card {
-
   padding:
     35px;
 
@@ -735,20 +644,16 @@ main {
 
   transition:
     transform 0.3s ease;
-
 }
 
 
 .story-card:hover {
-
   transform:
     translateY(-8px);
-
 }
 
 
 .story-card span {
-
   color:
     var(--purple-light);
 
@@ -760,30 +665,25 @@ main {
 
   font-weight:
     700;
-
 }
 
 
 .story-card h2 {
-
   font-family:
     "Outfit";
 
   margin:
     18px 0
     12px;
-
 }
 
 
 .story-card p {
-
   color:
     var(--text-soft);
 
   line-height:
     1.7;
-
 }
 
 
@@ -792,7 +692,6 @@ main {
    ========================================= */
 
 .feature-row {
-
   display: grid;
 
   grid-template-columns:
@@ -803,12 +702,10 @@ main {
 
   padding-bottom:
     80px;
-
 }
 
 
 .feature-row > div {
-
   padding:
     30px;
 
@@ -823,72 +720,60 @@ main {
 
   background:
     var(--card);
-
 }
 
 
 .feature-icon {
-
   font-size:
     2.3rem;
 
   margin-bottom:
     15px;
-
 }
 
 
 .feature-row h3 {
-
   font-family:
     "Outfit";
 
   margin-bottom:
     8px;
-
 }
 
 
 .feature-row p {
-
   color:
     var(--text-soft);
 
   font-size:
     0.9rem;
-
 }
 
 
 /* =========================================
-   10. SONG PAGE
+   10. EMOTION / SONG PAGE
    ========================================= */
 
 .emotion-page-hero {
-
   padding:
     80px 0
     50px;
 
   text-align:
     center;
-
 }
 
 
 .large-emoji {
-
   font-size:
     5rem;
 
   margin-bottom:
     20px;
-
 }
 
 
 #emotion-title {
-
   font-family:
     "Outfit";
 
@@ -897,12 +782,10 @@ main {
 
   margin-bottom:
     20px;
-
 }
 
 
 .back-button {
-
   border:
     1px solid var(--border);
 
@@ -923,59 +806,47 @@ main {
 
   cursor:
     pointer;
-
 }
 
 
 .songs-section {
-
   padding-bottom:
     100px;
-
 }
 
 
 .songs-heading {
-
   margin-bottom:
     30px;
-
 }
 
 
 .songs-heading h2 {
-
   font-family:
     "Outfit";
 
   font-size:
     2.5rem;
-
 }
 
 
 .songs-heading h2 span {
-
   color:
     var(--purple-light);
-
 }
 
 
 /* SONG LIST */
 
 #song-list {
-
   display: grid;
 
   gap:
     15px;
-
 }
 
 
 .song-card {
-
   width:
     100%;
 
@@ -1011,23 +882,19 @@ main {
   transition:
     transform 0.25s ease,
     border 0.25s ease;
-
 }
 
 
 .song-card:hover {
-
   transform:
     translateX(8px);
 
   border-color:
     var(--purple);
-
 }
 
 
 .song-number {
-
   width:
     42px;
 
@@ -1055,12 +922,10 @@ main {
       var(--purple),
       var(--pink)
     );
-
 }
 
 
 .song-details {
-
   display:
     flex;
 
@@ -1069,28 +934,22 @@ main {
 
   gap:
     5px;
-
 }
 
 
 .song-details strong {
-
   font-size:
     1.05rem;
-
 }
 
 
 .song-details small {
-
   color:
     var(--text-soft);
-
 }
 
 
 .song-why {
-
   margin-top:
     12px;
 
@@ -1108,15 +967,12 @@ main {
 
   line-height:
     1.7;
-
 }
 
 
 .song-why b {
-
   color:
     var(--purple-light);
-
 }
 
 
@@ -1125,7 +981,6 @@ main {
    ========================================= */
 
 .player-layout {
-
   display: grid;
 
   grid-template-columns:
@@ -1136,13 +991,11 @@ main {
 
   padding:
     70px 0;
-
 }
 
 
 .now-playing-panel,
 .queue-panel {
-
   padding:
     38px;
 
@@ -1154,46 +1007,38 @@ main {
 
   background:
     var(--card);
-
 }
 
 
 .player-emoji {
-
   font-size:
     4rem;
 
   margin:
     25px 0;
-
 }
 
 
 #player-title {
-
   font-family:
     "Outfit";
 
   font-size:
     3rem;
-
 }
 
 
 .player-artist {
-
   color:
     var(--text-soft);
 
   margin:
     10px 0
     25px;
-
 }
 
 
 .shuffle-status {
-
   display:
     inline-flex;
 
@@ -1217,12 +1062,10 @@ main {
 
   font-weight:
     700;
-
 }
 
 
 .player-reason {
-
   margin:
     30px 0;
 
@@ -1234,33 +1077,27 @@ main {
 
   background:
     var(--bg-secondary);
-
 }
 
 
 .player-reason h3 {
-
   margin-bottom:
     10px;
-
 }
 
 
 .player-reason p {
-
   color:
     var(--text-soft);
 
   line-height:
     1.7;
-
 }
 
 
-/* BUTTONS */
+/* PLAYER BUTTONS */
 
 .player-actions {
-
   display:
     flex;
 
@@ -1269,14 +1106,12 @@ main {
 
   flex-wrap:
     wrap;
-
 }
 
 
 .listen-button-large,
 .next-song-button,
 .reshuffle-button {
-
   border:
     none;
 
@@ -1294,12 +1129,10 @@ main {
 
   cursor:
     pointer;
-
 }
 
 
 .listen-button-large {
-
   flex:
     1;
 
@@ -1318,23 +1151,19 @@ main {
       var(--purple),
       var(--pink)
     );
-
 }
 
 
 .next-song-button {
-
   background:
     var(--card-light);
 
   color:
     var(--text);
-
 }
 
 
 .reshuffle-button {
-
   width:
     100%;
 
@@ -1349,14 +1178,12 @@ main {
 
   color:
     var(--purple-light);
-
 }
 
 
 /* QUEUE */
 
 #queue-list {
-
   display:
     grid;
 
@@ -1365,12 +1192,10 @@ main {
 
   margin-top:
     25px;
-
 }
 
 
 .queue-item {
-
   display:
     flex;
 
@@ -1383,8 +1208,14 @@ main {
   padding:
     14px;
 
+  border:
+    none;
+
   border-radius:
     14px;
+
+  color:
+    var(--text);
 
   background:
     var(--bg-secondary);
@@ -1392,22 +1223,21 @@ main {
   cursor:
     pointer;
 
+  text-align:
+    left;
 }
 
 
 .queue-item span {
-
   color:
     var(--purple-light);
 
   font-weight:
     800;
-
 }
 
 
 .queue-item small {
-
   display:
     block;
 
@@ -1416,7 +1246,6 @@ main {
 
   margin-top:
     3px;
-
 }
 
 
@@ -1425,7 +1254,6 @@ main {
    ========================================= */
 
 .process {
-
   display:
     grid;
 
@@ -1434,12 +1262,10 @@ main {
 
   padding-bottom:
     80px;
-
 }
 
 
 .process-step {
-
   display:
     grid;
 
@@ -1460,12 +1286,10 @@ main {
 
   background:
     var(--card);
-
 }
 
 
 .step-number {
-
   font-family:
     "Outfit";
 
@@ -1477,130 +1301,193 @@ main {
 
   font-weight:
     800;
-
 }
 
 
 .step-icon {
-
   font-size:
     2.3rem;
 
   margin-bottom:
     12px;
-
 }
 
 
 .step-content h2 {
-
   font-family:
     "Outfit";
 
   margin-bottom:
     10px;
-
 }
 
 
 .step-content p {
-
   color:
     var(--text-soft);
 
   line-height:
     1.7;
-
 }
 
 
 /* =========================================
-   13. FOOTER
+   13. FOOTER — FIXED SPACING
    ========================================= */
 
 footer {
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
-  gap: 20px;
 
-  padding: 40px 7%;
+  gap: 24px;
 
-  border-top: 1px solid var(--border);
+  padding:
+    45px 7%;
 
-  color: var(--text-soft);
-
-  text-align: center;
-}
-
-
-footer strong {
-
-  font-family:
-    "Outfit";
-
-  font-size:
-    1.3rem;
-
-  color:
-    var(--text);
-
-}
-
-.footer-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  gap: 28px;
-}
-
-
-.footer-links button {
-
-  border:
-    none;
-
-  background:
-    none;
+  border-top:
+    1px solid var(--border);
 
   color:
     var(--text-soft);
 
+  text-align:
+    center;
+}
+
+
+/* SOUNDSPACE NAME */
+
+footer strong {
+  font-family:
+    "Outfit",
+    sans-serif;
+
+  font-size:
+    1.4rem;
+
+  color:
+    var(--text);
+}
+
+
+/* FOOTER LINKS */
+
+.footer-links {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap:
+    16px 30px;
+
+  width: 100%;
+}
+
+
+.footer-links button,
+.footer-links a {
+  border: none;
+
+  background: none;
+
+  color:
+    var(--text-soft);
+
+  text-decoration: none;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.9rem;
+
   cursor:
     pointer;
 
+  padding:
+    6px 4px;
+
+  white-space:
+    nowrap;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.footer-links button:hover,
+.footer-links a:hover {
+  color:
+    var(--purple-light);
+
+  transform:
+    translateY(-2px);
+}
+
+
+/* COPYRIGHT + DESIGNER CREDIT */
+
+.footer-credit {
+  max-width:
+    650px;
+
+  margin:
+    0 auto;
+
+  color:
+    var(--text-soft);
+
+  font-size:
+    0.95rem;
+
+  line-height:
+    1.8;
+}
+
+
+.footer-credit strong {
+  display:
+    inline;
+
+  font-size:
+    inherit;
+
+  color:
+    var(--text);
 }
 
 
 /* =========================================
-   RESPONSIVE
+   14. RESPONSIVE DESIGN
    ========================================= */
 
 @media (max-width: 1000px) {
 
   .emotion-grid {
-
     grid-template-columns:
       repeat(3, 1fr);
-
   }
 
   .story-grid,
   .feature-row {
-
     grid-template-columns:
       1fr;
-
   }
 
   .player-layout {
-
     grid-template-columns:
       1fr;
-
   }
 
 }
@@ -1609,610 +1496,117 @@ footer strong {
 @media (max-width: 650px) {
 
   .nav {
-
     padding:
       16px 5%;
-
   }
 
   .nav-links {
-
     gap:
       14px;
-
   }
 
   .nav-links button,
   .nav-links a {
-
     font-size:
       0.78rem;
-
   }
 
   .logo {
-
     font-size:
       1.4rem;
-
   }
 
   main {
-
     width:
       92%;
-
   }
 
   .hero h1 {
-
     font-size:
       clamp(3.5rem, 17vw, 5.5rem);
 
     letter-spacing:
       -3px;
-
   }
 
   .emotion-grid {
-
     grid-template-columns:
       repeat(2, 1fr);
-
   }
 
   .emotion-card:last-child {
-
     grid-column:
       span 2;
-
   }
 
   .emotion-card {
-
     min-height:
       210px;
-
   }
 
   .process-step {
-
     grid-template-columns:
       1fr;
 
     gap:
       15px;
-
   }
 
   .song-card {
-
     grid-template-columns:
       45px 1fr 20px;
 
     padding:
       18px;
-
   }
 
   .player-layout {
-
     padding:
       40px 0;
-
   }
 
   .now-playing-panel,
   .queue-panel {
-
     padding:
       25px;
-
   }
 
   #player-title {
-
     font-size:
       2.2rem;
-
   }
+
+
+  /* MOBILE FOOTER */
 
   footer {
-
-    flex-direction:
-      column;
-
     gap:
-      25px;
+      20px;
 
-    text-align:
-      center;
-
+    padding:
+      40px 5%;
   }
 
-}
-/* =========================================
-   SOUNDSPACE INSIGHTS
-   ========================================= */
-
-.insights-dashboard {
-
-  display: grid;
-
-  grid-template-columns:
-    2fr 1fr 1fr 1fr;
-
-  gap: 18px;
-
-  margin-bottom: 70px;
-
-}
-
-
-.insight-card {
-
-  padding: 28px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius: 24px;
-
-  background:
-    var(--card);
-
-}
-
-
-.insight-card.main-stat {
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(139, 92, 246, 0.18),
-      rgba(236, 72, 153, 0.12)
-    );
-
-}
-
-
-.insight-icon {
-
-  font-size: 2rem;
-
-  margin-bottom: 15px;
-
-}
-
-
-.insight-card p {
-
-  color:
-    var(--text-soft);
-
-  font-size:
-    0.75rem;
-
-  font-weight:
-    700;
-
-  letter-spacing:
-    1px;
-
-}
-
-
-.insight-card h3 {
-
-  font-family:
-    "Outfit";
-
-  margin-bottom:
-    10px;
-
-}
-
-
-.insight-card strong {
-
-  display:
-    block;
-
-  font-family:
-    "Outfit";
-
-  font-size:
-    2.8rem;
-
-  color:
-    var(--text);
-
-}
-
-
-.insight-card small {
-
-  color:
-    var(--text-soft);
-
-}
-
-
-.insights-section {
-
-  margin-bottom:
-    70px;
-
-}
-
-
-.insights-section h2 {
-
-  font-family:
-    "Outfit";
-
-  font-size:
-    2.4rem;
-
-  margin-bottom:
-    25px;
-
-}
-
-
-.insights-section h2 span {
-
-  color:
-    var(--purple-light);
-
-}
-
-
-/* EMOTION STATS */
-
-.emotion-stats {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(5, 1fr);
-
-  gap:
-    14px;
-
-}
-
-
-.emotion-stat {
-
-  padding:
-    22px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    20px;
-
-  background:
-    var(--card);
-
-}
-
-
-.emotion-stat span {
-
-  display:
-    block;
-
-  color:
-    var(--text-soft);
-
-  margin-bottom:
-    10px;
-
-}
-
-
-.emotion-stat strong {
-
-  font-family:
-    "Outfit";
-
-  font-size:
-    2rem;
-
-  color:
-    var(--purple-light);
-
-}
-
-
-/* DATES */
-
-#insight-dates {
-
-  display:
-    grid;
-
-  gap:
-    10px;
-
-}
-
-
-.date-row {
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    center;
-
-  padding:
-    18px 20px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    16px;
-
-  background:
-    var(--card);
-
-}
-
-
-.date-row strong {
-
-  color:
-    var(--purple-light);
-
-}
-
-
-/* FEEDBACK */
-
-#insight-feedback {
-
-  display:
-    grid;
-
-  gap:
-    15px;
-
-}
-
-
-.feedback-result {
-
-  padding:
-    24px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    20px;
-
-  background:
-    var(--card);
-
-}
-
-
-.feedback-result-top {
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    center;
-
-  gap:
-    15px;
-
-  margin-bottom:
-    15px;
-
-}
-
-
-.feedback-result-top strong {
-
-  font-family:
-    "Outfit";
-
-  font-size:
-    1.1rem;
-
-}
-
-
-.feedback-result-top span {
-
-  padding:
-    7px 12px;
-
-  border-radius:
-    100px;
-
-  background:
-    rgba(139, 92, 246, 0.12);
-
-  color:
-    var(--purple-light);
-
-  font-size:
-    0.8rem;
-
-  font-weight:
-    700;
-
-}
-
-
-.feedback-result p {
-
-  color:
-    var(--text-soft);
-
-  line-height:
-    1.7;
-
-  margin-top:
-    14px;
-
-}
-
-
-.feedback-result p b {
-
-  color:
-    var(--text);
-
-}
-
-
-.feedback-result small {
-
-  display:
-    block;
-
-  margin-top:
-    18px;
-
-  color:
-    var(--text-soft);
-
-  opacity:
-    0.7;
-
-}
-
-
-.empty-insights {
-
-  padding:
-    30px;
-
-  text-align:
-    center;
-
-  color:
-    var(--text-soft);
-
-  border:
-    1px dashed var(--border);
-
-  border-radius:
-    18px;
-
-}
-
-
-/* RESET */
-
-.reset-insights-button {
-
-  padding:
-    13px 18px;
-
-  border:
-    1px solid rgba(239, 68, 68, 0.35);
-
-  border-radius:
-    12px;
-
-  background:
-    transparent;
-
-  color:
-    #f87171;
-
-  cursor:
-    pointer;
-
-  font-weight:
-    700;
-
-}
-
-
-.reset-insights-button:hover {
-
-  background:
-    rgba(239, 68, 68, 0.08);
-
-}
-
-
-/* RESPONSIVE */
-
-@media (max-width: 1000px) {
-
-  .insights-dashboard {
-
-    grid-template-columns:
-      repeat(2, 1fr);
-
-  }
-
-  .emotion-stats {
-
-    grid-template-columns:
-      repeat(2, 1fr);
-
-  }
-
-}
-
-
-@media (max-width: 650px) {
-
-  .insights-dashboard {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-  .emotion-stats {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-  .date-row {
-
-    align-items:
-      flex-start;
-
-    flex-direction:
-      column;
-
+  .footer-links {
     gap:
-      8px;
-
+      14px 22px;
   }
 
-  .feedback-result-top {
+  .footer-links button,
+  .footer-links a {
+    font-size:
+      0.85rem;
+  }
 
-    align-items:
-      flex-start;
+  .footer-credit {
+    max-width:
+      100%;
 
-    flex-direction:
-      column;
+    font-size:
+      0.9rem;
 
+    line-height:
+      1.7;
   }
 
 }
