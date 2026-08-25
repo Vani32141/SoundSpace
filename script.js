@@ -41,60 +41,477 @@ const SOUNDSPACE_SESSION_ID =
    3. SUPABASE EVENT TRACKING
    ========================================================= */
 
-async function trackSoundSpaceEvent(
-  eventType,
-  mood = null,
-  song = null,
-  helpful = null
-) {
-  try {
+async function displayInsights() {
 
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/usage_events`,
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_KEY,
-          "Authorization": `Bearer ${SUPABASE_KEY}`,
-          "Prefer": "return=minimal"
-        },
-
-        body: JSON.stringify({
-          event_type: eventType,
-          session_id: SOUNDSPACE_SESSION_ID,
-          page: window.location.pathname,
-          mood: mood,
-          song: song,
-          helpful: helpful
-        })
-      }
-    );
+  const events =
+    await getSharedInsights();
 
 
-    if (!response.ok) {
+  /* =====================================
+     UNIQUE VISITORS
+  ===================================== */
 
-      const errorText =
-        await response.text();
+  const sessions =
+    new Set();
 
-      console.error(
-        "Supabase tracking failed:",
-        errorText
+  events.forEach(function(event) {
+
+    if (event.session_id) {
+
+      sessions.add(
+        event.session_id
       );
 
     }
 
-  } catch (error) {
+  });
 
-    console.error(
-      "SoundSpace analytics error:",
-      error
+
+  const totalElement =
+    document.querySelector(
+      "#insight-total"
     );
 
-  }
-}
 
+  if (totalElement) {
+
+    totalElement.textContent =
+      sessions.size;
+
+  }
+
+
+
+  /* =====================================
+     EMOTION COUNTS
+  ===================================== */
+
+  const emotionCounts = {
+
+    happiness: 0,
+    sadness: 0,
+    anger: 0,
+    anxiety: 0,
+    irritation: 0
+
+  };
+
+
+  events.forEach(function(event) {
+
+    if (
+      event.event_type ===
+      "emotion_selected"
+    ) {
+
+      const mood =
+        String(
+          event.mood || ""
+        ).toLowerCase();
+
+
+      if (
+        emotionCounts[mood] !==
+        undefined
+      ) {
+
+        emotionCounts[mood]++;
+
+      }
+
+    }
+
+  });
+
+
+  Object.keys(
+    emotionCounts
+  ).forEach(function(emotion) {
+
+    const element =
+      document.querySelector(
+        "#stat-" + emotion
+      );
+
+
+    if (element) {
+
+      element.textContent =
+        emotionCounts[emotion];
+
+    }
+
+  });
+
+
+
+  /* =====================================
+     HELPFULNESS RESULTS
+  ===================================== */
+
+  let yes = 0;
+  let no = 0;
+
+
+  events.forEach(function(event) {
+
+    if (
+      event.event_type ===
+      "feedback"
+    ) {
+
+      if (event.helpful === "Yes") {
+
+        yes++;
+
+      }
+
+
+      if (event.helpful === "No") {
+
+        no++;
+
+      }
+
+    }
+
+  });
+
+
+  const yesElement =
+    document.querySelector(
+      "#insight-yes"
+    );
+
+
+  const noElement =
+    document.querySelector(
+      "#insight-no"
+    );
+
+
+  if (yesElement) {
+
+    yesElement.textContent =
+      yes;
+
+  }
+
+
+  if (noElement) {
+
+    noElement.textContent =
+      no;
+
+  }
+
+
+
+  /* =====================================
+     GROUP VISITS BY DATE
+  ===================================== */
+
+  const datesContainer =
+    document.querySelector(
+      "#insight-dates"
+    );
+
+
+  if (datesContainer) {
+
+    const visits =
+      events.filter(function(event) {
+
+        return (
+          event.event_type ===
+          "page_view"
+        );
+
+      });
+
+
+    if (!visits.length) {
+
+      datesContainer.innerHTML = `
+
+        <p class="empty-insights">
+          No visits recorded yet.
+        </p>
+
+      `;
+
+    } else {
+
+      const groupedDates = {};
+
+
+      visits.forEach(function(event) {
+
+        if (!event.created_at) {
+
+          return;
+
+        }
+
+
+        const date =
+          new Date(
+            event.created_at
+          );
+
+
+        const dateKey =
+          date.toLocaleDateString(
+            undefined,
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            }
+          );
+
+
+        if (!groupedDates[dateKey]) {
+
+          groupedDates[dateKey] = {
+
+            count: 0,
+
+            latest:
+              date
+
+          };
+
+        }
+
+
+        groupedDates[dateKey].count++;
+
+
+        if (
+          date >
+          groupedDates[dateKey].latest
+        ) {
+
+          groupedDates[dateKey].latest =
+            date;
+
+        }
+
+      });
+
+
+      const sortedDates =
+        Object.entries(
+          groupedDates
+        ).sort(function(a, b) {
+
+          return (
+            b[1].latest -
+            a[1].latest
+          );
+
+        });
+
+
+      datesContainer.innerHTML =
+        sortedDates
+          .map(function(entry) {
+
+            const date =
+              entry[0];
+
+            const data =
+              entry[1];
+
+
+            const visitText =
+              data.count === 1
+                ? "visit"
+                : "visits";
+
+
+            return `
+
+              <div class="date-row">
+
+                <div>
+
+                  <strong>
+                    📅 ${date}
+                  </strong>
+
+                  <p>
+                    SoundSpace was used
+                    ${data.count}
+                    ${visitText}.
+                  </p>
+
+                </div>
+
+
+                <strong>
+                  ${data.count}
+                </strong>
+
+              </div>
+
+            `;
+
+          })
+          .join("");
+
+    }
+
+  }
+
+
+
+  /* =====================================
+     VISITOR FEEDBACK
+  ===================================== */
+
+  const feedbackContainer =
+    document.querySelector(
+      "#insight-feedback"
+    );
+
+
+  if (feedbackContainer) {
+
+    const feedback =
+      events
+        .filter(function(event) {
+
+          return (
+            event.event_type ===
+            "feedback"
+          );
+
+        })
+        .reverse();
+
+
+    if (!feedback.length) {
+
+      feedbackContainer.innerHTML = `
+
+        <p class="empty-insights">
+          No feedback submitted yet.
+        </p>
+
+      `;
+
+    } else {
+
+      feedbackContainer.innerHTML =
+        feedback
+          .map(function(item) {
+
+            return `
+
+              <article
+                class="feedback-result"
+              >
+
+                <div
+                  class="feedback-result-top"
+                >
+
+                  <strong>
+
+                    ${
+                      escapeHTML(
+                        item.mood ||
+                        "No emotion selected"
+                      )
+                    }
+
+                  </strong>
+
+
+                  <span>
+
+                    ${
+                      escapeHTML(
+                        item.helpful ||
+                        "No answer"
+                      )
+                    }
+
+                  </span>
+
+                </div>
+
+
+                ${
+                  item.song
+                    ? `
+
+                      <p>
+
+                        <b>
+                          Song:
+                        </b>
+
+                        <br>
+
+                        ${escapeHTML(item.song)}
+
+                      </p>
+
+                    `
+                    : ""
+                }
+
+
+                ${
+                  item.feedback_text
+                    ? `
+
+                      <p>
+
+                        <b>
+                          Feedback:
+                        </b>
+
+                        <br>
+
+                        ${escapeHTML(
+                          item.feedback_text
+                        )}
+
+                      </p>
+
+                    `
+                    : ""
+                }
+
+
+                <small>
+
+                  ${
+                    item.created_at
+                      ? new Date(
+                          item.created_at
+                        ).toLocaleString()
+                      : ""
+                  }
+
+                </small>
+
+              </article>
+
+            `;
+
+          })
+          .join("");
+
+    }
+
+  }
+
+}
 
 /* =========================================================
    4. ALL 50 SONGS
