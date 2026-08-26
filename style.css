@@ -1,50 +1,17 @@
-/* =========================================
-   SOUNDSPACE — COMPLETE STYLE.CSS
-   DARK INTERACTIVE DESIGN
-   ========================================= */
-
-/* ---------- IMPORT FONTS ---------- */
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+/* =========================================================
+   SOUNDSPACE — NATURAL / HUMAN-DESIGNED STYLE
+   Music for How You Feel
+   ========================================================= */
 
 
-/* =========================================
-   1. COLORS
-   ========================================= */
-
-:root {
-  --bg: #080812;
-  --bg-secondary: #10101f;
-  --card: #151527;
-  --card-light: #1d1d33;
-
-  --text: #f8f7ff;
-  --text-soft: #aaa9bc;
-
-  --purple: #8b5cf6;
-  --purple-light: #a78bfa;
-
-  --pink: #ec4899;
-  --blue: #38bdf8;
-  --orange: #fb923c;
-  --green: #34d399;
-
-  --border: rgba(255, 255, 255, 0.08);
-
-  --shadow:
-    0 20px 60px
-    rgba(0, 0, 0, 0.35);
-}
-
-
-/* =========================================
-   2. RESET
-   ========================================= */
+/* =========================================================
+   1. GLOBAL
+   ========================================================= */
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
@@ -52,1481 +19,1306 @@ html {
 }
 
 body {
-  min-height: 100vh;
-
   font-family:
-    "DM Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     Arial,
     sans-serif;
 
-  color: var(--text);
+  background: #f7f4ef;
+  color: #27252b;
+  line-height: 1.6;
+  min-height: 100vh;
+}
 
-  background:
-    radial-gradient(
-      circle at 10% 10%,
-      rgba(139, 92, 246, 0.18),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(236, 72, 153, 0.12),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 50% 100%,
-      rgba(56, 189, 248, 0.10),
-      transparent 35%
-    ),
-    var(--bg);
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 
-/* =========================================
-   3. NAVIGATION
-   ========================================= */
+/* =========================================================
+   2. NAVIGATION
+   ========================================================= */
 
 .nav {
-  position: sticky;
-  top: 0;
-
-  z-index: 1000;
+  width: 100%;
+  min-height: 76px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 20px 7%;
+  padding: 0 7%;
 
-  background:
-    rgba(8, 8, 18, 0.82);
+  background: rgba(247, 244, 239, 0.96);
 
-  backdrop-filter: blur(18px);
+  border-bottom: 1px solid #e5dfd6;
 
-  border-bottom:
-    1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  backdrop-filter: blur(10px);
 }
-
 
 .logo {
   border: none;
-  background: none;
+  background: transparent;
 
-  color: var(--text);
-
-  font-family:
-    "Outfit",
-    sans-serif;
-
-  font-size: 1.8rem;
-
+  font-size: 1.45rem;
   font-weight: 800;
 
-  cursor: pointer;
+  letter-spacing: -0.04em;
 
-  letter-spacing: -1px;
+  color: #292630;
 }
-
 
 .logo span {
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple-light),
-      var(--pink)
-    );
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  color: transparent;
+  color: #7566a8;
 }
-
 
 .nav-links {
   display: flex;
-
   align-items: center;
-
-  gap: 30px;
+  gap: 8px;
 }
-
 
 .nav-links button,
-.nav-links a {
+.footer-links button {
   border: none;
+  background: transparent;
 
-  background: none;
+  color: #625d67;
 
-  color: var(--text-soft);
+  padding: 9px 13px;
 
-  text-decoration: none;
+  border-radius: 8px;
 
-  font-family:
-    "DM Sans",
-    sans-serif;
-
-  font-size: 0.95rem;
-
+  font-size: 0.92rem;
   font-weight: 600;
 
-  cursor: pointer;
-
   transition:
-    color 0.25s ease,
-    transform 0.25s ease;
+    background 0.2s ease,
+    color 0.2s ease;
 }
-
 
 .nav-links button:hover,
-.nav-links a:hover {
-  color: var(--text);
-
-  transform:
-    translateY(-2px);
+.footer-links button:hover {
+  background: #ece7df;
+  color: #302b38;
 }
 
 
-/* =========================================
-   4. MAIN + PAGES
-   ========================================= */
-
-main {
-  width:
-    min(1180px, 90%);
-
-  margin: auto;
-}
-
+/* =========================================================
+   3. PAGES
+   ========================================================= */
 
 .page {
   display: none;
 
-  min-height: 80vh;
-}
+  min-height: calc(100vh - 76px);
 
+  padding: 80px 7%;
+}
 
 .page.active-page {
   display: block;
 }
 
 
-/* =========================================
-   5. HERO
-   ========================================= */
+/* =========================================================
+   4. HOME / HERO
+   ========================================================= */
 
 .hero {
-  min-height: 82vh;
+  max-width: 1180px;
+  margin: 0 auto;
 
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  text-align: center;
+  padding-top: 45px;
 }
-
 
 .eyebrow {
-  display: inline-block;
+  color: #8a7b9d;
 
-  margin-bottom: 24px;
-
-  padding:
-    9px 17px;
-
-  border-radius: 100px;
-
-  border:
-    1px solid
-    rgba(167, 139, 250, 0.3);
-
-  background:
-    rgba(139, 92, 246, 0.08);
-
-  color:
-    var(--purple-light);
-
-  font-size: 0.72rem;
-
+  font-size: 0.78rem;
   font-weight: 700;
 
-  letter-spacing: 2px;
+  letter-spacing: 0.16em;
+
+  margin-bottom: 20px;
 }
 
-
 .hero h1 {
-  font-family:
-    "Outfit",
-    sans-serif;
+  max-width: 750px;
 
-  font-size:
-    clamp(4rem, 9vw, 7.5rem);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+
+  line-height: 0.98;
+
+  letter-spacing: -0.065em;
 
   font-weight: 800;
 
-  line-height: 0.92;
-
-  letter-spacing:
-    -5px;
+  color: #292630;
 
   margin-bottom: 28px;
 }
 
-
 .hero h1 span {
-  background:
-    linear-gradient(
-      120deg,
-      #a78bfa,
-      #ec4899,
-      #fb923c
-    );
+  display: block;
 
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: #7566a8;
 
-  color: transparent;
+  font-weight: 700;
 }
-
 
 .intro {
-  max-width:
-    620px;
+  max-width: 650px;
 
-  margin-bottom:
-    55px;
+  color: #6d6871;
 
-  color:
-    var(--text-soft);
+  font-size: 1.08rem;
 
-  font-size:
-    1.1rem;
-
-  line-height:
-    1.8;
+  line-height: 1.8;
 }
 
 
-/* =========================================
-   6. EMOTION CARDS
-   ========================================= */
+/* =========================================================
+   5. EMOTION GRID
+   ========================================================= */
 
 .emotion-grid {
-  width: 100%;
-
   display: grid;
 
   grid-template-columns:
-    repeat(5, 1fr);
+    repeat(5, minmax(0, 1fr));
 
-  gap: 18px;
+  gap: 14px;
+
+  margin-top: 55px;
 }
 
 
+/* =========================================================
+   6. EMOTION CARDS
+   ========================================================= */
+
 .emotion-card {
-  position: relative;
-
-  overflow: hidden;
-
-  min-height: 235px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius: 24px;
-
-  padding:
-    28px 20px;
+  min-height: 255px;
 
   text-align: left;
 
-  cursor: pointer;
+  padding: 25px 21px;
 
-  color:
-    var(--text);
+  border-radius: 18px;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,0.06),
-      rgba(255,255,255,0.02)
-    );
+  background: #fffdf9;
 
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border 0.3s ease;
-}
-
-
-/* CARD GLOW */
-
-.emotion-card::before {
-  content: "";
-
-  position: absolute;
-
-  width: 160px;
-  height: 160px;
-
-  border-radius: 50%;
-
-  top: -70px;
-  right: -70px;
-
-  opacity: 0.7;
-
-  transition:
-    transform 0.4s ease;
-}
-
-
-.emotion-card:hover {
-  transform:
-    translateY(-12px);
+  border: 1px solid #e5ded5;
 
   box-shadow:
-    var(--shadow);
-}
+    0 4px 15px rgba(50, 43, 38, 0.045);
 
+  display: flex;
+  flex-direction: column;
 
-.emotion-card:hover::before {
-  transform:
-    scale(1.5);
-}
-
-
-/* HAPPINESS */
-
-.happiness::before {
-  background:
-    radial-gradient(
-      circle,
-      rgba(251, 146, 60, 0.65),
-      transparent 70%
-    );
-}
-
-.happiness:hover {
-  border-color:
-    rgba(251, 146, 60, 0.6);
-}
-
-
-/* SADNESS */
-
-.sadness::before {
-  background:
-    radial-gradient(
-      circle,
-      rgba(56, 189, 248, 0.6),
-      transparent 70%
-    );
-}
-
-.sadness:hover {
-  border-color:
-    rgba(56, 189, 248, 0.6);
-}
-
-
-/* ANGER */
-
-.anger::before {
-  background:
-    radial-gradient(
-      circle,
-      rgba(239, 68, 68, 0.65),
-      transparent 70%
-    );
-}
-
-.anger:hover {
-  border-color:
-    rgba(239, 68, 68, 0.6);
-}
-
-
-/* ANXIETY */
-
-.anxiety::before {
-  background:
-    radial-gradient(
-      circle,
-      rgba(139, 92, 246, 0.7),
-      transparent 70%
-    );
-}
-
-.anxiety:hover {
-  border-color:
-    rgba(139, 92, 246, 0.6);
-}
-
-
-/* IRRITATION */
-
-.irritation::before {
-  background:
-    radial-gradient(
-      circle,
-      rgba(236, 72, 153, 0.65),
-      transparent 70%
-    );
-}
-
-.irritation:hover {
-  border-color:
-    rgba(236, 72, 153, 0.6);
-}
-
-
-/* CARD CONTENT */
-
-.emoji {
-  position: relative;
-
-  font-size:
-    2.7rem;
-
-  margin-bottom:
-    22px;
+  align-items: flex-start;
 
   transition:
-    transform 0.3s ease;
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
 }
 
+.emotion-card:hover {
+  transform: translateY(-5px);
 
-.emotion-card:hover .emoji {
-  transform:
-    scale(1.2)
-    rotate(-8deg);
+  box-shadow:
+    0 12px 28px rgba(50, 43, 38, 0.09);
 }
 
+.emotion-card:active {
+  transform: translateY(-1px);
+}
+
+.emotion-card .emoji {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  font-size: 1.7rem;
+
+  margin-bottom: 28px;
+}
 
 .emotion-card h2 {
-  position: relative;
+  font-size: 1.15rem;
 
-  font-family:
-    "Outfit",
-    sans-serif;
+  color: #302d34;
 
-  font-size:
-    1.25rem;
+  margin-bottom: 7px;
 
-  margin-bottom:
-    8px;
+  letter-spacing: -0.02em;
 }
-
 
 .emotion-card p {
-  position: relative;
+  color: #77717a;
 
-  color:
-    var(--text-soft);
+  font-size: 0.88rem;
 
-  font-size:
-    0.88rem;
+  line-height: 1.5;
 
-  line-height:
-    1.55;
+  margin-bottom: auto;
+}
+
+.emotion-card > span:last-child {
+  margin-top: 25px;
+
+  color: #6f619d;
+
+  font-size: 0.83rem;
+
+  font-weight: 700;
 }
 
 
-.emotion-card span {
-  position: absolute;
+/* Individual emotion accents */
 
-  bottom: 24px;
+.happiness {
+  border-top: 4px solid #e6b85c;
+}
 
-  left: 20px;
+.happiness .emoji {
+  background: #fbf0d4;
+}
 
-  font-size:
-    0.85rem;
+.sadness {
+  border-top: 4px solid #7898bd;
+}
 
-  font-weight:
-    700;
+.sadness .emoji {
+  background: #e3edf7;
+}
 
-  color:
-    var(--purple-light);
+.anger {
+  border-top: 4px solid #c96d69;
+}
+
+.anger .emoji {
+  background: #f7e1df;
+}
+
+.anxiety {
+  border-top: 4px solid #8b9e91;
+}
+
+.anxiety .emoji {
+  background: #e6eee9;
+}
+
+.irritation {
+  border-top: 4px solid #9a82ad;
+}
+
+.irritation .emoji {
+  background: #eee6f2;
 }
 
 
-/* =========================================
+/* =========================================================
    7. PAGE HERO
-   ========================================= */
+   ========================================================= */
 
 .page-hero {
-  padding:
-    100px 0
-    60px;
+  max-width: 850px;
+
+  margin: 0 auto 65px;
 
   text-align: center;
 }
 
-
 .page-hero h1 {
-  font-family:
-    "Outfit",
-    sans-serif;
+  font-size: clamp(2.7rem, 6vw, 5rem);
 
-  font-size:
-    clamp(3rem, 6vw, 5.5rem);
+  line-height: 1;
 
-  line-height:
-    1;
+  letter-spacing: -0.055em;
 
-  letter-spacing:
-    -3px;
+  color: #2b2730;
 
-  margin-bottom:
-    25px;
+  margin-bottom: 24px;
 }
-
 
 .page-hero h1 span {
-  color:
-    var(--purple-light);
+  color: #7566a8;
 }
-
 
 .page-hero p {
-  max-width:
-    700px;
+  max-width: 680px;
 
-  margin:
-    auto;
+  margin: 0 auto;
 
-  color:
-    var(--text-soft);
+  color: #706b73;
 
-  line-height:
-    1.8;
+  font-size: 1.05rem;
 
-  font-size:
-    1.05rem;
+  line-height: 1.8;
 }
 
 
-/* =========================================
+/* =========================================================
    8. STORY CARDS
-   ========================================= */
+   ========================================================= */
 
 .story-grid {
+  max-width: 1100px;
+
+  margin: 0 auto;
+
   display: grid;
 
   grid-template-columns:
     repeat(3, 1fr);
 
-  gap:
-    22px;
-
-  margin:
-    30px 0
-    70px;
+  gap: 18px;
 }
-
 
 .story-card {
-  padding:
-    35px;
+  background: #fffdf9;
 
-  border-radius:
-    24px;
+  border: 1px solid #e5ded5;
 
-  background:
-    var(--card);
+  border-radius: 16px;
 
-  border:
-    1px solid var(--border);
+  padding: 28px;
 
-  transition:
-    transform 0.3s ease;
+  box-shadow:
+    0 4px 14px rgba(50, 43, 38, 0.035);
 }
 
+.story-card > span {
+  color: #9b8bb0;
 
-.story-card:hover {
-  transform:
-    translateY(-8px);
+  font-size: 0.8rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
 }
-
-
-.story-card span {
-  color:
-    var(--purple-light);
-
-  font-family:
-    "Outfit";
-
-  font-size:
-    1.3rem;
-
-  font-weight:
-    700;
-}
-
 
 .story-card h2 {
-  font-family:
-    "Outfit";
+  color: #332e37;
 
-  margin:
-    18px 0
-    12px;
+  font-size: 1.25rem;
+
+  margin: 12px 0 10px;
 }
-
 
 .story-card p {
-  color:
-    var(--text-soft);
+  color: #716c73;
 
-  line-height:
-    1.7;
+  font-size: 0.94rem;
+
+  line-height: 1.7;
 }
 
 
-/* =========================================
-   9. FEATURE ROW
-   ========================================= */
+/* =========================================================
+   9. FEATURES
+   ========================================================= */
 
 .feature-row {
+  max-width: 1050px;
+
+  margin: 55px auto 0;
+
   display: grid;
 
   grid-template-columns:
     repeat(3, 1fr);
 
-  gap:
-    18px;
+  gap: 35px;
 
-  padding-bottom:
-    80px;
+  text-align: center;
 }
-
-
-.feature-row > div {
-  padding:
-    30px;
-
-  text-align:
-    center;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    24px;
-
-  background:
-    var(--card);
-}
-
 
 .feature-icon {
-  font-size:
-    2.3rem;
+  width: 54px;
+  height: 54px;
 
-  margin-bottom:
-    15px;
+  margin: 0 auto 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ece7f1;
+
+  font-size: 1.35rem;
 }
-
 
 .feature-row h3 {
-  font-family:
-    "Outfit";
+  color: #37323a;
 
-  margin-bottom:
-    8px;
+  margin-bottom: 8px;
 }
-
 
 .feature-row p {
-  color:
-    var(--text-soft);
+  color: #777179;
 
-  font-size:
-    0.9rem;
+  font-size: 0.9rem;
+
+  max-width: 280px;
+
+  margin: 0 auto;
 }
 
 
-/* =========================================
-   10. EMOTION / SONG PAGE
-   ========================================= */
-
-.emotion-page-hero {
-  padding:
-    80px 0
-    50px;
-
-  text-align:
-    center;
-}
-
-
-.large-emoji {
-  font-size:
-    5rem;
-
-  margin-bottom:
-    20px;
-}
-
-
-#emotion-title {
-  font-family:
-    "Outfit";
-
-  font-size:
-    clamp(3rem, 6vw, 5rem);
-
-  margin-bottom:
-    20px;
-}
-
-
-.back-button {
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    100px;
-
-  padding:
-    11px 18px;
-
-  margin-bottom:
-    35px;
-
-  color:
-    var(--text);
-
-  background:
-    var(--card);
-
-  cursor:
-    pointer;
-}
-
-
-.songs-section {
-  padding-bottom:
-    100px;
-}
-
-
-.songs-heading {
-  margin-bottom:
-    30px;
-}
-
-
-.songs-heading h2 {
-  font-family:
-    "Outfit";
-
-  font-size:
-    2.5rem;
-}
-
-
-.songs-heading h2 span {
-  color:
-    var(--purple-light);
-}
-
-
-/* SONG LIST */
-
-#song-list {
-  display: grid;
-
-  gap:
-    15px;
-}
-
-
-.song-card {
-  width:
-    100%;
-
-  display: grid;
-
-  grid-template-columns:
-    55px 1fr 30px;
-
-  gap:
-    18px;
-
-  padding:
-    24px;
-
-  text-align:
-    left;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    22px;
-
-  color:
-    var(--text);
-
-  background:
-    var(--card);
-
-  cursor:
-    pointer;
-
-  transition:
-    transform 0.25s ease,
-    border 0.25s ease;
-}
-
-
-.song-card:hover {
-  transform:
-    translateX(8px);
-
-  border-color:
-    var(--purple);
-}
-
-
-.song-number {
-  width:
-    42px;
-
-  height:
-    42px;
-
-  display:
-    grid;
-
-  place-items:
-    center;
-
-  border-radius:
-    50%;
-
-  color:
-    white;
-
-  font-weight:
-    800;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--pink)
-    );
-}
-
-
-.song-details {
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  gap:
-    5px;
-}
-
-
-.song-details strong {
-  font-size:
-    1.05rem;
-}
-
-
-.song-details small {
-  color:
-    var(--text-soft);
-}
-
-
-.song-why {
-  margin-top:
-    12px;
-
-  padding-top:
-    12px;
-
-  border-top:
-    1px solid var(--border);
-
-  color:
-    var(--text-soft);
-
-  font-size:
-    0.88rem;
-
-  line-height:
-    1.7;
-}
-
-
-.song-why b {
-  color:
-    var(--purple-light);
-}
-
-
-/* =========================================
-   11. PLAYER
-   ========================================= */
-
-.player-layout {
-  display: grid;
-
-  grid-template-columns:
-    1.2fr 0.8fr;
-
-  gap:
-    25px;
-
-  padding:
-    70px 0;
-}
-
-
-.now-playing-panel,
-.queue-panel {
-  padding:
-    38px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    30px;
-
-  background:
-    var(--card);
-}
-
-
-.player-emoji {
-  font-size:
-    4rem;
-
-  margin:
-    25px 0;
-}
-
-
-#player-title {
-  font-family:
-    "Outfit";
-
-  font-size:
-    3rem;
-}
-
-
-.player-artist {
-  color:
-    var(--text-soft);
-
-  margin:
-    10px 0
-    25px;
-}
-
-
-.shuffle-status {
-  display:
-    inline-flex;
-
-  gap:
-    8px;
-
-  padding:
-    10px 16px;
-
-  border-radius:
-    100px;
-
-  background:
-    rgba(139, 92, 246, 0.12);
-
-  color:
-    var(--purple-light);
-
-  font-size:
-    0.8rem;
-
-  font-weight:
-    700;
-}
-
-
-.player-reason {
-  margin:
-    30px 0;
-
-  padding:
-    22px;
-
-  border-radius:
-    20px;
-
-  background:
-    var(--bg-secondary);
-}
-
-
-.player-reason h3 {
-  margin-bottom:
-    10px;
-}
-
-
-.player-reason p {
-  color:
-    var(--text-soft);
-
-  line-height:
-    1.7;
-}
-
-
-/* PLAYER BUTTONS */
-
-.player-actions {
-  display:
-    flex;
-
-  gap:
-    12px;
-
-  flex-wrap:
-    wrap;
-}
-
-
-.listen-button-large,
-.next-song-button,
-.reshuffle-button {
-  border:
-    none;
-
-  border-radius:
-    14px;
-
-  padding:
-    15px 20px;
-
-  font-family:
-    "DM Sans";
-
-  font-weight:
-    700;
-
-  cursor:
-    pointer;
-}
-
-
-.listen-button-large {
-  flex:
-    1;
-
-  text-align:
-    center;
-
-  text-decoration:
-    none;
-
-  color:
-    white;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--pink)
-    );
-}
-
-
-.next-song-button {
-  background:
-    var(--card-light);
-
-  color:
-    var(--text);
-}
-
-
-.reshuffle-button {
-  width:
-    100%;
-
-  margin-top:
-    15px;
-
-  background:
-    transparent;
-
-  border:
-    1px solid var(--border);
-
-  color:
-    var(--purple-light);
-}
-
-
-/* QUEUE */
-
-#queue-list {
-  display:
-    grid;
-
-  gap:
-    10px;
-
-  margin-top:
-    25px;
-}
-
-
-.queue-item {
-  display:
-    flex;
-
-  gap:
-    14px;
-
-  align-items:
-    center;
-
-  padding:
-    14px;
-
-  border:
-    none;
-
-  border-radius:
-    14px;
-
-  color:
-    var(--text);
-
-  background:
-    var(--bg-secondary);
-
-  cursor:
-    pointer;
-
-  text-align:
-    left;
-}
-
-
-.queue-item span {
-  color:
-    var(--purple-light);
-
-  font-weight:
-    800;
-}
-
-
-.queue-item small {
-  display:
-    block;
-
-  color:
-    var(--text-soft);
-
-  margin-top:
-    3px;
-}
-
-
-/* =========================================
-   12. PROCESS
-   ========================================= */
+/* =========================================================
+   10. HOW IT WORKS
+   ========================================================= */
 
 .process {
-  display:
-    grid;
+  max-width: 850px;
 
-  gap:
-    20px;
-
-  padding-bottom:
-    80px;
+  margin: 0 auto;
 }
-
 
 .process-step {
-  display:
-    grid;
+  display: grid;
 
-  grid-template-columns:
-    100px 1fr;
+  grid-template-columns: 80px 1fr;
 
-  gap:
-    30px;
+  gap: 28px;
 
-  padding:
-    35px;
+  padding: 28px 0;
 
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    25px;
-
-  background:
-    var(--card);
+  border-bottom: 1px solid #e2dcd4;
 }
 
+.process-step:last-child {
+  border-bottom: none;
+}
 
 .step-number {
-  font-family:
-    "Outfit";
+  font-size: 1rem;
 
-  font-size:
-    3rem;
+  font-weight: 800;
 
-  color:
-    var(--purple);
+  color: #9687a7;
 
-  font-weight:
-    800;
+  padding-top: 4px;
 }
-
 
 .step-icon {
-  font-size:
-    2.3rem;
+  font-size: 1.4rem;
 
-  margin-bottom:
-    12px;
+  margin-bottom: 8px;
 }
-
 
 .step-content h2 {
-  font-family:
-    "Outfit";
+  color: #302c34;
 
-  margin-bottom:
-    10px;
+  font-size: 1.35rem;
+
+  margin-bottom: 7px;
 }
-
 
 .step-content p {
-  color:
-    var(--text-soft);
+  color: #716c73;
 
-  line-height:
-    1.7;
+  line-height: 1.7;
+
+  max-width: 650px;
 }
 
 
-/* =========================================
-   13. FOOTER — FIXED SPACING
-   ========================================= */
+/* =========================================================
+   11. BACK BUTTONS
+   ========================================================= */
 
-footer {
+.back-button {
+  border: none;
+
+  background: #ebe6de;
+
+  color: #5f5864;
+
+  border-radius: 9px;
+
+  padding: 10px 15px;
+
+  font-size: 0.87rem;
+
+  font-weight: 700;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.back-button:hover {
+  background: #e1dbd1;
+
+  transform: translateX(-2px);
+}
+
+
+/* =========================================================
+   12. EMOTION PAGE
+   ========================================================= */
+
+.emotion-page-hero {
+  max-width: 1050px;
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.emotion-page-hero .back-button {
+  display: block;
+
+  margin: 0 auto 35px;
+}
+
+.large-emoji {
+  font-size: 3.5rem;
+
+  margin-bottom: 12px;
+}
+
+.emotion-page-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+
+  letter-spacing: -0.05em;
+
+  color: #2e2932;
+
+  margin-bottom: 15px;
+}
+
+.songs-section {
+  max-width: 1050px;
+
+  margin: 65px auto 0;
+}
+
+.songs-heading {
+  margin-bottom: 25px;
+}
+
+.songs-heading h2 {
+  font-size: 1.8rem;
+
+  color: #312d35;
+}
+
+.songs-heading h2 span {
+  color: #7566a8;
+}
+
+
+/* =========================================================
+   13. SONG CARDS
+   ========================================================= */
+
+#song-list {
   display: flex;
 
   flex-direction: column;
 
+  gap: 10px;
+}
+
+.song-card {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    45px 1fr 30px;
+
+  gap: 18px;
+
   align-items: center;
 
-  justify-content: center;
+  text-align: left;
 
-  gap: 24px;
+  background: #fffdf9;
 
-  padding:
-    45px 7%;
+  border: 1px solid #e5ded5;
 
-  border-top:
-    1px solid var(--border);
+  border-radius: 13px;
 
-  color:
-    var(--text-soft);
+  padding: 18px 20px;
 
-  text-align:
-    center;
+  color: #2f2b32;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.song-card:hover {
+  background: #faf7f1;
+
+  border-color: #cfc4d8;
+
+  transform: translateX(3px);
+}
+
+.song-number {
+  color: #a294af;
+
+  font-weight: 800;
+
+  font-size: 0.8rem;
+}
+
+.song-details {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.song-details strong {
+  font-size: 1rem;
+
+  margin-bottom: 2px;
+}
+
+.song-details small {
+  color: #817a82;
+
+  font-size: 0.83rem;
+
+  margin-bottom: 7px;
+}
+
+.song-why {
+  color: #777079;
+
+  font-size: 0.82rem;
+
+  line-height: 1.5;
+}
+
+.song-why b {
+  color: #77689c;
+}
+
+.song-arrow {
+  color: #77689c;
+
+  font-size: 1.1rem;
+
+  font-weight: 700;
 }
 
 
-/* SOUNDSPACE NAME */
+/* =========================================================
+   14. PLAYER
+   ========================================================= */
 
-footer strong {
-  font-family:
-    "Outfit",
-    sans-serif;
+.player-layout {
+  max-width: 1100px;
 
-  font-size:
-    1.4rem;
+  margin: 0 auto;
 
-  color:
-    var(--text);
+  display: grid;
+
+  grid-template-columns:
+    1.35fr 0.8fr;
+
+  gap: 25px;
+}
+
+.now-playing-panel,
+.queue-panel {
+  background: #fffdf9;
+
+  border: 1px solid #e5ded5;
+
+  border-radius: 18px;
+
+  padding: 32px;
+
+  box-shadow:
+    0 5px 18px rgba(50, 43, 38, 0.04);
+}
+
+.now-playing-panel .back-button {
+  margin-bottom: 35px;
+}
+
+.player-emoji {
+  font-size: 4rem;
+
+  margin-bottom: 18px;
+}
+
+#player-title {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+
+  line-height: 1.05;
+
+  letter-spacing: -0.045em;
+
+  color: #2c2830;
+
+  margin-bottom: 7px;
+}
+
+.player-artist {
+  color: #7b747d;
+
+  font-size: 0.94rem;
+}
+
+.shuffle-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 20px;
+
+  padding: 7px 11px;
+
+  border-radius: 8px;
+
+  background: #f0ece6;
+
+  color: #716975;
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+}
+
+.player-reason {
+  margin-top: 30px;
+
+  padding: 20px;
+
+  background: #f4f0f5;
+
+  border-left: 3px solid #8c7ba4;
+
+  border-radius: 8px;
+}
+
+.player-reason h3 {
+  font-size: 0.9rem;
+
+  color: #5f5273;
+
+  margin-bottom: 7px;
+}
+
+.player-reason p {
+  color: #6e6870;
+
+  font-size: 0.88rem;
+
+  line-height: 1.65;
+}
+
+.player-actions {
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 25px;
+}
+
+.listen-button-large,
+.next-song-button {
+  border-radius: 9px;
+
+  padding: 12px 18px;
+
+  font-weight: 700;
+
+  font-size: 0.88rem;
+}
+
+.listen-button-large {
+  background: #7566a8;
+
+  color: white;
+
+  border: 1px solid #7566a8;
+}
+
+.listen-button-large:hover {
+  background: #675895;
+}
+
+.next-song-button {
+  background: #ebe6de;
+
+  color: #514b55;
+
+  border: 1px solid #ddd5ca;
+}
+
+.next-song-button:hover {
+  background: #e1dbd2;
+}
+
+.reshuffle-button {
+  width: 100%;
+
+  margin-top: 12px;
+
+  padding: 11px;
+
+  border-radius: 9px;
+
+  background: transparent;
+
+  border: 1px solid #ddd5ca;
+
+  color: #706977;
+
+  font-weight: 700;
+
+  font-size: 0.85rem;
+}
+
+.reshuffle-button:hover {
+  background: #f0ece6;
 }
 
 
-/* FOOTER LINKS */
+/* =========================================================
+   15. QUEUE
+   ========================================================= */
 
-.footer-links {
+.queue-panel h2 {
+  font-size: 1.3rem;
+
+  color: #322e36;
+
+  margin-bottom: 4px;
+}
+
+#queue-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  margin-top: 25px;
+
+  max-height: 500px;
+
+  overflow-y: auto;
+}
+
+.queue-item {
+  width: 100%;
+
   display: flex;
 
   align-items: center;
 
-  justify-content: center;
+  gap: 13px;
+
+  padding: 11px;
+
+  border-radius: 9px;
+
+  border: 1px solid transparent;
+
+  background: transparent;
+
+  text-align: left;
+
+  color: #37323a;
+}
+
+.queue-item:hover {
+  background: #f3efe9;
+}
+
+.queue-item.current-song {
+  background: #eee9f2;
+
+  border-color: #d8ccdf;
+}
+
+.queue-number {
+  color: #9a8da3;
+
+  font-size: 0.75rem;
+
+  font-weight: 800;
+}
+
+.queue-info {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.queue-info strong {
+  font-size: 0.84rem;
+}
+
+.queue-info small {
+  color: #827b83;
+
+  font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   16. FEEDBACK
+   ========================================================= */
+
+.feedback-form {
+  max-width: 720px;
+
+  margin: 0 auto;
+
+  background: #fffdf9;
+
+  border: 1px solid #e5ded5;
+
+  border-radius: 18px;
+
+  padding: 35px;
+
+  box-shadow:
+    0 5px 18px rgba(50, 43, 38, 0.04);
+}
+
+.feedback-form > label,
+.feedback-question {
+  display: block;
+
+  margin-bottom: 24px;
+
+  color: #49434d;
+
+  font-weight: 650;
+
+  font-size: 0.9rem;
+}
+
+.feedback-form input[type="text"],
+.feedback-form select,
+.feedback-form textarea {
+  width: 100%;
+
+  margin-top: 8px;
+
+  padding: 12px 13px;
+
+  background: #faf7f1;
+
+  border: 1px solid #ddd6cc;
+
+  border-radius: 8px;
+
+  color: #38333b;
+
+  outline: none;
+}
+
+.feedback-form input[type="text"]:focus,
+.feedback-form select:focus,
+.feedback-form textarea:focus {
+  border-color: #9b8bb0;
+
+  box-shadow:
+    0 0 0 3px rgba(117, 102, 168, 0.08);
+}
+
+.feedback-form textarea {
+  resize: vertical;
+}
+
+.feedback-question p {
+  margin-bottom: 10px;
+}
+
+.feedback-question label {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-right: 20px;
+
+  color: #6e6870;
+
+  font-weight: 500;
+}
+
+.submit-feedback {
+  border: none;
+
+  background: #7566a8;
+
+  color: white;
+
+  padding: 12px 20px;
+
+  border-radius: 9px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.submit-feedback:hover {
+  background: #675895;
+}
+
+#feedback-success {
+  margin-top: 15px;
+
+  color: #587a64;
+
+  font-size: 0.9rem;
+
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   17. INSIGHTS
+   ========================================================= */
+
+.insights-container {
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 18px;
+}
+
+.insights-container .story-card h2 {
+  margin-top: 0;
+}
+
+.date-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 13px 0;
+
+  border-bottom: 1px solid #e7e0d8;
+
+  color: #514b54;
+}
+
+.date-row:last-child {
+  border-bottom: none;
+}
+
+.date-row p {
+  margin-top: 3px;
+}
+
+.empty-insights {
+  color: #8a838a;
+
+  font-size: 0.88rem;
+
+  padding: 10px 0;
+}
+
+.feedback-result {
+  padding: 15px 0;
+
+  border-bottom: 1px solid #e7e0d8;
+}
+
+.feedback-result:last-child {
+  border-bottom: none;
+}
+
+.feedback-result-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 8px;
+}
+
+.feedback-result-top span {
+  color: #7566a8;
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+}
+
+.feedback-result p {
+  margin-top: 7px;
+
+  font-size: 0.86rem;
+}
+
+.feedback-result small {
+  display: block;
+
+  margin-top: 10px;
+
+  color: #948d94;
+
+  font-size: 0.73rem;
+}
+
+
+/* =========================================================
+   18. FOOTER
+   ========================================================= */
+
+footer {
+  border-top: 1px solid #e2dcd4;
+
+  background: #eee9e1;
+
+  padding: 45px 7%;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  gap: 30px;
+
+  color: #666069;
+}
+
+.footer-brand strong {
+  color: #342f38;
+
+  font-size: 1.15rem;
+}
+
+.footer-brand p {
+  margin-top: 5px;
+
+  font-size: 0.84rem;
+}
+
+.footer-links {
+  display: flex;
 
   flex-wrap: wrap;
 
-  gap:
-    16px 30px;
+  gap: 5px;
 
-  width: 100%;
+  align-content: start;
 }
 
+.footer-links button {
+  padding: 5px 8px;
 
-.footer-links button,
-.footer-links a {
-  border: none;
-
-  background: none;
-
-  color:
-    var(--text-soft);
-
-  text-decoration: none;
-
-  font-family:
-    "DM Sans",
-    sans-serif;
-
-  font-size:
-    0.9rem;
-
-  cursor:
-    pointer;
-
-  padding:
-    6px 4px;
-
-  white-space:
-    nowrap;
-
-  transition:
-    color 0.25s ease,
-    transform 0.25s ease;
+  font-size: 0.8rem;
 }
-
-
-.footer-links button:hover,
-.footer-links a:hover {
-  color:
-    var(--purple-light);
-
-  transform:
-    translateY(-2px);
-}
-
-
-/* COPYRIGHT + DESIGNER CREDIT */
 
 .footer-credit {
-  max-width:
-    650px;
+  text-align: right;
 
-  margin:
-    0 auto;
+  font-size: 0.78rem;
 
-  color:
-    var(--text-soft);
-
-  font-size:
-    0.95rem;
-
-  line-height:
-    1.8;
+  line-height: 1.6;
 }
-
 
 .footer-credit strong {
-  display:
-    inline;
-
-  font-size:
-    inherit;
-
-  color:
-    var(--text);
+  color: #4d4652;
 }
 
 
-/* =========================================
-   14. RESPONSIVE DESIGN
-   ========================================= */
+/* =========================================================
+   19. SELECTION
+   ========================================================= */
 
-@media (max-width: 1000px) {
-
-  .emotion-grid {
-    grid-template-columns:
-      repeat(3, 1fr);
-  }
-
-  .story-grid,
-  .feature-row {
-    grid-template-columns:
-      1fr;
-  }
-
-  .player-layout {
-    grid-template-columns:
-      1fr;
-  }
-
+::selection {
+  background: #dcd2e5;
+  color: #332d39;
 }
 
 
-@media (max-width: 650px) {
+/* =========================================================
+   20. SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1ede7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c9c0cb;
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #afa3b5;
+}
+
+
+/* =========================================================
+   21. RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
 
   .nav {
-    padding:
-      16px 5%;
+    padding: 0 4%;
   }
 
-  .nav-links {
-    gap:
-      14px;
-  }
-
-  .nav-links button,
-  .nav-links a {
-    font-size:
-      0.78rem;
-  }
-
-  .logo {
-    font-size:
-      1.4rem;
-  }
-
-  main {
-    width:
-      92%;
-  }
-
-  .hero h1 {
-    font-size:
-      clamp(3.5rem, 17vw, 5.5rem);
-
-    letter-spacing:
-      -3px;
+  .page {
+    padding: 65px 5%;
   }
 
   .emotion-grid {
@@ -1534,79 +1326,137 @@ footer strong {
       repeat(2, 1fr);
   }
 
-  .emotion-card:last-child {
-    grid-column:
-      span 2;
+  .story-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .player-layout {
+    grid-template-columns:
+      1fr;
+  }
+
+  .insights-container {
+    grid-template-columns:
+      1fr;
+  }
+
+  footer {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .footer-credit {
+    text-align: left;
+  }
+
+}
+
+
+/* =========================================================
+   22. RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .nav {
+    min-height: auto;
+
+    padding: 15px 5%;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .nav-links {
+    width: 100%;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+  }
+
+  .nav-links button {
+    font-size: 0.78rem;
+
+    padding: 6px 8px;
+  }
+
+  .page {
+    padding: 50px 5%;
+  }
+
+  .hero {
+    padding-top: 20px;
+  }
+
+  .hero h1 {
+    font-size: 3.2rem;
+  }
+
+  .emotion-grid {
+    grid-template-columns:
+      1fr;
+
+    margin-top: 35px;
   }
 
   .emotion-card {
-    min-height:
-      210px;
+    min-height: 210px;
+  }
+
+  .feature-row {
+    grid-template-columns:
+      1fr;
+
+    gap: 30px;
   }
 
   .process-step {
     grid-template-columns:
-      1fr;
+      45px 1fr;
 
-    gap:
-      15px;
+    gap: 15px;
   }
 
   .song-card {
     grid-template-columns:
-      45px 1fr 20px;
+      32px 1fr 20px;
 
-    padding:
-      18px;
+    gap: 10px;
+
+    padding: 15px;
   }
 
-  .player-layout {
-    padding:
-      40px 0;
+  .song-why {
+    display: none;
   }
 
-  .now-playing-panel,
-  .queue-panel {
-    padding:
-      25px;
+  .player-actions {
+    flex-direction: column;
   }
 
-  #player-title {
-    font-size:
-      2.2rem;
+  .listen-button-large,
+  .next-song-button {
+    width: 100%;
+
+    text-align: center;
   }
 
-
-  /* MOBILE FOOTER */
+  .feedback-form {
+    padding: 24px 20px;
+  }
 
   footer {
-    gap:
-      20px;
+    grid-template-columns:
+      1fr;
 
-    padding:
-      40px 5%;
-  }
-
-  .footer-links {
-    gap:
-      14px 22px;
-  }
-
-  .footer-links button,
-  .footer-links a {
-    font-size:
-      0.85rem;
+    padding: 35px 5%;
   }
 
   .footer-credit {
-    max-width:
-      100%;
-
-    font-size:
-      0.9rem;
-
-    line-height:
-      1.7;
+    text-align: left;
   }
 
 }
