@@ -458,6 +458,33 @@
 
 
     <script src="script.js"></script>
+<script>
+  function showPage(pageId, button) {
+    document.querySelectorAll('.page-section').forEach(section => {
+      section.classList.remove('active');
+    });
 
+    const selectedPage = document.getElementById(pageId);
+
+    if (selectedPage) {
+      selectedPage.classList.add('active');
+    }
+
+    document.querySelectorAll('nav button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    if (button) {
+      button.classList.add('active');
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+</script>
+
+<script src="script.js"></script>
 </body>
 </html>
