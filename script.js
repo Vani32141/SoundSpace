@@ -1,7 +1,7 @@
 /* =========================================================
    SOUNDSPACE
-   50 SONG VERSION
-   5 EMOTIONS × 10 SONGS
+   FUNCTIONALITY + SUPABASE ANALYTICS
+   DEVELOPER ACTIVITY EXCLUDED
    ========================================================= */
 
 
@@ -10,491 +10,618 @@
    ========================================================= */
 
 const SUPABASE_URL =
-    "https://bjfmlknorxlztxkxlebd.supabase.co";
+  "https://bjfmlknorxlztxkxlebd.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_NDHWFaIHfs6IqvmbZiHrCg_0H2ZXZbU";
+  "sb_publishable_NDHWFaIHfs6IqvmbZiHrCg_0H2ZXZbU";
 
 
-/*
-   If your previous Supabase URL and publishable key are already
-   in your old script, KEEP THOSE TWO VALUES.
+/* =========================================================
+   DEVELOPER MODE
+   ========================================================= */
 
-   Do NOT use the placeholder values above if you already have
-   your real Supabase details.
+const DEVELOPER_MODE_KEY =
+  "soundspace_developer_mode";
+
+const params =
+  new URLSearchParams(window.location.search);
+
+
+/* Turn developer mode ON */
+
+if (params.get("developer") === "on") {
+
+  localStorage.setItem(
+    DEVELOPER_MODE_KEY,
+    "true"
+  );
+
+  window.history.replaceState(
+    {},
+    document.title,
+    window.location.pathname
+  );
+
+}
+
+
+/* Optional way to turn it OFF:
+   Add ?developer=off to the URL
 */
 
+if (params.get("developer") === "off") {
 
-async function sendAnalytics(eventType, emotion = null, feedback = null) {
+  localStorage.removeItem(
+    DEVELOPER_MODE_KEY
+  );
 
-    try {
+  window.history.replaceState(
+    {},
+    document.title,
+    window.location.pathname
+  );
 
-        if (
-            SUPABASE_URL.includes("https://bjfmlknorxlztxkxlebd.supabase.co") ||
-            SUPABASE_KEY.includes("sb_publishable_NDHWFaIHfs6IqvmbZiHrCg_0H2ZXZbU")
-        ) {
-            return;
-        }
+}
 
-        await fetch(
-            `${SUPABASE_URL}/rest/v1/usage_events`,
-            {
-                method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": SUPABASE_KEY,
-                    "Authorization": `Bearer ${SUPABASE_KEY}`,
-                    "Prefer": "return=minimal"
-                },
+const IS_DEVELOPER =
+  localStorage.getItem(
+    DEVELOPER_MODE_KEY
+  ) === "true";
 
-                body: JSON.stringify({
-                    event_type: eventType,
-                    emotion: emotion,
-                    feedback: feedback
-                })
-            }
-        );
 
-    } catch (error) {
+/* =========================================================
+   SESSION ID
+   ========================================================= */
 
-        console.log(
-            "Analytics error:",
-            error
-        );
+let SOUNDSPACE_SESSION_ID =
+  sessionStorage.getItem(
+    "soundspace_session_id"
+  );
 
-    }
+
+if (!SOUNDSPACE_SESSION_ID) {
+
+  SOUNDSPACE_SESSION_ID =
+    "ss_" +
+    Date.now() +
+    "_" +
+    Math.random()
+      .toString(36)
+      .slice(2, 10);
+
+
+  sessionStorage.setItem(
+    "soundspace_session_id",
+    SOUNDSPACE_SESSION_ID
+  );
+
 }
 
 
 /* =========================================================
-   SOUND DATA
+   TRACK EVENT
+   ========================================================= */
+
+async function trackSoundSpaceEvent(
+  eventType,
+  mood = null,
+  song = null,
+  helpful = null,
+  feedbackText = null
+) {
+
+  /* NEVER TRACK DEVELOPER */
+
+  if (IS_DEVELOPER) {
+
+    console.log(
+      "Developer activity not tracked:",
+      eventType
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    await fetch(
+      `${SUPABASE_URL}/rest/v1/usage_events`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
+
+          "apikey":
+            SUPABASE_KEY,
+
+          "Authorization":
+            `Bearer ${SUPABASE_KEY}`,
+
+          "Prefer":
+            "return=minimal"
+        },
+
+        body: JSON.stringify({
+
+          event_type: eventType,
+
+          session_id:
+            SOUNDSPACE_SESSION_ID,
+
+          page:
+            window.location.pathname,
+
+          mood: mood,
+
+          song: song,
+
+          helpful: helpful,
+
+          feedback_text:
+            feedbackText
+
+        })
+
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "SoundSpace analytics error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SONG DATA
    ========================================================= */
 
 const moodData = {
 
-    Happiness: {
-
-        icon: "😊",
-
-        description:
-            "Bright, energetic and joyful music for moments when you feel happy.",
-
-        songs: [
-
-            {
-                title: "Happy",
-                artist: "Pharrell Williams",
-                reason:
-                    "Its upbeat tempo, major-key sound and positive lyrical message create a strong feeling of joy and celebration."
-            },
-
-            {
-                title: "Can't Stop the Feeling!",
-                artist: "Justin Timberlake",
-                reason:
-                    "Its energetic rhythm, dance-focused production and positive tone make it strongly associated with excitement and happiness."
-            },
-
-            {
-                title: "Levitating",
-                artist: "Dua Lipa",
-                reason:
-                    "The song uses a highly danceable groove and bright pop production that can support an energetic, positive mood."
-            },
-
-            {
-                title: "Uptown Funk",
-                artist: "Mark Ronson ft. Bruno Mars",
-                reason:
-                    "Its strong rhythmic groove, energetic vocals and playful production make it well suited to an upbeat mood."
-            },
-
-            {
-                title: "Good as Hell",
-                artist: "Lizzo",
-                reason:
-                    "The confident lyrics and energetic production encourage a positive, self-affirming feeling."
-            },
-
-            {
-                title: "Lush Life",
-                artist: "Zara Larsson",
-                reason:
-                    "Its lively beat and bright pop production give it an energetic and carefree character."
-            },
-
-            {
-                title: "APT.",
-                artist: "ROSÉ & Bruno Mars",
-                reason:
-                    "Its catchy rhythm, playful vocals and energetic pop-rock production create an exciting atmosphere."
-            },
-
-            {
-                title: "Golden",
-                artist: "HUNTR/X, EJAE, Audrey Nuna & REI AMI",
-                reason:
-                    "Its energetic pop sound and uplifting vocal performance make it suitable for an energized, positive mood."
-            },
-
-            {
-                title: "Flowers",
-                artist: "Miley Cyrus",
-                reason:
-                    "Its empowering message and accessible pop production can support feelings of confidence and positivity."
-            },
-
-            {
-                title: "Roar",
-                artist: "Katy Perry",
-                reason:
-                    "Its powerful vocals and motivational lyrics create an energetic, confident and uplifting feeling."
-            }
-
-        ]
-
-    },
-
-
-    Sadness: {
-
-        icon: "😔",
-
-        description:
-            "Reflective, emotional and comforting music for difficult moments.",
-
-        songs: [
-
-            {
-                title: "Someone Like You",
-                artist: "Adele",
-                reason:
-                    "Its slow tempo, restrained arrangement and emotional vocal delivery create a reflective atmosphere."
-            },
-
-            {
-                title: "When I Was Your Man",
-                artist: "Bruno Mars",
-                reason:
-                    "The piano-led arrangement and regretful lyrics give the song a strongly reflective emotional character."
-            },
-
-            {
-                title: "drivers license",
-                artist: "Olivia Rodrigo",
-                reason:
-                    "Its intimate vocals, slower pacing and themes of heartbreak make it particularly suited to reflective moods."
-            },
-
-            {
-                title: "Lovely",
-                artist: "Billie Eilish & Khalid",
-                reason:
-                    "Its subdued production and melancholic vocal performance create a quiet, introspective atmosphere."
-            },
-
-            {
-                title: "All I Want",
-                artist: "Kodaline",
-                reason:
-                    "The emotional vocals and gradual musical build support feelings of longing and reflection."
-            },
-
-            {
-                title: "The Night We Met",
-                artist: "Lord Huron",
-                reason:
-                    "Its atmospheric arrangement and nostalgic lyrics create a strong sense of longing and remembrance."
-            },
-
-            {
-                title: "Fix You",
-                artist: "Coldplay",
-                reason:
-                    "The restrained beginning and gradual emotional build create a reflective and comforting musical experience."
-            },
-
-            {
-                title: "Let Her Go",
-                artist: "Passenger",
-                reason:
-                    "Its acoustic sound and reflective lyrics focus on loss, memory and realizing someone's importance."
-            },
-
-            {
-                title: "traitor",
-                artist: "Olivia Rodrigo",
-                reason:
-                    "Its intimate delivery and emotionally heavy subject matter make it suited to a reflective mood."
-            },
-
-            {
-                title: "Before You Go",
-                artist: "Lewis Capaldi",
-                reason:
-                    "The emotional vocal performance and slow-building arrangement create a deeply reflective atmosphere."
-            }
-
-        ]
-
-    },
-
-
-    Anger: {
-
-        icon: "😡",
-
-        description:
-            "Intense, powerful music that matches high-energy emotions.",
-
-        songs: [
-
-            {
-                title: "Believer",
-                artist: "Imagine Dragons",
-                reason:
-                    "Its heavy percussion, forceful vocals and intense dynamic build create a powerful high-energy sound."
-            },
-
-            {
-                title: "Centuries",
-                artist: "Fall Out Boy",
-                reason:
-                    "The strong drums and dramatic arrangement create an intense, powerful atmosphere."
-            },
-
-            {
-                title: "Natural",
-                artist: "Imagine Dragons",
-                reason:
-                    "Its aggressive percussion and forceful vocal delivery give the song a high-intensity character."
-            },
-
-            {
-                title: "Numb",
-                artist: "Linkin Park",
-                reason:
-                    "Its powerful rock instrumentation and emotionally intense vocals make it suitable for expressing frustration."
-            },
-
-            {
-                title: "Warriors",
-                artist: "Imagine Dragons",
-                reason:
-                    "Its dramatic percussion and escalating arrangement create a feeling of strength and intensity."
-            },
-
-            {
-                title: "Radioactive",
-                artist: "Imagine Dragons",
-                reason:
-                    "The heavy electronic-rock production and dramatic rhythm create an intense atmosphere."
-            },
-
-            {
-                title: "Monster",
-                artist: "Skillet",
-                reason:
-                    "Its heavy rock instrumentation and forceful vocal delivery produce a strongly energetic sound."
-            },
-
-            {
-                title: "My Songs Know What You Did in the Dark",
-                artist: "Fall Out Boy",
-                reason:
-                    "Its driving drums and energetic rock production create a fast-moving, high-intensity mood."
-            },
-
-            {
-                title: "Whatever It Takes",
-                artist: "Imagine Dragons",
-                reason:
-                    "Its energetic percussion and determined vocal performance create a strong sense of intensity and drive."
-            },
-
-            {
-                title: "In the End",
-                artist: "Linkin Park",
-                reason:
-                    "Its contrast between restrained sections and powerful choruses creates an emotionally intense listening experience."
-            }
-
-        ]
-
-    },
-
-
-    Anxiety: {
-
-        icon: "😰",
-
-        description:
-            "Calming and grounding music for moments when your thoughts feel overwhelming.",
-
-        songs: [
-
-            {
-                title: "Weightless",
-                artist: "Marconi Union",
-                reason:
-                    "This track was specifically created with relaxation in mind and has been associated with reduced subjective stress in research."
-            },
-
-            {
-                title: "Lovely",
-                artist: "Billie Eilish & Khalid",
-                reason:
-                    "Its slower pace and restrained production create a quiet atmosphere that can work well for reflective listening."
-            },
-
-            {
-                title: "ocean eyes",
-                artist: "Billie Eilish",
-                reason:
-                    "Its soft vocals and spacious production create a gentle, low-intensity listening experience."
-            },
-
-            {
-                title: "Until I Found You",
-                artist: "Stephen Sanchez",
-                reason:
-                    "Its slower tempo and warm acoustic arrangement create a calmer, nostalgic atmosphere."
-            },
-
-            {
-                title: "Yellow",
-                artist: "Coldplay",
-                reason:
-                    "Its steady pacing and gradual arrangement can provide a predictable and soothing listening experience."
-            },
-
-            {
-                title: "Perfect",
-                artist: "Ed Sheeran",
-                reason:
-                    "Its gentle acoustic instrumentation and steady rhythm create a relaxed musical environment."
-            },
-
-            {
-                title: "Photograph",
-                artist: "Ed Sheeran",
-                reason:
-                    "Its acoustic arrangement and moderate pace give it a calm, intimate quality."
-            },
-
-            {
-                title: "All of Me",
-                artist: "John Legend",
-                reason:
-                    "The piano-led arrangement and smooth vocal delivery create a relatively gentle listening atmosphere."
-            },
-
-            {
-                title: "A Thousand Years",
-                artist: "Christina Perri",
-                reason:
-                    "Its slow pacing and soft orchestral arrangement create a peaceful and reflective sound."
-            },
-
-            {
-                title: "Someone You Loved",
-                artist: "Lewis Capaldi",
-                reason:
-                    "Its piano-centered arrangement starts relatively quietly and gives space for emotional reflection."
-            }
-
-        ]
-
-    },
-
-
-    Irritation: {
-
-        icon: "😤",
-
-        description:
-            "Energetic music to help acknowledge tension and shift your mood.",
-
-        songs: [
-
-            {
-                title: "Shake It Off",
-                artist: "Taylor Swift",
-                reason:
-                    "Its upbeat rhythm and message about moving past negativity make it a natural choice for shifting an irritated mood."
-            },
-
-            {
-                title: "Stronger",
-                artist: "Kelly Clarkson",
-                reason:
-                    "Its energetic production and resilience-focused lyrics create a sense of confidence and forward movement."
-            },
-
-            {
-                title: "Since U Been Gone",
-                artist: "Kelly Clarkson",
-                reason:
-                    "Its energetic pop-rock production provides a strong musical outlet for frustration."
-            },
-
-            {
-                title: "Don't Start Now",
-                artist: "Dua Lipa",
-                reason:
-                    "Its steady dance groove provides energetic movement that can help redirect attention."
-            },
-
-            {
-                title: "Good 4 U",
-                artist: "Olivia Rodrigo",
-                reason:
-                    "Its energetic pop-rock production strongly expresses frustration and emotional intensity."
-            },
-
-            {
-                title: "So What",
-                artist: "P!nk",
-                reason:
-                    "Its energetic arrangement and assertive vocal delivery create a powerful outlet for irritation."
-            },
-
-            {
-                title: "Confident",
-                artist: "Demi Lovato",
-                reason:
-                    "Its strong beat and assertive lyrics create an energetic and self-assured atmosphere."
-            },
-
-            {
-                title: "Break My Soul",
-                artist: "Beyoncé",
-                reason:
-                    "Its dance-oriented rhythm and theme of releasing pressure can support a transition away from frustration."
-            },
-
-            {
-                title: "Unstoppable",
-                artist: "Sia",
-                reason:
-                    "Its strong beat and empowering vocal performance create an energetic sense of determination."
-            },
-
-            {
-                title: "Firework",
-                artist: "Katy Perry",
-                reason:
-                    "Its uplifting build and powerful chorus create an energetic shift toward confidence and positivity."
-            }
-
-        ]
-
-    }
+  happiness: {
+
+    title: "😊 Happiness",
+
+    emoji: "😊",
+
+    description:
+      "Keep the good feeling going with upbeat, energetic and positive music.",
+
+    songs: [
+
+      {
+        title: "Happy",
+        artist: "Pharrell Williams",
+        why:
+          "Its fast, upbeat rhythm, bright production and strongly positive message make it well suited to maintaining an already positive emotional state."
+      },
+
+      {
+        title: "Can't Stop the Feeling!",
+        artist: "Justin Timberlake",
+        why:
+          "The lively tempo, danceable rhythm and joyful lyrics create an energetic listening experience."
+      },
+
+      {
+        title: "Levitating",
+        artist: "Dua Lipa",
+        why:
+          "Its disco-inspired beat and energetic production give the song a playful and uplifting character."
+      },
+
+      {
+        title: "Uptown Funk",
+        artist: "Mark Ronson ft. Bruno Mars",
+        why:
+          "The strong funk groove and energetic tempo make it highly danceable and stimulating."
+      },
+
+      {
+        title: "Good as Hell",
+        artist: "Lizzo",
+        why:
+          "Its upbeat production and encouraging message support feelings of confidence and positivity."
+      },
+
+      {
+        title: "Lush Life",
+        artist: "Zara Larsson",
+        why:
+          "The bright pop production and carefree tone create a lively atmosphere."
+      },
+
+      {
+        title: "APT.",
+        artist: "ROSÉ & Bruno Mars",
+        why:
+          "Its catchy rhythm and high-energy production make it suitable for an upbeat mood."
+      },
+
+      {
+        title: "Golden",
+        artist: "HUNTR/X, EJAE, Audrey Nuna & REI AMI",
+        why:
+          "The energetic production and confident delivery give the song an uplifting direction."
+      },
+
+      {
+        title: "Flowers",
+        artist: "Miley Cyrus",
+        why:
+          "Its confident message and bright pop production can reinforce feelings of empowerment."
+      },
+
+      {
+        title: "Roar",
+        artist: "Katy Perry",
+        why:
+          "The energetic chorus and message of finding one's voice make it uplifting and motivating."
+      }
+
+    ]
+
+  },
+
+
+  sadness: {
+
+    title: "😢 Sadness",
+
+    emoji: "😢",
+
+    description:
+      "Find comfort, emotional connection and gentle warmth through reflective music.",
+
+    songs: [
+
+      {
+        title: "Beautiful Things",
+        artist: "Benson Boone",
+        why:
+          "Its emotional delivery and themes of meaningful relationships create space for reflection."
+      },
+
+      {
+        title: "Someone You Loved",
+        artist: "Lewis Capaldi",
+        why:
+          "The emotional vocals and reflective mood can help listeners connect with feelings of sadness."
+      },
+
+      {
+        title: "The Night We Met",
+        artist: "Lord Huron",
+        why:
+          "Its atmospheric sound and nostalgic feeling create a reflective listening experience."
+      },
+
+      {
+        title: "When We Were Young",
+        artist: "Adele",
+        why:
+          "Its nostalgic themes and expressive vocals create a strong sense of reflection."
+      },
+
+      {
+        title: "Iris",
+        artist: "Goo Goo Dolls",
+        why:
+          "The emotional melody and vulnerable lyrics can resonate with longing and sadness."
+      },
+
+      {
+        title: "Lovely",
+        artist: "Billie Eilish & Khalid",
+        why:
+          "Its restrained production and vulnerable atmosphere make it suitable for reflective listening."
+      },
+
+      {
+        title: "What Was I Made For?",
+        artist: "Billie Eilish",
+        why:
+          "Its soft arrangement and introspective tone encourage quiet reflection."
+      },
+
+      {
+        title: "Ocean Eyes",
+        artist: "Billie Eilish",
+        why:
+          "The gentle production and dreamy atmosphere create a calm, introspective experience."
+      },
+
+      {
+        title: "Die With A Smile",
+        artist: "Lady Gaga & Bruno Mars",
+        why:
+          "Its emotional ballad style encourages heartfelt reflection."
+      },
+
+      {
+        title: "Back To Friends",
+        artist: "sombr",
+        why:
+          "Its reflective themes and emotional delivery suit feelings of loss or longing."
+      }
+
+    ]
+
+  },
+
+
+  anger: {
+
+    title: "😡 Anger",
+
+    emoji: "😡",
+
+    description:
+      "Use powerful music as a structured way to release energy and shift your emotional direction.",
+
+    songs: [
+
+      {
+        title: "Believer",
+        artist: "Imagine Dragons",
+        why:
+          "Its intense percussion and powerful vocals provide an energetic outlet for strong emotions."
+      },
+
+      {
+        title: "Stronger",
+        artist: "Kelly Clarkson",
+        why:
+          "Its message of overcoming difficulty can redirect frustration toward resilience."
+      },
+
+      {
+        title: "Titanium",
+        artist: "David Guetta ft. Sia",
+        why:
+          "Its strong production and resilient message create an intense but empowering experience."
+      },
+
+      {
+        title: "Unstoppable",
+        artist: "Sia",
+        why:
+          "Its dramatic build and confident lyrics can shift frustration toward determination."
+      },
+
+      {
+        title: "Roar",
+        artist: "Katy Perry",
+        why:
+          "Its energetic chorus provides a constructive direction for intense emotions."
+      },
+
+      {
+        title: "Shake It Off",
+        artist: "Taylor Swift",
+        why:
+          "Its upbeat rhythm encourages emotional release and moving on from irritation."
+      },
+
+      {
+        title: "Flowers",
+        artist: "Miley Cyrus",
+        why:
+          "Its confident message can redirect frustration toward self-reliance."
+      },
+
+      {
+        title: "I Will Survive",
+        artist: "Gloria Gaynor",
+        why:
+          "Its message of overcoming hardship transforms negative experiences into resilience."
+      },
+
+      {
+        title: "Since U Been Gone",
+        artist: "Kelly Clarkson",
+        why:
+          "Its high-energy sound provides an expressive outlet for intense feelings."
+      },
+
+      {
+        title: "The Man",
+        artist: "The Killers",
+        why:
+          "Its energetic rock sound matches high-energy emotional states."
+      }
+
+    ]
+
+  },
+
+
+  anxiety: {
+
+    title: "😟 Anxiety",
+
+    emoji: "😟",
+
+    description:
+      "Explore slower, familiar and emotionally gentle songs that may help create a calmer atmosphere.",
+
+    songs: [
+
+      {
+        title: "A Thousand Years",
+        artist: "Christina Perri",
+        why:
+          "Its slow tempo and gentle arrangement create a softer listening environment."
+      },
+
+      {
+        title: "Perfect",
+        artist: "Ed Sheeran",
+        why:
+          "Its smooth melody provides a gentle and emotionally warm listening experience."
+      },
+
+      {
+        title: "Photograph",
+        artist: "Ed Sheeran",
+        why:
+          "Its reflective pacing creates a quieter atmosphere suited to slowing down."
+      },
+
+      {
+        title: "Yellow",
+        artist: "Coldplay",
+        why:
+          "Its warm melody can create a comforting atmosphere."
+      },
+
+      {
+        title: "Ocean Eyes",
+        artist: "Billie Eilish",
+        why:
+          "Its soft vocals and spacious sound create a calm listening environment."
+      },
+
+      {
+        title: "Lovely",
+        artist: "Billie Eilish & Khalid",
+        why:
+          "Its restrained instrumentation allows for gentle reflective listening."
+      },
+
+      {
+        title: "Until I Found You",
+        artist: "Stephen Sanchez",
+        why:
+          "Its nostalgic style and smooth vocals create a gentle atmosphere."
+      },
+
+      {
+        title: "Adore You",
+        artist: "Harry Styles",
+        why:
+          "Its warm production and smooth melody create a comfortable listening experience."
+      },
+
+      {
+        title: "Sunflower",
+        artist: "Post Malone & Swae Lee",
+        why:
+          "Its relaxed groove gives it an easy-going quality."
+      },
+
+      {
+        title: "What Was I Made For?",
+        artist: "Billie Eilish",
+        why:
+          "Its quiet arrangement and slow pace encourage stillness and reflection."
+      }
+
+    ]
+
+  },
+
+
+  irritation: {
+
+    title: "😤 Irritation",
+
+    emoji: "😤",
+
+    description:
+      "Take a musical reset with lighter, warmer and more relaxed songs.",
+
+    songs: [
+
+      {
+        title: "Sunday Best",
+        artist: "Surfaces",
+        why:
+          "Its relaxed rhythm and optimistic tone create an easy-going atmosphere."
+      },
+
+      {
+        title: "Put Your Records On",
+        artist: "Corinne Bailey Rae",
+        why:
+          "Its warm vocals and relaxed groove create a comforting listening experience."
+      },
+
+      {
+        title: "Lovely Day",
+        artist: "Bill Withers",
+        why:
+          "Its smooth groove creates a warm and positive atmosphere."
+      },
+
+      {
+        title: "Sunflower",
+        artist: "Post Malone & Swae Lee",
+        why:
+          "Its laid-back rhythm gives the song a relaxed quality."
+      },
+
+      {
+        title: "Adore You",
+        artist: "Harry Styles",
+        why:
+          "Its warm production creates a lighter emotional atmosphere."
+      },
+
+      {
+        title: "Best Part",
+        artist: "Daniel Caesar ft. H.E.R.",
+        why:
+          "Its soft instrumentation and gentle delivery create a calm atmosphere."
+      },
+
+      {
+        title: "Location",
+        artist: "Khalid",
+        why:
+          "Its mellow production makes it suitable for relaxed listening."
+      },
+
+      {
+        title: "Golden Hour",
+        artist: "JVKE",
+        why:
+          "Its warm melody creates a soothing and pleasant emotional tone."
+      },
+
+      {
+        title: "Sweet Creature",
+        artist: "Harry Styles",
+        why:
+          "Its acoustic sound creates a quiet and low-intensity listening experience."
+      },
+
+      {
+        title: "So Easy (To Fall in Love)",
+        artist: "Olivia Dean",
+        why:
+          "Its smooth vocals and warm production create an easy-going atmosphere."
+      }
+
+    ]
+
+  }
 
 };
+
+
 /* =========================================================
-   6. APP STATE
+   APP STATE
    ========================================================= */
 
 let currentEmotion = "";
@@ -504,71 +631,93 @@ let currentSongIndex = 0;
 
 
 /* =========================================================
-   7. SAFE PAGE NAVIGATION
+   PAGE NAVIGATION
    ========================================================= */
 
 function showPage(pageId) {
 
-  const pages = document.querySelectorAll(".page");
+  const pages =
+    document.querySelectorAll(".page");
+
 
   pages.forEach(function(page) {
-    page.classList.remove("active-page");
+
+    page.classList.remove(
+      "active-page"
+    );
+
   });
 
-  const targetPage = document.getElementById(pageId);
 
-  if (!targetPage) {
-    console.error("Page not found:", pageId);
-    return;
+  const target =
+    document.getElementById(pageId);
+
+
+  if (target) {
+
+    target.classList.add(
+      "active-page"
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
   }
-
-  targetPage.classList.add("active-page");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
 
 }
 
 
 /* =========================================================
-   8. DISPLAY EMOTION
+   EMOTION DISPLAY
    ========================================================= */
 
 function displayEmotion(emotion) {
 
   if (!moodData[emotion]) {
-    console.error("Emotion not found:", emotion);
     return;
   }
 
+
   currentEmotion = emotion;
 
-  const data = moodData[emotion];
 
-  const emotionTitle =
-    document.getElementById("emotion-title");
-
-  const emotionDescription =
-    document.getElementById("emotion-description");
-
-  const emotionEmoji =
-    document.getElementById("emotion-emoji");
+  const data =
+    moodData[emotion];
 
 
-  if (emotionTitle) {
-    emotionTitle.textContent = data.title;
+  const title =
+    document.getElementById(
+      "emotion-title"
+    );
+
+  const description =
+    document.getElementById(
+      "emotion-description"
+    );
+
+  const emoji =
+    document.getElementById(
+      "emotion-emoji"
+    );
+
+
+  if (title) {
+    title.textContent = data.title;
   }
 
-  if (emotionDescription) {
-    emotionDescription.textContent =
+
+  if (description) {
+    description.textContent =
       data.description;
   }
 
-  if (emotionEmoji) {
-    emotionEmoji.textContent = data.emoji;
+
+  if (emoji) {
+    emoji.textContent = data.emoji;
   }
+
 
   displaySongs();
 
@@ -576,89 +725,90 @@ function displayEmotion(emotion) {
 
 
 /* =========================================================
-   9. DISPLAY SONGS
+   SONG LIST
    ========================================================= */
 
 function displaySongs() {
 
   const songList =
-    document.getElementById("song-list");
+    document.getElementById(
+      "song-list"
+    );
 
-  if (!songList) {
+
+  if (!songList || !currentEmotion) {
     return;
   }
+
 
   songList.innerHTML = "";
 
-  if (
-    !currentEmotion ||
-    !moodData[currentEmotion]
-  ) {
-    return;
-  }
 
   const songs =
     moodData[currentEmotion].songs;
 
 
-  songs.forEach(function(song, index) {
+  songs.forEach(
+    function(song, index) {
 
-    const songCard =
-      document.createElement("button");
+      const card =
+        document.createElement(
+          "button"
+        );
 
-    songCard.type = "button";
 
-    songCard.className = "song-card";
+      card.type = "button";
 
-    songCard.innerHTML = `
-      <span class="song-number">
-        ${String(index + 1).padStart(2, "0")}
-      </span>
+      card.className =
+        "song-card";
 
-      <span class="song-details">
 
-        <strong>${escapeHTML(song.title)}</strong>
-
-        <small>${escapeHTML(song.artist)}</small>
-
-        <span class="song-why">
-
-          <b>✨ Why this song fits:</b>
-
-          ${escapeHTML(song.why)}
-
+      card.innerHTML = `
+        <span class="song-number">
+          ${String(index + 1).padStart(2, "0")}
         </span>
 
-      </span>
+        <span class="song-details">
+          <strong>${song.title}</strong>
 
-      <span class="song-arrow">→</span>
-    `;
+          <small>${song.artist}</small>
+
+          <span class="song-why">
+            <b>✨ Why this song fits:</b>
+            ${song.why}
+          </span>
+        </span>
+
+        <span class="song-arrow">→</span>
+      `;
 
 
-    songCard.addEventListener(
-      "click",
-      function() {
+      card.addEventListener(
+        "click",
+        function() {
 
-        startSongSession(song);
+          startSongSession(song);
 
-      }
-    );
+        }
+      );
 
 
-    songList.appendChild(songCard);
+      songList.appendChild(card);
 
-  });
+    }
+  );
 
 }
 
 
 /* =========================================================
-   10. SHUFFLE
+   SHUFFLE
    ========================================================= */
 
 function shuffleSongs(array) {
 
   const shuffled = [...array];
+
 
   for (
     let i = shuffled.length - 1;
@@ -667,7 +817,10 @@ function shuffleSongs(array) {
   ) {
 
     const j =
-      Math.floor(Math.random() * (i + 1));
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
 
     [
       shuffled[i],
@@ -680,58 +833,39 @@ function shuffleSongs(array) {
 
   }
 
+
   return shuffled;
 
 }
 
 
 /* =========================================================
-   11. START SONG SESSION
+   START SONG
    ========================================================= */
 
 function startSongSession(song) {
 
-  if (
-    !currentEmotion ||
-    !moodData[currentEmotion]
-  ) {
-    return;
-  }
-
   currentSong = song;
 
 
-  /* Analytics should NEVER stop the website */
-
-  try {
-
-    trackSoundSpaceEvent(
-      "song_selected",
-      currentEmotion,
-      `${song.title} — ${song.artist}`
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Analytics error ignored:",
-      error
-    );
-
-  }
+  trackSoundSpaceEvent(
+    "song_selected",
+    currentEmotion,
+    `${song.title} — ${song.artist}`
+  );
 
 
   const otherSongs =
-    moodData[currentEmotion].songs.filter(
-      function(item) {
+    moodData[currentEmotion]
+      .songs
+      .filter(function(item) {
 
         return !(
           item.title === song.title &&
           item.artist === song.artist
         );
 
-      }
-    );
+      });
 
 
   shuffleQueue = [
@@ -742,6 +876,7 @@ function startSongSession(song) {
 
   currentSongIndex = 0;
 
+
   displayPlayer();
 
   showPage("player-page");
@@ -750,7 +885,7 @@ function startSongSession(song) {
 
 
 /* =========================================================
-   12. DISPLAY PLAYER
+   PLAYER
    ========================================================= */
 
 function displayPlayer() {
@@ -759,76 +894,90 @@ function displayPlayer() {
     return;
   }
 
+
   currentSong =
     shuffleQueue[currentSongIndex];
 
 
-  const playerTitle =
-    document.getElementById("player-title");
+  const title =
+    document.getElementById(
+      "player-title"
+    );
 
-  const playerArtist =
-    document.getElementById("player-artist");
+  const artist =
+    document.getElementById(
+      "player-artist"
+    );
 
-  const playerReason =
-    document.getElementById("player-reason");
+  const reason =
+    document.getElementById(
+      "player-reason"
+    );
 
-  const playerEmoji =
-    document.getElementById("player-emoji");
+  const emoji =
+    document.getElementById(
+      "player-emoji"
+    );
 
-  const songPosition =
-    document.getElementById("song-position");
+  const position =
+    document.getElementById(
+      "song-position"
+    );
 
-  const spotifyLink =
-    document.getElementById("spotify-link");
+  const spotify =
+    document.getElementById(
+      "spotify-link"
+    );
 
 
-  if (playerTitle) {
-    playerTitle.textContent =
+  if (title) {
+    title.textContent =
       currentSong.title;
   }
 
-  if (playerArtist) {
-    playerArtist.textContent =
+
+  if (artist) {
+    artist.textContent =
       currentSong.artist;
   }
 
-  if (playerReason) {
-    playerReason.textContent =
+
+  if (reason) {
+    reason.textContent =
       currentSong.why;
   }
 
-  if (
-    playerEmoji &&
-    currentEmotion &&
-    moodData[currentEmotion]
-  ) {
 
-    playerEmoji.textContent =
+  if (emoji && currentEmotion) {
+
+    emoji.textContent =
       moodData[currentEmotion].emoji;
 
   }
 
-  if (songPosition) {
 
-    songPosition.textContent =
+  if (position) {
+
+    position.textContent =
       `${currentSongIndex + 1} / ${shuffleQueue.length}`;
 
   }
 
-  if (spotifyLink) {
 
-    const searchQuery =
+  if (spotify) {
+
+    const query =
       encodeURIComponent(
-        currentSong.title +
-        " " +
-        currentSong.artist
+        `${currentSong.title} ${currentSong.artist}`
       );
 
-    spotifyLink.href =
+
+    spotify.href =
       "https://open.spotify.com/search/" +
-      searchQuery;
+      query;
 
   }
+
 
   displayQueue();
 
@@ -836,61 +985,68 @@ function displayPlayer() {
 
 
 /* =========================================================
-   13. DISPLAY QUEUE
+   QUEUE
    ========================================================= */
 
 function displayQueue() {
 
-  const queueList =
-    document.getElementById("queue-list");
+  const queue =
+    document.getElementById(
+      "queue-list"
+    );
 
-  if (!queueList) {
+
+  if (!queue) {
     return;
   }
 
-  queueList.innerHTML = "";
+
+  queue.innerHTML = "";
 
 
   shuffleQueue.forEach(
     function(song, index) {
 
-      const queueItem =
-        document.createElement("button");
-
-      queueItem.type = "button";
-
-      queueItem.className = "queue-item";
+      const item =
+        document.createElement(
+          "button"
+        );
 
 
-      if (index === currentSongIndex) {
+      item.type = "button";
 
-        queueItem.classList.add(
+      item.className =
+        "queue-item";
+
+
+      if (
+        index === currentSongIndex
+      ) {
+
+        item.classList.add(
           "current-song"
         );
 
       }
 
 
-      queueItem.innerHTML = `
+      item.innerHTML = `
         <span class="queue-number">
           ${String(index + 1).padStart(2, "0")}
         </span>
 
         <span class="queue-info">
-          <strong>${escapeHTML(song.title)}</strong>
-          <small>${escapeHTML(song.artist)}</small>
+          <strong>${song.title}</strong>
+          <small>${song.artist}</small>
         </span>
       `;
 
 
-      queueItem.addEventListener(
+      item.addEventListener(
         "click",
         function() {
 
           currentSongIndex = index;
-
-          currentSong =
-            shuffleQueue[index];
 
           displayPlayer();
 
@@ -898,7 +1054,7 @@ function displayQueue() {
       );
 
 
-      queueList.appendChild(queueItem);
+      queue.appendChild(item);
 
     }
   );
@@ -907,7 +1063,7 @@ function displayQueue() {
 
 
 /* =========================================================
-   14. NEXT SONG
+   NEXT SONG
    ========================================================= */
 
 function nextSong() {
@@ -915,6 +1071,7 @@ function nextSong() {
   if (!shuffleQueue.length) {
     return;
   }
+
 
   currentSongIndex++;
 
@@ -938,26 +1095,24 @@ function nextSong() {
 
 
 /* =========================================================
-   15. RESHUFFLE
+   RESHUFFLE
    ========================================================= */
 
 function reshuffleSongs() {
 
-  if (
-    !currentEmotion ||
-    !moodData[currentEmotion]
-  ) {
+  if (!currentEmotion) {
     return;
   }
+
 
   shuffleQueue =
     shuffleSongs(
       moodData[currentEmotion].songs
     );
 
+
   currentSongIndex = 0;
 
-  currentSong = shuffleQueue[0];
 
   displayPlayer();
 
@@ -965,10 +1120,15 @@ function reshuffleSongs() {
 
 
 /* =========================================================
-   16. SAFE INSIGHTS
+   INSIGHTS
    ========================================================= */
 
-async function getSharedInsights() {
+async function displayInsights() {
+
+  if (IS_DEVELOPER) {
+    return;
+  }
+
 
   try {
 
@@ -976,10 +1136,10 @@ async function getSharedInsights() {
       await fetch(
         `${SUPABASE_URL}/rest/v1/usage_events?select=*`,
         {
-          method: "GET",
-
           headers: {
-            "apikey": SUPABASE_KEY,
+            "apikey":
+              SUPABASE_KEY,
+
             "Authorization":
               `Bearer ${SUPABASE_KEY}`
           }
@@ -988,458 +1148,174 @@ async function getSharedInsights() {
 
 
     if (!response.ok) {
-
-      console.error(
-        "Could not load insights"
-      );
-
-      return [];
-
+      return;
     }
 
 
-    return await response.json();
+    const events =
+      await response.json();
+
+
+    const sessions =
+      new Set();
+
+
+    events.forEach(function(event) {
+
+      if (event.session_id) {
+        sessions.add(
+          event.session_id
+        );
+      }
+
+    });
+
+
+    const total =
+      document.getElementById(
+        "insight-total"
+      );
+
+
+    if (total) {
+      total.textContent =
+        sessions.size;
+    }
+
+
+    const counts = {
+      happiness: 0,
+      sadness: 0,
+      anger: 0,
+      anxiety: 0,
+      irritation: 0
+    };
+
+
+    events.forEach(function(event) {
+
+      if (
+        event.event_type ===
+          "emotion_selected" &&
+        counts[event.mood] !== undefined
+      ) {
+
+        counts[event.mood]++;
+
+      }
+
+    });
+
+
+    Object.keys(counts).forEach(
+      function(emotion) {
+
+        const element =
+          document.getElementById(
+            "stat-" + emotion
+          );
+
+
+        if (element) {
+          element.textContent =
+            counts[emotion];
+        }
+
+      }
+    );
+
+
+    let yes = 0;
+    let no = 0;
+
+
+    events.forEach(function(event) {
+
+      if (
+        event.event_type ===
+        "feedback"
+      ) {
+
+        if (event.helpful === "Yes") {
+          yes++;
+        }
+
+        if (event.helpful === "No") {
+          no++;
+        }
+
+      }
+
+    });
+
+
+    const yesElement =
+      document.getElementById(
+        "insight-yes"
+      );
+
+    const noElement =
+      document.getElementById(
+        "insight-no"
+      );
+
+
+    if (yesElement) {
+      yesElement.textContent = yes;
+    }
+
+    if (noElement) {
+      noElement.textContent = no;
+    }
+
 
   } catch (error) {
 
     console.error(
-      "Insights error:",
+      "Could not load insights:",
       error
     );
 
-    return [];
-
   }
 
 }
 
 
 /* =========================================================
-   17. DISPLAY INSIGHTS
-   ========================================================= */
-
-async function displayInsights() {
-
-  const events =
-    await getSharedInsights();
-
-
-  const sessions = new Set();
-
-  events.forEach(function(event) {
-
-    if (event.session_id) {
-      sessions.add(event.session_id);
-    }
-
-  });
-
-
-  const totalElement =
-    document.getElementById("insight-total");
-
-  if (totalElement) {
-    totalElement.textContent =
-      sessions.size;
-  }
-
-
-  const emotionCounts = {
-    happiness: 0,
-    sadness: 0,
-    anger: 0,
-    anxiety: 0,
-    irritation: 0
-  };
-
-
-  events.forEach(function(event) {
-
-    if (
-      event.event_type ===
-      "emotion_selected"
-    ) {
-
-      const mood =
-        String(event.mood || "")
-          .toLowerCase();
-
-      if (
-        emotionCounts[mood] !== undefined
-      ) {
-
-        emotionCounts[mood]++;
-
-      }
-
-    }
-
-  });
-
-
-  Object.keys(emotionCounts).forEach(
-    function(emotion) {
-
-      const element =
-        document.getElementById(
-          "stat-" + emotion
-        );
-
-      if (element) {
-        element.textContent =
-          emotionCounts[emotion];
-      }
-
-    }
-  );
-
-
-  let yes = 0;
-  let no = 0;
-
-
-  events.forEach(function(event) {
-
-    if (
-      event.event_type === "feedback"
-    ) {
-
-      if (event.helpful === "Yes") {
-        yes++;
-      }
-
-      if (event.helpful === "No") {
-        no++;
-      }
-
-    }
-
-  });
-
-
-  const yesElement =
-    document.getElementById("insight-yes");
-
-  const noElement =
-    document.getElementById("insight-no");
-
-
-  if (yesElement) {
-    yesElement.textContent = yes;
-  }
-
-  if (noElement) {
-    noElement.textContent = no;
-  }
-
-
-  const dates =
-    document.getElementById(
-      "insight-dates"
-    );
-
-
-  if (dates) {
-
-    const pageViews =
-      events
-        .filter(function(event) {
-
-          return event.event_type ===
-            "page_view";
-
-        })
-        .reverse();
-
-
-    if (!pageViews.length) {
-
-      dates.innerHTML = `
-        <p class="empty-insights">
-          No activity recorded yet.
-        </p>
-      `;
-
-    } else {
-
-      dates.innerHTML =
-        pageViews.map(function(event) {
-
-          const date =
-            event.created_at
-              ? new Date(event.created_at)
-              : new Date();
-
-          return `
-            <div class="date-row">
-
-              <span>
-                📅
-                ${date.toLocaleDateString()}
-              </span>
-
-              <strong>
-                ${date.toLocaleTimeString(
-                  [],
-                  {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                  }
-                )}
-              </strong>
-
-            </div>
-          `;
-
-        }).join("");
-
-    }
-
-  }
-
-
-  const feedbackContainer =
-    document.getElementById(
-      "insight-feedback"
-    );
-
-
-  if (feedbackContainer) {
-
-    const feedback =
-      events
-        .filter(function(event) {
-
-          return event.event_type ===
-            "feedback";
-
-        })
-        .reverse();
-
-
-    if (!feedback.length) {
-
-      feedbackContainer.innerHTML = `
-        <p class="empty-insights">
-          No feedback submitted yet.
-        </p>
-      `;
-
-    } else {
-
-      feedbackContainer.innerHTML =
-        feedback.map(function(item) {
-
-          return `
-            <article class="feedback-result">
-
-              <div class="feedback-result-top">
-
-                <strong>
-                  ${escapeHTML(
-                    item.mood ||
-                    "No emotion selected"
-                  )}
-                </strong>
-
-                <span>
-                  ${escapeHTML(
-                    item.helpful ||
-                    "No answer"
-                  )}
-                </span>
-
-              </div>
-
-              ${
-                item.song
-                  ? `
-                    <p>
-                      <b>Song:</b><br>
-                      ${escapeHTML(item.song)}
-                    </p>
-                  `
-                  : ""
-              }
-
-              ${
-                item.feedback_text
-                  ? `
-                    <p>
-                      <b>Feedback:</b><br>
-                      ${escapeHTML(
-                        item.feedback_text
-                      )}
-                    </p>
-                  `
-                  : ""
-              }
-
-            </article>
-          `;
-
-        }).join("");
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   18. ESCAPE HTML
-   ========================================================= */
-
-function escapeHTML(value) {
-
-  return String(value ?? "")
-
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
-
-/* =========================================================
-   19. NAVIGATION
-   ========================================================= */
-
-function setupPageButtons() {
-
-  document.addEventListener(
-    "click",
-    function(event) {
-
-      const button =
-        event.target.closest("[data-page]");
-
-      if (!button) {
-        return;
-      }
-
-      event.preventDefault();
-
-      const page =
-        button.dataset.page;
-
-      if (!page) {
-        return;
-      }
-
-      showPage(page);
-
-
-      if (page === "insights") {
-
-        displayInsights();
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   20. EMOTION CARDS
-   ========================================================= */
-
-function setupEmotionCards() {
-
-  document.addEventListener(
-    "click",
-    function(event) {
-
-      const card =
-        event.target.closest(
-          ".emotion-card"
-        );
-
-      if (!card) {
-        return;
-      }
-
-
-      event.preventDefault();
-
-      const emotion =
-        card.dataset.emotion;
-
-
-      if (!moodData[emotion]) {
-        return;
-      }
-
-
-      currentEmotion = emotion;
-
-
-      /* Analytics cannot stop emotion clicks */
-
-      try {
-
-        trackSoundSpaceEvent(
-          "emotion_selected",
-          emotion
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Tracking error ignored:",
-          error
-        );
-
-      }
-
-
-      displayEmotion(emotion);
-
-      showPage("emotion-page");
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   21. FEEDBACK
+   FEEDBACK
    ========================================================= */
 
 function setupFeedback() {
 
-  const feedbackForm =
+  const form =
     document.getElementById(
       "feedback-form"
     );
 
-  if (!feedbackForm) {
+
+  if (!form) {
     return;
   }
 
 
-  feedbackForm.addEventListener(
+  form.addEventListener(
     "submit",
     async function(event) {
 
       event.preventDefault();
 
 
-      const feedbackEmotion =
+      const emotion =
         document.getElementById(
           "feedback-emotion"
         );
 
-      const calmerAnswer =
+
+      const selectedAnswer =
         document.querySelector(
           'input[name="calmer"]:checked'
         );
+
 
       const liked =
         document.getElementById("liked");
@@ -1453,140 +1329,57 @@ function setupFeedback() {
         );
 
 
-      const emotion =
-        feedbackEmotion?.value ||
-        currentEmotion ||
-        "";
-
-
-      const helpful =
-        calmerAnswer?.value || "";
-
-
       const feedbackText = [
-        liked?.value.trim() || "",
-        disliked?.value.trim() || "",
-        additional?.value.trim() || ""
+
+        liked ? liked.value.trim() : "",
+        disliked ? disliked.value.trim() : "",
+        additional ? additional.value.trim() : ""
+
       ]
         .filter(Boolean)
         .join("\n");
 
 
-      const successMessage =
+      await trackSoundSpaceEvent(
+
+        "feedback",
+
+        emotion && emotion.value
+          ? emotion.value.toLowerCase()
+          : currentEmotion,
+
+        currentSong
+          ? `${currentSong.title} — ${currentSong.artist}`
+          : null,
+
+        selectedAnswer
+          ? selectedAnswer.value
+          : null,
+
+        feedbackText || null
+
+      );
+
+
+      const success =
         document.getElementById(
           "feedback-success"
         );
 
 
-      if (IS_DEVELOPER) {
+      if (success) {
 
-        if (successMessage) {
+        success.textContent =
+          IS_DEVELOPER
+            ? "Developer mode is on. Your feedback was not tracked."
+            : "✨ Thank you! Your feedback has been saved.";
 
-          successMessage.textContent =
-            "Developer mode is on. This test feedback was not saved.";
-
-          successMessage.hidden = false;
-
-        }
-
-        feedbackForm.reset();
-
-        return;
+        success.hidden = false;
 
       }
 
 
-      try {
-
-        const response =
-          await fetch(
-            `${SUPABASE_URL}/rest/v1/usage_events`,
-            {
-              method: "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json",
-
-                "apikey":
-                  SUPABASE_KEY,
-
-                "Authorization":
-                  `Bearer ${SUPABASE_KEY}`,
-
-                "Prefer":
-                  "return=minimal"
-              },
-
-              body: JSON.stringify({
-
-                event_type: "feedback",
-
-                session_id:
-                  SOUNDSPACE_SESSION_ID,
-
-                page:
-                  window.location.pathname,
-
-                mood:
-                  emotion || null,
-
-                song:
-                  currentSong
-                    ? `${currentSong.title} — ${currentSong.artist}`
-                    : null,
-
-                helpful:
-                  helpful || null,
-
-                feedback_text:
-                  feedbackText || null
-
-              })
-
-            }
-          );
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            "Feedback could not be saved"
-          );
-
-        }
-
-
-        if (successMessage) {
-
-          successMessage.textContent =
-            "✨ Thank you! Your feedback has been saved.";
-
-          successMessage.hidden = false;
-
-        }
-
-
-        feedbackForm.reset();
-
-      } catch (error) {
-
-        console.error(
-          "Feedback error:",
-          error
-        );
-
-
-        if (successMessage) {
-
-          successMessage.textContent =
-            "Your feedback could not be saved. Please try again.";
-
-          successMessage.hidden = false;
-
-        }
-
-      }
+      form.reset();
 
     }
   );
@@ -1595,150 +1388,188 @@ function setupFeedback() {
 
 
 /* =========================================================
-   22. PLAYER BUTTONS
-   ========================================================= */
-
-function setupPlayerButtons() {
-
-  const nextButton =
-    document.getElementById(
-      "next-button"
-    );
-
-  const reshuffleButton =
-    document.getElementById(
-      "reshuffle-button"
-    );
-
-
-  if (nextButton) {
-
-    nextButton.addEventListener(
-      "click",
-      nextSong
-    );
-
-  }
-
-
-  if (reshuffleButton) {
-
-    reshuffleButton.addEventListener(
-      "click",
-      reshuffleSongs
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   23. BACK BUTTONS
-   ========================================================= */
-
-function setupBackButtons() {
-
-  const backHome =
-    document.getElementById(
-      "back-home"
-    );
-
-  const backToEmotion =
-    document.getElementById(
-      "back-to-emotion"
-    );
-
-
-  if (backHome) {
-
-    backHome.addEventListener(
-      "click",
-      function() {
-
-        showPage("home");
-
-      }
-    );
-
-  }
-
-
-  if (backToEmotion) {
-
-    backToEmotion.addEventListener(
-      "click",
-      function() {
-
-        if (currentEmotion) {
-
-          displayEmotion(
-            currentEmotion
-          );
-
-        }
-
-        showPage("emotion-page");
-
-      }
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   24. START SOUNDSPACE
+   START WEBSITE
    ========================================================= */
 
 document.addEventListener(
   "DOMContentLoaded",
   function() {
 
-    console.log(
-      "SoundSpace loaded successfully!"
-    );
+    /* NAVIGATION TABS */
+
+    document
+      .querySelectorAll("[data-page]")
+      .forEach(function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            const page =
+              button.dataset.page;
 
 
-    /*
-       Set up the website FIRST.
-       Analytics cannot interfere with clicking.
-    */
+            showPage(page);
 
-    setupPageButtons();
 
-    setupEmotionCards();
+            if (
+              page === "insights"
+            ) {
+
+              displayInsights();
+
+            }
+
+          }
+        );
+
+      });
+
+
+    /* EMOTION CARDS */
+
+    document
+      .querySelectorAll(".emotion-card")
+      .forEach(function(card) {
+
+        card.addEventListener(
+          "click",
+          function() {
+
+            const emotion =
+              card.dataset.emotion;
+
+
+            if (!moodData[emotion]) {
+              return;
+            }
+
+
+            currentEmotion =
+              emotion;
+
+
+            trackSoundSpaceEvent(
+              "emotion_selected",
+              emotion
+            );
+
+
+            displayEmotion(emotion);
+
+            showPage(
+              "emotion-page"
+            );
+
+          }
+        );
+
+      });
+
+
+    /* BACK HOME */
+
+    const backHome =
+      document.getElementById(
+        "back-home"
+      );
+
+
+    if (backHome) {
+
+      backHome.addEventListener(
+        "click",
+        function() {
+
+          showPage("home");
+
+        }
+      );
+
+    }
+
+
+    /* BACK TO SONGS */
+
+    const backToEmotion =
+      document.getElementById(
+        "back-to-emotion"
+      );
+
+
+    if (backToEmotion) {
+
+      backToEmotion.addEventListener(
+        "click",
+        function() {
+
+          showPage(
+            "emotion-page"
+          );
+
+        }
+      );
+
+    }
+
+
+    /* NEXT */
+
+    const next =
+      document.getElementById(
+        "next-button"
+      );
+
+
+    if (next) {
+
+      next.addEventListener(
+        "click",
+        nextSong
+      );
+
+    }
+
+
+    /* RESHUFFLE */
+
+    const reshuffle =
+      document.getElementById(
+        "reshuffle-button"
+      );
+
+
+    if (reshuffle) {
+
+      reshuffle.addEventListener(
+        "click",
+        reshuffleSongs
+      );
+
+    }
+
+
+    /* FEEDBACK */
 
     setupFeedback();
 
-    setupPlayerButtons();
 
-    setupBackButtons();
-
-
-    /*
-       Track the visit separately.
-    */
+    /* TRACK REAL VISITORS ONLY */
 
     if (!IS_DEVELOPER) {
 
-      try {
-
-        trackSoundSpaceEvent(
-          "page_view"
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Page tracking error ignored:",
-          error
-        );
-
-      }
+      trackSoundSpaceEvent(
+        "page_view"
+      );
 
     }
+
+
+    console.log(
+      IS_DEVELOPER
+        ? "SoundSpace loaded — Developer Mode ON"
+        : "SoundSpace loaded successfully"
+    );
 
   }
 );
