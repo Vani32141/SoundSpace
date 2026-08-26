@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>SoundSpace — Music for How You Feel</title>
 
@@ -14,12 +18,29 @@
     <!-- ================= HEADER ================= -->
 
     <header class="site-header">
-        <div class="logo">SoundSpace</div>
+
+        <div class="logo">
+            SoundSpace
+        </div>
 
         <nav>
-            <button id="home-nav" class="nav-btn">Home</button>
-            <button id="insights-nav" class="nav-btn">Insights</button>
+
+            <button
+                id="home-nav"
+                class="nav-btn"
+            >
+                Home
+            </button>
+
+            <button
+                id="insights-nav"
+                class="nav-btn"
+            >
+                Insights
+            </button>
+
         </nav>
+
     </header>
 
 
@@ -28,67 +49,131 @@
     <main id="home-page">
 
         <section class="hero">
-            <p class="eyebrow">YOUR MOOD • YOUR MOMENT • YOUR MUSIC</p>
 
-            <h1>Music for how you feel.</h1>
+            <p class="eyebrow">
+                YOUR MOOD • YOUR MOMENT • YOUR MUSIC
+            </p>
 
-            <p>
+            <h1>
+                Music for how you feel.
+            </h1>
+
+            <p class="hero-description">
                 Choose the emotion that best describes how you're feeling
                 and discover music selected to match your mood.
             </p>
+
         </section>
 
 
-        <!-- EMOTIONS -->
+        <!-- ================= EMOTIONS ================= -->
 
         <section class="emotion-section">
 
-            <h2>How are you feeling?</h2>
+            <h2>
+                How are you feeling?
+            </h2>
 
             <div class="emotion-grid">
 
-                <button class="emotion-card" data-emotion="Happiness">
-                    <span class="emotion-icon">😊</span>
-                    <span class="emotion-name">Happiness</span>
+
+                <button
+                    class="emotion-card"
+                    data-emotion="Happiness"
+                >
+
+                    <span class="emotion-icon">
+                        😊
+                    </span>
+
+                    <span class="emotion-name">
+                        Happiness
+                    </span>
+
                     <span class="emotion-description">
                         Bright, energetic and joyful
                     </span>
+
                 </button>
 
 
-                <button class="emotion-card" data-emotion="Sadness">
-                    <span class="emotion-icon">😔</span>
-                    <span class="emotion-name">Sadness</span>
+                <button
+                    class="emotion-card"
+                    data-emotion="Sadness"
+                >
+
+                    <span class="emotion-icon">
+                        😔
+                    </span>
+
+                    <span class="emotion-name">
+                        Sadness
+                    </span>
+
                     <span class="emotion-description">
                         Reflective, emotional and comforting
                     </span>
+
                 </button>
 
 
-                <button class="emotion-card" data-emotion="Anger">
-                    <span class="emotion-icon">😡</span>
-                    <span class="emotion-name">Anger</span>
+                <button
+                    class="emotion-card"
+                    data-emotion="Anger"
+                >
+
+                    <span class="emotion-icon">
+                        😡
+                    </span>
+
+                    <span class="emotion-name">
+                        Anger
+                    </span>
+
                     <span class="emotion-description">
                         Intense, powerful and energetic
                     </span>
+
                 </button>
 
 
-                <button class="emotion-card" data-emotion="Anxiety">
-                    <span class="emotion-icon">😰</span>
-                    <span class="emotion-name">Anxiety</span>
+                <button
+                    class="emotion-card"
+                    data-emotion="Anxiety"
+                >
+
+                    <span class="emotion-icon">
+                        😰
+                    </span>
+
+                    <span class="emotion-name">
+                        Anxiety
+                    </span>
+
                     <span class="emotion-description">
                         Calming, grounding and reassuring
                     </span>
+
                 </button>
 
 
-                <button class="emotion-card" data-emotion="Irritation">
-                    <span class="emotion-icon">😤</span>
-                    <span class="emotion-name">Irritation</span>
+                <button
+                    class="emotion-card"
+                    data-emotion="Irritation"
+                >
+
+                    <span class="emotion-icon">
+                        😤
+                    </span>
+
+                    <span class="emotion-name">
+                        Irritation
+                    </span>
+
                     <span class="emotion-description">
                         Release tension and reset
                     </span>
+
                 </button>
 
             </div>
@@ -100,58 +185,112 @@
 
     <!-- ================= EMOTION PAGE ================= -->
 
-    <main id="emotion-page" style="display:none;">
+    <main
+        id="emotion-page"
+        style="display:none;"
+    >
 
         <section class="emotion-header">
 
-            <button id="back-button" class="back-button">
+            <button
+                id="back-button"
+                class="back-button"
+            >
                 ← Back
             </button>
 
-            <p id="selected-emotion-icon" class="large-emotion-icon"></p>
 
-            <h1 id="selected-emotion-title"></h1>
+            <p
+                id="selected-emotion-icon"
+                class="large-emotion-icon"
+            >
+            </p>
 
-            <p id="selected-emotion-description"></p>
+
+            <h1
+                id="selected-emotion-title"
+            >
+            </h1>
+
+
+            <p
+                id="selected-emotion-description"
+            >
+            </p>
 
         </section>
 
+
+        <!-- ================= SONGS ================= -->
 
         <section class="songs-section">
 
             <div class="songs-heading">
+
                 <div>
-                    <h2>10 songs for your mood</h2>
+
+                    <h2>
+                        10 songs for your mood
+                    </h2>
+
                     <p>
                         Explore the songs selected for this emotion and
                         learn why each one fits.
                     </p>
+
                 </div>
 
-                <button id="surprise-button" class="surprise-button">
+
+                <button
+                    id="surprise-button"
+                    class="surprise-button"
+                >
                     🎲 Surprise Me
                 </button>
+
             </div>
 
 
-            <!-- THIS IS WHERE THE SONGS ARE INSERTED -->
-
-            <div id="song-list" class="song-list"></div>
+            <div
+                id="song-list"
+                class="song-list"
+            >
+            </div>
 
         </section>
 
 
-        <!-- SIMPLE PLAYER -->
+        <!-- ================= PLAYER ================= -->
 
-        <section id="player-section" class="player-section" style="display:none;">
+        <section
+            id="player-section"
+            class="player-section"
+            style="display:none;"
+        >
 
             <div class="player-content">
 
-                <p class="player-label">NOW VIEWING</p>
+                <p class="player-label">
+                    NOW PLAYING
+                </p>
 
-                <h3 id="player-song-title"></h3>
+                <h3
+                    id="player-song-title"
+                >
+                </h3>
 
-                <p id="player-song-artist"></p>
+                <p
+                    id="player-song-artist"
+                >
+                </p>
+
+
+                <p
+                    id="player-song-reason"
+                    class="player-reason"
+                >
+                </p>
+
 
                 <a
                     id="listen-link"
@@ -160,7 +299,7 @@
                     rel="noopener noreferrer"
                     class="listen-button"
                 >
-                    Listen to this song
+                    🎵 Listen to this song
                 </a>
 
             </div>
@@ -168,13 +307,18 @@
         </section>
 
 
-        <!-- FEEDBACK -->
+        <!-- ================= FEEDBACK ================= -->
 
         <section class="feedback-section">
 
-            <h2>Did SoundSpace help?</h2>
+            <h2>
+                Did SoundSpace help?
+            </h2>
 
-            <p>Your feedback helps us improve SoundSpace.</p>
+            <p>
+                Your feedback helps us improve SoundSpace.
+            </p>
+
 
             <div class="feedback-buttons">
 
@@ -185,6 +329,7 @@
                     👍 Yes
                 </button>
 
+
                 <button
                     class="feedback-button"
                     data-feedback="no"
@@ -194,7 +339,11 @@
 
             </div>
 
-            <p id="feedback-message"></p>
+
+            <p
+                id="feedback-message"
+            >
+            </p>
 
         </section>
 
@@ -203,17 +352,30 @@
 
     <!-- ================= INSIGHTS ================= -->
 
-    <main id="insights-page" style="display:none;">
+    <main
+        id="insights-page"
+        style="display:none;"
+    >
 
         <section class="insights-header">
 
-            <button id="insights-back-button" class="back-button">
+            <button
+                id="insights-back-button"
+                class="back-button"
+            >
                 ← Back
             </button>
 
-            <p class="eyebrow">SOUNDSPACE INSIGHTS</p>
 
-            <h1>Your SoundSpace Insights</h1>
+            <p class="eyebrow">
+                SOUNDSPACE INSIGHTS
+            </p>
+
+
+            <h1>
+                Your SoundSpace Insights
+            </h1>
+
 
             <p>
                 See how SoundSpace has been used.
@@ -225,18 +387,41 @@
         <section class="insights-grid">
 
             <div class="insight-card">
-                <h3>Total Uses</h3>
-                <p id="total-uses">0</p>
+
+                <h3>
+                    Total Uses
+                </h3>
+
+                <p id="total-uses">
+                    0
+                </p>
+
             </div>
 
-            <div class="insight-card">
-                <h3>Helpful Responses</h3>
-                <p id="helpful-count">0</p>
-            </div>
 
             <div class="insight-card">
-                <h3>Most Selected Emotion</h3>
-                <p id="most-used-emotion">—</p>
+
+                <h3>
+                    Helpful Responses
+                </h3>
+
+                <p id="helpful-count">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="insight-card">
+
+                <h3>
+                    Most Selected Emotion
+                </h3>
+
+                <p id="most-used-emotion">
+                    —
+                </p>
+
             </div>
 
         </section>
@@ -244,25 +429,33 @@
 
         <section class="emotion-statistics">
 
-            <h2>Emotion Usage</h2>
+            <h2>
+                Emotion Usage
+            </h2>
 
-            <div id="emotion-statistics-list"></div>
+            <div
+                id="emotion-statistics-list"
+            >
+            </div>
 
         </section>
 
 
         <section class="usage-history">
 
-            <h2>When SoundSpace Was Used</h2>
+            <h2>
+                When SoundSpace Was Used
+            </h2>
 
-            <div id="usage-history-list"></div>
+            <div
+                id="usage-history-list"
+            >
+            </div>
 
         </section>
 
     </main>
 
-
-    <!-- ================= JAVASCRIPT ================= -->
 
     <script src="script.js"></script>
 
