@@ -1,6 +1,6 @@
 /* =========================================
    SOUNDSPACE
-   WORKING SCRIPT + ANALYTICS
+   WORKING SCRIPT + ANALYTICS + MUSIC QUEUE
    ========================================= */
 
 
@@ -26,7 +26,7 @@ const params =
     new URLSearchParams(window.location.search);
 
 
-/* Turn developer mode ON */
+/* Developer Mode ON */
 
 if (params.get("developer") === "on") {
 
@@ -43,7 +43,7 @@ if (params.get("developer") === "on") {
 }
 
 
-/* Turn developer mode OFF */
+/* Developer Mode OFF */
 
 if (params.get("developer") === "off") {
 
@@ -74,6 +74,7 @@ let SOUNDSPACE_SESSION_ID =
         "soundspace_session_id"
     );
 
+
 if (!SOUNDSPACE_SESSION_ID) {
 
     SOUNDSPACE_SESSION_ID =
@@ -92,7 +93,7 @@ if (!SOUNDSPACE_SESSION_ID) {
 
 
 /* =========================================
-   TRACK EVENT
+   ANALYTICS
    ========================================= */
 
 async function trackSoundSpaceEvent(
@@ -160,10 +161,8 @@ async function trackSoundSpaceEvent(
         if (!response.ok) {
 
             console.error(
-                "Analytics could not be saved.",
-                await response.text()
+                "Analytics could not be saved."
             );
-
         }
 
     } catch (error) {
@@ -172,7 +171,6 @@ async function trackSoundSpaceEvent(
             "SoundSpace analytics error:",
             error
         );
-
     }
 }
 
@@ -616,7 +614,23 @@ const moodData = {
    ========================================= */
 
 let currentEmotion = null;
+
 let currentSong = null;
+
+let currentQueue = [];
+
+let currentQueueIndex = 0;
+
+
+/* =========================================
+   GET ELEMENT SAFELY
+   ========================================= */
+
+function getElement(id) {
+
+    return document.getElementById(id);
+
+}
 
 
 /* =========================================
@@ -634,14 +648,16 @@ function showPage(page) {
         "insights-page"
     ];
 
+
     pages.forEach(function(id) {
 
         const element =
-            document.getElementById(id);
+            getElement(id);
 
         if (element) {
 
-            element.style.display = "none";
+            element.style.display =
+                "none";
 
         }
 
@@ -649,14 +665,13 @@ function showPage(page) {
 
 
     const selectedPage =
-        document.getElementById(
-            page + "-page"
-        );
+        getElement(page + "-page");
 
 
     if (selectedPage) {
 
-        selectedPage.style.display = "block";
+        selectedPage.style.display =
+            "block";
 
     }
 
@@ -673,9 +688,7 @@ function showPage(page) {
 
 
     const navButton =
-        document.getElementById(
-            page + "-nav"
-        );
+        getElement(page + "-nav");
 
 
     if (navButton) {
@@ -688,8 +701,11 @@ function showPage(page) {
 
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
 
 
@@ -703,388 +719,23 @@ function showPage(page) {
 
 
 /* =========================================
-   SHOW EMOTION
-   ========================================= */
-
-function showEmotion(emotion) {
-
-    /*
-       HTML sends:
-       Happiness
-       Sadness
-       Anger
-       Anxiety
-       Irritation
-
-       moodData uses lowercase keys.
-
-       Convert the value to lowercase
-       so they match.
-    */
-
-    const emotionKey =
-        String(emotion).toLowerCase();
-
-
-    const data =
-        moodData[emotionKey];
-
-
-    if (!data) {
-
-        console.error(
-            "SoundSpace could not find emotion:",
-            emotion
-        );
-
-        return;
-
-    }
-
-
-    currentEmotion =
-        emotionKey;
-
-
-    /* -------------------------------------
-       Emotion icon
-       ------------------------------------- */
-
-    const icon =
-        document.getElementById(
-            "selected-emotion-icon"
-        );
-
-    if (icon) {
-
-        icon.textContent =
-            data.emoji;
-
-    }
-
-
-    /* -------------------------------------
-       Emotion title
-       ------------------------------------- */
-
-    const title =
-        document.getElementById(
-            "selected-emotion-title"
-        );
-
-    if (title) {
-
-        title.textContent =
-            data.title;
-
-    }
-
-
-    /* -------------------------------------
-       Emotion description
-       ------------------------------------- */
-
-    const description =
-        document.getElementById(
-            "selected-emotion-description"
-        );
-
-    if (description) {
-
-        description.textContent =
-            data.description;
-
-    }
-
-
-    /* -------------------------------------
-       Song list
-       ------------------------------------- */
-
-    const songList =
-        document.getElementById(
-            "song-list"
-        );
-
-
-    if (songList) {
-
-        songList.innerHTML = "";
-
-
-        data.songs.forEach(
-            function(song, index) {
-
-                const songButton =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                songButton.type =
-                    "button";
-
-
-                songButton.className =
-                    "song-item";
-
-
-                songButton.innerHTML = `
-
-                    <span class="song-number">
-                        ${index + 1}
-                    </span>
-
-                    <span class="song-info">
-
-                        <strong>
-                            ${escapeHTML(song.title)}
-                        </strong>
-
-                        <small>
-                            ${escapeHTML(song.artist)}
-                        </small>
-
-                    </span>
-
-                    <span class="song-arrow">
-                        ▶
-                    </span>
-
-                `;
-
-
-                songButton.addEventListener(
-                    "click",
-                    function() {
-
-                        playSong(song);
-
-                    }
-                );
-
-
-                songList.appendChild(
-                    songButton
-                );
-
-            }
-        );
-
-    }
-
-
-    /* -------------------------------------
-       Hide previous player
-       ------------------------------------- */
-
-    const playerSection =
-        document.getElementById(
-            "player-section"
-        );
-
-
-    if (playerSection) {
-
-        playerSection.style.display =
-            "none";
-
-    }
-
-
-    /* -------------------------------------
-       Show emotion page
-       ------------------------------------- */
-
-    showPage("emotion");
-
-
-    /* -------------------------------------
-       Analytics
-       ------------------------------------- */
-
-    trackSoundSpaceEvent(
-        "emotion_selected",
-        emotionKey
-    );
-
-}
-
-
-/* =========================================
-   PLAY / SELECT SONG
-   ========================================= */
-
-function playSong(song) {
-
-    currentSong =
-        song;
-
-
-    /* -------------------------------------
-       Player title
-       ------------------------------------- */
-
-    const title =
-        document.getElementById(
-            "player-song-title"
-        );
-
-
-    if (title) {
-
-        title.textContent =
-            song.title;
-
-    }
-
-
-    /* -------------------------------------
-       Player artist
-       ------------------------------------- */
-
-    const artist =
-        document.getElementById(
-            "player-song-artist"
-        );
-
-
-    if (artist) {
-
-        artist.textContent =
-            song.artist;
-
-    }
-
-
-    /* -------------------------------------
-       Player reason
-       ------------------------------------- */
-
-    const reason =
-        document.getElementById(
-            "player-song-reason"
-        );
-
-
-    if (reason) {
-
-        reason.textContent =
-            song.why;
-
-    }
-
-
-    /* -------------------------------------
-       Listen button
-       ------------------------------------- */
-
-    const listenLink =
-        document.getElementById(
-            "listen-link"
-        );
-
-
-    if (listenLink) {
-
-        /*
-           Opens a search for the exact song.
-           This avoids sending users to a random
-           or incorrect page.
-        */
-
-        const searchQuery =
-            encodeURIComponent(
-                `${song.title} ${song.artist}`
-            );
-
-
-        listenLink.href =
-            `https://open.spotify.com/search/${searchQuery}`;`;
-
-    }
-
-
-    /* -------------------------------------
-       Show player
-       ------------------------------------- */
-
-    const playerSection =
-        document.getElementById(
-            "player-section"
-        );
-
-
-    if (playerSection) {
-
-        playerSection.style.display =
-            "block";
-
-        playerSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    }
-
-
-    /* -------------------------------------
-       Analytics
-       ------------------------------------- */
-
-    trackSoundSpaceEvent(
-        "song_selected",
-        currentEmotion,
-        song.title
-    );
-
-}
-
-
-/* =========================================
-   ESCAPE HTML
-   ========================================= */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================
-   NAVIGATION BUTTONS
+   NAVIGATION
    ========================================= */
 
 const homeNav =
-    document.getElementById(
-        "home-nav"
-    );
+    getElement("home-nav");
 
 const whyNav =
-    document.getElementById(
-        "why-nav"
-    );
+    getElement("why-nav");
 
 const aboutNav =
-    document.getElementById(
-        "about-nav"
-    );
+    getElement("about-nav");
 
 const feedbackNav =
-    document.getElementById(
-        "feedback-nav"
-    );
+    getElement("feedback-nav");
 
 const insightsNav =
-    document.getElementById(
-        "insights-nav"
-    );
+    getElement("insights-nav");
 
 
 if (homeNav) {
@@ -1158,42 +809,177 @@ if (insightsNav) {
 
 
 /* =========================================
-   BACK BUTTON
+   EMOTION SYSTEM
    ========================================= */
 
-const backButton =
-    document.getElementById(
-        "back-button"
-    );
+function showEmotion(emotionName) {
+
+    if (!emotionName) {
+
+        return;
+
+    }
 
 
-if (backButton) {
+    const emotionKey =
+        emotionName.toLowerCase().trim();
 
-    backButton.addEventListener(
-        "click",
-        function() {
 
-            showPage("home");
+    const emotion =
+        moodData[emotionKey];
 
-        }
+
+    if (!emotion) {
+
+        console.error(
+            "Emotion not found:",
+            emotionName
+        );
+
+        return;
+
+    }
+
+
+    currentEmotion =
+        emotionKey;
+
+
+    currentQueue =
+        [...emotion.songs];
+
+
+    currentQueueIndex = 0;
+
+
+    const icon =
+        getElement(
+            "selected-emotion-icon"
+        );
+
+    const title =
+        getElement(
+            "selected-emotion-title"
+        );
+
+    const description =
+        getElement(
+            "selected-emotion-description"
+        );
+
+
+    if (icon) {
+
+        icon.textContent =
+            emotion.emoji;
+
+    }
+
+
+    if (title) {
+
+        title.textContent =
+            emotion.title;
+
+    }
+
+
+    if (description) {
+
+        description.textContent =
+            emotion.description;
+
+    }
+
+
+    renderSongList();
+
+
+    showPage("emotion");
+
+
+    trackSoundSpaceEvent(
+        "emotion_selected",
+        emotionKey
     );
 
 }
 
 
-const insightsBackButton =
-    document.getElementById(
-        "insights-back-button"
-    );
+/* =========================================
+   RENDER SONG LIST
+   ========================================= */
+
+function renderSongList() {
+
+    const songList =
+        getElement("song-list");
 
 
-if (insightsBackButton) {
+    if (!songList) {
 
-    insightsBackButton.addEventListener(
-        "click",
-        function() {
+        return;
 
-            showPage("home");
+    }
+
+
+    songList.innerHTML = "";
+
+
+    currentQueue.forEach(
+        function(song, index) {
+
+            const card =
+                document.createElement(
+                    "button"
+                );
+
+
+            card.type = "button";
+
+            card.className =
+                "song-card";
+
+
+            card.innerHTML = `
+
+                <span class="song-number">
+                    ${index + 1}
+                </span>
+
+                <span class="song-info">
+
+                    <strong>
+                        ${escapeHTML(song.title)}
+                    </strong>
+
+                    <span>
+                        ${escapeHTML(song.artist)}
+                    </span>
+
+                </span>
+
+                <span class="song-arrow">
+                    →
+                </span>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                function() {
+
+                    currentQueueIndex =
+                        index;
+
+                    playSong(song);
+
+                }
+            );
+
+
+            songList.appendChild(card);
 
         }
     );
@@ -1202,30 +988,266 @@ if (insightsBackButton) {
 
 
 /* =========================================
-   EMOTION CARDS
+   PLAY SONG
    ========================================= */
 
-document
-    .querySelectorAll(
-        ".emotion-card"
-    )
-    .forEach(function(card) {
+function playSong(song) {
 
-        card.addEventListener(
-            "click",
-            function() {
+    if (!song) {
 
-                const emotion =
-                    card.dataset.emotion;
+        return;
 
-                showEmotion(
-                    emotion
-                );
+    }
 
-            }
+
+    currentSong =
+        song;
+
+
+    const playerSection =
+        getElement(
+            "player-section"
         );
 
-    });
+
+    const title =
+        getElement(
+            "player-song-title"
+        );
+
+    const artist =
+        getElement(
+            "player-song-artist"
+        );
+
+    const reason =
+        getElement(
+            "player-song-reason"
+        );
+
+    const listenLink =
+        getElement(
+            "listen-link"
+        );
+
+
+    if (title) {
+
+        title.textContent =
+            song.title;
+
+    }
+
+
+    if (artist) {
+
+        artist.textContent =
+            song.artist;
+
+    }
+
+
+    if (reason) {
+
+        reason.textContent =
+            song.why;
+
+    }
+
+
+    /* =====================================
+       SPOTIFY SEARCH
+       ===================================== */
+
+    if (listenLink) {
+
+        const spotifyQuery =
+            encodeURIComponent(
+                `${song.title} ${song.artist}`
+            );
+
+
+        listenLink.href =
+            `https://open.spotify.com/search/${spotifyQuery}`;
+
+
+        listenLink.target =
+            "_blank";
+
+    }
+
+
+    if (playerSection) {
+
+        playerSection.style.display =
+            "block";
+
+    }
+
+
+    trackSoundSpaceEvent(
+        "song_selected",
+        currentEmotion,
+        song.title
+    );
+
+
+    if (playerSection) {
+
+        playerSection.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "start"
+
+        });
+
+    }
+
+}
+
+
+/* =========================================
+   NEXT SONG
+   ========================================= */
+
+function playNextSong() {
+
+    if (
+        !currentQueue.length
+    ) {
+
+        return;
+
+    }
+
+
+    currentQueueIndex++;
+
+
+    if (
+        currentQueueIndex >=
+        currentQueue.length
+    ) {
+
+        currentQueueIndex = 0;
+
+    }
+
+
+    playSong(
+        currentQueue[currentQueueIndex]
+    );
+
+}
+
+
+/* =========================================
+   PREVIOUS SONG
+   ========================================= */
+
+function playPreviousSong() {
+
+    if (
+        !currentQueue.length
+    ) {
+
+        return;
+
+    }
+
+
+    currentQueueIndex--;
+
+
+    if (
+        currentQueueIndex < 0
+    ) {
+
+        currentQueueIndex =
+            currentQueue.length - 1;
+
+    }
+
+
+    playSong(
+        currentQueue[currentQueueIndex]
+    );
+
+}
+
+
+/* =========================================
+   SHUFFLE QUEUE
+   ========================================= */
+
+function shuffleQueue() {
+
+    if (
+        !currentQueue.length
+    ) {
+
+        return;
+
+    }
+
+
+    for (
+        let i =
+            currentQueue.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+
+        [
+            currentQueue[i],
+            currentQueue[j]
+        ] = [
+            currentQueue[j],
+            currentQueue[i]
+        ];
+
+    }
+
+
+    currentQueueIndex = 0;
+
+
+    renderSongList();
+
+}
+
+
+/* =========================================
+   RESHUFFLE QUEUE
+   ========================================= */
+
+function reshuffleQueue() {
+
+    if (!currentEmotion) {
+
+        return;
+
+    }
+
+
+    const songs =
+        moodData[currentEmotion].songs;
+
+
+    currentQueue =
+        [...songs];
+
+
+    shuffleQueue();
+
+}
 
 
 /* =========================================
@@ -1233,9 +1255,7 @@ document
    ========================================= */
 
 const surpriseButton =
-    document.getElementById(
-        "surprise-button"
-    );
+    getElement("surprise-button");
 
 
 if (surpriseButton) {
@@ -1244,7 +1264,9 @@ if (surpriseButton) {
         "click",
         function() {
 
-            if (!currentEmotion) {
+            if (
+                !currentEmotion
+            ) {
 
                 return;
 
@@ -1264,9 +1286,91 @@ if (surpriseButton) {
                 );
 
 
+            currentQueueIndex =
+                randomIndex;
+
+
             playSong(
                 songs[randomIndex]
             );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   OPTIONAL QUEUE BUTTON SUPPORT
+   ========================================= */
+
+const shuffleButton =
+    getElement("shuffle-button");
+
+if (shuffleButton) {
+
+    shuffleButton.addEventListener(
+        "click",
+        shuffleQueue
+    );
+
+}
+
+
+const reshuffleButton =
+    getElement("reshuffle-button");
+
+if (reshuffleButton) {
+
+    reshuffleButton.addEventListener(
+        "click",
+        reshuffleQueue
+    );
+
+}
+
+
+const nextButton =
+    getElement("next-song");
+
+if (nextButton) {
+
+    nextButton.addEventListener(
+        "click",
+        playNextSong
+    );
+
+}
+
+
+const previousButton =
+    getElement("previous-song");
+
+if (previousButton) {
+
+    previousButton.addEventListener(
+        "click",
+        playPreviousSong
+    );
+
+}
+
+
+/* =========================================
+   BACK BUTTON
+   ========================================= */
+
+const backButton =
+    getElement("back-button");
+
+
+if (backButton) {
+
+    backButton.addEventListener(
+        "click",
+        function() {
+
+            showPage("home");
 
         }
     );
@@ -1279,9 +1383,7 @@ if (surpriseButton) {
    ========================================= */
 
 document
-    .querySelectorAll(
-        ".choice-button"
-    )
+    .querySelectorAll(".choice-button")
     .forEach(function(button) {
 
         button.addEventListener(
@@ -1292,15 +1394,13 @@ document
                     .querySelectorAll(
                         ".choice-button"
                     )
-                    .forEach(
-                        function(other) {
+                    .forEach(function(other) {
 
-                            other.classList.remove(
-                                "selected"
-                            );
+                        other.classList.remove(
+                            "selected"
+                        );
 
-                        }
-                    );
+                    });
 
 
                 button.classList.add(
@@ -1309,7 +1409,7 @@ document
 
 
                 const input =
-                    document.getElementById(
+                    getElement(
                         "feedback-fit"
                     );
 
@@ -1328,9 +1428,7 @@ document
 
 
 document
-    .querySelectorAll(
-        ".helpful-choice"
-    )
+    .querySelectorAll(".helpful-choice")
     .forEach(function(button) {
 
         button.addEventListener(
@@ -1341,15 +1439,13 @@ document
                     .querySelectorAll(
                         ".helpful-choice"
                     )
-                    .forEach(
-                        function(other) {
+                    .forEach(function(other) {
 
-                            other.classList.remove(
-                                "selected"
-                            );
+                        other.classList.remove(
+                            "selected"
+                        );
 
-                        }
-                    );
+                    });
 
 
                 button.classList.add(
@@ -1358,7 +1454,7 @@ document
 
 
                 const input =
-                    document.getElementById(
+                    getElement(
                         "feedback-helpful"
                     );
 
@@ -1381,9 +1477,7 @@ document
    ========================================= */
 
 const feedbackForm =
-    document.getElementById(
-        "feedback-form"
-    );
+    getElement("feedback-form");
 
 
 if (feedbackForm) {
@@ -1396,45 +1490,49 @@ if (feedbackForm) {
 
 
             const emotion =
-                document.getElementById(
+                getElement(
                     "feedback-emotion"
-                ).value;
+                )?.value;
 
 
             const fit =
-                document.getElementById(
+                getElement(
                     "feedback-fit"
-                ).value;
+                )?.value;
 
 
             const helpful =
-                document.getElementById(
+                getElement(
                     "feedback-helpful"
-                ).value;
+                )?.value;
 
 
             const improvement =
-                document.getElementById(
+                getElement(
                     "feedback-improvement"
-                ).value.trim();
+                )?.value.trim();
 
 
             const liked =
-                document.getElementById(
+                getElement(
                     "feedback-liked"
-                ).value.trim();
+                )?.value.trim();
 
 
             const message =
-                document.getElementById(
+                getElement(
                     "full-feedback-message"
                 );
 
 
             if (!emotion) {
 
-                message.textContent =
-                    "Please choose the emotion you explored.";
+                if (message) {
+
+                    message.textContent =
+                        "Please choose the emotion you explored.";
+
+                }
 
                 return;
 
@@ -1443,8 +1541,12 @@ if (feedbackForm) {
 
             if (!fit) {
 
-                message.textContent =
-                    "Please tell us whether the music fit your mood.";
+                if (message) {
+
+                    message.textContent =
+                        "Please tell us whether the music fit your mood.";
+
+                }
 
                 return;
 
@@ -1453,8 +1555,12 @@ if (feedbackForm) {
 
             if (!helpful) {
 
-                message.textContent =
-                    "Please tell us whether SoundSpace was helpful.";
+                if (message) {
+
+                    message.textContent =
+                        "Please tell us whether SoundSpace was helpful.";
+
+                }
 
                 return;
 
@@ -1463,8 +1569,12 @@ if (feedbackForm) {
 
             if (IS_DEVELOPER) {
 
-                message.textContent =
-                    "✨ Developer Mode is on. Your feedback was not added to analytics.";
+                if (message) {
+
+                    message.textContent =
+                        "✨ Developer Mode is on. Your feedback was not added to analytics.";
+
+                }
 
                 return;
 
@@ -1537,8 +1647,12 @@ if (feedbackForm) {
                 }
 
 
-                message.textContent =
-                    "✨ Thank you for helping shape the future of SoundSpace!";
+                if (message) {
+
+                    message.textContent =
+                        "✨ Thank you for helping shape the future of SoundSpace!";
+
+                }
 
 
                 feedbackForm.reset();
@@ -1548,38 +1662,51 @@ if (feedbackForm) {
                     .querySelectorAll(
                         ".choice-button, .helpful-choice"
                     )
-                    .forEach(
-                        function(button) {
+                    .forEach(function(button) {
 
-                            button.classList.remove(
-                                "selected"
-                            );
+                        button.classList.remove(
+                            "selected"
+                        );
 
-                        }
+                    });
+
+
+                const fitInput =
+                    getElement(
+                        "feedback-fit"
+                    );
+
+                const helpfulInput =
+                    getElement(
+                        "feedback-helpful"
                     );
 
 
-                document.getElementById(
-                    "feedback-fit"
-                ).value = "";
+                if (fitInput) {
+
+                    fitInput.value = "";
+
+                }
 
 
-                document.getElementById(
-                    "feedback-helpful"
-                ).value = "";
+                if (helpfulInput) {
+
+                    helpfulInput.value = "";
+
+                }
 
 
-            }
+            } catch (error) {
 
-            catch (error) {
-
-                console.error(
-                    error
-                );
+                console.error(error);
 
 
-                message.textContent =
-                    "Something went wrong while sending your feedback. Please try again.";
+                if (message) {
+
+                    message.textContent =
+                        "Something went wrong while sending your feedback. Please try again.";
+
+                }
 
             }
 
@@ -1595,33 +1722,11 @@ if (feedbackForm) {
 
 async function loadInsights() {
 
-    const totalUses =
-        document.getElementById(
-            "total-uses"
+    if (IS_DEVELOPER) {
+
+        console.log(
+            "Developer Mode: insights not loaded."
         );
-
-    const helpfulCount =
-        document.getElementById(
-            "helpful-count"
-        );
-
-    const mostUsedEmotion =
-        document.getElementById(
-            "most-used-emotion"
-        );
-
-    const emotionStatistics =
-        document.getElementById(
-            "emotion-statistics-list"
-        );
-
-    const usageHistory =
-        document.getElementById(
-            "usage-history-list"
-        );
-
-
-    if (!totalUses) {
 
         return;
 
@@ -1634,8 +1739,6 @@ async function loadInsights() {
             await fetch(
                 `${SUPABASE_URL}/rest/v1/usage_events?select=*`,
                 {
-
-                    method: "GET",
 
                     headers: {
 
@@ -1665,268 +1768,232 @@ async function loadInsights() {
 
 
         const emotionEvents =
-            events.filter(
-                function(event) {
+            events.filter(function(event) {
 
-                    return (
-                        event.event_type ===
-                        "emotion_selected"
-                    );
+                return (
+                    event.event_type ===
+                    "emotion_selected"
+                );
 
-                }
+            });
+
+
+        const helpfulEvents =
+            events.filter(function(event) {
+
+                return (
+                    event.helpful === "yes"
+                );
+
+            });
+
+
+        const totalUses =
+            getElement("total-uses");
+
+        const helpfulCount =
+            getElement("helpful-count");
+
+        const mostUsedEmotion =
+            getElement(
+                "most-used-emotion"
             );
 
 
-        const feedbackEvents =
-            events.filter(
-                function(event) {
+        if (totalUses) {
 
-                    return (
-                        event.event_type ===
-                        "detailed_feedback"
-                    );
+            totalUses.textContent =
+                emotionEvents.length;
 
-                }
-            );
-
-
-        totalUses.textContent =
-            emotionEvents.length;
-
-
-        const helpfulResponses =
-            feedbackEvents.filter(
-                function(event) {
-
-                    return (
-                        event.helpful ===
-                        "yes"
-                    );
-
-                }
-            );
+        }
 
 
         if (helpfulCount) {
 
             helpfulCount.textContent =
-                helpfulResponses.length;
+                helpfulEvents.length;
 
         }
 
 
-        /* ---------------------------------
-           Emotion counts
-           --------------------------------- */
-
-        const counts = {};
+        const emotionCounts = {};
 
 
-        emotionEvents.forEach(
-            function(event) {
+        emotionEvents.forEach(function(event) {
 
-                if (!event.mood) {
-                    return;
-                }
+            const emotion =
+                event.mood;
 
-                const mood =
-                    event.mood.toLowerCase();
+            if (emotion) {
 
-                counts[mood] =
-                    (counts[mood] || 0) + 1;
+                emotionCounts[emotion] =
+                    (
+                        emotionCounts[emotion] ||
+                        0
+                    ) + 1;
 
             }
-        );
+
+        });
 
 
-        let mostUsed =
-            "—";
+        let highestEmotion = null;
 
-        let highest =
-            0;
+        let highestCount = 0;
 
 
-        Object.keys(counts)
-            .forEach(
-                function(mood) {
+        Object.keys(
+            emotionCounts
+        ).forEach(function(emotion) {
 
-                    if (
-                        counts[mood] >
-                        highest
-                    ) {
+            if (
+                emotionCounts[emotion] >
+                highestCount
+            ) {
 
-                        highest =
-                            counts[mood];
+                highestCount =
+                    emotionCounts[emotion];
 
-                        mostUsed =
-                            mood;
+                highestEmotion =
+                    emotion;
 
-                    }
+            }
 
-                }
-            );
+        });
 
 
         if (mostUsedEmotion) {
 
             mostUsedEmotion.textContent =
-                mostUsed === "—"
-                    ? "—"
-                    : moodData[mostUsed]
-                        ? moodData[mostUsed].title
-                        : mostUsed;
+                highestEmotion
+                    ? moodData[
+                        highestEmotion
+                    ].title
+                    : "—";
 
         }
 
 
-        /* ---------------------------------
-           Statistics
-           --------------------------------- */
-
-        if (emotionStatistics) {
-
-            emotionStatistics.innerHTML = "";
+        const statistics =
+            getElement(
+                "emotion-statistics-list"
+            );
 
 
-            Object.keys(moodData)
-                .forEach(
-                    function(mood) {
+        if (statistics) {
 
-                        const row =
-                            document.createElement(
-                                "div"
-                            );
+            statistics.innerHTML = "";
 
 
-                        row.className =
-                            "emotion-stat-row";
+            Object.keys(
+                moodData
+            ).forEach(function(emotion) {
+
+                const count =
+                    emotionCounts[
+                        emotion
+                    ] || 0;
 
 
-                        row.innerHTML = `
-                            <span>
-                                ${moodData[mood].emoji}
-                                ${moodData[mood].title}
-                            </span>
-
-                            <strong>
-                                ${counts[mood] || 0}
-                            </strong>
-                        `;
+                const item =
+                    document.createElement(
+                        "p"
+                    );
 
 
-                        emotionStatistics.appendChild(
-                            row
+                item.textContent =
+                    `${moodData[emotion].emoji} ${moodData[emotion].title}: ${count}`;
+
+
+                statistics.appendChild(
+                    item
+                );
+
+            });
+
+        }
+
+
+        const history =
+            getElement(
+                "usage-history-list"
+            );
+
+
+        if (history) {
+
+            history.innerHTML = "";
+
+
+            const sorted =
+                [...events].sort(
+                    function(a, b) {
+
+                        return new Date(
+                            b.created_at
+                        ) -
+                        new Date(
+                            a.created_at
                         );
 
                     }
                 );
 
-        }
 
+            sorted
+                .slice(0, 50)
+                .forEach(function(event) {
 
-        /* ---------------------------------
-           Usage history
-           --------------------------------- */
-
-        if (usageHistory) {
-
-            usageHistory.innerHTML = "";
-
-
-            const sortedEvents =
-                [...events]
-                    .sort(
-                        function(a, b) {
-
-                            return new Date(b.created_at)
-                                - new Date(a.created_at);
-
-                        }
-                    )
-                    .slice(0, 50);
-
-
-            if (
-                sortedEvents.length === 0
-            ) {
-
-                usageHistory.textContent =
-                    "No usage recorded yet.";
-
-            } else {
-
-                sortedEvents.forEach(
-                    function(event) {
-
-                        const row =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        row.className =
-                            "usage-history-row";
-
-
-                        const date =
-                            event.created_at
-                                ? new Date(
-                                    event.created_at
-                                ).toLocaleString()
-                                : "Unknown date";
-
-
-                        row.textContent =
-                            `${date} — ${event.event_type}` +
-                            (
-                                event.mood
-                                    ? ` — ${event.mood}`
-                                    : ""
-                            );
-
-
-                        usageHistory.appendChild(
-                            row
+                    const item =
+                        document.createElement(
+                            "p"
                         );
 
-                    }
-                );
 
-            }
+                    const date =
+                        event.created_at
+                            ? new Date(
+                                event.created_at
+                            ).toLocaleString()
+                            : "Unknown date";
+
+
+                    item.textContent =
+                        `${date} — ${event.event_type}${event.mood ? " — " + event.mood : ""}`;
+
+
+                    history.appendChild(
+                        item
+                    );
+
+                });
 
         }
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
             "Insights error:",
             error
         );
 
-        if (totalUses) {
-
-            totalUses.textContent =
-                "—";
-
-        }
-
-        if (helpfulCount) {
-
-            helpfulCount.textContent =
-                "—";
-
-        }
-
-        if (mostUsedEmotion) {
-
-            mostUsedEmotion.textContent =
-                "—";
-
-        }
-
     }
+
+}
+
+
+/* =========================================
+   HTML ESCAPE
+   ========================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
@@ -1949,7 +2016,11 @@ if (!IS_DEVELOPER) {
    ========================================= */
 
 console.log(
+
     IS_DEVELOPER
+
         ? "SoundSpace loaded — Developer Mode ON"
+
         : "SoundSpace loaded successfully"
+
 );
