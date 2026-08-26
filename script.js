@@ -493,880 +493,1252 @@ const moodData = {
     }
 
 };
+/* =========================================================
+   6. APP STATE
+   ========================================================= */
+
+let currentEmotion = "";
+let currentSong = null;
+let shuffleQueue = [];
+let currentSongIndex = 0;
 
 
 /* =========================================================
-   APP STATE
+   7. SAFE PAGE NAVIGATION
    ========================================================= */
 
-let currentEmotion = null;
+function showPage(pageId) {
+
+  const pages = document.querySelectorAll(".page");
+
+  pages.forEach(function(page) {
+    page.classList.remove("active-page");
+  });
+
+  const targetPage = document.getElementById(pageId);
+
+  if (!targetPage) {
+    console.error("Page not found:", pageId);
+    return;
+  }
+
+  targetPage.classList.add("active-page");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
 
 
 /* =========================================================
-   PAGE ELEMENTS
+   8. DISPLAY EMOTION
    ========================================================= */
 
-const homePage =
-    document.getElementById("home-page");
+function displayEmotion(emotion) {
 
-const emotionPage =
-    document.getElementById("emotion-page");
+  if (!moodData[emotion]) {
+    console.error("Emotion not found:", emotion);
+    return;
+  }
 
-const insightsPage =
-    document.getElementById("insights-page");
+  currentEmotion = emotion;
 
-const songList =
+  const data = moodData[emotion];
+
+  const emotionTitle =
+    document.getElementById("emotion-title");
+
+  const emotionDescription =
+    document.getElementById("emotion-description");
+
+  const emotionEmoji =
+    document.getElementById("emotion-emoji");
+
+
+  if (emotionTitle) {
+    emotionTitle.textContent = data.title;
+  }
+
+  if (emotionDescription) {
+    emotionDescription.textContent =
+      data.description;
+  }
+
+  if (emotionEmoji) {
+    emotionEmoji.textContent = data.emoji;
+  }
+
+  displaySongs();
+
+}
+
+
+/* =========================================================
+   9. DISPLAY SONGS
+   ========================================================= */
+
+function displaySongs() {
+
+  const songList =
     document.getElementById("song-list");
 
-const selectedEmotionIcon =
-    document.getElementById("selected-emotion-icon");
+  if (!songList) {
+    return;
+  }
 
-const selectedEmotionTitle =
-    document.getElementById("selected-emotion-title");
+  songList.innerHTML = "";
 
-const selectedEmotionDescription =
-    document.getElementById("selected-emotion-description");
+  if (
+    !currentEmotion ||
+    !moodData[currentEmotion]
+  ) {
+    return;
+  }
 
-const playerSection =
-    document.getElementById("player-section");
+  const songs =
+    moodData[currentEmotion].songs;
 
-const playerSongTitle =
-    document.getElementById("player-song-title");
 
-const playerSongArtist =
-    document.getElementById("player-song-artist");
+  songs.forEach(function(song, index) {
 
-const listenLink =
-    document.getElementById("listen-link");
+    const songCard =
+      document.createElement("button");
+
+    songCard.type = "button";
+
+    songCard.className = "song-card";
+
+    songCard.innerHTML = `
+      <span class="song-number">
+        ${String(index + 1).padStart(2, "0")}
+      </span>
+
+      <span class="song-details">
+
+        <strong>${escapeHTML(song.title)}</strong>
+
+        <small>${escapeHTML(song.artist)}</small>
+
+        <span class="song-why">
+
+          <b>✨ Why this song fits:</b>
+
+          ${escapeHTML(song.why)}
+
+        </span>
+
+      </span>
+
+      <span class="song-arrow">→</span>
+    `;
+
+
+    songCard.addEventListener(
+      "click",
+      function() {
+
+        startSongSession(song);
+
+      }
+    );
+
+
+    songList.appendChild(songCard);
+
+  });
+
+}
 
 
 /* =========================================================
-   OPEN EMOTION
+   10. SHUFFLE
    ========================================================= */
 
-function openEmotion(emotion) {
+function shuffleSongs(array) {
 
-    const data = moodData[emotion];
+  const shuffled = [...array];
 
-    if (!data) {
-        console.error(
-            "SoundSpace could not find this emotion:",
-            emotion
+  for (
+    let i = shuffled.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const j =
+      Math.floor(Math.random() * (i + 1));
+
+    [
+      shuffled[i],
+      shuffled[j]
+    ] =
+    [
+      shuffled[j],
+      shuffled[i]
+    ];
+
+  }
+
+  return shuffled;
+
+}
+
+
+/* =========================================================
+   11. START SONG SESSION
+   ========================================================= */
+
+function startSongSession(song) {
+
+  if (
+    !currentEmotion ||
+    !moodData[currentEmotion]
+  ) {
+    return;
+  }
+
+  currentSong = song;
+
+
+  /* Analytics should NEVER stop the website */
+
+  try {
+
+    trackSoundSpaceEvent(
+      "song_selected",
+      currentEmotion,
+      `${song.title} — ${song.artist}`
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Analytics error ignored:",
+      error
+    );
+
+  }
+
+
+  const otherSongs =
+    moodData[currentEmotion].songs.filter(
+      function(item) {
+
+        return !(
+          item.title === song.title &&
+          item.artist === song.artist
         );
 
-        return;
-    }
-
-    currentEmotion = emotion;
+      }
+    );
 
 
-    /* Change page */
-
-    homePage.style.display = "none";
-
-    insightsPage.style.display = "none";
-
-    emotionPage.style.display = "block";
+  shuffleQueue = [
+    song,
+    ...shuffleSongs(otherSongs)
+  ];
 
 
-    /* Update heading */
+  currentSongIndex = 0;
 
-    selectedEmotionIcon.textContent =
-        data.icon;
+  displayPlayer();
 
-    selectedEmotionTitle.textContent =
-        emotion;
+  showPage("player-page");
 
-    selectedEmotionDescription.textContent =
-        data.description;
+}
 
 
-    /* Clear old songs */
+/* =========================================================
+   12. DISPLAY PLAYER
+   ========================================================= */
 
-    songList.innerHTML = "";
+function displayPlayer() {
 
+  if (!shuffleQueue.length) {
+    return;
+  }
 
-    /* Create all 10 songs */
-
-    data.songs.forEach(
-        (song, index) => {
-
-            const songCard =
-                document.createElement("article");
-
-            songCard.className =
-                "song-card";
+  currentSong =
+    shuffleQueue[currentSongIndex];
 
 
-            songCard.innerHTML = `
+  const playerTitle =
+    document.getElementById("player-title");
 
-                <div class="song-number">
-                    ${index + 1}
-                </div>
+  const playerArtist =
+    document.getElementById("player-artist");
 
-                <div class="song-information">
+  const playerReason =
+    document.getElementById("player-reason");
 
-                    <h3>
-                        ${song.title}
-                    </h3>
+  const playerEmoji =
+    document.getElementById("player-emoji");
 
-                    <p class="song-artist">
-                        ${song.artist}
-                    </p>
+  const songPosition =
+    document.getElementById("song-position");
 
-                    <div class="why-section">
-
-                        <strong>
-                            Why it fits:
-                        </strong>
-
-                        <p>
-                            ${song.reason}
-                        </p>
-
-                    </div>
-
-                    <button
-                        class="song-listen-button"
-                        data-title="${escapeAttribute(song.title)}"
-                        data-artist="${escapeAttribute(song.artist)}"
-                    >
-                        🎵 Listen
-                    </button>
-
-                </div>
-            `;
+  const spotifyLink =
+    document.getElementById("spotify-link");
 
 
-            songList.appendChild(
-                songCard
-            );
+  if (playerTitle) {
+    playerTitle.textContent =
+      currentSong.title;
+  }
+
+  if (playerArtist) {
+    playerArtist.textContent =
+      currentSong.artist;
+  }
+
+  if (playerReason) {
+    playerReason.textContent =
+      currentSong.why;
+  }
+
+  if (
+    playerEmoji &&
+    currentEmotion &&
+    moodData[currentEmotion]
+  ) {
+
+    playerEmoji.textContent =
+      moodData[currentEmotion].emoji;
+
+  }
+
+  if (songPosition) {
+
+    songPosition.textContent =
+      `${currentSongIndex + 1} / ${shuffleQueue.length}`;
+
+  }
+
+  if (spotifyLink) {
+
+    const searchQuery =
+      encodeURIComponent(
+        currentSong.title +
+        " " +
+        currentSong.artist
+      );
+
+    spotifyLink.href =
+      "https://open.spotify.com/search/" +
+      searchQuery;
+
+  }
+
+  displayQueue();
+
+}
+
+
+/* =========================================================
+   13. DISPLAY QUEUE
+   ========================================================= */
+
+function displayQueue() {
+
+  const queueList =
+    document.getElementById("queue-list");
+
+  if (!queueList) {
+    return;
+  }
+
+  queueList.innerHTML = "";
+
+
+  shuffleQueue.forEach(
+    function(song, index) {
+
+      const queueItem =
+        document.createElement("button");
+
+      queueItem.type = "button";
+
+      queueItem.className = "queue-item";
+
+
+      if (index === currentSongIndex) {
+
+        queueItem.classList.add(
+          "current-song"
+        );
+
+      }
+
+
+      queueItem.innerHTML = `
+        <span class="queue-number">
+          ${String(index + 1).padStart(2, "0")}
+        </span>
+
+        <span class="queue-info">
+          <strong>${escapeHTML(song.title)}</strong>
+          <small>${escapeHTML(song.artist)}</small>
+        </span>
+      `;
+
+
+      queueItem.addEventListener(
+        "click",
+        function() {
+
+          currentSongIndex = index;
+
+          currentSong =
+            shuffleQueue[index];
+
+          displayPlayer();
 
         }
-    );
+      );
 
 
-    /* Scroll to top */
+      queueList.appendChild(queueItem);
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-
-    /* Analytics */
-
-    sendAnalytics(
-        "emotion_selected",
-        emotion,
-        null
-    );
-
-    saveLocalUsage(
-        emotion
-    );
-}
-
-
-/* =========================================================
-   ATTRIBUTE SAFETY
-   ========================================================= */
-
-function escapeAttribute(text) {
-
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+    }
+  );
 
 }
 
 
 /* =========================================================
-   LISTEN BUTTON
+   14. NEXT SONG
    ========================================================= */
 
-document.addEventListener(
+function nextSong() {
+
+  if (!shuffleQueue.length) {
+    return;
+  }
+
+  currentSongIndex++;
+
+
+  if (
+    currentSongIndex >=
+    shuffleQueue.length
+  ) {
+
+    currentSongIndex = 0;
+
+    shuffleQueue =
+      shuffleSongs(shuffleQueue);
+
+  }
+
+
+  displayPlayer();
+
+}
+
+
+/* =========================================================
+   15. RESHUFFLE
+   ========================================================= */
+
+function reshuffleSongs() {
+
+  if (
+    !currentEmotion ||
+    !moodData[currentEmotion]
+  ) {
+    return;
+  }
+
+  shuffleQueue =
+    shuffleSongs(
+      moodData[currentEmotion].songs
+    );
+
+  currentSongIndex = 0;
+
+  currentSong = shuffleQueue[0];
+
+  displayPlayer();
+
+}
+
+
+/* =========================================================
+   16. SAFE INSIGHTS
+   ========================================================= */
+
+async function getSharedInsights() {
+
+  try {
+
+    const response =
+      await fetch(
+        `${SUPABASE_URL}/rest/v1/usage_events?select=*`,
+        {
+          method: "GET",
+
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization":
+              `Bearer ${SUPABASE_KEY}`
+          }
+        }
+      );
+
+
+    if (!response.ok) {
+
+      console.error(
+        "Could not load insights"
+      );
+
+      return [];
+
+    }
+
+
+    return await response.json();
+
+  } catch (error) {
+
+    console.error(
+      "Insights error:",
+      error
+    );
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================================================
+   17. DISPLAY INSIGHTS
+   ========================================================= */
+
+async function displayInsights() {
+
+  const events =
+    await getSharedInsights();
+
+
+  const sessions = new Set();
+
+  events.forEach(function(event) {
+
+    if (event.session_id) {
+      sessions.add(event.session_id);
+    }
+
+  });
+
+
+  const totalElement =
+    document.getElementById("insight-total");
+
+  if (totalElement) {
+    totalElement.textContent =
+      sessions.size;
+  }
+
+
+  const emotionCounts = {
+    happiness: 0,
+    sadness: 0,
+    anger: 0,
+    anxiety: 0,
+    irritation: 0
+  };
+
+
+  events.forEach(function(event) {
+
+    if (
+      event.event_type ===
+      "emotion_selected"
+    ) {
+
+      const mood =
+        String(event.mood || "")
+          .toLowerCase();
+
+      if (
+        emotionCounts[mood] !== undefined
+      ) {
+
+        emotionCounts[mood]++;
+
+      }
+
+    }
+
+  });
+
+
+  Object.keys(emotionCounts).forEach(
+    function(emotion) {
+
+      const element =
+        document.getElementById(
+          "stat-" + emotion
+        );
+
+      if (element) {
+        element.textContent =
+          emotionCounts[emotion];
+      }
+
+    }
+  );
+
+
+  let yes = 0;
+  let no = 0;
+
+
+  events.forEach(function(event) {
+
+    if (
+      event.event_type === "feedback"
+    ) {
+
+      if (event.helpful === "Yes") {
+        yes++;
+      }
+
+      if (event.helpful === "No") {
+        no++;
+      }
+
+    }
+
+  });
+
+
+  const yesElement =
+    document.getElementById("insight-yes");
+
+  const noElement =
+    document.getElementById("insight-no");
+
+
+  if (yesElement) {
+    yesElement.textContent = yes;
+  }
+
+  if (noElement) {
+    noElement.textContent = no;
+  }
+
+
+  const dates =
+    document.getElementById(
+      "insight-dates"
+    );
+
+
+  if (dates) {
+
+    const pageViews =
+      events
+        .filter(function(event) {
+
+          return event.event_type ===
+            "page_view";
+
+        })
+        .reverse();
+
+
+    if (!pageViews.length) {
+
+      dates.innerHTML = `
+        <p class="empty-insights">
+          No activity recorded yet.
+        </p>
+      `;
+
+    } else {
+
+      dates.innerHTML =
+        pageViews.map(function(event) {
+
+          const date =
+            event.created_at
+              ? new Date(event.created_at)
+              : new Date();
+
+          return `
+            <div class="date-row">
+
+              <span>
+                📅
+                ${date.toLocaleDateString()}
+              </span>
+
+              <strong>
+                ${date.toLocaleTimeString(
+                  [],
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                  }
+                )}
+              </strong>
+
+            </div>
+          `;
+
+        }).join("");
+
+    }
+
+  }
+
+
+  const feedbackContainer =
+    document.getElementById(
+      "insight-feedback"
+    );
+
+
+  if (feedbackContainer) {
+
+    const feedback =
+      events
+        .filter(function(event) {
+
+          return event.event_type ===
+            "feedback";
+
+        })
+        .reverse();
+
+
+    if (!feedback.length) {
+
+      feedbackContainer.innerHTML = `
+        <p class="empty-insights">
+          No feedback submitted yet.
+        </p>
+      `;
+
+    } else {
+
+      feedbackContainer.innerHTML =
+        feedback.map(function(item) {
+
+          return `
+            <article class="feedback-result">
+
+              <div class="feedback-result-top">
+
+                <strong>
+                  ${escapeHTML(
+                    item.mood ||
+                    "No emotion selected"
+                  )}
+                </strong>
+
+                <span>
+                  ${escapeHTML(
+                    item.helpful ||
+                    "No answer"
+                  )}
+                </span>
+
+              </div>
+
+              ${
+                item.song
+                  ? `
+                    <p>
+                      <b>Song:</b><br>
+                      ${escapeHTML(item.song)}
+                    </p>
+                  `
+                  : ""
+              }
+
+              ${
+                item.feedback_text
+                  ? `
+                    <p>
+                      <b>Feedback:</b><br>
+                      ${escapeHTML(
+                        item.feedback_text
+                      )}
+                    </p>
+                  `
+                  : ""
+              }
+
+            </article>
+          `;
+
+        }).join("");
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   18. ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(value) {
+
+  return String(value ?? "")
+
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   19. NAVIGATION
+   ========================================================= */
+
+function setupPageButtons() {
+
+  document.addEventListener(
     "click",
     function(event) {
 
-        const button =
-            event.target.closest(
-                ".song-listen-button"
-            );
+      const button =
+        event.target.closest("[data-page]");
 
-        if (!button) {
-            return;
-        }
+      if (!button) {
+        return;
+      }
 
+      event.preventDefault();
 
-        const title =
-            button.dataset.title;
+      const page =
+        button.dataset.page;
 
-        const artist =
-            button.dataset.artist;
+      if (!page) {
+        return;
+      }
 
-
-        playerSongTitle.textContent =
-            title;
-
-        playerSongArtist.textContent =
-            artist;
+      showPage(page);
 
 
-        /*
-           SoundSpace does not embed copyrighted
-           full songs. The button opens a search
-           for the song so the user can listen.
-        */
+      if (page === "insights") {
 
-        const search =
-            encodeURIComponent(
-                `${title} ${artist}`
-            );
+        displayInsights();
 
-
-        listenLink.href =
-            `https://www.youtube.com/results?search_query=${search}`;
-
-
-        playerSection.style.display =
-            "block";
-
-
-        playerSection.scrollIntoView({
-            behavior: "smooth"
-        });
-
-
-        sendAnalytics(
-            "song_selected",
-            currentEmotion,
-            null
-        );
+      }
 
     }
-);
+  );
+
+}
 
 
 /* =========================================================
-   EMOTION BUTTONS
+   20. EMOTION CARDS
    ========================================================= */
 
-document
-    .querySelectorAll(".emotion-card")
-    .forEach(
-        button => {
+function setupEmotionCards() {
 
-            button.addEventListener(
-                "click",
-                function() {
+  document.addEventListener(
+    "click",
+    function(event) {
 
-                    const emotion =
-                        this.dataset.emotion;
+      const card =
+        event.target.closest(
+          ".emotion-card"
+        );
 
-                    openEmotion(
-                        emotion
-                    );
+      if (!card) {
+        return;
+      }
 
-                }
-            );
 
-        }
-    );
+      event.preventDefault();
 
+      const emotion =
+        card.dataset.emotion;
 
-/* =========================================================
-   BACK BUTTON
-   ========================================================= */
 
-document
-    .getElementById("back-button")
-    .addEventListener(
-        "click",
-        function() {
+      if (!moodData[emotion]) {
+        return;
+      }
 
-            emotionPage.style.display =
-                "none";
 
-            insightsPage.style.display =
-                "none";
+      currentEmotion = emotion;
 
-            homePage.style.display =
-                "block";
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+      /* Analytics cannot stop emotion clicks */
 
-        }
-    );
+      try {
 
+        trackSoundSpaceEvent(
+          "emotion_selected",
+          emotion
+        );
 
-/* =========================================================
-   SURPRISE ME
-   ========================================================= */
+      } catch (error) {
 
-document
-    .getElementById("surprise-button")
-    .addEventListener(
-        "click",
-        function() {
+        console.error(
+          "Tracking error ignored:",
+          error
+        );
 
-            if (!currentEmotion) {
-                return;
-            }
+      }
 
-            const songs =
-                moodData[
-                    currentEmotion
-                ].songs;
 
-            const randomIndex =
-                Math.floor(
-                    Math.random() *
-                    songs.length
-                );
+      displayEmotion(emotion);
 
-            const song =
-                songs[randomIndex];
-
-
-            const buttons =
-                document.querySelectorAll(
-                    ".song-listen-button"
-                );
-
-
-            if (buttons[randomIndex]) {
-
-                buttons[randomIndex].click();
-
-            }
-
-        }
-    );
-
-
-/* =========================================================
-   FEEDBACK
-   ========================================================= */
-
-document
-    .querySelectorAll(".feedback-button")
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    const feedback =
-                        this.dataset.feedback;
-
-                    const message =
-                        document.getElementById(
-                            "feedback-message"
-                        );
-
-
-                    if (feedback === "yes") {
-
-                        message.textContent =
-                            "Thank you! We're glad SoundSpace helped.";
-
-                    } else {
-
-                        message.textContent =
-                            "Thank you for the feedback. We'll keep improving SoundSpace.";
-
-                    }
-
-
-                    sendAnalytics(
-                        "feedback",
-                        currentEmotion,
-                        feedback
-                    );
-
-
-                    saveFeedback(
-                        feedback
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   HOME NAVIGATION
-   ========================================================= */
-
-document
-    .getElementById("home-nav")
-    .addEventListener(
-        "click",
-        function() {
-
-            emotionPage.style.display =
-                "none";
-
-            insightsPage.style.display =
-                "none";
-
-            homePage.style.display =
-                "block";
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        }
-    );
-
-
-/* =========================================================
-   INSIGHTS NAVIGATION
-   ========================================================= */
-
-document
-    .getElementById("insights-nav")
-    .addEventListener(
-        "click",
-        function() {
-
-            homePage.style.display =
-                "none";
-
-            emotionPage.style.display =
-                "none";
-
-            insightsPage.style.display =
-                "block";
-
-
-            loadInsights();
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        }
-    );
-
-
-/* =========================================================
-   INSIGHTS BACK
-   ========================================================= */
-
-document
-    .getElementById(
-        "insights-back-button"
-    )
-    .addEventListener(
-        "click",
-        function() {
-
-            insightsPage.style.display =
-                "none";
-
-            homePage.style.display =
-                "block";
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        }
-    );
-
-
-/* =========================================================
-   LOCAL ANALYTICS
-   ========================================================= */
-
-function getUsageData() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(
-                "soundspace_usage"
-            )
-        ) || [];
-
-    } catch {
-
-        return [];
+      showPage("emotion-page");
 
     }
-
-}
-
-
-function saveLocalUsage(emotion) {
-
-    const data =
-        getUsageData();
-
-
-    data.push({
-
-        emotion: emotion,
-
-        date:
-            new Date().toISOString()
-
-    });
-
-
-    localStorage.setItem(
-        "soundspace_usage",
-        JSON.stringify(data)
-    );
-
-}
-
-
-function saveFeedback(feedback) {
-
-    const feedbackData =
-        JSON.parse(
-            localStorage.getItem(
-                "soundspace_feedback"
-            )
-        ) || [];
-
-
-    feedbackData.push({
-
-        feedback: feedback,
-
-        emotion: currentEmotion,
-
-        date:
-            new Date().toISOString()
-
-    });
-
-
-    localStorage.setItem(
-        "soundspace_feedback",
-        JSON.stringify(
-            feedbackData
-        )
-    );
+  );
 
 }
 
 
 /* =========================================================
-   LOAD INSIGHTS
+   21. FEEDBACK
    ========================================================= */
 
-function loadInsights() {
+function setupFeedback() {
 
-    const usage =
-        getUsageData();
-
-
-    const feedback =
-        JSON.parse(
-            localStorage.getItem(
-                "soundspace_feedback"
-            )
-        ) || [];
-
-
+  const feedbackForm =
     document.getElementById(
-        "total-uses"
-    ).textContent =
-        usage.length;
-
-
-    const helpful =
-        feedback.filter(
-            item =>
-                item.feedback === "yes"
-        ).length;
-
-
-    document.getElementById(
-        "helpful-count"
-    ).textContent =
-        helpful;
-
-
-    /* Count emotions */
-
-    const emotionCounts = {
-
-        Happiness: 0,
-        Sadness: 0,
-        Anger: 0,
-        Anxiety: 0,
-        Irritation: 0
-
-    };
-
-
-    usage.forEach(
-        item => {
-
-            if (
-                emotionCounts[
-                    item.emotion
-                ] !== undefined
-            ) {
-
-                emotionCounts[
-                    item.emotion
-                ]++;
-
-            }
-
-        }
+      "feedback-form"
     );
 
-
-    let mostUsed =
-        "—";
-
-    let highest =
-        0;
+  if (!feedbackForm) {
+    return;
+  }
 
 
-    Object.keys(
-        emotionCounts
-    ).forEach(
-        emotion => {
+  feedbackForm.addEventListener(
+    "submit",
+    async function(event) {
 
-            if (
-                emotionCounts[
-                    emotion
-                ] > highest
-            ) {
-
-                highest =
-                    emotionCounts[
-                        emotion
-                    ];
-
-                mostUsed =
-                    emotion;
-
-            }
-
-        }
-    );
+      event.preventDefault();
 
 
-    document.getElementById(
-        "most-used-emotion"
-    ).textContent =
-        mostUsed;
-
-
-    /* Emotion statistics */
-
-    const statistics =
+      const feedbackEmotion =
         document.getElementById(
-            "emotion-statistics-list"
+          "feedback-emotion"
+        );
+
+      const calmerAnswer =
+        document.querySelector(
+          'input[name="calmer"]:checked'
+        );
+
+      const liked =
+        document.getElementById("liked");
+
+      const disliked =
+        document.getElementById("disliked");
+
+      const additional =
+        document.getElementById(
+          "additional-feedback"
         );
 
 
-    statistics.innerHTML = "";
+      const emotion =
+        feedbackEmotion?.value ||
+        currentEmotion ||
+        "";
 
 
-    Object.keys(
-        emotionCounts
-    ).forEach(
-        emotion => {
-
-            const item =
-                document.createElement(
-                    "div"
-                );
+      const helpful =
+        calmerAnswer?.value || "";
 
 
-            item.className =
-                "emotion-stat";
+      const feedbackText = [
+        liked?.value.trim() || "",
+        disliked?.value.trim() || "",
+        additional?.value.trim() || ""
+      ]
+        .filter(Boolean)
+        .join("\n");
 
 
-            item.innerHTML = `
-
-                <span>
-                    ${moodData[emotion].icon}
-                    ${emotion}
-                </span>
-
-                <strong>
-                    ${emotionCounts[emotion]}
-                </strong>
-
-            `;
-
-
-            statistics.appendChild(
-                item
-            );
-
-        }
-    );
-
-
-    /* Usage history */
-
-    const history =
+      const successMessage =
         document.getElementById(
-            "usage-history-list"
+          "feedback-success"
         );
 
 
-    history.innerHTML = "";
+      if (IS_DEVELOPER) {
 
+        if (successMessage) {
 
-    if (usage.length === 0) {
+          successMessage.textContent =
+            "Developer mode is on. This test feedback was not saved.";
 
-        history.innerHTML =
-            "<p>No usage recorded yet.</p>";
+          successMessage.hidden = false;
+
+        }
+
+        feedbackForm.reset();
 
         return;
 
-    }
+      }
 
 
-    /*
-       Show newest first and group
-       entries by date.
-    */
+      try {
 
-    const grouped = {};
+        const response =
+          await fetch(
+            `${SUPABASE_URL}/rest/v1/usage_events`,
+            {
+              method: "POST",
 
+              headers: {
+                "Content-Type":
+                  "application/json",
 
-    usage
-        .slice()
-        .reverse()
-        .forEach(
-            item => {
+                "apikey":
+                  SUPABASE_KEY,
 
-                const date =
-                    new Date(
-                        item.date
-                    );
+                "Authorization":
+                  `Bearer ${SUPABASE_KEY}`,
 
+                "Prefer":
+                  "return=minimal"
+              },
 
-                const dateKey =
-                    date.toLocaleDateString(
-                        undefined,
-                        {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric"
-                        }
-                    );
+              body: JSON.stringify({
 
+                event_type: "feedback",
 
-                if (!grouped[dateKey]) {
+                session_id:
+                  SOUNDSPACE_SESSION_ID,
 
-                    grouped[dateKey] =
-                        [];
+                page:
+                  window.location.pathname,
 
-                }
+                mood:
+                  emotion || null,
 
+                song:
+                  currentSong
+                    ? `${currentSong.title} — ${currentSong.artist}`
+                    : null,
 
-                grouped[
-                    dateKey
-                ].push(item);
+                helpful:
+                  helpful || null,
+
+                feedback_text:
+                  feedbackText || null
+
+              })
 
             }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "Feedback could not be saved"
+          );
+
+        }
+
+
+        if (successMessage) {
+
+          successMessage.textContent =
+            "✨ Thank you! Your feedback has been saved.";
+
+          successMessage.hidden = false;
+
+        }
+
+
+        feedbackForm.reset();
+
+      } catch (error) {
+
+        console.error(
+          "Feedback error:",
+          error
         );
 
 
-    Object.keys(
-        grouped
-    ).forEach(
-        date => {
+        if (successMessage) {
 
-            const day =
-                document.createElement(
-                    "div"
-                );
+          successMessage.textContent =
+            "Your feedback could not be saved. Please try again.";
 
-
-            day.className =
-                "history-day";
-
-
-            const heading =
-                document.createElement(
-                    "h3"
-                );
-
-
-            heading.textContent =
-                date;
-
-
-            day.appendChild(
-                heading
-            );
-
-
-            grouped[date].forEach(
-                item => {
-
-                    const row =
-                        document.createElement(
-                            "p"
-                        );
-
-
-                    row.textContent =
-                        `${moodData[item.emotion]?.icon || ""} ${item.emotion}`;
-
-
-                    day.appendChild(
-                        row
-                    );
-
-                }
-            );
-
-
-            history.appendChild(
-                day
-            );
+          successMessage.hidden = false;
 
         }
-    );
+
+      }
+
+    }
+  );
 
 }
 
 
 /* =========================================================
-   STARTUP
+   22. PLAYER BUTTONS
    ========================================================= */
 
-homePage.style.display =
-    "block";
+function setupPlayerButtons() {
 
-emotionPage.style.display =
-    "none";
+  const nextButton =
+    document.getElementById(
+      "next-button"
+    );
 
-insightsPage.style.display =
-    "none";
+  const reshuffleButton =
+    document.getElementById(
+      "reshuffle-button"
+    );
 
 
-console.log(
-    "SoundSpace loaded successfully."
+  if (nextButton) {
+
+    nextButton.addEventListener(
+      "click",
+      nextSong
+    );
+
+  }
+
+
+  if (reshuffleButton) {
+
+    reshuffleButton.addEventListener(
+      "click",
+      reshuffleSongs
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   23. BACK BUTTONS
+   ========================================================= */
+
+function setupBackButtons() {
+
+  const backHome =
+    document.getElementById(
+      "back-home"
+    );
+
+  const backToEmotion =
+    document.getElementById(
+      "back-to-emotion"
+    );
+
+
+  if (backHome) {
+
+    backHome.addEventListener(
+      "click",
+      function() {
+
+        showPage("home");
+
+      }
+    );
+
+  }
+
+
+  if (backToEmotion) {
+
+    backToEmotion.addEventListener(
+      "click",
+      function() {
+
+        if (currentEmotion) {
+
+          displayEmotion(
+            currentEmotion
+          );
+
+        }
+
+        showPage("emotion-page");
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   24. START SOUNDSPACE
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    console.log(
+      "SoundSpace loaded successfully!"
+    );
+
+
+    /*
+       Set up the website FIRST.
+       Analytics cannot interfere with clicking.
+    */
+
+    setupPageButtons();
+
+    setupEmotionCards();
+
+    setupFeedback();
+
+    setupPlayerButtons();
+
+    setupBackButtons();
+
+
+    /*
+       Track the visit separately.
+    */
+
+    if (!IS_DEVELOPER) {
+
+      try {
+
+        trackSoundSpaceEvent(
+          "page_view"
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Page tracking error ignored:",
+          error
+        );
+
+      }
+
+    }
+
+  }
 );
