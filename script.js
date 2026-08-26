@@ -1,2916 +1,2220 @@
-# SoundSpace — Natural, Enticing & Intriguing `style.css`
-
-
-/* =========================================
+/* =========================================================
    SOUNDSPACE
-   NATURAL • ENTICING • INTRIGUING DESIGN
-   Matches the current index.html + script.js
-   ========================================= */
+   COMPLETE WORKING SCRIPT
+   Matches the exact index.html provided
+   ========================================================= */
 
 
-/* =========================================
-   ROOT + RESET
-   ========================================= */
+/* =========================================================
+   SUPABASE SETTINGS
+   ========================================================= */
 
-:root {
+const SUPABASE_URL =
+    "https://bjfmlknorxlztxkxlebd.supabase.co";
 
-    --background:
-        #f4f1ea;
+const SUPABASE_KEY =
+    "sb_publishable_NDHWFaIHfs6IqvmbZiHrCg_0H2ZXZbU";
 
-    --background-deep:
-        #e8e3d8;
 
-    --surface:
-        rgba(255, 255, 255, 0.82);
+/* =========================================================
+   DEVELOPER MODE
+   ========================================================= */
 
-    --surface-solid:
-        #ffffff;
+const DEVELOPER_MODE_KEY =
+    "soundspace_developer_mode";
 
-    --text:
-        #252a24;
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-    --muted:
-        #70776d;
 
-    --border:
-        rgba(77, 91, 73, 0.14);
+if (params.get("developer") === "on") {
 
-    --purple:
-        #7564a8;
+    localStorage.setItem(
+        DEVELOPER_MODE_KEY,
+        "true"
+    );
 
-    --purple-light:
-        #ebe6f5;
+    window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+    );
 
-    --sage:
-        #9caf88;
-
-    --sage-light:
-        #e6eddf;
-
-    --gold:
-        #d5ad63;
-
-    --blue:
-        #7897a6;
-
-    --rose:
-        #c98585;
-
-    --orange:
-        #cf9565;
-
-    --shadow:
-        0 20px 60px rgba(
-            54,
-            64,
-            49,
-            0.12
-        );
-
-    --soft-shadow:
-        0 10px 30px rgba(
-            54,
-            64,
-            49,
-            0.07
-        );
-
-}
-
-
-* {
-
-    box-sizing:
-        border-box;
-
-}
-
-
-html {
-
-    scroll-behavior:
-        smooth;
-
-}
-
-
-body {
-
-    margin:
-        0;
-
-    min-height:
-        100vh;
-
-    background:
-        linear-gradient(
-            135deg,
-            #f7f4ed 0%,
-            #f1eee6 45%,
-            #e8eee3 100%
-        );
-
-    color:
-        var(--text);
-
-    font-family:
-        "DM Sans",
-        sans-serif;
-
-    overflow-x:
-        hidden;
-
-}
-
-
-body::before {
-
-    content:
-        "";
-
-    position:
-        fixed;
-
-    width:
-        500px;
-
-    height:
-        500px;
-
-    top:
-        -220px;
-
-    right:
-        -150px;
-
-    border-radius:
-        50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(
-                156,
-                175,
-                136,
-                0.25
-            ),
-            transparent 70%
-        );
-
-    pointer-events:
-        none;
-
-    z-index:
-        -1;
-
-}
-
-
-body::after {
-
-    content:
-        "";
-
-    position:
-        fixed;
-
-    width:
-        550px;
-
-    height:
-        550px;
-
-    bottom:
-        -280px;
-
-    left:
-        -220px;
-
-    border-radius:
-        50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(
-                213,
-                173,
-                99,
-                0.16
-            ),
-            transparent 70%
-        );
-
-    pointer-events:
-        none;
-
-    z-index:
-        -1;
-
-}
-
-
-/* =========================================
-   BUTTON RESET
-   ========================================= */
-
-button {
-
-    font:
-        inherit;
-
-}
-
-
-button,
-a {
-
-    -webkit-tap-highlight-color:
-        transparent;
-
-}
-
-
-/* =========================================
-   HEADER
-   ========================================= */
-
-.site-header {
-
-    width:
-        100%;
-
-    min-height:
-        82px;
-
-    padding:
-        16px clamp(
-            20px,
-            6vw,
-            90px
-        );
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    gap:
-        25px;
-
-    background:
-        rgba(
-            247,
-            244,
-            237,
-            0.78
-        );
-
-    border-bottom:
-        1px solid
-        rgba(
-            77,
-            91,
-            73,
-            0.1
-        );
-
-    position:
-        sticky;
-
-    top:
-        0;
-
-    z-index:
-        100;
-
-    backdrop-filter:
-        blur(18px);
-
-    -webkit-backdrop-filter:
-        blur(18px);
-
-}
-
-
-.logo {
-
-    position:
-        relative;
-
-    flex-shrink:
-        0;
-
-    font-family:
-        "Playfair Display",
-        serif;
-
-    font-size:
-        clamp(
-            1.5rem,
-            2.3vw,
-            2rem
-        );
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        -0.04em;
-
-}
-
-
-.logo::after {
-
-    content:
-        "";
-
-    display:
-        block;
-
-    width:
-        35%;
-
-    height:
-        3px;
-
-    margin-top:
-        2px;
-
-    border-radius:
-        20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--sage),
-            var(--gold)
-        );
-
-}
-
-
-/* =========================================
-   NAVIGATION
-   ========================================= */
-
-.main-nav {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        flex-end;
-
-    gap:
-        6px;
-
-    flex-wrap:
-        wrap;
-
-}
-
-
-.nav-btn {
-
-    border:
-        1px solid
-        transparent;
-
-    background:
-        transparent;
-
-    color:
-        var(--muted);
-
-    padding:
-        10px 15px;
-
-    border-radius:
-        999px;
-
-    cursor:
-        pointer;
-
-    font-size:
-        0.9rem;
-
-    font-weight:
-        600;
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.nav-btn:hover {
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.7
-        );
-
-    color:
-        var(--text);
-
-    transform:
-        translateY(-1px);
-
-}
-
-
-.nav-btn.active {
-
-    background:
-        var(--text);
-
-    color:
-        #ffffff;
-
-    box-shadow:
-        0 6px 18px rgba(
-            37,
-            42,
-            36,
-            0.18
-        );
-
-}
-
-
-/* =========================================
-   MAIN STRUCTURE
-   ========================================= */
-
-main {
-
-    width:
-        min(
-            1180px,
-            calc(100% - 40px)
-        );
-
-    margin:
-        0 auto;
-
-    padding:
-        clamp(
-            55px,
-            8vw,
-            100px
-        )
-        0;
-
-}
-
-
-/* =========================================
-   HERO
-   ========================================= */
-
-.hero {
-
-    position:
-        relative;
-
-    max-width:
-        850px;
-
-    margin:
-        0 auto;
-
-    padding:
-        clamp(
-            40px,
-            8vw,
-            95px
-        )
-        0
-        clamp(
-            55px,
-            9vw,
-            100px
-        );
-
-    text-align:
-        center;
-
-}
-
-
-.hero::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    width:
-        180px;
-
-    height:
-        180px;
-
-    top:
-        20px;
-
-    left:
-        50%;
-
-    transform:
-        translateX(-50%);
-
-    border-radius:
-        50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(
-                156,
-                175,
-                136,
-                0.22
-            ),
-            transparent 70%
-        );
-
-    z-index:
-        -1;
-
-}
-
-
-.eyebrow {
-
-    margin:
-        0 0 20px;
-
-    color:
-        #758465;
-
-    font-size:
-        0.72rem;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        0.18em;
-
-}
-
-
-.hero h1,
-.information-hero h1,
-.insights-header h1,
-.emotion-header h1 {
-
-    margin:
-        0;
-
-    font-family:
-        "Playfair Display",
-        serif;
-
-    font-size:
-        clamp(
-            2.7rem,
-            7vw,
-            5.7rem
-        );
-
-    line-height:
-        1.03;
-
-    letter-spacing:
-        -0.05em;
-
-}
-
-
-.hero h1 {
-
-    background:
-        linear-gradient(
-            120deg,
-            #293126,
-            #596c50,
-            #8b7047
-        );
-
-    -webkit-background-clip:
-        text;
-
-    background-clip:
-        text;
-
-    color:
-        transparent;
-
-}
-
-
-.hero-description {
-
-    max-width:
-        680px;
-
-    margin:
-        26px auto 0;
-
-    color:
-        var(--muted);
-
-    font-size:
-        clamp(
-            1rem,
-            2vw,
-            1.15rem
-        );
-
-    line-height:
-        1.9;
-
-}
-
-
-/* =========================================
-   EMOTION SECTION
-   ========================================= */
-
-.emotion-section h2 {
-
-    margin:
-        0 0 35px;
-
-    text-align:
-        center;
-
-    font-family:
-        "Playfair Display",
-        serif;
-
-    font-size:
-        clamp(
-            2rem,
-            4vw,
-            2.8rem
-        );
-
-}
-
-
-.emotion-grid {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(210px, 1fr)
-        );
-
-    gap:
-        18px;
-
-}
-
-
-/* =========================================
-   EMOTION CARDS
-   ========================================= */
-
-.emotion-card {
-
-    position:
-        relative;
-
-    overflow:
-        hidden;
-
-    min-height:
-        260px;
-
-    padding:
-        28px;
-
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    align-items:
-        flex-start;
-
-    text-align:
-        left;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        26px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.72
-        );
-
-    color:
-        var(--text);
-
-    cursor:
-        pointer;
-
-    box-shadow:
-        var(--soft-shadow);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
-
-}
-
-
-.emotion-card::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    width:
-        180px;
-
-    height:
-        180px;
-
-    border-radius:
-        50%;
-
-    top:
-        -95px;
-
-    right:
-        -80px;
-
-    opacity:
-        0.65;
-
-    transition:
-        transform 0.5s ease;
-
-}
-
-
-.emotion-card:hover {
-
-    transform:
-        translateY(-8px);
-
-    box-shadow:
-        var(--shadow);
-
-}
-
-
-.emotion-card:hover::before {
-
-    transform:
-        scale(1.35);
-
-}
-
-
-.emotion-card:active {
-
-    transform:
-        translateY(-2px);
-
-}
-
-
-/* Happiness */
-
-.happiness-card {
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(
-                255,
-                253,
-                244,
-                0.95
-            ),
-            rgba(
-                248,
-                238,
-                198,
-                0.72
-            )
-        );
-
-}
-
-
-.happiness-card::before {
-
-    background:
-        rgba(
-            226,
-            190,
-            91,
-            0.32
-        );
-
-}
-
-
-.happiness-card:hover {
-
-    border-color:
-        #d6b45e;
-
-}
-
-
-/* Sadness */
-
-.sadness-card {
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(
-                247,
-                250,
-                251,
-                0.95
-            ),
-            rgba(
-                216,
-                229,
-                235,
-                0.8
-            )
-        );
-
-}
-
-
-.sadness-card::before {
-
-    background:
-        rgba(
-            111,
-            151,
-            171,
-            0.22
-        );
-
-}
-
-
-.sadness-card:hover {
-
-    border-color:
-        var(--blue);
-
-}
-
-
-/* Anger */
-
-.anger-card {
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(
-                255,
-                248,
-                245,
-                0.95
-            ),
-            rgba(
-                242,
-                213,
-                205,
-                0.82
-            )
-        );
-
-}
-
-
-.anger-card::before {
-
-    background:
-        rgba(
-            201,
-            116,
-            100,
-            0.22
-        );
-
-}
-
-
-.anger-card:hover {
-
-    border-color:
-        var(--rose);
-
-}
-
-
-/* Anxiety */
-
-.anxiety-card {
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(
-                249,
-                247,
-                253,
-                0.95
-            ),
-            rgba(
-                228,
-                220,
-                242,
-                0.82
-            )
-        );
-
-}
-
-
-.anxiety-card::before {
-
-    background:
-        rgba(
-            117,
-            100,
-            168,
-            0.2
-        );
-
-}
-
-
-.anxiety-card:hover {
-
-    border-color:
-        var(--purple);
-
-}
-
-
-/* Irritation */
-
-.irritation-card {
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(
-                252,
-                249,
-                242,
-                0.95
-            ),
-            rgba(
-                239,
-                221,
-                198,
-                0.82
-            )
-        );
-
-}
-
-
-.irritation-card::before {
-
-    background:
-        rgba(
-            207,
-            149,
-            101,
-            0.22
-        );
-
-}
-
-
-.irritation-card:hover {
-
-    border-color:
-        var(--orange);
-
-}
-
-
-.emotion-icon {
-
-    position:
-        relative;
-
-    z-index:
-        1;
-
-    font-size:
-        2.7rem;
-
-    margin-bottom:
-        22px;
-
-    filter:
-        drop-shadow(
-            0 6px 8px
-            rgba(
-                0,
-                0,
-                0,
-                0.08
-            )
-        );
-
-}
-
-
-.emotion-name {
-
-    position:
-        relative;
-
-    z-index:
-        1;
-
-    font-family:
-        "Outfit",
-        sans-serif;
-
-    font-size:
-        1.4rem;
-
-    font-weight:
-        700;
-
-}
-
-
-.emotion-description {
-
-    position:
-        relative;
-
-    z-index:
-        1;
-
-    margin-top:
-        8px;
-
-    color:
-        #697065;
-
-    font-size:
-        0.93rem;
-
-    line-height:
-        1.65;
-
-}
-
-
-.card-explore {
-
-    position:
-        relative;
-
-    z-index:
-        1;
-
-    margin-top:
-        auto;
-
-    padding-top:
-        25px;
-
-    color:
-        #4c5b46;
-
-    font-size:
-        0.88rem;
-
-    font-weight:
-        700;
-
-}
-
-
-/* =========================================
-   EMOTION PAGE HEADER
-   ========================================= */
-
-.emotion-header {
-
-    max-width:
-        780px;
-
-    margin:
-        0 auto;
-
-    text-align:
-        center;
-
-}
-
-
-.back-button {
-
-    border:
-        none;
-
-    background:
-        transparent;
-
-    color:
-        var(--muted);
-
-    padding:
-        9px 2px;
-
-    cursor:
-        pointer;
-
-    font-weight:
-        600;
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.back-button:hover {
-
-    color:
-        var(--text);
-
-    transform:
-        translateX(-4px);
-
-}
-
-
-.large-emotion-icon {
-
-    margin:
-        32px 0 15px;
-
-    font-size:
-        clamp(
-            4rem,
-            9vw,
-            6rem
-        );
-
-}
-
-
-#selected-emotion-description {
-
-    max-width:
-        650px;
-
-    margin:
-        22px auto 0;
-
-    color:
-        var(--muted);
-
-    line-height:
-        1.85;
-
-}
-
-
-/* =========================================
-   SONG SECTION
-   ========================================= */
-
-.songs-section {
-
-    margin-top:
-        clamp(
-            55px,
-            9vw,
-            95px
-        );
-
-}
-
-
-.songs-heading {
-
-    display:
-        flex;
-
-    align-items:
-        flex-end;
-
-    justify-content:
-        space-between;
-
-    gap:
-        25px;
-
-    margin-bottom:
-        30px;
-
-}
-
-
-.songs-heading h2 {
-
-    margin:
-        7px 0 8px;
-
-    font-family:
-        "Playfair Display",
-        serif;
-
-    font-size:
-        clamp(
-            2.1rem,
-            4vw,
-            3.2rem
-        );
-
-}
-
-
-.songs-heading p:not(.eyebrow) {
-
-    margin:
-        0;
-
-    color:
-        var(--muted);
-
-    line-height:
-        1.75;
-
-}
-
-
-.surprise-button {
-
-    flex-shrink:
-        0;
-
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.3
-        );
-
-    border-radius:
-        999px;
-
-    padding:
-        14px 22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #58684f,
-            #8a9a78
-        );
-
-    color:
-        #ffffff;
-
-    cursor:
-        pointer;
-
-    font-weight:
-        700;
-
-    box-shadow:
-        0 10px 25px
-        rgba(
-            86,
-            104,
-            79,
-            0.22
-        );
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-
-}
-
-
-.surprise-button:hover {
-
-    transform:
-        translateY(-3px)
-        rotate(-1deg);
-
-    box-shadow:
-        0 15px 30px
-        rgba(
-            86,
-            104,
-            79,
-            0.3
-        );
-
-}
-
-
-/* =========================================
-   QUEUE CONTROLS
-   ========================================= */
-
-.queue-controls {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    flex-wrap:
-        wrap;
-
-    gap:
-        10px;
-
-    margin:
-        0 0 30px;
-
-}
-
-
-.queue-button {
-
-    border:
-        1px solid
-        var(--border);
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.7
-        );
-
-    color:
-        var(--text);
-
-    border-radius:
-        999px;
-
-    padding:
-        11px 18px;
-
-    cursor:
-        pointer;
-
-    font-size:
-        0.9rem;
-
-    font-weight:
-        600;
-
-    box-shadow:
-        0 4px 15px
-        rgba(
-            50,
-            60,
-            45,
-            0.05
-        );
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
-
-}
-
-
-.queue-button:hover {
-
-    background:
-        var(--sage-light);
-
-    border-color:
-        var(--sage);
-
-    transform:
-        translateY(-2px);
-
-}
-
-
-.queue-button:active {
-
-    transform:
-        scale(0.97);
-
-}
-
-
-/* =========================================
-   SONG LIST
-   ========================================= */
-
-.song-list {
-
-    display:
-        grid;
-
-    gap:
-        14px;
-
-}
-
-
-.song-card {
-
-    width:
-        100%;
-
-    display:
-        grid;
-
-    grid-template-columns:
-        50px
-        1fr
-        auto;
-
-    align-items:
-        center;
-
-    gap:
-        18px;
-
-    padding:
-        19px 22px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        20px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.75
-        );
-
-    color:
-        var(--text);
-
-    text-align:
-        left;
-
-    box-shadow:
-        0 5px 20px
-        rgba(
-            54,
-            64,
-            49,
-            0.04
-        );
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-
-}
-
-
-.song-card:hover {
-
-    transform:
-        translateX(6px);
-
-    border-color:
-        rgba(
-            117,
-            132,
-            101,
-            0.4
-        );
-
-    box-shadow:
-        var(--soft-shadow);
-
-}
-
-
-.song-number {
-
-    width:
-        40px;
-
-    height:
-        40px;
-
-    display:
-        grid;
-
-    place-items:
-        center;
-
-    border-radius:
-        50%;
-
-    background:
-        var(--sage-light);
-
-    color:
-        #667557;
-
-    font-size:
-        0.85rem;
-
-    font-weight:
-        700;
-
-}
-
-
-.song-details {
-
-    min-width:
-        0;
-
-}
-
-
-.song-details strong {
-
-    display:
-        block;
-
-    font-size:
-        1rem;
-
-}
-
-
-.song-details small {
-
-    display:
-        block;
-
-    margin-top:
-        4px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        0.88rem;
-
-}
-
-
-.song-why {
-
-    margin:
-        9px 0 0;
-
-    color:
-        #73796f;
-
-    font-size:
-        0.84rem;
-
-    line-height:
-        1.65;
-
-}
-
-
-.listen-song-button {
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        999px;
-
-    padding:
-        9px 15px;
-
-    background:
-        #ffffff;
-
-    color:
-        #56634d;
-
-    cursor:
-        pointer;
-
-    font-size:
-        0.84rem;
-
-    font-weight:
-        700;
-
-    transition:
-        0.2s ease;
-
-}
-
-
-.listen-song-button:hover {
-
-    background:
-        var(--text);
-
-    border-color:
-        var(--text);
-
-    color:
-        #ffffff;
-
-}
-
-
-/* =========================================
-   PLAYER
-   ========================================= */
-
-.player-section {
-
-    margin-top:
-        35px;
-
-    padding:
-        clamp(
-            30px,
-            6vw,
-            55px
-        );
-
-    border-radius:
-        30px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #293027,
-            #485443
-        );
-
-    color:
-        #ffffff;
-
-    box-shadow:
-        var(--shadow);
-
-}
-
-
-.player-content {
-
-    max-width:
-        760px;
-
-    margin:
-        0 auto;
-
-    text-align:
-        center;
-
-}
-
-
-.player-label {
-
-    margin:
-        0 0 14px;
-
-    color:
-        #bfcfb4;
-
-    font-size:
-        0.72rem;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        0.16em;
-
-}
-
-
-#player-song-title {
-
-    margin:
-        0;
-
-    font-family:
-        "Playfair Display",
-        serif;
-
-    font-size:
-        clamp(
-            2rem,
-            4vw,
-            3rem
-        );
-
-}
-
-
-#player-song-artist {
-
-    margin:
-        10px 0 0;
-
-    color:
-        #d5dbd1;
-
-}
-
-
-.player-reason {
-
-    max-width:
-        660px;
-
-    margin:
-        25px auto;
-
-    color:
-        #d3dbce;
-
-    line-height:
-        1.8;
-
-}
-
-
-/* =========================================
-   PLAYER CONTROLS
-   ========================================= */
-
-.player-controls {
-
-    display:
-        flex;
-
-    justify-content:
-        center;
-
-    align-items:
-        center;
-
-    gap:
-        14px;
-
-    margin:
-        22px 0;
-
-}
-
-
-.player-control-button {
-
-    width:
-        48px;
-
-    height:
-        48px;
-
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.22
-        );
-
-    border-radius:
-        50%;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.08
-        );
-
-    color:
-        #ffffff;
-
-    cursor:
-        pointer;
-
-    font-size:
-        1rem;
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.player-control-button:hover {
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.2
-        );
-
-    transform:
-        scale(1.08);
-
-}
-
-
-.listen-button {
-
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    margin-top:
-        10px;
-
-    padding:
-        14px 24px;
-
-    border-radius:
-        999px;
-
-    background:
-        #f4efe3;
-
-    color:
-        #354033;
-
-    text-decoration:
-        none;
-
-    font-weight:
-        700;
-
-    box-shadow:
-        0 8px 20px
-        rgba(
-            0,
-            0,
-            0,
-            0.15
-        );
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.listen-button:hover {
-
-    transform:
-        translateY(-3px);
-
-    background:
-        #ffffff;
-
-}
-
-
-/* =========================================
-   INFORMATION PAGES
-   ========================================= */
-
-.information-hero,
-.insights-header {
-
-    max-width:
-        800px;
-
-    margin:
-        0 auto;
-
-    text-align:
-        center;
-
 }
 
 
-.information-hero p:not(.eyebrow),
-.insights-header > p:last-child {
+if (params.get("developer") === "off") {
 
-    max-width:
-        670px;
+    localStorage.removeItem(
+        DEVELOPER_MODE_KEY
+    );
 
-    margin:
-        22px auto 0;
+    window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+    );
 
-    color:
-        var(--muted);
-
-    line-height:
-        1.85;
-
-}
-
-
-.information-grid {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(250px, 1fr)
-        );
-
-    gap:
-        20px;
-
-    margin-top:
-        65px;
-
-}
-
-
-.information-card,
-.about-card {
-
-    padding:
-        30px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        24px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.72
-        );
-
-    box-shadow:
-        var(--soft-shadow);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-
-}
-
-
-.information-card:hover,
-.about-card:hover {
-
-    transform:
-        translateY(-5px);
-
-    box-shadow:
-        var(--shadow);
-
-}
-
-
-.information-icon {
-
-    font-size:
-        2.2rem;
-
-    margin-bottom:
-        16px;
-
-}
-
-
-.information-card h2,
-.about-card h2 {
-
-    margin:
-        0 0 13px;
-
-    font-family:
-        "Outfit",
-        sans-serif;
-
-    font-size:
-        1.3rem;
-
-}
-
-
-.information-card p,
-.about-card p {
-
-    color:
-        var(--muted);
-
-    line-height:
-        1.85;
-
-}
-
-
-.about-content {
-
-    display:
-        grid;
-
-    gap:
-        20px;
-
-    max-width:
-        880px;
-
-    margin:
-        65px auto 0;
-
-}
-
-
-/* =========================================
-   FEEDBACK
-   ========================================= */
-
-.feedback-page-card {
-
-    max-width:
-        820px;
-
-    margin:
-        65px auto 0;
-
-    padding:
-        clamp(
-            28px,
-            6vw,
-            55px
-        );
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        30px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.76
-        );
-
-    box-shadow:
-        var(--shadow);
-
-}
-
-
-.feedback-page-card h2 {
-
-    margin:
-        0;
-
-    font-family:
-        "Playfair Display",
-        serif;
-
-    font-size:
-        clamp(
-            1.8rem,
-            4vw,
-            2.4rem
-        );
-
-}
-
-
-.feedback-page-card > p {
-
-    color:
-        var(--muted);
-
-    line-height:
-        1.75;
-
-}
-
-
-.feedback-question {
-
-    margin-top:
-        34px;
-
-}
-
-
-.feedback-question label {
-
-    display:
-        block;
-
-    margin-bottom:
-        13px;
-
-    font-weight:
-        700;
-
-}
-
-
-.feedback-question select,
-.feedback-question textarea {
-
-    width:
-        100%;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        14px;
-
-    padding:
-        15px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.9
-        );
-
-    color:
-        var(--text);
-
-    font:
-        inherit;
-
-    outline:
-        none;
-
-    resize:
-        vertical;
-
-}
-
-
-.feedback-question select:focus,
-.feedback-question textarea:focus {
-
-    border-color:
-        var(--sage);
-
-    box-shadow:
-        0 0 0 4px
-        rgba(
-            156,
-            175,
-            136,
-            0.15
-        );
-
-}
-
-
-.feedback-choice-row {
-
-    display:
-        flex;
-
-    flex-wrap:
-        wrap;
-
-    gap:
-        10px;
-
-}
-
-
-.choice-button,
-.helpful-choice {
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        999px;
-
-    padding:
-        11px 18px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.7
-        );
-
-    color:
-        var(--text);
-
-    cursor:
-        pointer;
-
-    font-weight:
-        600;
-
-    transition:
-        0.2s ease;
-
 }
 
 
-.choice-button:hover,
-.helpful-choice:hover {
+const IS_DEVELOPER =
+    localStorage.getItem(
+        DEVELOPER_MODE_KEY
+    ) === "true";
 
-    border-color:
-        var(--sage);
 
-    background:
-        var(--sage-light);
+/* =========================================================
+   SESSION ID
+   ========================================================= */
 
-}
-
-
-.choice-button.selected,
-.helpful-choice.selected {
-
-    background:
-        #627357;
-
-    border-color:
-        #627357;
-
-    color:
-        #ffffff;
-
-}
-
-
-.submit-feedback {
-
-    width:
-        100%;
-
-    margin-top:
-        35px;
-
-    padding:
-        16px;
-
-    border:
-        none;
-
-    border-radius:
-        999px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #3e4a3a,
-            #69795f
-        );
-
-    color:
-        #ffffff;
-
-    cursor:
-        pointer;
-
-    font-weight:
-        700;
-
-    box-shadow:
-        0 10px 25px
-        rgba(
-            62,
-            74,
-            58,
-            0.18
-        );
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.submit-feedback:hover {
-
-    transform:
-        translateY(-3px);
-
-}
-
-
-.feedback-message {
-
-    min-height:
-        24px;
-
-    margin:
-        20px 0 0;
-
-    text-align:
-        center;
-
-    color:
-        #647357;
-
-    font-weight:
-        600;
-
-}
-
-
-/* =========================================
-   INSIGHTS
-   ========================================= */
-
-.insights-grid {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
-
-    gap:
-        18px;
-
-    margin-top:
-        60px;
-
-}
-
-
-.insight-card {
-
-    padding:
-        32px 25px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        24px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.74
-        );
-
-    text-align:
-        center;
-
-    box-shadow:
-        var(--soft-shadow);
-
-}
-
-
-.insight-card h3 {
-
-    margin:
-        0;
-
-    color:
-        var(--muted);
-
-    font-size:
-        0.9rem;
-
-}
-
+let SOUNDSPACE_SESSION_ID =
+    sessionStorage.getItem(
+        "soundspace_session_id"
+    );
 
-.insight-card p {
-
-    margin:
-        16px 0 0;
-
-    font-family:
-        "Playfair Display",
-        serif;
-
-    font-size:
-        2.3rem;
-
-    font-weight:
-        700;
-
-}
-
-
-.emotion-statistics,
-.usage-history {
-
-    margin-top:
-        55px;
-
-    padding:
-        clamp(
-            22px,
-            5vw,
-            35px
-        );
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        26px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.74
-        );
-
-    box-shadow:
-        var(--soft-shadow);
-
-}
-
-
-.emotion-statistics h2,
-.usage-history h2 {
-
-    margin:
-        0 0 22px;
-
-    font-family:
-        "Playfair Display",
-        serif;
-
-}
-
-
-#emotion-statistics-list,
-#usage-history-list {
-
-    display:
-        grid;
-
-    gap:
-        11px;
-
-}
-
-
-.emotion-stat-row,
-.usage-history-row {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    gap:
-        20px;
-
-    padding:
-        15px;
-
-    border-radius:
-        14px;
-
-    background:
-        rgba(
-            244,
-            241,
-            234,
-            0.8
-        );
-
-}
-
-
-#emotion-statistics-list p,
-#usage-history-list p {
-
-    margin:
-        0;
-
-    padding:
-        14px;
-
-    border-radius:
-        14px;
-
-    background:
-        var(--sage-light);
-
-    color:
-        var(--muted);
-
-}
-
-
-/* =========================================
-   FOOTER
-   ========================================= */
-
-.site-footer {
-
-    position:
-        relative;
-
-    margin-top:
-        50px;
-
-    padding:
-        55px 20px;
-
-    border-top:
-        1px solid
-        var(--border);
-
-    background:
-        rgba(
-            232,
-            227,
-            216,
-            0.55
-        );
-
-    text-align:
-        center;
-
-    color:
-        var(--muted);
-
-}
-
-
-.site-footer p {
-
-    margin:
-        7px 0;
-
-}
 
+if (!SOUNDSPACE_SESSION_ID) {
 
-.site-footer strong {
+    SOUNDSPACE_SESSION_ID =
+        "ss_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .slice(2, 10);
 
-    color:
-        var(--text);
+    sessionStorage.setItem(
+        "soundspace_session_id",
+        SOUNDSPACE_SESSION_ID
+    );
 
 }
 
 
-/* =========================================
-   TABLET
-   ========================================= */
+/* =========================================================
+   ANALYTICS
+   ========================================================= */
 
-@media (
-    max-width:
-    850px
+async function trackSoundSpaceEvent(
+    eventType,
+    mood = null,
+    song = null,
+    helpful = null,
+    feedbackText = null
 ) {
 
-    .site-header {
+    if (IS_DEVELOPER) {
 
-        align-items:
-            flex-start;
+        console.log(
+            "Developer activity not tracked:",
+            eventType
+        );
 
-        flex-direction:
-            column;
-
-    }
-
-
-    .main-nav {
-
-        width:
-            100%;
-
-        justify-content:
-            flex-start;
+        return;
 
     }
 
 
-    .songs-heading {
+    try {
 
-        align-items:
-            flex-start;
+        const response =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/usage_events`,
+                {
 
-        flex-direction:
-            column;
+                    method: "POST",
 
-    }
+                    headers: {
 
+                        "Content-Type":
+                            "application/json",
 
-    .insights-grid {
+                        "apikey":
+                            SUPABASE_KEY,
 
-        grid-template-columns:
-            1fr;
+                        "Authorization":
+                            `Bearer ${SUPABASE_KEY}`,
 
-    }
+                        "Prefer":
+                            "return=minimal"
 
-}
+                    },
 
+                    body:
+                        JSON.stringify({
 
-/* =========================================
-   MOBILE
-   ========================================= */
+                            event_type:
+                                eventType,
 
-@media (
-    max-width:
-    600px
-) {
+                            session_id:
+                                SOUNDSPACE_SESSION_ID,
 
-    main {
+                            page:
+                                window.location.pathname,
 
-        width:
-            min(
-                100% - 28px,
-                1180px
+                            mood:
+                                mood,
+
+                            song:
+                                song,
+
+                            helpful:
+                                helpful,
+
+                            feedback_text:
+                                feedbackText
+
+                        })
+
+                }
             );
 
-        padding:
-            50px 0;
 
-    }
+        if (!response.ok) {
 
+            console.error(
+                "Analytics could not be saved."
+            );
 
-    .site-header {
+        }
 
-        padding:
-            14px;
+    } catch (error) {
 
-    }
-
-
-    .main-nav {
-
-        flex-wrap:
-            nowrap;
-
-        overflow-x:
-            auto;
-
-        padding-bottom:
-            5px;
-
-        scrollbar-width:
-            none;
-
-    }
-
-
-    .main-nav::-webkit-scrollbar {
-
-        display:
-            none;
-
-    }
-
-
-    .nav-btn {
-
-        flex:
-            0 0 auto;
-
-        padding:
-            9px 13px;
-
-        font-size:
-            0.84rem;
-
-    }
-
-
-    .emotion-grid {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .emotion-card {
-
-        min-height:
-            225px;
-
-    }
-
-
-    .queue-controls {
-
-        display:
-            grid;
-
-        grid-template-columns:
-            1fr 1fr;
-
-        width:
-            100%;
-
-    }
-
-
-    .queue-button {
-
-        width:
-            100%;
-
-        padding:
-            12px 8px;
-
-        font-size:
-            0.8rem;
-
-    }
-
-
-    .song-card {
-
-        grid-template-columns:
-            42px
-            1fr;
-
-        padding:
-            16px;
-
-        gap:
-            12px;
-
-    }
-
-
-    .listen-song-button {
-
-        grid-column:
-            2;
-
-        justify-self:
-            start;
-
-        margin-top:
-            5px;
-
-    }
-
-
-    .song-why {
-
-        font-size:
-            0.8rem;
-
-    }
-
-
-    .feedback-page-card {
-
-        padding:
-            25px 18px;
-
-    }
-
-
-    .emotion-statistics,
-    .usage-history {
-
-        padding:
-            22px;
+        console.error(
+            "SoundSpace analytics error:",
+            error
+        );
 
     }
 
 }
 
 
-/* =========================================
-   SMALL PHONES
-   ========================================= */
+/* =========================================================
+   SONG DATA
+   ========================================================= */
 
-@media (
-    max-width:
-    380px
-) {
+const moodData = {
 
-    .queue-controls {
+    happiness: {
 
-        grid-template-columns:
-            1fr;
+        title: "Happiness",
+
+        emoji: "😊",
+
+        description:
+            "Keep the good feeling going with upbeat, energetic and positive music.",
+
+        songs: [
+
+            {
+                title: "Happy",
+                artist: "Pharrell Williams",
+                why:
+                    "Its upbeat rhythm and positive energy make it a natural fit for maintaining a happy mood."
+            },
+
+            {
+                title: "Can't Stop the Feeling!",
+                artist: "Justin Timberlake",
+                why:
+                    "Its lively tempo and danceable rhythm create an energetic and joyful atmosphere."
+            },
+
+            {
+                title: "Levitating",
+                artist: "Dua Lipa",
+                why:
+                    "Its playful disco-inspired production gives the song an uplifting character."
+            },
+
+            {
+                title: "Uptown Funk",
+                artist: "Mark Ronson ft. Bruno Mars",
+                why:
+                    "Its energetic funk groove makes it lively, stimulating and highly danceable."
+            },
+
+            {
+                title: "Good as Hell",
+                artist: "Lizzo",
+                why:
+                    "Its confident message and upbeat production support feelings of positivity."
+            },
+
+            {
+                title: "Lush Life",
+                artist: "Zara Larsson",
+                why:
+                    "Its bright pop sound creates a carefree and energetic atmosphere."
+            },
+
+            {
+                title: "APT.",
+                artist: "ROSÉ & Bruno Mars",
+                why:
+                    "Its catchy rhythm and high-energy production make it suitable for an upbeat mood."
+            },
+
+            {
+                title: "Golden",
+                artist:
+                    "HUNTR/X, EJAE, Audrey Nuna & REI AMI",
+                why:
+                    "Its energetic production and confident delivery create an uplifting atmosphere."
+            },
+
+            {
+                title: "Flowers",
+                artist: "Miley Cyrus",
+                why:
+                    "Its confident message and bright pop production can reinforce positive feelings."
+            },
+
+            {
+                title: "Roar",
+                artist: "Katy Perry",
+                why:
+                    "Its energetic chorus and empowering message make it uplifting and motivating."
+            }
+
+        ]
+
+    },
+
+
+    sadness: {
+
+        title: "Sadness",
+
+        emoji: "😢",
+
+        description:
+            "Find comfort, emotional connection and gentle warmth through reflective music.",
+
+        songs: [
+
+            {
+                title: "Beautiful Things",
+                artist: "Benson Boone",
+                why:
+                    "Its emotional delivery creates space for reflection and emotional connection."
+            },
+
+            {
+                title: "Someone You Loved",
+                artist: "Lewis Capaldi",
+                why:
+                    "Its emotional vocals and reflective mood connect naturally with feelings of sadness."
+            },
+
+            {
+                title: "The Night We Met",
+                artist: "Lord Huron",
+                why:
+                    "Its nostalgic atmosphere creates a deeply reflective listening experience."
+            },
+
+            {
+                title: "When We Were Young",
+                artist: "Adele",
+                why:
+                    "Its nostalgic themes and expressive vocals create a strong sense of reflection."
+            },
+
+            {
+                title: "Iris",
+                artist: "Goo Goo Dolls",
+                why:
+                    "Its emotional melody and vulnerable atmosphere can resonate with longing."
+            },
+
+            {
+                title: "Lovely",
+                artist: "Billie Eilish & Khalid",
+                why:
+                    "Its restrained production and vulnerable atmosphere suit reflective listening."
+            },
+
+            {
+                title: "What Was I Made For?",
+                artist: "Billie Eilish",
+                why:
+                    "Its soft arrangement and introspective tone encourage quiet reflection."
+            },
+
+            {
+                title: "Ocean Eyes",
+                artist: "Billie Eilish",
+                why:
+                    "Its gentle production creates a calm and introspective atmosphere."
+            },
+
+            {
+                title: "Die With A Smile",
+                artist: "Lady Gaga & Bruno Mars",
+                why:
+                    "Its emotional ballad style creates space for heartfelt reflection."
+            },
+
+            {
+                title: "Back To Friends",
+                artist: "sombr",
+                why:
+                    "Its reflective themes and emotional delivery suit feelings of loss and longing."
+            }
+
+        ]
+
+    },
+
+
+    anger: {
+
+        title: "Anger",
+
+        emoji: "😡",
+
+        description:
+            "Use powerful music as a structured way to release energy and shift your emotional direction.",
+
+        songs: [
+
+            {
+                title: "Believer",
+                artist: "Imagine Dragons",
+                why:
+                    "Its intense percussion and powerful vocals provide an energetic outlet."
+            },
+
+            {
+                title: "Stronger",
+                artist: "Kelly Clarkson",
+                why:
+                    "Its message of overcoming difficulty can redirect frustration toward resilience."
+            },
+
+            {
+                title: "Titanium",
+                artist: "David Guetta ft. Sia",
+                why:
+                    "Its powerful production and resilient message create an empowering experience."
+            },
+
+            {
+                title: "Unstoppable",
+                artist: "Sia",
+                why:
+                    "Its dramatic build can shift intense feelings toward determination."
+            },
+
+            {
+                title: "Roar",
+                artist: "Katy Perry",
+                why:
+                    "Its energetic chorus provides a constructive direction for intense emotions."
+            },
+
+            {
+                title: "Shake It Off",
+                artist: "Taylor Swift",
+                why:
+                    "Its upbeat rhythm encourages emotional release and moving forward."
+            },
+
+            {
+                title: "Flowers",
+                artist: "Miley Cyrus",
+                why:
+                    "Its confident message can redirect frustration toward self-reliance."
+            },
+
+            {
+                title: "I Will Survive",
+                artist: "Gloria Gaynor",
+                why:
+                    "Its resilient message transforms difficult feelings into strength."
+            },
+
+            {
+                title: "Since U Been Gone",
+                artist: "Kelly Clarkson",
+                why:
+                    "Its high-energy sound provides an expressive outlet for strong emotions."
+            },
+
+            {
+                title: "The Man",
+                artist: "The Killers",
+                why:
+                    "Its energetic rock sound matches high-energy emotional states."
+            }
+
+        ]
+
+    },
+
+
+    anxiety: {
+
+        title: "Anxiety",
+
+        emoji: "😟",
+
+        description:
+            "Explore slower, familiar and emotionally gentle songs that may help create a calmer atmosphere.",
+
+        songs: [
+
+            {
+                title: "A Thousand Years",
+                artist: "Christina Perri",
+                why:
+                    "Its slow tempo and gentle arrangement create a softer listening environment."
+            },
+
+            {
+                title: "Perfect",
+                artist: "Ed Sheeran",
+                why:
+                    "Its smooth melody provides a gentle and emotionally warm experience."
+            },
+
+            {
+                title: "Photograph",
+                artist: "Ed Sheeran",
+                why:
+                    "Its reflective pacing creates a quieter atmosphere suited to slowing down."
+            },
+
+            {
+                title: "Yellow",
+                artist: "Coldplay",
+                why:
+                    "Its warm melody can create a comforting atmosphere."
+            },
+
+            {
+                title: "Ocean Eyes",
+                artist: "Billie Eilish",
+                why:
+                    "Its soft vocals and spacious sound create a calm listening environment."
+            },
+
+            {
+                title: "Lovely",
+                artist: "Billie Eilish & Khalid",
+                why:
+                    "Its restrained instrumentation supports gentle reflective listening."
+            },
+
+            {
+                title: "Until I Found You",
+                artist: "Stephen Sanchez",
+                why:
+                    "Its nostalgic style and smooth vocals create a gentle atmosphere."
+            },
+
+            {
+                title: "Adore You",
+                artist: "Harry Styles",
+                why:
+                    "Its warm production and smooth melody create a comfortable listening experience."
+            },
+
+            {
+                title: "Sunflower",
+                artist: "Post Malone & Swae Lee",
+                why:
+                    "Its relaxed groove gives it an easy-going quality."
+            },
+
+            {
+                title: "What Was I Made For?",
+                artist: "Billie Eilish",
+                why:
+                    "Its quiet arrangement and slow pace encourage stillness and reflection."
+            }
+
+        ]
+
+    },
+
+
+    irritation: {
+
+        title: "Irritation",
+
+        emoji: "😤",
+
+        description:
+            "Take a musical reset with lighter, warmer and more relaxed songs.",
+
+        songs: [
+
+            {
+                title: "Sunday Best",
+                artist: "Surfaces",
+                why:
+                    "Its relaxed rhythm and optimistic tone create an easy-going atmosphere."
+            },
+
+            {
+                title: "Put Your Records On",
+                artist: "Corinne Bailey Rae",
+                why:
+                    "Its warm vocals and relaxed groove create a comforting experience."
+            },
+
+            {
+                title: "Lovely Day",
+                artist: "Bill Withers",
+                why:
+                    "Its smooth groove creates a warm and positive atmosphere."
+            },
+
+            {
+                title: "Sunflower",
+                artist: "Post Malone & Swae Lee",
+                why:
+                    "Its laid-back rhythm gives the song a relaxed quality."
+            },
+
+            {
+                title: "Adore You",
+                artist: "Harry Styles",
+                why:
+                    "Its warm production creates a lighter emotional atmosphere."
+            },
+
+            {
+                title: "Best Part",
+                artist: "Daniel Caesar ft. H.E.R.",
+                why:
+                    "Its soft instrumentation and gentle delivery create a calm atmosphere."
+            },
+
+            {
+                title: "Location",
+                artist: "Khalid",
+                why:
+                    "Its mellow production makes it suitable for relaxed listening."
+            },
+
+            {
+                title: "Golden Hour",
+                artist: "JVKE",
+                why:
+                    "Its warm melody creates a soothing emotional tone."
+            },
+
+            {
+                title: "Sweet Creature",
+                artist: "Harry Styles",
+                why:
+                    "Its quiet sound creates a low-intensity listening experience."
+            },
+
+            {
+                title: "So Easy (To Fall in Love)",
+                artist: "Olivia Dean",
+                why:
+                    "Its smooth vocals and warm production create an easy-going atmosphere."
+            }
+
+        ]
+
+    }
+
+};
+
+
+/* =========================================================
+   APP STATE
+   ========================================================= */
+
+let currentEmotion = "";
+
+let currentSongIndex = -1;
+
+let originalSongs = [];
+
+let queueSongs = [];
+
+let isShuffleOn = false;
+
+
+/* =========================================================
+   PAGE ELEMENTS
+   ========================================================= */
+
+const pages = {
+
+    home:
+        document.getElementById(
+            "home-page"
+        ),
+
+    emotion:
+        document.getElementById(
+            "emotion-page"
+        ),
+
+    why:
+        document.getElementById(
+            "why-page"
+        ),
+
+    about:
+        document.getElementById(
+            "about-page"
+        ),
+
+    feedback:
+        document.getElementById(
+            "feedback-page"
+        ),
+
+    insights:
+        document.getElementById(
+            "insights-page"
+        )
+
+};
+
+
+/* =========================================================
+   PAGE SWITCHING
+   ========================================================= */
+
+function showPage(pageName) {
+
+    Object.values(pages).forEach(
+        function(page) {
+
+            if (page) {
+
+                page.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    if (pages[pageName]) {
+
+        pages[pageName].style.display =
+            "block";
 
     }
 
 
-    .feedback-choice-row {
+    document
+        .querySelectorAll(
+            ".nav-btn"
+        )
+        .forEach(
+            function(button) {
 
-        flex-direction:
-            column;
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    const activeNav =
+        document.getElementById(
+            `${pageName}-nav`
+        );
+
+
+    if (activeNav) {
+
+        activeNav.classList.add(
+            "active"
+        );
 
     }
 
 
-    .choice-button,
-    .helpful-choice {
+    window.scrollTo({
 
-        width:
-            100%;
+        top: 0,
+
+        behavior:
+            "smooth"
+
+    });
+
+}
+
+
+function showHomePage() {
+
+    showPage("home");
+
+}
+
+
+function showEmotionPage() {
+
+    showPage("emotion");
+
+}
+
+
+function showWhyPage() {
+
+    showPage("why");
+
+}
+
+
+function showAboutPage() {
+
+    showPage("about");
+
+}
+
+
+function showFeedbackPage() {
+
+    showPage("feedback");
+
+}
+
+
+function showInsightsPage() {
+
+    showPage("insights");
+
+    displayInsights();
+
+}
+
+
+/* =========================================================
+   DISPLAY EMOTION
+   ========================================================= */
+
+function displayEmotion(emotion) {
+
+    const data =
+        moodData[emotion];
+
+
+    if (!data) {
+
+        return;
 
     }
 
 
-    .hero h1 {
+    currentEmotion =
+        emotion;
 
-        font-size:
-            2.55rem;
+
+    currentSongIndex =
+        -1;
+
+
+    originalSongs =
+        [...data.songs];
+
+
+    queueSongs =
+        [...data.songs];
+
+
+    document.getElementById(
+        "selected-emotion-icon"
+    ).textContent =
+        data.emoji;
+
+
+    document.getElementById(
+        "selected-emotion-title"
+    ).textContent =
+        data.title;
+
+
+    document.getElementById(
+        "selected-emotion-description"
+    ).textContent =
+        data.description;
+
+
+    const player =
+        document.getElementById(
+            "player-section"
+        );
+
+
+    if (player) {
+
+        player.style.display =
+            "none";
+
+    }
+
+
+    displaySongs();
+
+    showEmotionPage();
+
+}
+
+
+/* =========================================================
+   DISPLAY SONGS
+   ========================================================= */
+
+function displaySongs() {
+
+    const songList =
+        document.getElementById(
+            "song-list"
+        );
+
+
+    if (!songList) {
+
+        return;
+
+    }
+
+
+    songList.innerHTML =
+        "";
+
+
+    queueSongs.forEach(
+        function(song, index) {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "song-card";
+
+
+            card.innerHTML = `
+
+                <div class="song-number">
+                    ${String(
+                        index + 1
+                    ).padStart(
+                        2,
+                        "0"
+                    )}
+                </div>
+
+                <div class="song-details">
+
+                    <strong>
+                        ${song.title}
+                    </strong>
+
+                    <small>
+                        ${song.artist}
+                    </small>
+
+                    <p class="song-why">
+                        <b>✨ Why this song fits:</b>
+                        ${song.why}
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="listen-song-button"
+                >
+                    Listen
+                </button>
+
+            `;
+
+
+            const listenButton =
+                card.querySelector(
+                    ".listen-song-button"
+                );
+
+
+            listenButton.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+                    currentSongIndex =
+                        index;
+
+                    playCurrentSong();
+
+                }
+            );
+
+
+            card.addEventListener(
+                "click",
+                function() {
+
+                    currentSongIndex =
+                        index;
+
+                    playCurrentSong();
+
+                }
+            );
+
+
+            songList.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   PLAY CURRENT SONG
+   ========================================================= */
+
+function playCurrentSong() {
+
+    if (
+        currentSongIndex < 0 ||
+        currentSongIndex >=
+            queueSongs.length
+    ) {
+
+        return;
+
+    }
+
+
+    const song =
+        queueSongs[
+            currentSongIndex
+        ];
+
+
+    trackSoundSpaceEvent(
+
+        "song_selected",
+
+        currentEmotion,
+
+        `${song.title} — ${song.artist}`
+
+    );
+
+
+    const player =
+        document.getElementById(
+            "player-section"
+        );
+
+
+    const title =
+        document.getElementById(
+            "player-song-title"
+        );
+
+
+    const artist =
+        document.getElementById(
+            "player-song-artist"
+        );
+
+
+    const reason =
+        document.getElementById(
+            "player-song-reason"
+        );
+
+
+    const listenLink =
+        document.getElementById(
+            "listen-link"
+        );
+
+
+    title.textContent =
+        song.title;
+
+
+    artist.textContent =
+        song.artist;
+
+
+    reason.textContent =
+        "✨ Why this song fits: " +
+        song.why;
+
+
+    const searchQuery =
+        encodeURIComponent(
+            `${song.title} ${song.artist}`
+        );
+
+
+    listenLink.href =
+        "https://open.spotify.com/search/" +
+        searchQuery;
+
+
+    player.style.display =
+        "block";
+
+
+    player.scrollIntoView({
+
+        behavior:
+            "smooth",
+
+        block:
+            "center"
+
+    });
+
+}
+
+
+/* =========================================================
+   NEXT SONG
+   ========================================================= */
+
+function nextSong() {
+
+    if (
+        queueSongs.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    currentSongIndex++;
+
+
+    if (
+        currentSongIndex >=
+        queueSongs.length
+    ) {
+
+        currentSongIndex =
+            0;
+
+    }
+
+
+    playCurrentSong();
+
+}
+
+
+/* =========================================================
+   PREVIOUS SONG
+   ========================================================= */
+
+function previousSong() {
+
+    if (
+        queueSongs.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    currentSongIndex--;
+
+
+    if (
+        currentSongIndex < 0
+    ) {
+
+        currentSongIndex =
+            queueSongs.length - 1;
+
+    }
+
+
+    playCurrentSong();
+
+}
+
+
+/* =========================================================
+   SHUFFLE ARRAY
+   ========================================================= */
+
+function shuffleArray(array) {
+
+    const shuffled =
+        [...array];
+
+
+    for (
+        let i =
+            shuffled.length - 1;
+
+        i > 0;
+
+        i--
+    ) {
+
+        const randomIndex =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            shuffled[i],
+            shuffled[randomIndex]
+        ] =
+        [
+            shuffled[randomIndex],
+            shuffled[i]
+        ];
+
+    }
+
+
+    return shuffled;
+
+}
+
+
+/* =========================================================
+   SHUFFLE
+   ========================================================= */
+
+function shuffleSongs() {
+
+    if (
+        !currentEmotion
+    ) {
+
+        return;
+
+    }
+
+
+    queueSongs =
+        shuffleArray(
+            queueSongs
+        );
+
+
+    currentSongIndex =
+        -1;
+
+
+    isShuffleOn =
+        true;
+
+
+    displaySongs();
+
+
+    const button =
+        document.getElementById(
+            "shuffle-button"
+        );
+
+
+    if (button) {
+
+        button.textContent =
+            "🔀 Shuffled";
 
     }
 
 }
+
+
+/* =========================================================
+   RESHUFFLE
+   ========================================================= */
+
+function reshuffleSongs() {
+
+    if (
+        !currentEmotion
+    ) {
+
+        return;
+
+    }
+
+
+    queueSongs =
+        shuffleArray(
+            originalSongs
+        );
+
+
+    currentSongIndex =
+        -1;
+
+
+    isShuffleOn =
+        true;
+
+
+    displaySongs();
+
+
+    const button =
+        document.getElementById(
+            "shuffle-button"
+        );
+
+
+    if (button) {
+
+        button.textContent =
+            "🔀 Shuffled";
+
+    }
+
+}
+
+
+/* =========================================================
+   SURPRISE ME
+   ========================================================= */
+
+function surpriseMe() {
+
+    if (
+        queueSongs.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    let randomIndex =
+        Math.floor(
+            Math.random() *
+            queueSongs.length
+        );
+
+
+    if (
+        queueSongs.length > 1 &&
+        randomIndex ===
+        currentSongIndex
+    ) {
+
+        randomIndex =
+            (
+                randomIndex + 1
+            ) %
+            queueSongs.length;
+
+    }
+
+
+    currentSongIndex =
+        randomIndex;
+
+
+    playCurrentSong();
+
+}
+
+
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
+
+let selectedFit = "";
+
+let selectedHelpful = "";
+
+
+function setupFeedback() {
+
+    const choiceButtons =
+        document.querySelectorAll(
+            ".choice-button"
+        );
+
+
+    choiceButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    choiceButtons.forEach(
+                        function(otherButton) {
+
+                            otherButton.classList.remove(
+                                "selected"
+                            );
+
+                        }
+                    );
+
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+
+                    selectedFit =
+                        button.dataset.value;
+
+
+                    document.getElementById(
+                        "feedback-fit"
+                    ).value =
+                        selectedFit;
+
+                }
+            );
+
+        }
+    );
+
+
+    const helpfulButtons =
+        document.querySelectorAll(
+            ".helpful-choice"
+        );
+
+
+    helpfulButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    helpfulButtons.forEach(
+                        function(otherButton) {
+
+                            otherButton.classList.remove(
+                                "selected"
+                            );
+
+                        }
+                    );
+
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+
+                    selectedHelpful =
+                        button.dataset.value;
+
+
+                    document.getElementById(
+                        "feedback-helpful"
+                    ).value =
+                        selectedHelpful;
+
+                }
+            );
+
+        }
+    );
+
+
+    const form =
+        document.getElementById(
+            "feedback-form"
+        );
+
+
+    if (!form) {
+
+        return;
+
+    }
+
+
+    form.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const emotion =
+                document.getElementById(
+                    "feedback-emotion"
+                ).value;
+
+
+            const improvement =
+                document.getElementById(
+                    "feedback-improvement"
+                ).value;
+
+
+            const liked =
+                document.getElementById(
+                    "feedback-liked"
+                ).value;
+
+
+            const message =
+                document.getElementById(
+                    "full-feedback-message"
+                );
+
+
+            if (
+                !emotion ||
+                !selectedFit ||
+                !selectedHelpful
+            ) {
+
+                message.textContent =
+                    "Please answer the required questions first.";
+
+                return;
+
+            }
+
+
+            const feedbackText =
+                `Fit: ${selectedFit}. ` +
+                `Helpful: ${selectedHelpful}. ` +
+                `Improvement: ${improvement}. ` +
+                `Liked: ${liked}`;
+
+
+            trackSoundSpaceEvent(
+
+                "feedback",
+
+                emotion,
+
+                null,
+
+                selectedHelpful,
+
+                feedbackText
+
+            );
+
+
+            message.textContent =
+                IS_DEVELOPER
+                    ? "Developer mode is on, so this feedback was not tracked."
+                    : "✨ Thank you! Your feedback has been sent.";
+
+
+            form.reset();
+
+
+            selectedFit =
+                "";
+
+
+            selectedHelpful =
+                "";
+
+
+            choiceButtons.forEach(
+                function(button) {
+
+                    button.classList.remove(
+                        "selected"
+                    );
+
+                }
+            );
+
+
+            helpfulButtons.forEach(
+                function(button) {
+
+                    button.classList.remove(
+                        "selected"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   INSIGHTS
+   ========================================================= */
+
+async function displayInsights() {
+
+    const totalUses =
+        document.getElementById(
+            "total-uses"
+        );
+
+    const helpfulCount =
+        document.getElementById(
+            "helpful-count"
+        );
+
+    const mostUsedEmotion =
+        document.getElementById(
+            "most-used-emotion"
+        );
+
+    const emotionList =
+        document.getElementById(
+            "emotion-statistics-list"
+        );
+
+    const historyList =
+        document.getElementById(
+            "usage-history-list"
+        );
+
+
+    if (IS_DEVELOPER) {
+
+        if (totalUses) {
+
+            totalUses.textContent =
+                "—";
+
+        }
+
+
+        if (helpfulCount) {
+
+            helpfulCount.textContent =
+                "—";
+
+        }
+
+
+        if (mostUsedEmotion) {
+
+            mostUsedEmotion.textContent =
+                "Developer Mode";
+
+        }
+
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/usage_events?select=*`,
+                {
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            `Bearer ${SUPABASE_KEY}`
+
+                    }
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not load insights."
+            );
+
+        }
+
+
+        const events =
+            await response.json();
+
+
+        const sessions =
+            new Set();
+
+
+        events.forEach(
+            function(event) {
+
+                if (
+                    event.session_id
+                ) {
+
+                    sessions.add(
+                        event.session_id
+                    );
+
+                }
+
+            }
+        );
+
+
+        if (totalUses) {
+
+            totalUses.textContent =
+                sessions.size;
+
+        }
+
+
+        const helpfulResponses =
+            events.filter(
+                function(event) {
+
+                    return (
+                        event.event_type ===
+                        "feedback" &&
+
+                        event.helpful ===
+                        "yes"
+                    );
+
+                }
+            );
+
+
+        if (helpfulCount) {
+
+            helpfulCount.textContent =
+                helpfulResponses.length;
+
+        }
+
+
+        const counts = {
+
+            happiness: 0,
+            sadness: 0,
+            anger: 0,
+            anxiety: 0,
+            irritation: 0
+
+        };
+
+
+        events.forEach(
+            function(event) {
+
+                if (
+                    event.event_type ===
+                    "emotion_selected" &&
+
+                    Object.prototype.hasOwnProperty.call(
+                        counts,
+                        event.mood
+                    )
+                ) {
+
+                    counts[
+                        event.mood
+                    ]++;
+
+                }
+
+            }
+        );
+
+
+        let mostUsed =
+            null;
+
+        let highestCount =
+            0;
+
+
+        Object.keys(
+            counts
+        ).forEach(
+            function(emotion) {
+
+                if (
+                    counts[emotion] >
+                    highestCount
+                ) {
+
+                    highestCount =
+                        counts[emotion];
+
+                    mostUsed =
+                        emotion;
+
+                }
+
+            }
+        );
+
+
+        if (mostUsedEmotion) {
+
+            mostUsedEmotion.textContent =
+                mostUsed
+                    ? moodData[mostUsed].emoji +
+                      " " +
+                      moodData[mostUsed].title
+                    : "—";
+
+        }
+
+
+        if (emotionList) {
+
+            emotionList.innerHTML =
+                "";
+
+
+            Object.keys(
+                counts
+            ).forEach(
+                function(emotion) {
+
+                    const row =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    row.className =
+                        "emotion-stat-row";
+
+
+                    row.innerHTML =
+                        `<strong>
+                            ${moodData[emotion].emoji}
+                            ${moodData[emotion].title}
+                        </strong>
+
+                        <span>
+                            ${counts[emotion]}
+                        </span>`;
+
+
+                    emotionList.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+        }
+
+
+        if (historyList) {
+
+            historyList.innerHTML =
+                "";
+
+
+            const pageViews =
+                events.filter(
+                    function(event) {
+
+                        return (
+                            event.event_type ===
+                            "page_view"
+                        );
+
+                    }
+                );
+
+
+            if (
+                pageViews.length === 0
+            ) {
+
+                historyList.innerHTML =
+                    "<p>No visitor activity yet.</p>";
+
+            } else {
+
+                pageViews
+                    .slice()
+                    .reverse()
+                    .slice(0, 20)
+                    .forEach(
+                        function(event) {
+
+                            const row =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            row.className =
+                                "usage-history-row";
+
+
+                            const date =
+                                event.created_at
+                                    ? new Date(
+                                        event.created_at
+                                      ).toLocaleString()
+                                    : "Unknown date";
+
+
+                            row.textContent =
+                                date;
+
+
+                            historyList.appendChild(
+                                row
+                            );
+
+                        }
+                    );
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Could not load insights:",
+            error
+        );
+
+
+        if (totalUses) {
+
+            totalUses.textContent =
+                "—";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   START WEBSITE
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+
+        /* EMOTION CARDS */
+
+        document
+            .querySelectorAll(
+                ".emotion-card"
+            )
+            .forEach(
+                function(card) {
+
+                    card.addEventListener(
+                        "click",
+                        function() {
+
+                            const emotion =
+                                card.dataset.emotion
+                                    .toLowerCase();
+
+
+                            if (
+                                !moodData[
+                                    emotion
+                                ]
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            trackSoundSpaceEvent(
+                                "emotion_selected",
+                                emotion
+                            );
+
+
+                            displayEmotion(
+                                emotion
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* BACK BUTTON */
+
+        const backButton =
+            document.getElementById(
+                "back-button"
+            );
+
+
+        if (backButton) {
+
+            backButton.addEventListener(
+                "click",
+                showHomePage
+            );
+
+        }
+
+
+        /* NAVIGATION */
+
+        const homeNav =
+            document.getElementById(
+                "home-nav"
+            );
+
+        const whyNav =
+            document.getElementById(
+                "why-nav"
+            );
+
+        const aboutNav =
+            document.getElementById(
+                "about-nav"
+            );
+
+        const feedbackNav =
+            document.getElementById(
+                "feedback-nav"
+            );
+
+        const insightsNav =
+            document.getElementById(
+                "insights-nav"
+            );
+
+
+        if (homeNav) {
+
+            homeNav.addEventListener(
+                "click",
+                showHomePage
+            );
+
+        }
+
+
+        if (whyNav) {
+
+            whyNav.addEventListener(
+                "click",
+                showWhyPage
+            );
+
+        }
+
+
+        if (aboutNav) {
+
+            aboutNav.addEventListener(
+                "click",
+                showAboutPage
+            );
+
+        }
+
+
+        if (feedbackNav) {
+
+            feedbackNav.addEventListener(
+                "click",
+                showFeedbackPage
+            );
+
+        }
+
+
+        if (insightsNav) {
+
+            insightsNav.addEventListener(
+                "click",
+                showInsightsPage
+            );
+
+        }
+
+
+        /* SURPRISE ME */
+
+        const surpriseButton =
+            document.getElementById(
+                "surprise-button"
+            );
+
+
+        if (surpriseButton) {
+
+            surpriseButton.addEventListener(
+                "click",
+                surpriseMe
+            );
+
+        }
+
+
+        /* QUEUE BUTTONS */
+
+        const previousButton =
+            document.getElementById(
+                "previous-song"
+            );
+
+
+        const nextButton =
+            document.getElementById(
+                "next-song"
+            );
+
+
+        const shuffleButton =
+            document.getElementById(
+                "shuffle-button"
+            );
+
+
+        const reshuffleButton =
+            document.getElementById(
+                "reshuffle-button"
+            );
+
+
+        if (previousButton) {
+
+            previousButton.addEventListener(
+                "click",
+                previousSong
+            );
+
+        }
+
+
+        if (nextButton) {
+
+            nextButton.addEventListener(
+                "click",
+                nextSong
+            );
+
+        }
+
+
+        if (shuffleButton) {
+
+            shuffleButton.addEventListener(
+                "click",
+                shuffleSongs
+            );
+
+        }
+
+
+        if (reshuffleButton) {
+
+            reshuffleButton.addEventListener(
+                "click",
+                reshuffleSongs
+            );
+
+        }
+
+
+        /* PLAYER CONTROLS */
+
+        const playerPrevious =
+            document.getElementById(
+                "player-previous"
+            );
+
+
+        const playerNext =
+            document.getElementById(
+                "player-next"
+            );
+
+
+        if (playerPrevious) {
+
+            playerPrevious.addEventListener(
+                "click",
+                previousSong
+            );
+
+        }
+
+
+        if (playerNext) {
+
+            playerNext.addEventListener(
+                "click",
+                nextSong
+            );
+
+        }
+
+
+        /* FEEDBACK */
+
+        setupFeedback();
+
+
+        /* TRACK PAGE VISIT */
+
+        if (!IS_DEVELOPER) {
+
+            trackSoundSpaceEvent(
+                "page_view"
+            );
+
+        }
+
+
+        console.log(
+            "SoundSpace loaded successfully!"
+        );
+
+    }
+);
