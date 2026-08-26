@@ -1,296 +1,1352 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+/* =========================================================
+   SOUNDSPACE
+   Warm • Artistic • Emotional • Modern
+   ========================================================= */
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+
+    --cream: #fff8ef;
+    --cream-deep: #f8eadb;
+    --ink: #30221f;
+    --muted: #75615a;
+
+    --burgundy: #642b3b;
+    --burgundy-dark: #451d29;
+
+    --gold: #d69a45;
+    --gold-light: #f0c77d;
+
+    --card-white: rgba(255, 255, 255, 0.86);
+
+    --happiness: #e59b45;
+    --happiness-dark: #bd6f27;
+
+    --sadness: #536b9d;
+    --sadness-dark: #35466e;
+
+    --anger: #b94b42;
+    --anger-dark: #7d2928;
+
+    --anxiety: #765b91;
+    --anxiety-dark: #4f3b69;
+
+    --irritation: #c77a35;
+    --irritation-dark: #8f4e20;
+
+    --shadow:
+        0 18px 45px rgba(75, 39, 31, 0.12);
+
+    --soft-shadow:
+        0 8px 25px rgba(75, 39, 31, 0.08);
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: #fff7ed;
-  color: #3d2924;
-  min-height: 100vh;
-  line-height: 1.6;
+
+    font-family: "DM Sans", sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(240, 199, 125, 0.22),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 25%,
+            rgba(118, 91, 145, 0.10),
+            transparent 28%
+        ),
+        var(--cream);
+
+    color: var(--ink);
+
+    min-height: 100vh;
+
+    line-height: 1.6;
 }
 
-/* HEADER */
 
-header {
-  background: #6b2737;
-  color: #fff7ed;
-  padding: 22px 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 4px 18px rgba(80, 35, 30, 0.15);
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding: 17px 6%;
+
+    background:
+        rgba(69, 29, 41, 0.96);
+
+    backdrop-filter: blur(16px);
+
+    color: white;
+
+    box-shadow:
+        0 8px 30px rgba(48, 34, 31, 0.16);
 }
+
 
 .logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.7rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 1.8rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    white-space: nowrap;
 }
 
-nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.main-nav {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 5px;
+
+    flex-wrap: wrap;
 }
 
-nav button {
-  border: none;
-  background: transparent;
-  color: #fff7ed;
-  padding: 9px 15px;
-  border-radius: 20px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
+
+.nav-btn {
+
+    border: none;
+
+    background: transparent;
+
+    color: rgba(255,255,255,0.78);
+
+    padding: 9px 15px;
+
+    border-radius: 999px;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
 }
 
-nav button:hover,
-nav button.active {
-  background: #d88952;
-  color: #fff;
+
+.nav-btn:hover {
+
+    background: rgba(255,255,255,0.12);
+
+    color: white;
+
+    transform: translateY(-1px);
 }
 
-/* MAIN */
+
+.nav-btn.active {
+
+    background: var(--gold);
+
+    color: white;
+
+    box-shadow:
+        0 5px 18px rgba(214, 154, 69, 0.28);
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
 
 main {
-  width: 100%;
-  max-width: 1150px;
-  margin: auto;
-  padding: 55px 6% 40px;
+
+    width: min(1180px, 100%);
+
+    margin: 0 auto;
+
+    padding: 60px 6% 70px;
 }
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
 
 .hero {
-  text-align: center;
-  padding: 25px 0 45px;
+
+    text-align: center;
+
+    padding:
+        30px
+        0
+        55px;
 }
+
+
+.eyebrow {
+
+    color: var(--gold);
+
+    font-size: 0.76rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.22em;
+
+    margin-bottom: 15px;
+
+    text-transform: uppercase;
+}
+
 
 .hero h1 {
-  font-family: 'Playfair Display', serif;
-  color: #6b2737;
-  font-size: clamp(2.4rem, 6vw, 4.7rem);
-  line-height: 1.1;
-  margin-bottom: 18px;
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    font-size:
+        clamp(2.7rem, 7vw, 5.3rem);
+
+    line-height: 1.04;
+
+    max-width: 900px;
+
+    margin:
+        0 auto 22px;
 }
 
-.hero p {
-  max-width: 650px;
-  margin: auto;
-  color: #70574f;
-  font-size: 1.05rem;
+
+.hero-description {
+
+    max-width: 650px;
+
+    margin: auto;
+
+    color: var(--muted);
+
+    font-size: 1.05rem;
 }
 
-/* EMOTIONS */
+
+/* =========================================================
+   EMOTION SECTION
+   ========================================================= */
+
+.emotion-section h2 {
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    text-align: center;
+
+    font-size:
+        clamp(1.8rem, 4vw, 2.5rem);
+
+    margin-bottom: 28px;
+}
+
 
 .emotion-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-  margin: 30px 0 45px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 17px;
 }
 
-.emotion-button {
-  border: none;
-  padding: 22px 12px;
-  min-height: 110px;
-  border-radius: 20px;
-  background: #e7a66b;
-  color: #fff;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(107, 39, 55, 0.12);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
 
-.emotion-button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(107, 39, 55, 0.2);
-}
+/* =========================================================
+   EMOTION CARDS
+   ========================================================= */
 
-.emotion-button:nth-child(2) {
-  background: #8e4354;
-}
+.emotion-card {
 
-.emotion-button:nth-child(3) {
-  background: #c75c3b;
-}
+    position: relative;
 
-.emotion-button:nth-child(4) {
-  background: #a36a45;
-}
+    overflow: hidden;
 
-.emotion-button:nth-child(5) {
-  background: #b87945;
-}
+    border: none;
 
-/* CONTENT SECTIONS */
+    min-height: 220px;
 
-.page-section {
-  display: none;
-  animation: fadeIn 0.3s ease;
-}
+    padding: 28px 20px;
 
-.page-section.active {
-  display: block;
-}
+    border-radius: 28px;
 
-.page-section h2 {
-  font-family: 'Playfair Display', serif;
-  color: #6b2737;
-  font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 20px;
-}
+    color: white;
 
-.page-section p {
-  color: #604c45;
-  font-size: 1.03rem;
-  margin-bottom: 18px;
-}
+    display: flex;
 
-.info-card {
-  background: #fff;
-  border: 1px solid #efd8c4;
-  border-radius: 22px;
-  padding: 28px;
-  margin: 18px 0;
-  box-shadow: 0 8px 25px rgba(107, 39, 55, 0.07);
-}
-
-.info-card h3 {
-  font-family: 'Playfair Display', serif;
-  color: #8e4354;
-  margin-bottom: 8px;
-  font-size: 1.4rem;
-}
-
-/* MUSIC AREA */
-
-#music-section {
-  background: #fff;
-  border-radius: 25px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(107, 39, 55, 0.08);
-  margin-top: 20px;
-}
-
-#music-section h2 {
-  font-family: 'Playfair Display', serif;
-  color: #6b2737;
-  margin-bottom: 15px;
-}
-
-/* FOOTER */
-
-footer {
-  background: #6b2737;
-  color: #fff7ed;
-  text-align: center;
-  padding: 25px 15px;
-  margin-top: 60px;
-  font-size: 0.9rem;
-}
-
-footer strong {
-  color: #f0b46f;
-}
-
-/* ANIMATION */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* TABLETS */
-
-@media (max-width: 900px) {
-  .emotion-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  header {
-    padding: 18px 5%;
-  }
-
-  main {
-    padding: 40px 5% 30px;
-  }
-}
-
-/* PHONES */
-
-@media (max-width: 600px) {
-  header {
     flex-direction: column;
-    padding: 17px 15px;
-  }
 
-  .logo {
-    font-size: 1.45rem;
-  }
+    align-items: center;
 
-  nav {
     justify-content: center;
-    width: 100%;
-  }
 
-  nav button {
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.emotion-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 160px;
+
+    height: 160px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.12);
+
+    top: -65px;
+
+    right: -55px;
+}
+
+
+.emotion-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+
+    height: 100px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.07);
+
+    bottom: -45px;
+
+    left: -35px;
+}
+
+
+.emotion-card:hover {
+
+    transform:
+        translateY(-9px)
+        scale(1.015);
+
+    box-shadow:
+        0 25px 50px rgba(70, 36, 30, 0.20);
+}
+
+
+.emotion-icon {
+
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 2.8rem;
+
+    margin-bottom: 14px;
+
+    filter:
+        drop-shadow(
+            0 4px 8px rgba(0,0,0,0.12)
+        );
+}
+
+
+.emotion-name {
+
+    position: relative;
+
+    z-index: 2;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 1.45rem;
+
+    font-weight: 700;
+
+    margin-bottom: 7px;
+}
+
+
+.emotion-description {
+
+    position: relative;
+
+    z-index: 2;
+
     font-size: 0.82rem;
-    padding: 8px 10px;
-  }
 
-  main {
-    padding: 30px 16px;
-  }
+    line-height: 1.45;
 
-  .hero {
-    padding-top: 10px;
-  }
+    opacity: 0.9;
 
-  .emotion-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
+    max-width: 150px;
+}
 
-  .emotion-button {
-    min-height: 95px;
-    padding: 16px 8px;
-    font-size: 0.9rem;
-  }
 
-  #music-section,
-  .info-card {
-    padding: 22px;
+/* =========================================================
+   INDIVIDUAL EMOTION COLORS
+   ========================================================= */
+
+.happiness-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #efb55d,
+            var(--happiness-dark)
+        );
+}
+
+
+.sadness-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #7187b8,
+            var(--sadness-dark)
+        );
+}
+
+
+.anger-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #d3675b,
+            var(--anger-dark)
+        );
+}
+
+
+.anxiety-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #9273ad,
+            var(--anxiety-dark)
+        );
+}
+
+
+.irritation-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #df9a50,
+            var(--irritation-dark)
+        );
+}
+
+
+/* =========================================================
+   EMOTION PAGE
+   ========================================================= */
+
+.emotion-header {
+
+    text-align: center;
+
+    padding:
+        10px
+        0
+        50px;
+}
+
+
+.back-button {
+
+    border: 1px solid rgba(100,43,59,0.15);
+
+    background: white;
+
+    color: var(--burgundy);
+
+    border-radius: 999px;
+
+    padding: 9px 17px;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin-bottom: 35px;
+
+    transition: 0.25s ease;
+}
+
+
+.back-button:hover {
+
+    transform: translateX(-3px);
+
+    box-shadow: var(--soft-shadow);
+}
+
+
+.large-emotion-icon {
+
+    font-size: 4rem;
+
+    margin-bottom: 8px;
+}
+
+
+#selected-emotion-title {
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    font-size:
+        clamp(2.4rem, 6vw, 4rem);
+
+    line-height: 1.1;
+
+    margin-bottom: 12px;
+}
+
+
+#selected-emotion-description {
+
+    color: var(--muted);
+
+    font-size: 1.05rem;
+}
+
+
+/* =========================================================
+   SONGS
+   ========================================================= */
+
+.songs-section {
+
+    margin-top: 10px;
+}
+
+
+.songs-heading {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+
+.songs-heading h2 {
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    font-size:
+        clamp(1.8rem, 4vw, 2.7rem);
+
+    margin-bottom: 8px;
+}
+
+
+.songs-heading p:not(.eyebrow) {
+
+    color: var(--muted);
+}
+
+
+.surprise-button {
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--burgundy),
+            #8c4054
+        );
+
+    color: white;
+
+    padding: 12px 19px;
+
+    border-radius: 999px;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 8px 22px rgba(100,43,59,0.18);
+
+    transition: 0.25s ease;
+}
+
+
+.surprise-button:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 28px rgba(100,43,59,0.25);
+}
+
+
+.song-list {
+
+    display: grid;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   PLAYER
+   ========================================================= */
+
+.player-section {
+
+    margin-top: 35px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--burgundy-dark),
+            var(--burgundy)
+        );
+
+    color: white;
+
+    padding: 32px;
+
+    box-shadow: var(--shadow);
+}
+
+
+.player-label {
+
+    color: var(--gold-light);
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2em;
+}
+
+
+#player-song-title {
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 2rem;
+
+    margin: 5px 0;
+}
+
+
+#player-song-artist {
+
+    opacity: 0.78;
+
+    margin-bottom: 15px;
+}
+
+
+.player-reason {
+
+    opacity: 0.88;
+
+    max-width: 700px;
+
+    margin-bottom: 20px;
+}
+
+
+.listen-button {
+
+    display: inline-block;
+
+    background: var(--gold);
+
+    color: white;
+
+    padding: 11px 19px;
+
+    border-radius: 999px;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+
+.listen-button:hover {
+
+    transform: translateY(-2px);
+
+    background: #e7aa55;
+}
+
+
+/* =========================================================
+   INFORMATION PAGES
+   ========================================================= */
+
+.information-page {
+
+    min-height: 65vh;
+}
+
+
+.information-hero {
+
+    text-align: center;
+
+    max-width: 760px;
+
+    margin:
+        0 auto
+        45px;
+}
+
+
+.information-hero h1 {
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    font-size:
+        clamp(2.6rem, 6vw, 4.5rem);
+
+    line-height: 1.05;
+
+    margin-bottom: 17px;
+}
+
+
+.information-hero > p:last-child {
+
+    color: var(--muted);
+
+    font-size: 1.08rem;
+}
+
+
+.information-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+.information-card,
+.about-card,
+.feedback-page-card {
+
+    background: var(--card-white);
+
+    border:
+        1px solid
+        rgba(100,43,59,0.09);
+
+    border-radius: 28px;
+
+    padding: 32px;
+
+    box-shadow: var(--soft-shadow);
+
+    backdrop-filter: blur(10px);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.information-card:hover,
+.about-card:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow: var(--shadow);
+}
+
+
+.information-icon {
+
+    width: 54px;
+
+    height: 54px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
     border-radius: 18px;
-  }
 
-  footer {
-    font-size: 0.8rem;
-    padding: 22px 12px;
-  }
+    background: var(--cream-deep);
+
+    font-size: 1.6rem;
+
+    margin-bottom: 18px;
+}
+
+
+.information-card h2,
+.about-card h2,
+.feedback-page-card h2 {
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    font-size: 1.55rem;
+
+    margin-bottom: 10px;
+}
+
+
+.information-card p,
+.about-card p,
+.feedback-page-card p {
+
+    color: var(--muted);
+
+    margin-bottom: 13px;
+}
+
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+
+.about-content {
+
+    max-width: 850px;
+
+    margin: auto;
+
+    display: grid;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
+
+.feedback-page-card {
+
+    max-width: 680px;
+
+    margin: auto;
+
+    text-align: center;
+}
+
+
+.feedback-page-card .information-icon {
+
+    margin:
+        0 auto
+        18px;
+}
+
+
+.feedback-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+
+    margin-top: 25px;
+}
+
+
+.feedback-button {
+
+    border: none;
+
+    border-radius: 999px;
+
+    padding: 12px 20px;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    background: var(--cream-deep);
+
+    color: var(--burgundy);
+
+    transition: 0.25s ease;
+}
+
+
+.feedback-button:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: var(--soft-shadow);
+}
+
+
+/* =========================================================
+   INSIGHTS
+   ========================================================= */
+
+.insights-header {
+
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+
+.insights-header h1 {
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    font-size:
+        clamp(2.4rem, 6vw, 4rem);
+
+    margin-bottom: 10px;
+}
+
+
+.insights-header > p:last-child {
+
+    color: var(--muted);
+}
+
+
+.insights-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 45px;
+}
+
+
+.insight-card {
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 28px;
+
+    box-shadow: var(--soft-shadow);
+
+    text-align: center;
+
+    border:
+        1px solid
+        rgba(100,43,59,0.07);
+}
+
+
+.insight-card h3 {
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+
+    margin-bottom: 8px;
+}
+
+
+.insight-card p {
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    font-size: 2.3rem;
+
+    font-weight: 700;
+}
+
+
+.emotion-statistics,
+.usage-history {
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 28px;
+
+    margin-bottom: 20px;
+
+    box-shadow: var(--soft-shadow);
+}
+
+
+.emotion-statistics h2,
+.usage-history h2 {
+
+    font-family: "Playfair Display", serif;
+
+    color: var(--burgundy);
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer {
+
+    margin-top: 30px;
+
+    padding:
+        27px
+        18px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--burgundy-dark),
+            var(--burgundy)
+        );
+
+    color: rgba(255,255,255,0.82);
+
+    font-size: 0.88rem;
+}
+
+
+.site-footer strong {
+
+    color: var(--gold-light);
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+}
+
+
+main {
+
+    animation:
+        fadeUp 0.45s ease both;
+}
+
+
+/* =========================================================
+   TABLETS
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .emotion-grid {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+    .information-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLETS
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .site-header {
+
+        flex-direction: column;
+
+        padding:
+            16px
+            4%;
+    }
+
+    .main-nav {
+
+        justify-content: center;
+
+        width: 100%;
+    }
+
+    .emotion-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+    .songs-heading {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+    .insights-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+/* =========================================================
+   PHONES
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    main {
+
+        padding:
+            40px
+            16px
+            55px;
+
+    }
+
+    .logo {
+
+        font-size: 1.55rem;
+
+    }
+
+    .main-nav {
+
+        gap: 3px;
+
+    }
+
+    .nav-btn {
+
+        font-size: 0.76rem;
+
+        padding:
+            8px
+            9px;
+
+    }
+
+    .hero {
+
+        padding-top: 10px;
+
+    }
+
+    .hero h1 {
+
+        font-size:
+            clamp(2.35rem, 12vw, 3.4rem);
+
+    }
+
+    .hero-description {
+
+        font-size: 0.95rem;
+
+    }
+
+    .emotion-grid {
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 11px;
+
+    }
+
+    .emotion-card {
+
+        min-height: 185px;
+
+        padding:
+            22px
+            12px;
+
+        border-radius: 22px;
+
+    }
+
+    .emotion-icon {
+
+        font-size: 2.3rem;
+
+    }
+
+    .emotion-name {
+
+        font-size: 1.15rem;
+
+    }
+
+    .emotion-description {
+
+        font-size: 0.72rem;
+
+    }
+
+    .information-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .information-card,
+    .about-card,
+    .feedback-page-card {
+
+        padding: 25px;
+
+        border-radius: 23px;
+
+    }
+
+    .feedback-buttons {
+
+        flex-direction: column;
+
+    }
+
+    .feedback-button {
+
+        width: 100%;
+
+    }
+
+    .site-footer {
+
+        font-size: 0.78rem;
+
+    }
+
 }
