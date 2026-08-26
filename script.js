@@ -1,7 +1,9 @@
+# SoundSpace — Replacement `script.js`
+
 /* =========================================================
    SOUNDSPACE
-   COMPLETE WORKING SCRIPT
-   Matches the exact index.html provided
+   COMPLETE FUNCTIONAL SCRIPT
+   Keeps the existing SoundSpace HTML + design
    ========================================================= */
 
 
@@ -24,10 +26,7 @@ const DEVELOPER_MODE_KEY =
     "soundspace_developer_mode";
 
 const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
+    new URLSearchParams(window.location.search);
 
 if (params.get("developer") === "on") {
 
@@ -41,9 +40,7 @@ if (params.get("developer") === "on") {
         document.title,
         window.location.pathname
     );
-
 }
-
 
 if (params.get("developer") === "off") {
 
@@ -56,9 +53,7 @@ if (params.get("developer") === "off") {
         document.title,
         window.location.pathname
     );
-
 }
-
 
 const IS_DEVELOPER =
     localStorage.getItem(
@@ -75,7 +70,6 @@ let SOUNDSPACE_SESSION_ID =
         "soundspace_session_id"
     );
 
-
 if (!SOUNDSPACE_SESSION_ID) {
 
     SOUNDSPACE_SESSION_ID =
@@ -84,13 +78,12 @@ if (!SOUNDSPACE_SESSION_ID) {
         "_" +
         Math.random()
             .toString(36)
-            .slice(2, 10);
+            .substring(2, 10);
 
     sessionStorage.setItem(
         "soundspace_session_id",
         SOUNDSPACE_SESSION_ID
     );
-
 }
 
 
@@ -109,26 +102,32 @@ async function trackSoundSpaceEvent(
     if (IS_DEVELOPER) {
 
         console.log(
-            "Developer activity not tracked:",
+            "[Developer Mode] Not tracked:",
             eventType
         );
 
-        return;
-
+        return false;
     }
 
-
     try {
+
+        const payload = {
+            event_type: eventType,
+            session_id: SOUNDSPACE_SESSION_ID,
+            page: window.location.pathname,
+            mood: mood,
+            song: song,
+            helpful: helpful,
+            feedback_text: feedbackText
+        };
 
         const response =
             await fetch(
                 `${SUPABASE_URL}/rest/v1/usage_events`,
                 {
-
                     method: "POST",
 
                     headers: {
-
                         "Content-Type":
                             "application/json",
 
@@ -140,56 +139,38 @@ async function trackSoundSpaceEvent(
 
                         "Prefer":
                             "return=minimal"
-
                     },
 
                     body:
-                        JSON.stringify({
-
-                            event_type:
-                                eventType,
-
-                            session_id:
-                                SOUNDSPACE_SESSION_ID,
-
-                            page:
-                                window.location.pathname,
-
-                            mood:
-                                mood,
-
-                            song:
-                                song,
-
-                            helpful:
-                                helpful,
-
-                            feedback_text:
-                                feedbackText
-
-                        })
-
+                        JSON.stringify(payload)
                 }
             );
 
-
         if (!response.ok) {
 
+            const errorText =
+                await response.text();
+
             console.error(
-                "Analytics could not be saved."
+                "Supabase analytics error:",
+                response.status,
+                errorText
             );
 
+            return false;
         }
+
+        return true;
 
     } catch (error) {
 
         console.error(
-            "SoundSpace analytics error:",
+            "Analytics connection error:",
             error
         );
 
+        return false;
     }
-
 }
 
 
@@ -282,7 +263,6 @@ const moodData = {
             }
 
         ]
-
     },
 
 
@@ -368,7 +348,6 @@ const moodData = {
             }
 
         ]
-
     },
 
 
@@ -454,7 +433,6 @@ const moodData = {
             }
 
         ]
-
     },
 
 
@@ -540,7 +518,6 @@ const moodData = {
             }
 
         ]
-
     },
 
 
@@ -626,7 +603,6 @@ const moodData = {
             }
 
         ]
-
     }
 
 };
@@ -654,34 +630,22 @@ let isShuffleOn = false;
 const pages = {
 
     home:
-        document.getElementById(
-            "home-page"
-        ),
+        document.getElementById("home-page"),
 
     emotion:
-        document.getElementById(
-            "emotion-page"
-        ),
+        document.getElementById("emotion-page"),
 
     why:
-        document.getElementById(
-            "why-page"
-        ),
+        document.getElementById("why-page"),
 
     about:
-        document.getElementById(
-            "about-page"
-        ),
+        document.getElementById("about-page"),
 
     feedback:
-        document.getElementById(
-            "feedback-page"
-        ),
+        document.getElementById("feedback-page"),
 
     insights:
-        document.getElementById(
-            "insights-page"
-        )
+        document.getElementById("insights-page")
 
 };
 
@@ -693,18 +657,14 @@ const pages = {
 function showPage(pageName) {
 
     Object.values(pages).forEach(
-        function(page) {
+        page => {
 
             if (page) {
-
-                page.style.display =
-                    "none";
-
+                page.style.display = "none";
             }
 
         }
     );
-
 
     if (pages[pageName]) {
 
@@ -713,81 +673,54 @@ function showPage(pageName) {
 
     }
 
-
     document
-        .querySelectorAll(
-            ".nav-btn"
-        )
-        .forEach(
-            function(button) {
+        .querySelectorAll(".nav-btn")
+        .forEach(button => {
 
-                button.classList.remove(
-                    "active"
-                );
+            button.classList.remove("active");
 
-            }
-        );
-
+        });
 
     const activeNav =
         document.getElementById(
             `${pageName}-nav`
         );
 
-
     if (activeNav) {
 
-        activeNav.classList.add(
-            "active"
-        );
+        activeNav.classList.add("active");
 
     }
 
-
     window.scrollTo({
-
         top: 0,
-
-        behavior:
-            "smooth"
-
+        behavior: "smooth"
     });
-
 }
 
 
 function showHomePage() {
-
     showPage("home");
-
 }
 
 
 function showEmotionPage() {
-
     showPage("emotion");
-
 }
 
 
 function showWhyPage() {
-
     showPage("why");
-
 }
 
 
 function showAboutPage() {
-
     showPage("about");
-
 }
 
 
 function showFeedbackPage() {
-
     showPage("feedback");
-
 }
 
 
@@ -796,6 +729,36 @@ function showInsightsPage() {
     showPage("insights");
 
     displayInsights();
+}
+
+
+/* =========================================================
+   RESET QUEUE
+   ========================================================= */
+
+function resetQueue(emotion) {
+
+    if (!moodData[emotion]) {
+        return;
+    }
+
+    currentEmotion = emotion;
+
+    originalSongs =
+        moodData[emotion].songs.map(
+            song => ({ ...song })
+        );
+
+    queueSongs =
+        moodData[emotion].songs.map(
+            song => ({ ...song })
+        );
+
+    currentSongIndex = -1;
+
+    isShuffleOn = false;
+
+    updateQueueButton();
 
 }
 
@@ -809,53 +772,31 @@ function displayEmotion(emotion) {
     const data =
         moodData[emotion];
 
-
     if (!data) {
-
         return;
-
     }
 
-
-    currentEmotion =
-        emotion;
-
-
-    currentSongIndex =
-        -1;
-
-
-    originalSongs =
-        [...data.songs];
-
-
-    queueSongs =
-        [...data.songs];
-
+    resetQueue(emotion);
 
     document.getElementById(
         "selected-emotion-icon"
     ).textContent =
         data.emoji;
 
-
     document.getElementById(
         "selected-emotion-title"
     ).textContent =
         data.title;
-
 
     document.getElementById(
         "selected-emotion-description"
     ).textContent =
         data.description;
 
-
     const player =
         document.getElementById(
             "player-section"
         );
-
 
     if (player) {
 
@@ -864,11 +805,9 @@ function displayEmotion(emotion) {
 
     }
 
-
     displaySongs();
 
     showEmotionPage();
-
 }
 
 
@@ -883,55 +822,40 @@ function displaySongs() {
             "song-list"
         );
 
-
     if (!songList) {
-
         return;
-
     }
 
-
-    songList.innerHTML =
-        "";
-
+    songList.innerHTML = "";
 
     queueSongs.forEach(
-        function(song, index) {
+        (song, index) => {
 
             const card =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             card.className =
                 "song-card";
 
-
             card.innerHTML = `
 
                 <div class="song-number">
-                    ${String(
-                        index + 1
-                    ).padStart(
-                        2,
-                        "0"
-                    )}
+                    ${String(index + 1).padStart(2, "0")}
                 </div>
 
                 <div class="song-details">
 
                     <strong>
-                        ${song.title}
+                        ${escapeHTML(song.title)}
                     </strong>
 
                     <small>
-                        ${song.artist}
+                        ${escapeHTML(song.artist)}
                     </small>
 
                     <p class="song-why">
                         <b>✨ Why this song fits:</b>
-                        ${song.why}
+                        ${escapeHTML(song.why)}
                     </p>
 
                 </div>
@@ -945,31 +869,32 @@ function displaySongs() {
 
             `;
 
-
             const listenButton =
                 card.querySelector(
                     ".listen-song-button"
                 );
 
+            if (listenButton) {
 
-            listenButton.addEventListener(
-                "click",
-                function(event) {
+                listenButton.addEventListener(
+                    "click",
+                    event => {
 
-                    event.stopPropagation();
+                        event.stopPropagation();
 
-                    currentSongIndex =
-                        index;
+                        currentSongIndex =
+                            index;
 
-                    playCurrentSong();
+                        playCurrentSong();
 
-                }
-            );
+                    }
+                );
 
+            }
 
             card.addEventListener(
                 "click",
-                function() {
+                () => {
 
                     currentSongIndex =
                         index;
@@ -979,14 +904,52 @@ function displaySongs() {
                 }
             );
 
-
-            songList.appendChild(
-                card
-            );
+            songList.appendChild(card);
 
         }
     );
 
+    highlightCurrentSong();
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   HIGHLIGHT CURRENT SONG
+   ========================================================= */
+
+function highlightCurrentSong() {
+
+    const cards =
+        document.querySelectorAll(
+            ".song-card"
+        );
+
+    cards.forEach(
+        (card, index) => {
+
+            card.classList.toggle(
+                "current-song",
+                index === currentSongIndex
+            );
+
+        }
+    );
 }
 
 
@@ -997,101 +960,101 @@ function displaySongs() {
 function playCurrentSong() {
 
     if (
+        !queueSongs.length ||
         currentSongIndex < 0 ||
-        currentSongIndex >=
-            queueSongs.length
+        currentSongIndex >= queueSongs.length
     ) {
 
         return;
 
     }
 
-
     const song =
-        queueSongs[
-            currentSongIndex
-        ];
-
+        queueSongs[currentSongIndex];
 
     trackSoundSpaceEvent(
-
         "song_selected",
-
         currentEmotion,
-
         `${song.title} — ${song.artist}`
-
     );
-
 
     const player =
         document.getElementById(
             "player-section"
         );
 
-
     const title =
         document.getElementById(
             "player-song-title"
         );
-
 
     const artist =
         document.getElementById(
             "player-song-artist"
         );
 
-
     const reason =
         document.getElementById(
             "player-song-reason"
         );
-
 
     const listenLink =
         document.getElementById(
             "listen-link"
         );
 
+    if (title) {
 
-    title.textContent =
-        song.title;
+        title.textContent =
+            song.title;
 
+    }
 
-    artist.textContent =
-        song.artist;
+    if (artist) {
 
+        artist.textContent =
+            song.artist;
 
-    reason.textContent =
-        "✨ Why this song fits: " +
-        song.why;
+    }
 
+    if (reason) {
 
-    const searchQuery =
-        encodeURIComponent(
-            `${song.title} ${song.artist}`
-        );
+        reason.textContent =
+            "✨ Why this song fits: " +
+            song.why;
 
+    }
 
-    listenLink.href =
-        "https://open.spotify.com/search/" +
-        searchQuery;
+    if (listenLink) {
 
+        const searchQuery =
+            encodeURIComponent(
+                `${song.title} ${song.artist}`
+            );
 
-    player.style.display =
-        "block";
+        listenLink.href =
+            "https://open.spotify.com/search/" +
+            searchQuery;
 
+    }
 
-    player.scrollIntoView({
+    if (player) {
 
-        behavior:
-            "smooth",
+        player.style.display =
+            "block";
 
-        block:
-            "center"
+    }
 
-    });
+    highlightCurrentSong();
 
+    if (player) {
+
+        player.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
 }
 
 
@@ -1101,31 +1064,30 @@ function playCurrentSong() {
 
 function nextSong() {
 
-    if (
-        queueSongs.length === 0
-    ) {
-
+    if (!queueSongs.length) {
         return;
-
     }
 
+    if (currentSongIndex === -1) {
 
-    currentSongIndex++;
+        currentSongIndex = 0;
 
+    } else {
 
-    if (
-        currentSongIndex >=
-        queueSongs.length
-    ) {
+        currentSongIndex++;
 
-        currentSongIndex =
-            0;
+        if (
+            currentSongIndex >=
+            queueSongs.length
+        ) {
+
+            currentSongIndex = 0;
+
+        }
 
     }
-
 
     playCurrentSong();
-
 }
 
 
@@ -1135,30 +1097,29 @@ function nextSong() {
 
 function previousSong() {
 
-    if (
-        queueSongs.length === 0
-    ) {
-
+    if (!queueSongs.length) {
         return;
-
     }
 
-
-    currentSongIndex--;
-
-
-    if (
-        currentSongIndex < 0
-    ) {
+    if (currentSongIndex === -1) {
 
         currentSongIndex =
             queueSongs.length - 1;
 
+    } else {
+
+        currentSongIndex--;
+
+        if (currentSongIndex < 0) {
+
+            currentSongIndex =
+                queueSongs.length - 1;
+
+        }
+
     }
 
-
     playCurrentSong();
-
 }
 
 
@@ -1168,16 +1129,12 @@ function previousSong() {
 
 function shuffleArray(array) {
 
-    const shuffled =
+    const result =
         [...array];
 
-
     for (
-        let i =
-            shuffled.length - 1;
-
+        let i = result.length - 1;
         i > 0;
-
         i--
     ) {
 
@@ -1187,21 +1144,18 @@ function shuffleArray(array) {
                 (i + 1)
             );
 
-
         [
-            shuffled[i],
-            shuffled[randomIndex]
+            result[i],
+            result[randomIndex]
         ] =
         [
-            shuffled[randomIndex],
-            shuffled[i]
+            result[randomIndex],
+            result[i]
         ];
 
     }
 
-
-    return shuffled;
-
+    return result;
 }
 
 
@@ -1211,45 +1165,45 @@ function shuffleArray(array) {
 
 function shuffleSongs() {
 
-    if (
-        !currentEmotion
-    ) {
-
+    if (!currentEmotion) {
         return;
+    }
+
+    const currentlyPlaying =
+        currentSongIndex >= 0
+            ? queueSongs[currentSongIndex]
+            : null;
+
+    queueSongs =
+        shuffleArray(queueSongs);
+
+    /*
+       Keep the currently selected song
+       as the current song after shuffle.
+    */
+
+    if (currentlyPlaying) {
+
+        currentSongIndex =
+            queueSongs.findIndex(
+                song =>
+                    song.title ===
+                        currentlyPlaying.title &&
+                    song.artist ===
+                        currentlyPlaying.artist
+            );
+
+    } else {
+
+        currentSongIndex = -1;
 
     }
 
-
-    queueSongs =
-        shuffleArray(
-            queueSongs
-        );
-
-
-    currentSongIndex =
-        -1;
-
-
-    isShuffleOn =
-        true;
-
+    isShuffleOn = true;
 
     displaySongs();
 
-
-    const button =
-        document.getElementById(
-            "shuffle-button"
-        );
-
-
-    if (button) {
-
-        button.textContent =
-            "🔀 Shuffled";
-
-    }
-
+    updateQueueButton();
 }
 
 
@@ -1259,45 +1213,44 @@ function shuffleSongs() {
 
 function reshuffleSongs() {
 
-    if (
-        !currentEmotion
-    ) {
-
+    if (!currentEmotion) {
         return;
-
     }
-
 
     queueSongs =
         shuffleArray(
             originalSongs
         );
 
+    currentSongIndex = -1;
 
-    currentSongIndex =
-        -1;
-
-
-    isShuffleOn =
-        true;
-
+    isShuffleOn = true;
 
     displaySongs();
 
+    updateQueueButton();
+}
+
+
+/* =========================================================
+   UPDATE SHUFFLE BUTTON
+   ========================================================= */
+
+function updateQueueButton() {
 
     const button =
         document.getElementById(
             "shuffle-button"
         );
 
-
-    if (button) {
-
-        button.textContent =
-            "🔀 Shuffled";
-
+    if (!button) {
+        return;
     }
 
+    button.textContent =
+        isShuffleOn
+            ? "🔀 Shuffled"
+            : "🔀 Shuffle";
 }
 
 
@@ -1307,14 +1260,9 @@ function reshuffleSongs() {
 
 function surpriseMe() {
 
-    if (
-        queueSongs.length === 0
-    ) {
-
+    if (!queueSongs.length) {
         return;
-
     }
-
 
     let randomIndex =
         Math.floor(
@@ -1322,11 +1270,14 @@ function surpriseMe() {
             queueSongs.length
         );
 
+    /*
+       Avoid immediately selecting
+       the same song when possible.
+    */
 
     if (
         queueSongs.length > 1 &&
-        randomIndex ===
-        currentSongIndex
+        randomIndex === currentSongIndex
     ) {
 
         randomIndex =
@@ -1337,13 +1288,10 @@ function surpriseMe() {
 
     }
 
-
     currentSongIndex =
         randomIndex;
 
-
     playCurrentSong();
-
 }
 
 
@@ -1363,16 +1311,15 @@ function setupFeedback() {
             ".choice-button"
         );
 
-
     choiceButtons.forEach(
-        function(button) {
+        button => {
 
             button.addEventListener(
                 "click",
-                function() {
+                () => {
 
                     choiceButtons.forEach(
-                        function(otherButton) {
+                        otherButton => {
 
                             otherButton.classList.remove(
                                 "selected"
@@ -1381,20 +1328,24 @@ function setupFeedback() {
                         }
                     );
 
-
                     button.classList.add(
                         "selected"
                     );
 
-
                     selectedFit =
                         button.dataset.value;
 
+                    const hiddenInput =
+                        document.getElementById(
+                            "feedback-fit"
+                        );
 
-                    document.getElementById(
-                        "feedback-fit"
-                    ).value =
-                        selectedFit;
+                    if (hiddenInput) {
+
+                        hiddenInput.value =
+                            selectedFit;
+
+                    }
 
                 }
             );
@@ -1408,16 +1359,15 @@ function setupFeedback() {
             ".helpful-choice"
         );
 
-
     helpfulButtons.forEach(
-        function(button) {
+        button => {
 
             button.addEventListener(
                 "click",
-                function() {
+                () => {
 
                     helpfulButtons.forEach(
-                        function(otherButton) {
+                        otherButton => {
 
                             otherButton.classList.remove(
                                 "selected"
@@ -1426,20 +1376,24 @@ function setupFeedback() {
                         }
                     );
 
-
                     button.classList.add(
                         "selected"
                     );
 
-
                     selectedHelpful =
                         button.dataset.value;
 
+                    const hiddenInput =
+                        document.getElementById(
+                            "feedback-helpful"
+                        );
 
-                    document.getElementById(
-                        "feedback-helpful"
-                    ).value =
-                        selectedHelpful;
+                    if (hiddenInput) {
+
+                        hiddenInput.value =
+                            selectedHelpful;
+
+                    }
 
                 }
             );
@@ -1453,38 +1407,31 @@ function setupFeedback() {
             "feedback-form"
         );
 
-
     if (!form) {
-
         return;
-
     }
 
 
     form.addEventListener(
         "submit",
-        function(event) {
+        async event => {
 
             event.preventDefault();
-
 
             const emotion =
                 document.getElementById(
                     "feedback-emotion"
                 ).value;
 
-
             const improvement =
                 document.getElementById(
                     "feedback-improvement"
-                ).value;
-
+                ).value.trim();
 
             const liked =
                 document.getElementById(
                     "feedback-liked"
-                ).value;
-
+                ).value.trim();
 
             const message =
                 document.getElementById(
@@ -1498,11 +1445,14 @@ function setupFeedback() {
                 !selectedHelpful
             ) {
 
-                message.textContent =
-                    "Please answer the required questions first.";
+                if (message) {
+
+                    message.textContent =
+                        "Please answer the required questions first.";
+
+                }
 
                 return;
-
             }
 
 
@@ -1513,58 +1463,69 @@ function setupFeedback() {
                 `Liked: ${liked}`;
 
 
-            trackSoundSpaceEvent(
+            if (message) {
 
-                "feedback",
+                message.textContent =
+                    "Sending feedback...";
 
-                emotion,
-
-                null,
-
-                selectedHelpful,
-
-                feedbackText
-
-            );
+            }
 
 
-            message.textContent =
-                IS_DEVELOPER
-                    ? "Developer mode is on, so this feedback was not tracked."
-                    : "✨ Thank you! Your feedback has been sent.";
+            const saved =
+                await trackSoundSpaceEvent(
+                    "feedback",
+                    emotion.toLowerCase(),
+                    null,
+                    selectedHelpful,
+                    feedbackText
+                );
 
 
-            form.reset();
+            if (saved) {
 
+                if (message) {
 
-            selectedFit =
-                "";
-
-
-            selectedHelpful =
-                "";
-
-
-            choiceButtons.forEach(
-                function(button) {
-
-                    button.classList.remove(
-                        "selected"
-                    );
+                    message.textContent =
+                        "✨ Thank you! Your feedback has been sent.";
 
                 }
-            );
 
+                form.reset();
 
-            helpfulButtons.forEach(
-                function(button) {
+                selectedFit = "";
 
-                    button.classList.remove(
-                        "selected"
-                    );
+                selectedHelpful = "";
+
+                choiceButtons.forEach(
+                    button => {
+
+                        button.classList.remove(
+                            "selected"
+                        );
+
+                    }
+                );
+
+                helpfulButtons.forEach(
+                    button => {
+
+                        button.classList.remove(
+                            "selected"
+                        );
+
+                    }
+                );
+
+            } else {
+
+                if (message) {
+
+                    message.textContent =
+                        "We couldn't send your feedback right now. Please try again.";
 
                 }
-            );
+
+            }
 
         }
     );
@@ -1607,31 +1568,40 @@ async function displayInsights() {
     if (IS_DEVELOPER) {
 
         if (totalUses) {
-
-            totalUses.textContent =
-                "—";
-
+            totalUses.textContent = "—";
         }
-
 
         if (helpfulCount) {
-
-            helpfulCount.textContent =
-                "—";
-
+            helpfulCount.textContent = "—";
         }
-
 
         if (mostUsedEmotion) {
-
             mostUsedEmotion.textContent =
                 "Developer Mode";
-
         }
 
+        if (emotionList) {
+            emotionList.innerHTML = "";
+        }
+
+        if (historyList) {
+            historyList.innerHTML = "";
+        }
 
         return;
+    }
 
+
+    if (totalUses) {
+        totalUses.textContent = "Loading...";
+    }
+
+    if (helpfulCount) {
+        helpfulCount.textContent = "Loading...";
+    }
+
+    if (mostUsedEmotion) {
+        mostUsedEmotion.textContent = "Loading...";
     }
 
 
@@ -1639,27 +1609,28 @@ async function displayInsights() {
 
         const response =
             await fetch(
-                `${SUPABASE_URL}/rest/v1/usage_events?select=*`,
+                `${SUPABASE_URL}/rest/v1/usage_events?select=*&order=created_at.asc`,
                 {
+                    method: "GET",
 
                     headers: {
-
                         "apikey":
                             SUPABASE_KEY,
 
                         "Authorization":
                             `Bearer ${SUPABASE_KEY}`
-
                     }
-
                 }
             );
 
 
         if (!response.ok) {
 
+            const errorText =
+                await response.text();
+
             throw new Error(
-                "Could not load insights."
+                `Supabase returned ${response.status}: ${errorText}`
             );
 
         }
@@ -1669,16 +1640,19 @@ async function displayInsights() {
             await response.json();
 
 
+        /*
+           TOTAL USES
+           Count unique sessions instead of
+           counting every event.
+        */
+
         const sessions =
             new Set();
 
-
         events.forEach(
-            function(event) {
+            event => {
 
-                if (
-                    event.session_id
-                ) {
+                if (event.session_id) {
 
                     sessions.add(
                         event.session_id
@@ -1698,19 +1672,18 @@ async function displayInsights() {
         }
 
 
+        /*
+           HELPFUL RESPONSES
+        */
+
         const helpfulResponses =
             events.filter(
-                function(event) {
-
-                    return (
-                        event.event_type ===
+                event =>
+                    event.event_type ===
                         "feedback" &&
-
-                        event.helpful ===
+                    String(event.helpful)
+                        .toLowerCase() ===
                         "yes"
-                    );
-
-                }
             );
 
 
@@ -1721,6 +1694,10 @@ async function displayInsights() {
 
         }
 
+
+        /*
+           EMOTION COUNTS
+        */
 
         const counts = {
 
@@ -1734,21 +1711,28 @@ async function displayInsights() {
 
 
         events.forEach(
-            function(event) {
+            event => {
 
                 if (
                     event.event_type ===
-                    "emotion_selected" &&
-
-                    Object.prototype.hasOwnProperty.call(
-                        counts,
-                        event.mood
-                    )
+                    "emotion_selected"
                 ) {
 
-                    counts[
-                        event.mood
-                    ]++;
+                    const emotion =
+                        String(
+                            event.mood || ""
+                        ).toLowerCase();
+
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            counts,
+                            emotion
+                        )
+                    ) {
+
+                        counts[emotion]++;
+
+                    }
 
                 }
 
@@ -1756,17 +1740,17 @@ async function displayInsights() {
         );
 
 
-        let mostUsed =
-            null;
+        /*
+           MOST USED EMOTION
+        */
 
-        let highestCount =
-            0;
+        let mostUsed = null;
+
+        let highestCount = 0;
 
 
-        Object.keys(
-            counts
-        ).forEach(
-            function(emotion) {
+        Object.keys(counts).forEach(
+            emotion => {
 
                 if (
                     counts[emotion] >
@@ -1789,49 +1773,52 @@ async function displayInsights() {
 
             mostUsedEmotion.textContent =
                 mostUsed
-                    ? moodData[mostUsed].emoji +
-                      " " +
-                      moodData[mostUsed].title
+                    ? `${moodData[mostUsed].emoji} ${moodData[mostUsed].title}`
                     : "—";
 
         }
 
 
+        /*
+           EMOTION STATISTICS
+        */
+
         if (emotionList) {
 
-            emotionList.innerHTML =
-                "";
+            emotionList.innerHTML = "";
 
-
-            Object.keys(
-                counts
-            ).forEach(
-                function(emotion) {
+            Object.keys(counts).forEach(
+                emotion => {
 
                     const row =
                         document.createElement(
                             "div"
                         );
 
-
                     row.className =
                         "emotion-stat-row";
 
+                    const label =
+                        document.createElement(
+                            "strong"
+                        );
 
-                    row.innerHTML =
-                        `<strong>
-                            ${moodData[emotion].emoji}
-                            ${moodData[emotion].title}
-                        </strong>
+                    label.textContent =
+                        `${moodData[emotion].emoji} ${moodData[emotion].title}`;
 
-                        <span>
-                            ${counts[emotion]}
-                        </span>`;
+                    const count =
+                        document.createElement(
+                            "span"
+                        );
 
+                    count.textContent =
+                        counts[emotion];
 
-                    emotionList.appendChild(
-                        row
-                    );
+                    row.appendChild(label);
+
+                    row.appendChild(count);
+
+                    emotionList.appendChild(row);
 
                 }
             );
@@ -1839,28 +1826,25 @@ async function displayInsights() {
         }
 
 
+        /*
+           USAGE HISTORY
+
+           Shows actual page visits with dates.
+        */
+
         if (historyList) {
 
-            historyList.innerHTML =
-                "";
-
+            historyList.innerHTML = "";
 
             const pageViews =
                 events.filter(
-                    function(event) {
-
-                        return (
-                            event.event_type ===
-                            "page_view"
-                        );
-
-                    }
+                    event =>
+                        event.event_type ===
+                        "page_view"
                 );
 
 
-            if (
-                pageViews.length === 0
-            ) {
+            if (!pageViews.length) {
 
                 historyList.innerHTML =
                     "<p>No visitor activity yet.</p>";
@@ -1872,17 +1856,15 @@ async function displayInsights() {
                     .reverse()
                     .slice(0, 20)
                     .forEach(
-                        function(event) {
+                        event => {
 
                             const row =
                                 document.createElement(
                                     "div"
                                 );
 
-
                             row.className =
                                 "usage-history-row";
-
 
                             const date =
                                 event.created_at
@@ -1891,10 +1873,8 @@ async function displayInsights() {
                                       ).toLocaleString()
                                     : "Unknown date";
 
-
                             row.textContent =
                                 date;
-
 
                             historyList.appendChild(
                                 row
@@ -1907,18 +1887,38 @@ async function displayInsights() {
 
         }
 
+
     } catch (error) {
 
         console.error(
-            "Could not load insights:",
+            "Could not load SoundSpace insights:",
             error
         );
 
 
         if (totalUses) {
+            totalUses.textContent = "—";
+        }
 
-            totalUses.textContent =
-                "—";
+        if (helpfulCount) {
+            helpfulCount.textContent = "—";
+        }
+
+        if (mostUsedEmotion) {
+            mostUsedEmotion.textContent = "—";
+        }
+
+        if (emotionList) {
+
+            emotionList.innerHTML =
+                "<p>Unable to load emotion statistics.</p>";
+
+        }
+
+        if (historyList) {
+
+            historyList.innerHTML =
+                "<p>Unable to load usage history.</p>";
 
         }
 
@@ -1928,37 +1928,43 @@ async function displayInsights() {
 
 
 /* =========================================================
-   START WEBSITE
+   DOM READY
    ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
-    function() {
+    () => {
 
 
-        /* EMOTION CARDS */
+        /* =================================================
+           EMOTION CARDS
+           ================================================= */
 
         document
             .querySelectorAll(
                 ".emotion-card"
             )
             .forEach(
-                function(card) {
+                card => {
 
                     card.addEventListener(
                         "click",
-                        function() {
+                        () => {
 
                             const emotion =
-                                card.dataset.emotion
-                                    .toLowerCase();
-
+                                String(
+                                    card.dataset.emotion ||
+                                    ""
+                                ).toLowerCase();
 
                             if (
-                                !moodData[
-                                    emotion
-                                ]
+                                !moodData[emotion]
                             ) {
+
+                                console.error(
+                                    "Unknown emotion:",
+                                    emotion
+                                );
 
                                 return;
 
@@ -1982,13 +1988,14 @@ document.addEventListener(
             );
 
 
-        /* BACK BUTTON */
+        /* =================================================
+           BACK BUTTON
+           ================================================= */
 
         const backButton =
             document.getElementById(
                 "back-button"
             );
-
 
         if (backButton) {
 
@@ -2000,91 +2007,59 @@ document.addEventListener(
         }
 
 
-        /* NAVIGATION */
+        /* =================================================
+           NAVIGATION
+           ================================================= */
 
-        const homeNav =
-            document.getElementById(
-                "home-nav"
-            );
+        const navigation = {
 
-        const whyNav =
-            document.getElementById(
-                "why-nav"
-            );
+            "home-nav":
+                showHomePage,
 
-        const aboutNav =
-            document.getElementById(
-                "about-nav"
-            );
+            "why-nav":
+                showWhyPage,
 
-        const feedbackNav =
-            document.getElementById(
-                "feedback-nav"
-            );
+            "about-nav":
+                showAboutPage,
 
-        const insightsNav =
-            document.getElementById(
-                "insights-nav"
-            );
+            "feedback-nav":
+                showFeedbackPage,
 
-
-        if (homeNav) {
-
-            homeNav.addEventListener(
-                "click",
-                showHomePage
-            );
-
-        }
-
-
-        if (whyNav) {
-
-            whyNav.addEventListener(
-                "click",
-                showWhyPage
-            );
-
-        }
-
-
-        if (aboutNav) {
-
-            aboutNav.addEventListener(
-                "click",
-                showAboutPage
-            );
-
-        }
-
-
-        if (feedbackNav) {
-
-            feedbackNav.addEventListener(
-                "click",
-                showFeedbackPage
-            );
-
-        }
-
-
-        if (insightsNav) {
-
-            insightsNav.addEventListener(
-                "click",
+            "insights-nav":
                 showInsightsPage
-            );
 
-        }
+        };
 
 
-        /* SURPRISE ME */
+        Object.entries(
+            navigation
+        ).forEach(
+            ([id, handler]) => {
+
+                const button =
+                    document.getElementById(id);
+
+                if (button) {
+
+                    button.addEventListener(
+                        "click",
+                        handler
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           SURPRISE ME
+           ================================================= */
 
         const surpriseButton =
             document.getElementById(
                 "surprise-button"
             );
-
 
         if (surpriseButton) {
 
@@ -2096,25 +2071,24 @@ document.addEventListener(
         }
 
 
-        /* QUEUE BUTTONS */
+        /* =================================================
+           QUEUE BUTTONS
+           ================================================= */
 
         const previousButton =
             document.getElementById(
                 "previous-song"
             );
 
-
         const nextButton =
             document.getElementById(
                 "next-song"
             );
 
-
         const shuffleButton =
             document.getElementById(
                 "shuffle-button"
             );
-
 
         const reshuffleButton =
             document.getElementById(
@@ -2162,13 +2136,14 @@ document.addEventListener(
         }
 
 
-        /* PLAYER CONTROLS */
+        /* =================================================
+           PLAYER CONTROLS
+           ================================================= */
 
         const playerPrevious =
             document.getElementById(
                 "player-previous"
             );
-
 
         const playerNext =
             document.getElementById(
@@ -2196,12 +2171,16 @@ document.addEventListener(
         }
 
 
-        /* FEEDBACK */
+        /* =================================================
+           FEEDBACK
+           ================================================= */
 
         setupFeedback();
 
 
-        /* TRACK PAGE VISIT */
+        /* =================================================
+           PAGE VIEW
+           ================================================= */
 
         if (!IS_DEVELOPER) {
 
@@ -2212,8 +2191,12 @@ document.addEventListener(
         }
 
 
+        /* =================================================
+           STARTUP MESSAGE
+           ================================================= */
+
         console.log(
-            "SoundSpace loaded successfully!"
+            "SoundSpace loaded successfully."
         );
 
     }
