@@ -1,7 +1,9 @@
+# SoundSpace `script.js`
+
 
 /* =========================================================
-   SOUNDSPACE — COMPLETE WORKING SCRIPT
-   Matches the current index.html
+   SOUNDSPACE — COMPLETE WORKING VERSION
+   Matches your current index.html
    ========================================================= */
 
 
@@ -26,7 +28,6 @@ const DEVELOPER_MODE_KEY =
 const params =
   new URLSearchParams(window.location.search);
 
-
 if (params.get("developer") === "on") {
 
   localStorage.setItem(
@@ -42,7 +43,6 @@ if (params.get("developer") === "on") {
 
 }
 
-
 if (params.get("developer") === "off") {
 
   localStorage.removeItem(
@@ -56,7 +56,6 @@ if (params.get("developer") === "off") {
   );
 
 }
-
 
 const IS_DEVELOPER =
   localStorage.getItem(
@@ -73,7 +72,6 @@ let SOUNDSPACE_SESSION_ID =
     "soundspace_session_id"
   );
 
-
 if (!SOUNDSPACE_SESSION_ID) {
 
   SOUNDSPACE_SESSION_ID =
@@ -83,7 +81,6 @@ if (!SOUNDSPACE_SESSION_ID) {
     Math.random()
       .toString(36)
       .slice(2, 10);
-
 
   sessionStorage.setItem(
     "soundspace_session_id",
@@ -106,71 +103,50 @@ async function trackSoundSpaceEvent(
 ) {
 
   if (IS_DEVELOPER) {
-
-    console.log(
-      "Developer activity not tracked:",
-      eventType
-    );
-
     return;
-
   }
-
 
   try {
 
-    const response =
-      await fetch(
-        `${SUPABASE_URL}/rest/v1/usage_events`,
-        {
-          method: "POST",
+    await fetch(
+      `${SUPABASE_URL}/rest/v1/usage_events`,
+      {
+        method: "POST",
 
-          headers: {
-            "Content-Type":
-              "application/json",
+        headers: {
+          "Content-Type": "application/json",
 
-            "apikey":
-              SUPABASE_KEY,
+          "apikey": SUPABASE_KEY,
 
-            "Authorization":
-              `Bearer ${SUPABASE_KEY}`,
+          "Authorization":
+            `Bearer ${SUPABASE_KEY}`,
 
-            "Prefer":
-              "return=minimal"
-          },
+          "Prefer": "return=minimal"
+        },
 
-          body: JSON.stringify({
+        body: JSON.stringify({
 
-            event_type: eventType,
+          event_type: eventType,
 
-            session_id:
-              SOUNDSPACE_SESSION_ID,
+          session_id:
+            SOUNDSPACE_SESSION_ID,
 
-            page:
-              window.location.pathname,
+          page:
+            window.location.pathname,
 
-            mood: mood,
+          mood: mood,
 
-            song: song,
+          song: song,
 
-            helpful: helpful,
+          helpful: helpful,
 
-            feedback_text:
-              feedbackText
+          feedback_text:
+            feedbackText
 
-          })
+        })
 
-        }
-      );
-
-
-    if (!response.ok) {
-
-      console.error(
-        "Analytics could not be saved."
-      );
-
-    }
+      }
+    );
 
   } catch (error) {
 
@@ -205,49 +181,49 @@ const moodData = {
         title: "Happy",
         artist: "Pharrell Williams",
         why:
-          "Its fast, upbeat rhythm, bright production and strongly positive message make it well suited to maintaining an already positive emotional state."
+          "Its upbeat rhythm and positive energy make it suitable for maintaining a joyful mood."
       },
 
       {
         title: "Can't Stop the Feeling!",
         artist: "Justin Timberlake",
         why:
-          "The lively tempo, danceable rhythm and joyful lyrics create an energetic listening experience."
+          "Its lively tempo and danceable rhythm create an energetic listening experience."
       },
 
       {
         title: "Levitating",
         artist: "Dua Lipa",
         why:
-          "Its disco-inspired beat and energetic production give the song a playful and uplifting character."
+          "Its energetic disco-inspired production gives it a playful and uplifting character."
       },
 
       {
         title: "Uptown Funk",
         artist: "Mark Ronson ft. Bruno Mars",
         why:
-          "The strong funk groove and energetic tempo make it highly danceable and stimulating."
+          "Its strong groove and energetic tempo make it highly stimulating and danceable."
       },
 
       {
         title: "Good as Hell",
         artist: "Lizzo",
         why:
-          "Its upbeat production and encouraging message support feelings of confidence and positivity."
+          "Its confident message and upbeat production encourage positivity."
       },
 
       {
         title: "Lush Life",
         artist: "Zara Larsson",
         why:
-          "The bright pop production and carefree tone create a lively atmosphere."
+          "Its bright pop production creates a lively and carefree atmosphere."
       },
 
       {
         title: "APT.",
         artist: "ROSÉ & Bruno Mars",
         why:
-          "Its catchy rhythm and high-energy production make it suitable for an upbeat mood."
+          "Its catchy rhythm and energetic production suit an upbeat mood."
       },
 
       {
@@ -255,21 +231,21 @@ const moodData = {
         artist:
           "HUNTR/X, EJAE, Audrey Nuna & REI AMI",
         why:
-          "The energetic production and confident delivery give the song an uplifting direction."
+          "Its energetic production and confident delivery give it an uplifting direction."
       },
 
       {
         title: "Flowers",
         artist: "Miley Cyrus",
         why:
-          "Its confident message and bright pop production can reinforce feelings of empowerment."
+          "Its confident message can reinforce feelings of empowerment."
       },
 
       {
         title: "Roar",
         artist: "Katy Perry",
         why:
-          "The energetic chorus and message of finding one's voice make it uplifting and motivating."
+          "Its energetic chorus and empowering message make it motivating."
       }
 
     ]
@@ -290,72 +266,52 @@ const moodData = {
 
       {
         title: "Beautiful Things",
-        artist: "Benson Boone",
-        why:
-          "Its emotional delivery and themes of meaningful relationships create space for reflection."
+        artist: "Benson Boone"
       },
 
       {
         title: "Someone You Loved",
-        artist: "Lewis Capaldi",
-        why:
-          "The emotional vocals and reflective mood can help listeners connect with feelings of sadness."
+        artist: "Lewis Capaldi"
       },
 
       {
         title: "The Night We Met",
-        artist: "Lord Huron",
-        why:
-          "Its atmospheric sound and nostalgic feeling create a reflective listening experience."
+        artist: "Lord Huron"
       },
 
       {
         title: "When We Were Young",
-        artist: "Adele",
-        why:
-          "Its nostalgic themes and expressive vocals create a strong sense of reflection."
+        artist: "Adele"
       },
 
       {
         title: "Iris",
-        artist: "Goo Goo Dolls",
-        why:
-          "The emotional melody and vulnerable lyrics can resonate with longing and sadness."
+        artist: "Goo Goo Dolls"
       },
 
       {
         title: "Lovely",
-        artist: "Billie Eilish & Khalid",
-        why:
-          "Its restrained production and vulnerable atmosphere make it suitable for reflective listening."
+        artist: "Billie Eilish & Khalid"
       },
 
       {
         title: "What Was I Made For?",
-        artist: "Billie Eilish",
-        why:
-          "Its soft arrangement and introspective tone encourage quiet reflection."
+        artist: "Billie Eilish"
       },
 
       {
         title: "Ocean Eyes",
-        artist: "Billie Eilish",
-        why:
-          "The gentle production and dreamy atmosphere create a calm, introspective experience."
+        artist: "Billie Eilish"
       },
 
       {
         title: "Die With A Smile",
-        artist: "Lady Gaga & Bruno Mars",
-        why:
-          "Its emotional ballad style encourages heartfelt reflection."
+        artist: "Lady Gaga & Bruno Mars"
       },
 
       {
         title: "Back To Friends",
-        artist: "sombr",
-        why:
-          "Its reflective themes and emotional delivery suit feelings of loss or longing."
+        artist: "sombr"
       }
 
     ]
@@ -376,72 +332,52 @@ const moodData = {
 
       {
         title: "Believer",
-        artist: "Imagine Dragons",
-        why:
-          "Its intense percussion and powerful vocals provide an energetic outlet for strong emotions."
+        artist: "Imagine Dragons"
       },
 
       {
         title: "Stronger",
-        artist: "Kelly Clarkson",
-        why:
-          "Its message of overcoming difficulty can redirect frustration toward resilience."
+        artist: "Kelly Clarkson"
       },
 
       {
         title: "Titanium",
-        artist: "David Guetta ft. Sia",
-        why:
-          "Its strong production and resilient message create an intense but empowering experience."
+        artist: "David Guetta ft. Sia"
       },
 
       {
         title: "Unstoppable",
-        artist: "Sia",
-        why:
-          "Its dramatic build and confident lyrics can shift frustration toward determination."
+        artist: "Sia"
       },
 
       {
         title: "Roar",
-        artist: "Katy Perry",
-        why:
-          "Its energetic chorus provides a constructive direction for intense emotions."
+        artist: "Katy Perry"
       },
 
       {
         title: "Shake It Off",
-        artist: "Taylor Swift",
-        why:
-          "Its upbeat rhythm encourages emotional release and moving on from irritation."
+        artist: "Taylor Swift"
       },
 
       {
         title: "Flowers",
-        artist: "Miley Cyrus",
-        why:
-          "Its confident message can redirect frustration toward self-reliance."
+        artist: "Miley Cyrus"
       },
 
       {
         title: "I Will Survive",
-        artist: "Gloria Gaynor",
-        why:
-          "Its message of overcoming hardship transforms negative experiences into resilience."
+        artist: "Gloria Gaynor"
       },
 
       {
         title: "Since U Been Gone",
-        artist: "Kelly Clarkson",
-        why:
-          "Its high-energy sound provides an expressive outlet for intense feelings."
+        artist: "Kelly Clarkson"
       },
 
       {
         title: "The Man",
-        artist: "The Killers",
-        why:
-          "Its energetic rock sound matches high-energy emotional states."
+        artist: "The Killers"
       }
 
     ]
@@ -453,7 +389,7 @@ const moodData = {
 
     title: "Anxiety",
 
-    emoji: "😟",
+    emoji: "😰",
 
     description:
       "Explore slower, familiar and emotionally gentle songs that may help create a calmer atmosphere.",
@@ -462,72 +398,52 @@ const moodData = {
 
       {
         title: "A Thousand Years",
-        artist: "Christina Perri",
-        why:
-          "Its slow tempo and gentle arrangement create a softer listening environment."
+        artist: "Christina Perri"
       },
 
       {
         title: "Perfect",
-        artist: "Ed Sheeran",
-        why:
-          "Its smooth melody provides a gentle and emotionally warm listening experience."
+        artist: "Ed Sheeran"
       },
 
       {
         title: "Photograph",
-        artist: "Ed Sheeran",
-        why:
-          "Its reflective pacing creates a quieter atmosphere suited to slowing down."
+        artist: "Ed Sheeran"
       },
 
       {
         title: "Yellow",
-        artist: "Coldplay",
-        why:
-          "Its warm melody can create a comforting atmosphere."
+        artist: "Coldplay"
       },
 
       {
         title: "Ocean Eyes",
-        artist: "Billie Eilish",
-        why:
-          "Its soft vocals and spacious sound create a calm listening environment."
+        artist: "Billie Eilish"
       },
 
       {
         title: "Lovely",
-        artist: "Billie Eilish & Khalid",
-        why:
-          "Its restrained instrumentation allows for gentle reflective listening."
+        artist: "Billie Eilish & Khalid"
       },
 
       {
         title: "Until I Found You",
-        artist: "Stephen Sanchez",
-        why:
-          "Its nostalgic style and smooth vocals create a gentle atmosphere."
+        artist: "Stephen Sanchez"
       },
 
       {
         title: "Adore You",
-        artist: "Harry Styles",
-        why:
-          "Its warm production and smooth melody create a comfortable listening experience."
+        artist: "Harry Styles"
       },
 
       {
         title: "Sunflower",
-        artist: "Post Malone & Swae Lee",
-        why:
-          "Its relaxed groove gives it an easy-going quality."
+        artist: "Post Malone & Swae Lee"
       },
 
       {
         title: "What Was I Made For?",
-        artist: "Billie Eilish",
-        why:
-          "Its quiet arrangement and slow pace encourage stillness and reflection."
+        artist: "Billie Eilish"
       }
 
     ]
@@ -548,72 +464,52 @@ const moodData = {
 
       {
         title: "Sunday Best",
-        artist: "Surfaces",
-        why:
-          "Its relaxed rhythm and optimistic tone create an easy-going atmosphere."
+        artist: "Surfaces"
       },
 
       {
         title: "Put Your Records On",
-        artist: "Corinne Bailey Rae",
-        why:
-          "Its warm vocals and relaxed groove create a comforting listening experience."
+        artist: "Corinne Bailey Rae"
       },
 
       {
         title: "Lovely Day",
-        artist: "Bill Withers",
-        why:
-          "Its smooth groove creates a warm and positive atmosphere."
+        artist: "Bill Withers"
       },
 
       {
         title: "Sunflower",
-        artist: "Post Malone & Swae Lee",
-        why:
-          "Its laid-back rhythm gives the song a relaxed quality."
+        artist: "Post Malone & Swae Lee"
       },
 
       {
         title: "Adore You",
-        artist: "Harry Styles",
-        why:
-          "Its warm production creates a lighter emotional atmosphere."
+        artist: "Harry Styles"
       },
 
       {
         title: "Best Part",
-        artist: "Daniel Caesar ft. H.E.R.",
-        why:
-          "Its soft instrumentation and gentle delivery create a calm atmosphere."
+        artist: "Daniel Caesar ft. H.E.R."
       },
 
       {
         title: "Location",
-        artist: "Khalid",
-        why:
-          "Its mellow production makes it suitable for relaxed listening."
+        artist: "Khalid"
       },
 
       {
         title: "Golden Hour",
-        artist: "JVKE",
-        why:
-          "Its warm melody creates a soothing and pleasant emotional tone."
+        artist: "JVKE"
       },
 
       {
         title: "Sweet Creature",
-        artist: "Harry Styles",
-        why:
-          "Its acoustic sound creates a quiet and low-intensity listening experience."
+        artist: "Harry Styles"
       },
 
       {
         title: "So Easy (To Fall in Love)",
-        artist: "Olivia Dean",
-        why:
-          "Its smooth vocals and warm production create an easy-going atmosphere."
+        artist: "Olivia Dean"
       }
 
     ]
@@ -628,95 +524,60 @@ const moodData = {
    ========================================================= */
 
 let currentEmotion = "";
-let currentSong = null;
+
+let currentSongIndex = -1;
 
 let currentQueue = [];
-let currentSongIndex = -1;
 
 
 /* =========================================================
-   PAGE HELPERS
+   PAGE SWITCHING
    ========================================================= */
-
-const pages = [
-
-  "home-page",
-  "emotion-page",
-  "why-page",
-  "about-page",
-  "feedback-page",
-  "insights-page"
-
-];
-
 
 function hideAllPages() {
 
-  pages.forEach(function(pageId) {
+  const pages = [
 
-    const page =
-      document.getElementById(pageId);
+    "home-page",
 
-    if (page) {
+    "emotion-page",
 
-      page.style.display =
-        "none";
+    "why-page",
+
+    "about-page",
+
+    "feedback-page",
+
+    "insights-page"
+
+  ];
+
+  pages.forEach(
+    function(pageId) {
+
+      const page =
+        document.getElementById(pageId);
+
+      if (page) {
+        page.style.display = "none";
+      }
 
     }
-
-  });
-
-}
-
-
-function setActiveNav(navId) {
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(function(button) {
-
-      button.classList.remove("active");
-
-    });
-
-
-  const activeButton =
-    document.getElementById(navId);
-
-  if (activeButton) {
-
-    activeButton.classList.add("active");
-
-  }
+  );
 
 }
 
 
-function showPage(
-  pageId,
-  navId = null
-) {
+function showPage(pageId) {
 
   hideAllPages();
-
 
   const page =
     document.getElementById(pageId);
 
   if (page) {
-
-    page.style.display =
-      "block";
-
+    page.style.display = "block";
   }
-
-
-  if (navId) {
-
-    setActiveNav(navId);
-
-  }
-
 
   window.scrollTo({
     top: 0,
@@ -727,70 +588,7 @@ function showPage(
 
 
 /* =========================================================
-   PAGE NAVIGATION
-   ========================================================= */
-
-function showHomePage() {
-
-  showPage(
-    "home-page",
-    "home-nav"
-  );
-
-}
-
-
-function showEmotionPage() {
-
-  showPage(
-    "emotion-page"
-  );
-
-}
-
-
-function showWhyPage() {
-
-  showPage(
-    "why-page",
-    "why-nav"
-  );
-
-}
-
-
-function showAboutPage() {
-
-  showPage(
-    "about-page",
-    "about-nav"
-  );
-
-}
-
-
-function showFeedbackPage() {
-
-  showPage(
-    "feedback-page",
-    "feedback-nav"
-  );
-
-}
-
-
-function showInsightsPage() {
-
-  showPage(
-    "insights-page",
-    "insights-nav"
-  );
-
-}
-
-
-/* =========================================================
-   DISPLAY EMOTION
+   EMOTION
    ========================================================= */
 
 function displayEmotion(emotion) {
@@ -802,17 +600,12 @@ function displayEmotion(emotion) {
     return;
   }
 
-
-  currentEmotion =
-    emotion;
-
+  currentEmotion = emotion;
 
   currentQueue =
     [...data.songs];
 
-
-  currentSongIndex =
-    -1;
+  currentSongIndex = -1;
 
 
   document.getElementById(
@@ -841,7 +634,7 @@ function displayEmotion(emotion) {
 
   displaySongs();
 
-  showEmotionPage();
+  showPage("emotion-page");
 
 }
 
@@ -857,17 +650,11 @@ function displaySongs() {
       "song-list"
     );
 
-
-  if (
-    !songList ||
-    !currentEmotion
-  ) {
+  if (!songList) {
     return;
   }
 
-
-  songList.innerHTML =
-    "";
+  songList.innerHTML = "";
 
 
   currentQueue.forEach(
@@ -875,7 +662,6 @@ function displaySongs() {
 
       const card =
         document.createElement("div");
-
 
       card.className =
         "song-card";
@@ -897,26 +683,33 @@ function displaySongs() {
             ${song.artist}
           </small>
 
-          <p class="song-why">
-
-            <b>
-              ✨ Why this song fits:
-            </b>
-
-            ${song.why}
-
-          </p>
-
         </div>
 
         <button
-          class="listen-song-button"
           type="button"
+          class="listen-song-button"
         >
-          Listen
+          🎵 Listen
         </button>
 
       `;
+
+
+      card.addEventListener(
+        "click",
+        function(event) {
+
+          if (
+            event.target.tagName !==
+            "BUTTON"
+          ) {
+
+            playSongAtIndex(index);
+
+          }
+
+        }
+      );
 
 
       const listenButton =
@@ -929,18 +722,13 @@ function displaySongs() {
         "click",
         function() {
 
-          currentSongIndex =
-            index;
-
-          playSong(song);
+          playSongAtIndex(index);
 
         }
       );
 
 
-      songList.appendChild(
-        card
-      );
+      songList.appendChild(card);
 
     }
   );
@@ -952,15 +740,19 @@ function displaySongs() {
    PLAY SONG
    ========================================================= */
 
-function playSong(song) {
+function playSongAtIndex(index) {
 
-  if (!song) {
+  if (
+    index < 0 ||
+    index >= currentQueue.length
+  ) {
     return;
   }
 
+  currentSongIndex = index;
 
-  currentSong =
-    song;
+  const song =
+    currentQueue[index];
 
 
   trackSoundSpaceEvent(
@@ -970,72 +762,47 @@ function playSong(song) {
   );
 
 
-  const player =
-    document.getElementById(
-      "player-section"
-    );
-
-
-  const title =
-    document.getElementById(
-      "player-song-title"
-    );
-
-
-  const artist =
-    document.getElementById(
-      "player-song-artist"
-    );
-
-
-  const reason =
-    document.getElementById(
-      "player-song-reason"
-    );
-
-
-  const listenLink =
-    document.getElementById(
-      "listen-link"
-    );
-
-
-  title.textContent =
+  document.getElementById(
+    "player-song-title"
+  ).textContent =
     song.title;
 
 
-  artist.textContent =
+  document.getElementById(
+    "player-song-artist"
+  ).textContent =
     song.artist;
 
 
-  if (reason) {
+  document.getElementById(
+    "player-song-reason"
+  ).textContent =
+    song.why ||
+    "Selected to match the emotional atmosphere you chose.";
 
-    reason.textContent =
-      song.why;
 
-  }
-
-
-  const spotifyQuery =
+  const searchQuery =
     encodeURIComponent(
       `${song.title} ${song.artist}`
     );
 
 
-  listenLink.href =
+  document.getElementById(
+    "listen-link"
+  ).href =
     "https://open.spotify.com/search/" +
-    spotifyQuery;
+    searchQuery;
 
 
-  listenLink.textContent =
-    "🎵 Listen to this song on Spotify";
-
-
-  player.style.display =
+  document.getElementById(
+    "player-section"
+  ).style.display =
     "block";
 
 
-  player.scrollIntoView({
+  document.getElementById(
+    "player-section"
+  ).scrollIntoView({
     behavior: "smooth",
     block: "center"
   });
@@ -1049,31 +816,27 @@ function playSong(song) {
 
 function nextSong() {
 
-  if (
-    currentQueue.length === 0
-  ) {
+  if (!currentQueue.length) {
     return;
   }
 
-
-  currentSongIndex++;
-
-
   if (
-    currentSongIndex >=
-    currentQueue.length
+    currentSongIndex === -1
   ) {
 
-    currentSongIndex =
-      0;
+    playSongAtIndex(0);
+
+    return;
 
   }
 
+  currentSongIndex =
+    (currentSongIndex + 1) %
+    currentQueue.length;
 
-  playSong(
-    currentQueue[
-      currentSongIndex
-    ]
+
+  playSongAtIndex(
+    currentSongIndex
   );
 
 }
@@ -1085,49 +848,93 @@ function nextSong() {
 
 function previousSong() {
 
-  if (
-    currentQueue.length === 0
-  ) {
+  if (!currentQueue.length) {
     return;
   }
 
-
-  currentSongIndex--;
-
-
   if (
-    currentSongIndex < 0
+    currentSongIndex === -1
   ) {
 
-    currentSongIndex =
-      currentQueue.length - 1;
+    playSongAtIndex(
+      currentQueue.length - 1
+    );
+
+    return;
 
   }
 
+  currentSongIndex =
+    (
+      currentSongIndex - 1 +
+      currentQueue.length
+    ) %
+    currentQueue.length;
 
-  playSong(
-    currentQueue[
-      currentSongIndex
-    ]
+
+  playSongAtIndex(
+    currentSongIndex
   );
 
 }
 
 
 /* =========================================================
-   SHUFFLE QUEUE
+   SHUFFLE
+   Plays a random next song
    ========================================================= */
 
-function shuffleArray(array) {
+function shuffleSong() {
 
-  const shuffled =
-    [...array];
+  if (!currentQueue.length) {
+    return;
+  }
 
+  let randomIndex =
+    Math.floor(
+      Math.random() *
+      currentQueue.length
+    );
+
+
+  if (
+    currentQueue.length > 1 &&
+    randomIndex === currentSongIndex
+  ) {
+
+    randomIndex =
+      (
+        randomIndex + 1
+      ) %
+      currentQueue.length;
+
+  }
+
+
+  playSongAtIndex(
+    randomIndex
+  );
+
+}
+
+
+/* =========================================================
+   RESHUFFLE
+   Rearranges the entire queue
+   ========================================================= */
+
+function reshuffleQueue() {
+
+  if (!currentQueue.length) {
+    return;
+  }
 
   for (
     let i =
-      shuffled.length - 1;
+      currentQueue.length - 1;
+
     i > 0;
+
     i--
   ) {
 
@@ -1139,68 +946,20 @@ function shuffleArray(array) {
 
 
     [
-      shuffled[i],
-      shuffled[randomIndex]
-    ] =
-    [
-      shuffled[randomIndex],
-      shuffled[i]
+      currentQueue[i],
+      currentQueue[randomIndex]
+
+    ] = [
+
+      currentQueue[randomIndex],
+      currentQueue[i]
+
     ];
 
   }
 
 
-  return shuffled;
-
-}
-
-
-function shuffleQueue() {
-
-  if (
-    currentQueue.length === 0
-  ) {
-    return;
-  }
-
-
-  currentQueue =
-    shuffleArray(
-      currentQueue
-    );
-
-
-  currentSongIndex =
-    -1;
-
-
-  displaySongs();
-
-}
-
-
-/* =========================================================
-   RESHUFFLE QUEUE
-   ========================================================= */
-
-function reshuffleQueue() {
-
-  if (!currentEmotion) {
-    return;
-  }
-
-
-  currentQueue =
-    shuffleArray(
-      moodData[
-        currentEmotion
-      ].songs
-    );
-
-
-  currentSongIndex =
-    -1;
-
+  currentSongIndex = -1;
 
   displaySongs();
 
@@ -1213,98 +972,114 @@ function reshuffleQueue() {
 
 function surpriseMe() {
 
-  if (
-    currentQueue.length === 0
-  ) {
-    return;
-  }
-
-
-  const randomIndex =
-    Math.floor(
-      Math.random() *
-      currentQueue.length
-    );
-
-
-  currentSongIndex =
-    randomIndex;
-
-
-  playSong(
-    currentQueue[
-      currentSongIndex
-    ]
-  );
+  shuffleSong();
 
 }
 
 
 /* =========================================================
-   FEEDBACK CHOICES
+   FEEDBACK
    ========================================================= */
 
-function setupChoiceButtons(
-  selector,
-  inputId
-) {
+function setupFeedback() {
 
-  const buttons =
-    document.querySelectorAll(
-      selector
-    );
+  let selectedFit = "";
+  let selectedHelpful = "";
 
 
-  const hiddenInput =
-    document.getElementById(
-      inputId
-    );
+  document
+    .querySelectorAll(
+      ".choice-button"
+    )
+    .forEach(
+      function(button) {
 
+        button.addEventListener(
+          "click",
+          function() {
 
-  buttons.forEach(
-    function(button) {
+            document
+              .querySelectorAll(
+                ".choice-button"
+              )
+              .forEach(
+                function(other) {
 
-      button.addEventListener(
-        "click",
-        function() {
+                  other.classList.remove(
+                    "selected"
+                  );
 
-          buttons.forEach(
-            function(otherButton) {
-
-              otherButton.classList.remove(
-                "selected"
+                }
               );
 
-            }
-          );
+
+            button.classList.add(
+              "selected"
+            );
 
 
-          button.classList.add(
-            "selected"
-          );
-
-
-          if (hiddenInput) {
-
-            hiddenInput.value =
+            selectedFit =
               button.dataset.value;
 
+
+            document.getElementById(
+              "feedback-fit"
+            ).value =
+              selectedFit;
+
           }
+        );
 
-        }
-      );
-
-    }
-  );
-
-}
+      }
+    );
 
 
-/* =========================================================
-   FEEDBACK FORM
-   ========================================================= */
+  document
+    .querySelectorAll(
+      ".helpful-choice"
+    )
+    .forEach(
+      function(button) {
 
-function setupFeedbackForm() {
+        button.addEventListener(
+          "click",
+          function() {
+
+            document
+              .querySelectorAll(
+                ".helpful-choice"
+              )
+              .forEach(
+                function(other) {
+
+                  other.classList.remove(
+                    "selected"
+                  );
+
+                }
+              );
+
+
+            button.classList.add(
+              "selected"
+            );
+
+
+            selectedHelpful =
+              button.dataset.value;
+
+
+            document.getElementById(
+              "feedback-helpful"
+            ).value =
+              selectedHelpful;
+
+          }
+        );
+
+      }
+    );
+
 
   const form =
     document.getElementById(
@@ -1315,18 +1090,6 @@ function setupFeedbackForm() {
   if (!form) {
     return;
   }
-
-
-  setupChoiceButtons(
-    ".choice-button",
-    "feedback-fit"
-  );
-
-
-  setupChoiceButtons(
-    ".helpful-choice",
-    "feedback-helpful"
-  );
 
 
   form.addEventListener(
@@ -1342,28 +1105,25 @@ function setupFeedbackForm() {
         ).value;
 
 
-      const fit =
-        document.getElementById(
-          "feedback-fit"
-        ).value;
-
-
-      const helpful =
-        document.getElementById(
-          "feedback-helpful"
-        ).value;
-
-
       const improvement =
         document.getElementById(
           "feedback-improvement"
-        ).value.trim();
+        ).value;
 
 
       const liked =
         document.getElementById(
           "feedback-liked"
-        ).value.trim();
+        ).value;
+
+
+      trackSoundSpaceEvent(
+        "feedback",
+        emotion || null,
+        null,
+        selectedHelpful || null,
+        `Fit: ${selectedFit}. Improvement: ${improvement}. Liked: ${liked}`
+      );
 
 
       const message =
@@ -1372,52 +1132,19 @@ function setupFeedbackForm() {
         );
 
 
-      if (
-        !emotion ||
-        !fit ||
-        !helpful
-      ) {
-
-        if (message) {
-
-          message.textContent =
-            "Please answer the required questions before sending your feedback.";
-
-        }
-
-        return;
-
-      }
-
-
-      const feedbackText =
-        `Fit: ${fit}\n\n` +
-        `Improvement: ${improvement || "None"}\n\n` +
-        `Liked most: ${liked || "None"}`;
-
-
-      trackSoundSpaceEvent(
-        "feedback",
-        emotion,
-        currentSong
-          ? `${currentSong.title} — ${currentSong.artist}`
-          : null,
-        helpful,
-        feedbackText
-      );
-
-
       if (message) {
 
         message.textContent =
-          IS_DEVELOPER
-            ? "Developer mode is on, so this activity was not tracked."
-            : "✨ Thank you! Your feedback has been sent.";
+          "✨ Thank you! Your feedback has been received.";
 
       }
 
 
       form.reset();
+
+
+      selectedFit = "";
+      selectedHelpful = "";
 
 
       document
@@ -1474,18 +1201,11 @@ async function displayInsights() {
 
   if (IS_DEVELOPER) {
 
-    if (totalUses) {
-      totalUses.textContent = "—";
-    }
+    totalUses.textContent = "—";
+    helpfulCount.textContent = "—";
 
-    if (helpfulCount) {
-      helpfulCount.textContent = "—";
-    }
-
-    if (mostUsedEmotion) {
-      mostUsedEmotion.textContent =
-        "Developer Mode";
-    }
+    mostUsedEmotion.textContent =
+      "Developer Mode";
 
     return;
 
@@ -1509,15 +1229,6 @@ async function displayInsights() {
           }
         }
       );
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        "Could not load insights."
-      );
-
-    }
 
 
     const events =
@@ -1545,12 +1256,8 @@ async function displayInsights() {
     );
 
 
-    if (totalUses) {
-
-      totalUses.textContent =
-        sessions.size;
-
-    }
+    totalUses.textContent =
+      sessions.size;
 
 
     const helpfulResponses =
@@ -1568,12 +1275,8 @@ async function displayInsights() {
       );
 
 
-    if (helpfulCount) {
-
-      helpfulCount.textContent =
-        helpfulResponses.length;
-
-    }
+    helpfulCount.textContent =
+      helpfulResponses.length;
 
 
     const counts = {
@@ -1605,66 +1308,54 @@ async function displayInsights() {
     );
 
 
-    let mostUsed =
-      null;
-
-    let highestCount =
-      0;
+    let mostUsed = null;
+    let highestCount = 0;
 
 
-    Object.keys(counts).forEach(
-      function(emotion) {
+    Object.keys(counts)
+      .forEach(
+        function(emotion) {
 
-        if (
-          counts[emotion] >
-          highestCount
-        ) {
+          if (
+            counts[emotion] >
+            highestCount
+          ) {
 
-          highestCount =
-            counts[emotion];
+            highestCount =
+              counts[emotion];
 
-          mostUsed =
-            emotion;
+            mostUsed =
+              emotion;
+
+          }
 
         }
-
-      }
-    );
+      );
 
 
-    if (mostUsedEmotion) {
-
-      mostUsedEmotion.textContent =
-        mostUsed
-          ? mostUsed.charAt(0)
-              .toUpperCase() +
-            mostUsed.slice(1)
-          : "—";
-
-    }
+    mostUsedEmotion.textContent =
+      mostUsed
+        ? mostUsed.charAt(0)
+            .toUpperCase() +
+          mostUsed.slice(1)
+        : "—";
 
 
-    if (emotionList) {
-
-      emotionList.innerHTML =
-        "";
+    emotionList.innerHTML = "";
 
 
-      Object.keys(counts).forEach(
+    Object.keys(counts)
+      .forEach(
         function(emotion) {
 
           const row =
-            document.createElement(
-              "div"
-            );
-
+            document.createElement("div");
 
           row.className =
             "emotion-stat-row";
 
 
           row.innerHTML = `
-
             <strong>
               ${moodData[emotion].emoji}
               ${moodData[emotion].title}
@@ -1673,7 +1364,6 @@ async function displayInsights() {
             <span>
               ${counts[emotion]}
             </span>
-
           `;
 
 
@@ -1684,74 +1374,61 @@ async function displayInsights() {
         }
       );
 
-    }
+
+    const pageViews =
+      events.filter(
+        function(event) {
+
+          return (
+            event.event_type ===
+            "page_view"
+          );
+
+        }
+      );
 
 
-    if (historyList) {
+    historyList.innerHTML = "";
+
+
+    if (
+      pageViews.length === 0
+    ) {
 
       historyList.innerHTML =
-        "";
+        "<p>No visitor activity yet.</p>";
 
+    } else {
 
-      const pageViews =
-        events.filter(
+      pageViews
+        .slice()
+        .reverse()
+        .slice(0, 20)
+        .forEach(
           function(event) {
 
-            return (
-              event.event_type ===
-              "page_view"
+            const row =
+              document.createElement(
+                "div"
+              );
+
+
+            row.className =
+              "usage-history-row";
+
+
+            row.textContent =
+              new Date(
+                event.created_at
+              ).toLocaleString();
+
+
+            historyList.appendChild(
+              row
             );
 
           }
         );
-
-
-      if (
-        pageViews.length === 0
-      ) {
-
-        historyList.innerHTML =
-          "<p>No visitor activity yet.</p>";
-
-      } else {
-
-        pageViews
-          .slice()
-          .reverse()
-          .slice(0, 20)
-          .forEach(
-            function(event) {
-
-              const row =
-                document.createElement(
-                  "div"
-                );
-
-
-              row.className =
-                "usage-history-row";
-
-
-              const date =
-                event.created_at
-                  ? new Date(
-                      event.created_at
-                    ).toLocaleString()
-                  : "Unknown date";
-
-
-              row.textContent =
-                date;
-
-
-              historyList.appendChild(
-                row
-              );
-
-            }
-          );
-
-      }
 
     }
 
@@ -1761,14 +1438,6 @@ async function displayInsights() {
       "Could not load insights:",
       error
     );
-
-
-    if (totalUses) {
-
-      totalUses.textContent =
-        "—";
-
-    }
 
   }
 
@@ -1802,13 +1471,6 @@ document.addEventListener(
                   .toLowerCase();
 
 
-              if (
-                !moodData[emotion]
-              ) {
-                return;
-              }
-
-
               trackSoundSpaceEvent(
                 "emotion_selected",
                 emotion
@@ -1826,7 +1488,7 @@ document.addEventListener(
       );
 
 
-    /* NAVIGATION */
+    /* HOME */
 
     document
       .getElementById(
@@ -1834,9 +1496,17 @@ document.addEventListener(
       )
       ?.addEventListener(
         "click",
-        showHomePage
+        function() {
+
+          showPage(
+            "home-page"
+          );
+
+        }
       );
 
+
+    /* WHY IT WORKS */
 
     document
       .getElementById(
@@ -1844,9 +1514,17 @@ document.addEventListener(
       )
       ?.addEventListener(
         "click",
-        showWhyPage
+        function() {
+
+          showPage(
+            "why-page"
+          );
+
+        }
       );
 
+
+    /* ABOUT */
 
     document
       .getElementById(
@@ -1854,9 +1532,17 @@ document.addEventListener(
       )
       ?.addEventListener(
         "click",
-        showAboutPage
+        function() {
+
+          showPage(
+            "about-page"
+          );
+
+        }
       );
 
+
+    /* FEEDBACK */
 
     document
       .getElementById(
@@ -1864,9 +1550,17 @@ document.addEventListener(
       )
       ?.addEventListener(
         "click",
-        showFeedbackPage
+        function() {
+
+          showPage(
+            "feedback-page"
+          );
+
+        }
       );
 
+
+    /* INSIGHTS */
 
     document
       .getElementById(
@@ -1876,7 +1570,9 @@ document.addEventListener(
         "click",
         function() {
 
-          showInsightsPage();
+          showPage(
+            "insights-page"
+          );
 
           displayInsights();
 
@@ -1892,7 +1588,13 @@ document.addEventListener(
       )
       ?.addEventListener(
         "click",
-        showHomePage
+        function() {
+
+          showPage(
+            "home-page"
+          );
+
+        }
       );
 
 
@@ -1908,17 +1610,7 @@ document.addEventListener(
       );
 
 
-    /* QUEUE BUTTONS */
-
-    document
-      .getElementById(
-        "previous-song"
-      )
-      ?.addEventListener(
-        "click",
-        previousSong
-      );
-
+    /* QUEUE CONTROLS */
 
     document
       .getElementById(
@@ -1932,11 +1624,21 @@ document.addEventListener(
 
     document
       .getElementById(
+        "previous-song"
+      )
+      ?.addEventListener(
+        "click",
+        previousSong
+      );
+
+
+    document
+      .getElementById(
         "shuffle-button"
       )
       ?.addEventListener(
         "click",
-        shuffleQueue
+        shuffleSong
       );
 
 
@@ -1954,16 +1656,6 @@ document.addEventListener(
 
     document
       .getElementById(
-        "player-previous"
-      )
-      ?.addEventListener(
-        "click",
-        previousSong
-      );
-
-
-    document
-      .getElementById(
         "player-next"
       )
       ?.addEventListener(
@@ -1972,9 +1664,19 @@ document.addEventListener(
       );
 
 
+    document
+      .getElementById(
+        "player-previous"
+      )
+      ?.addEventListener(
+        "click",
+        previousSong
+      );
+
+
     /* FEEDBACK */
 
-    setupFeedbackForm();
+    setupFeedback();
 
 
     /* TRACK VISIT */
@@ -1989,9 +1691,7 @@ document.addEventListener(
 
 
     console.log(
-      IS_DEVELOPER
-        ? "SoundSpace loaded — Developer Mode ON"
-        : "SoundSpace loaded successfully"
+      "SoundSpace loaded successfully!"
     );
 
   }
