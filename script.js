@@ -667,12 +667,44 @@ let currentEmotion = null;
 
 let currentSong = null;
 
-
 /* =========================================
-   NAVIGATION
+   PAGE NAVIGATION
    ========================================= */
 
-function setActiveNav(activeId) {
+function showPage(page) {
+
+    const pages = [
+        "home-page",
+        "emotion-page",
+        "why-page",
+        "about-page",
+        "feedback-page",
+        "insights-page"
+    ];
+
+    pages.forEach(function(id) {
+
+        const element = document.getElementById(id);
+
+        if (element) {
+            element.style.display = "none";
+        }
+
+    });
+
+
+    const selectedPage =
+        document.getElementById(page + "-page");
+
+
+    if (selectedPage) {
+
+        selectedPage.style.display = "block";
+
+    }
+
+
+    /* Update navigation buttons */
 
     document
         .querySelectorAll(".nav-btn")
@@ -682,87 +714,14 @@ function setActiveNav(activeId) {
 
         });
 
-    const activeButton =
-        document.getElementById(activeId);
 
-    if (activeButton) {
-
-        activeButton.classList.add("active");
-
-    }
-
-}
+    const navButton =
+        document.getElementById(page + "-nav");
 
 
-/* =========================================
-   PAGE NAVIGATION
-   ========================================= */
+    if (navButton) {
 
-function showPage(page) {
-
-    const pages = {
-
-        home:
-            document.getElementById("home-page"),
-
-        emotion:
-            document.getElementById("emotion-page"),
-
-        why:
-            document.getElementById("why-page"),
-
-        about:
-            document.getElementById("about-page"),
-
-        feedback:
-            document.getElementById("feedback-page"),
-
-        insights:
-            document.getElementById("insights-page")
-
-    };
-
-
-    Object.values(pages).forEach(
-        function(section) {
-
-            if (section) {
-
-                section.style.display = "none";
-
-            }
-
-        }
-    );
-
-
-    if (pages[page]) {
-
-        pages[page].style.display = "block";
-
-    }
-
-
-    const navMap = {
-
-        home: "home-nav",
-
-        why: "why-nav",
-
-        about: "about-nav",
-
-        feedback: "feedback-nav",
-
-        insights: "insights-nav"
-
-    };
-
-
-    if (navMap[page]) {
-
-        setActiveNav(
-            navMap[page]
-        );
+        navButton.classList.add("active");
 
     }
 
@@ -776,6 +735,8 @@ function showPage(page) {
     });
 
 
+    /* Load insights when opened */
+
     if (page === "insights") {
 
         loadInsights();
@@ -786,12 +747,28 @@ function showPage(page) {
 
 
 /* =========================================
-   NAV BUTTONS
+   NAVIGATION BUTTONS
    ========================================= */
 
-document
-    .getElementById("home-nav")
-    .addEventListener(
+const homeNav =
+    document.getElementById("home-nav");
+
+const whyNav =
+    document.getElementById("why-nav");
+
+const aboutNav =
+    document.getElementById("about-nav");
+
+const feedbackNav =
+    document.getElementById("feedback-nav");
+
+const insightsNav =
+    document.getElementById("insights-nav");
+
+
+if (homeNav) {
+
+    homeNav.addEventListener(
         "click",
         function() {
 
@@ -800,10 +777,12 @@ document
         }
     );
 
+}
 
-document
-    .getElementById("why-nav")
-    .addEventListener(
+
+if (whyNav) {
+
+    whyNav.addEventListener(
         "click",
         function() {
 
@@ -812,10 +791,12 @@ document
         }
     );
 
+}
 
-document
-    .getElementById("about-nav")
-    .addEventListener(
+
+if (aboutNav) {
+
+    aboutNav.addEventListener(
         "click",
         function() {
 
@@ -824,10 +805,12 @@ document
         }
     );
 
+}
 
-document
-    .getElementById("feedback-nav")
-    .addEventListener(
+
+if (feedbackNav) {
+
+    feedbackNav.addEventListener(
         "click",
         function() {
 
@@ -836,10 +819,12 @@ document
         }
     );
 
+}
 
-document
-    .getElementById("insights-nav")
-    .addEventListener(
+
+if (insightsNav) {
+
+    insightsNav.addEventListener(
         "click",
         function() {
 
@@ -848,14 +833,19 @@ document
         }
     );
 
+}
+
 
 /* =========================================
    BACK BUTTONS
    ========================================= */
 
-document
-    .getElementById("back-button")
-    .addEventListener(
+const backButton =
+    document.getElementById("back-button");
+
+if (backButton) {
+
+    backButton.addEventListener(
         "click",
         function() {
 
@@ -864,6 +854,27 @@ document
         }
     );
 
+}
+
+
+const insightsBackButton =
+    document.getElementById(
+        "insights-back-button"
+    );
+
+if (insightsBackButton) {
+
+    insightsBackButton.addEventListener(
+        "click",
+        function() {
+
+            showPage("home");
+
+        }
+    );
+
+}
+
 
 /* =========================================
    EMOTION CARDS
@@ -871,22 +882,20 @@ document
 
 document
     .querySelectorAll(".emotion-card")
-    .forEach(
-        function(card) {
+    .forEach(function(card) {
 
-            card.addEventListener(
-                "click",
-                function() {
+        card.addEventListener(
+            "click",
+            function() {
 
-                    showEmotion(
-                        card.dataset.emotion
-                    );
+                showEmotion(
+                    card.dataset.emotion
+                );
 
-                }
-            );
+            }
+        );
 
-        }
-    );
+    });
 
 
 /* =========================================
