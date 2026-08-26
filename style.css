@@ -1,11 +1,11 @@
 /* =========================================================
-   SOUNDSPACE — NATURAL / HUMAN-DESIGNED STYLE
-   Music for How You Feel
+   SOUNDSPACE — RESPONSIVE STYLE
+   Natural • Clean • Human-designed • All Devices
    ========================================================= */
 
 
 /* =========================================================
-   1. GLOBAL
+   1. RESET
    ========================================================= */
 
 * {
@@ -23,19 +23,24 @@ body {
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
+    Roboto,
+    Helvetica,
     Arial,
     sans-serif;
 
-  background: #f7f4ef;
-  color: #27252b;
+  background: #f7f5f0;
+  color: #242424;
   line-height: 1.6;
+
   min-height: 100vh;
+
+  overflow-x: hidden;
 }
 
 button,
 input,
-textarea,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -61,11 +66,11 @@ a {
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 7%;
+  padding: 16px clamp(20px, 5vw, 70px);
 
-  background: rgba(247, 244, 239, 0.96);
+  background: rgba(247, 245, 240, 0.96);
 
-  border-bottom: 1px solid #e5dfd6;
+  border-bottom: 1px solid #e4e0d8;
 
   position: sticky;
   top: 0;
@@ -76,62 +81,57 @@ a {
 
 .logo {
   border: none;
-  background: transparent;
+  background: none;
 
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   font-weight: 800;
 
-  letter-spacing: -0.04em;
+  color: #252525;
 
-  color: #292630;
+  white-space: nowrap;
 }
 
 .logo span {
-  color: #7566a8;
+  color: #657d68;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: clamp(12px, 2vw, 28px);
 }
 
-.nav-links button,
-.footer-links button {
+.nav-links button {
   border: none;
   background: transparent;
 
-  color: #625d67;
+  color: #555;
 
-  padding: 9px 13px;
-
-  border-radius: 8px;
-
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 600;
 
+  padding: 8px 4px;
+
   transition:
-    background 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.nav-links button:hover,
-.footer-links button:hover {
-  background: #ece7df;
-  color: #302b38;
+.nav-links button:hover {
+  color: #657d68;
+  transform: translateY(-1px);
 }
 
 
 /* =========================================================
-   3. PAGES
+   3. PAGE SYSTEM
    ========================================================= */
 
 .page {
   display: none;
 
+  width: 100%;
   min-height: calc(100vh - 76px);
-
-  padding: 80px 7%;
 }
 
 .page.active-page {
@@ -140,114 +140,126 @@ a {
 
 
 /* =========================================================
-   4. HOME / HERO
+   4. GENERAL CONTAINERS
    ========================================================= */
 
-.hero {
-  max-width: 1180px;
-  margin: 0 auto;
-
-  padding-top: 45px;
+.hero,
+.page-hero,
+.emotion-page-hero,
+.songs-section {
+  width: min(1180px, calc(100% - 40px));
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.hero {
+  padding: clamp(55px, 9vw, 110px) 0 80px;
+}
+
+.page-hero {
+  padding: clamp(55px, 8vw, 100px) 0 55px;
+}
+
+
+/* =========================================================
+   5. HOME HERO
+   ========================================================= */
+
 .eyebrow {
-  color: #8a7b9d;
+  color: #657d68;
 
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 800;
 
   letter-spacing: 0.16em;
 
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
-.hero h1 {
-  max-width: 750px;
+.hero h1,
+.page-hero h1 {
+  max-width: 800px;
 
-  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-size: clamp(2.6rem, 7vw, 5.8rem);
 
   line-height: 0.98;
 
-  letter-spacing: -0.065em;
+  letter-spacing: -0.055em;
 
   font-weight: 800;
 
-  color: #292630;
-
-  margin-bottom: 28px;
+  color: #262626;
 }
 
-.hero h1 span {
-  display: block;
-
-  color: #7566a8;
-
-  font-weight: 700;
+.hero h1 span,
+.page-hero h1 span {
+  color: #657d68;
 }
 
-.intro {
-  max-width: 650px;
+.intro,
+.page-hero p {
+  max-width: 680px;
 
-  color: #6d6871;
+  margin-top: 25px;
 
-  font-size: 1.08rem;
+  color: #686868;
 
-  line-height: 1.8;
+  font-size: clamp(1rem, 1.7vw, 1.15rem);
+
+  line-height: 1.75;
 }
 
 
 /* =========================================================
-   5. EMOTION GRID
+   6. EMOTION GRID
    ========================================================= */
 
 .emotion-grid {
+  margin-top: 55px;
+
   display: grid;
 
   grid-template-columns:
-    repeat(5, minmax(0, 1fr));
+    repeat(3, minmax(0, 1fr));
 
-  gap: 14px;
-
-  margin-top: 55px;
+  gap: 20px;
 }
 
-
-/* =========================================================
-   6. EMOTION CARDS
-   ========================================================= */
-
 .emotion-card {
-  min-height: 255px;
+  min-width: 0;
 
   text-align: left;
 
-  padding: 25px 21px;
+  border: 1px solid #e1ddd5;
 
   border-radius: 18px;
 
+  padding: 28px;
+
   background: #fffdf9;
 
-  border: 1px solid #e5ded5;
+  color: #252525;
 
   box-shadow:
-    0 4px 15px rgba(50, 43, 38, 0.045);
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: flex-start;
+    0 8px 25px rgba(50, 45, 35, 0.05);
 
   transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    border-color 0.22s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  position: relative;
+
+  overflow: hidden;
 }
 
 .emotion-card:hover {
   transform: translateY(-5px);
 
   box-shadow:
-    0 12px 28px rgba(50, 43, 38, 0.09);
+    0 15px 35px rgba(50, 45, 35, 0.09);
+
+  border-color: #b9c4b8;
 }
 
 .emotion-card:active {
@@ -255,253 +267,161 @@ a {
 }
 
 .emotion-card .emoji {
-  width: 52px;
-  height: 52px;
+  font-size: 2.2rem;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 14px;
-
-  font-size: 1.7rem;
-
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .emotion-card h2 {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
 
-  color: #302d34;
-
-  margin-bottom: 7px;
-
-  letter-spacing: -0.02em;
+  margin-bottom: 8px;
 }
 
 .emotion-card p {
-  color: #77717a;
+  color: #777;
 
-  font-size: 0.88rem;
+  font-size: 0.95rem;
 
-  line-height: 1.5;
-
-  margin-bottom: auto;
+  margin-bottom: 20px;
 }
 
 .emotion-card > span:last-child {
-  margin-top: 25px;
-
-  color: #6f619d;
-
-  font-size: 0.83rem;
+  color: #657d68;
 
   font-weight: 700;
+
+  font-size: 0.9rem;
 }
 
 
-/* Individual emotion accents */
+/* Subtle natural variation */
 
-.happiness {
-  border-top: 4px solid #e6b85c;
+.emotion-card.happiness {
+  background: #fffdf6;
 }
 
-.happiness .emoji {
-  background: #fbf0d4;
+.emotion-card.sadness {
+  background: #f8fafb;
 }
 
-.sadness {
-  border-top: 4px solid #7898bd;
+.emotion-card.anger {
+  background: #fff9f7;
 }
 
-.sadness .emoji {
-  background: #e3edf7;
+.emotion-card.anxiety {
+  background: #f8faf7;
 }
 
-.anger {
-  border-top: 4px solid #c96d69;
-}
-
-.anger .emoji {
-  background: #f7e1df;
-}
-
-.anxiety {
-  border-top: 4px solid #8b9e91;
-}
-
-.anxiety .emoji {
-  background: #e6eee9;
-}
-
-.irritation {
-  border-top: 4px solid #9a82ad;
-}
-
-.irritation .emoji {
-  background: #eee6f2;
+.emotion-card.irritation {
+  background: #faf9f5;
 }
 
 
 /* =========================================================
-   7. PAGE HERO
-   ========================================================= */
-
-.page-hero {
-  max-width: 850px;
-
-  margin: 0 auto 65px;
-
-  text-align: center;
-}
-
-.page-hero h1 {
-  font-size: clamp(2.7rem, 6vw, 5rem);
-
-  line-height: 1;
-
-  letter-spacing: -0.055em;
-
-  color: #2b2730;
-
-  margin-bottom: 24px;
-}
-
-.page-hero h1 span {
-  color: #7566a8;
-}
-
-.page-hero p {
-  max-width: 680px;
-
-  margin: 0 auto;
-
-  color: #706b73;
-
-  font-size: 1.05rem;
-
-  line-height: 1.8;
-}
-
-
-/* =========================================================
-   8. STORY CARDS
+   7. ABOUT PAGE
    ========================================================= */
 
 .story-grid {
-  max-width: 1100px;
+  width: min(1180px, calc(100% - 40px));
 
   margin: 0 auto;
 
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(3, minmax(0, 1fr));
 
-  gap: 18px;
+  gap: 20px;
 }
 
 .story-card {
   background: #fffdf9;
 
-  border: 1px solid #e5ded5;
+  border: 1px solid #e2ded6;
 
-  border-radius: 16px;
+  border-radius: 18px;
 
   padding: 28px;
 
   box-shadow:
-    0 4px 14px rgba(50, 43, 38, 0.035);
+    0 7px 24px rgba(50, 45, 35, 0.04);
 }
 
 .story-card > span {
-  color: #9b8bb0;
+  display: block;
 
-  font-size: 0.8rem;
+  color: #8a8a80;
+
+  font-size: 0.78rem;
 
   font-weight: 800;
 
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+
+  margin-bottom: 18px;
 }
 
 .story-card h2 {
-  color: #332e37;
-
-  font-size: 1.25rem;
-
-  margin: 12px 0 10px;
-}
-
-.story-card p {
-  color: #716c73;
-
-  font-size: 0.94rem;
-
-  line-height: 1.7;
-}
-
-
-/* =========================================================
-   9. FEATURES
-   ========================================================= */
-
-.feature-row {
-  max-width: 1050px;
-
-  margin: 55px auto 0;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 35px;
-
-  text-align: center;
-}
-
-.feature-icon {
-  width: 54px;
-  height: 54px;
-
-  margin: 0 auto 15px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background: #ece7f1;
+  margin-bottom: 12px;
 
   font-size: 1.35rem;
 }
 
-.feature-row h3 {
-  color: #37323a;
+.story-card p {
+  color: #707070;
 
+  font-size: 0.95rem;
+}
+
+.feature-row {
+  width: min(1180px, calc(100% - 40px));
+
+  margin: 55px auto 90px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 30px;
+}
+
+.feature-row > div {
+  padding: 10px 0;
+}
+
+.feature-icon {
+  font-size: 1.8rem;
+
+  margin-bottom: 12px;
+}
+
+.feature-row h3 {
   margin-bottom: 8px;
 }
 
 .feature-row p {
-  color: #777179;
+  color: #707070;
 
-  font-size: 0.9rem;
-
-  max-width: 280px;
-
-  margin: 0 auto;
+  font-size: 0.95rem;
 }
 
 
 /* =========================================================
-   10. HOW IT WORKS
+   8. HOW IT WORKS
    ========================================================= */
 
 .process {
-  max-width: 850px;
+  width: min(950px, calc(100% - 40px));
 
-  margin: 0 auto;
+  margin: 0 auto 100px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
 }
 
 .process-step {
@@ -509,97 +429,74 @@ a {
 
   grid-template-columns: 80px 1fr;
 
-  gap: 28px;
+  gap: 25px;
 
-  padding: 28px 0;
+  padding: 30px;
 
-  border-bottom: 1px solid #e2dcd4;
-}
+  background: #fffdf9;
 
-.process-step:last-child {
-  border-bottom: none;
+  border: 1px solid #e2ded6;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 7px 24px rgba(50, 45, 35, 0.04);
 }
 
 .step-number {
-  font-size: 1rem;
+  color: #657d68;
+
+  font-size: 1.2rem;
 
   font-weight: 800;
-
-  color: #9687a7;
-
-  padding-top: 4px;
 }
 
 .step-icon {
-  font-size: 1.4rem;
+  font-size: 1.7rem;
 
   margin-bottom: 8px;
 }
 
 .step-content h2 {
-  color: #302c34;
-
-  font-size: 1.35rem;
-
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
 .step-content p {
-  color: #716c73;
-
-  line-height: 1.7;
-
-  max-width: 650px;
+  color: #707070;
 }
 
 
 /* =========================================================
-   11. BACK BUTTONS
+   9. EMOTION PAGE
    ========================================================= */
+
+.emotion-page-hero {
+  padding-top: 45px;
+  padding-bottom: 40px;
+}
 
 .back-button {
   border: none;
 
-  background: #ebe6de;
+  background: transparent;
 
-  color: #5f5864;
-
-  border-radius: 9px;
-
-  padding: 10px 15px;
-
-  font-size: 0.87rem;
+  color: #657d68;
 
   font-weight: 700;
 
+  padding: 8px 0;
+
+  margin-bottom: 35px;
+
   transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
 .back-button:hover {
-  background: #e1dbd1;
+  color: #4f6652;
 
-  transform: translateX(-2px);
-}
-
-
-/* =========================================================
-   12. EMOTION PAGE
-   ========================================================= */
-
-.emotion-page-hero {
-  max-width: 1050px;
-
-  margin: 0 auto;
-
-  text-align: center;
-}
-
-.emotion-page-hero .back-button {
-  display: block;
-
-  margin: 0 auto 35px;
+  transform: translateX(-3px);
 }
 
 .large-emoji {
@@ -609,19 +506,15 @@ a {
 }
 
 .emotion-page-hero h1 {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(2.3rem, 6vw, 4.5rem);
 
-  letter-spacing: -0.05em;
+  line-height: 1;
 
-  color: #2e2932;
-
-  margin-bottom: 15px;
+  letter-spacing: -0.045em;
 }
 
 .songs-section {
-  max-width: 1050px;
-
-  margin: 65px auto 0;
+  padding-bottom: 90px;
 }
 
 .songs-heading {
@@ -629,18 +522,18 @@ a {
 }
 
 .songs-heading h2 {
-  font-size: 1.8rem;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
 
-  color: #312d35;
+  letter-spacing: -0.03em;
 }
 
-.songs-heading h2 span {
-  color: #7566a8;
+.songs-heading span {
+  color: #657d68;
 }
 
 
 /* =========================================================
-   13. SONG CARDS
+   10. SONG CARDS
    ========================================================= */
 
 #song-list {
@@ -657,47 +550,50 @@ a {
   display: grid;
 
   grid-template-columns:
-    45px 1fr 30px;
-
-  gap: 18px;
+    55px minmax(0, 1fr) 30px;
 
   align-items: center;
 
+  gap: 18px;
+
   text-align: left;
 
-  background: #fffdf9;
+  border: 1px solid #e2ded6;
 
-  border: 1px solid #e5ded5;
-
-  border-radius: 13px;
+  border-radius: 15px;
 
   padding: 18px 20px;
 
-  color: #2f2b32;
+  background: #fffdf9;
+
+  color: #252525;
 
   transition:
+    transform 0.2s ease,
     border-color 0.2s ease,
-    background 0.2s ease,
-    transform 0.2s ease;
+    box-shadow 0.2s ease;
 }
 
 .song-card:hover {
-  background: #faf7f1;
-
-  border-color: #cfc4d8;
-
   transform: translateX(3px);
+
+  border-color: #b9c4b8;
+
+  box-shadow:
+    0 6px 18px rgba(50, 45, 35, 0.05);
 }
 
 .song-number {
-  color: #a294af;
+  color: #8a8a80;
+
+  font-size: 0.85rem;
 
   font-weight: 800;
-
-  font-size: 0.8rem;
 }
 
 .song-details {
+  min-width: 0;
+
   display: flex;
 
   flex-direction: column;
@@ -706,19 +602,19 @@ a {
 .song-details strong {
   font-size: 1rem;
 
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .song-details small {
-  color: #817a82;
+  color: #777;
 
-  font-size: 0.83rem;
-
-  margin-bottom: 7px;
+  font-size: 0.85rem;
 }
 
 .song-why {
-  color: #777079;
+  margin-top: 9px;
+
+  color: #777;
 
   font-size: 0.82rem;
 
@@ -726,75 +622,74 @@ a {
 }
 
 .song-why b {
-  color: #77689c;
+  color: #657d68;
 }
 
 .song-arrow {
-  color: #77689c;
+  color: #657d68;
 
-  font-size: 1.1rem;
+  font-size: 1.25rem;
 
   font-weight: 700;
 }
 
 
 /* =========================================================
-   14. PLAYER
+   11. PLAYER
    ========================================================= */
 
 .player-layout {
-  max-width: 1100px;
+  width: min(1180px, calc(100% - 40px));
 
   margin: 0 auto;
+
+  padding: 55px 0 90px;
 
   display: grid;
 
   grid-template-columns:
-    1.35fr 0.8fr;
+    minmax(0, 1.35fr)
+    minmax(280px, 0.65fr);
 
   gap: 25px;
+
+  align-items: start;
 }
 
 .now-playing-panel,
 .queue-panel {
   background: #fffdf9;
 
-  border: 1px solid #e5ded5;
+  border: 1px solid #e2ded6;
 
-  border-radius: 18px;
+  border-radius: 20px;
 
-  padding: 32px;
+  padding: clamp(25px, 4vw, 45px);
 
   box-shadow:
-    0 5px 18px rgba(50, 43, 38, 0.04);
-}
-
-.now-playing-panel .back-button {
-  margin-bottom: 35px;
+    0 8px 28px rgba(50, 45, 35, 0.05);
 }
 
 .player-emoji {
   font-size: 4rem;
 
-  margin-bottom: 18px;
+  margin: 20px 0;
 }
 
-#player-title {
-  font-size: clamp(2rem, 4vw, 3.4rem);
+.player-layout h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
 
   line-height: 1.05;
 
   letter-spacing: -0.045em;
 
-  color: #2c2830;
-
-  margin-bottom: 7px;
+  overflow-wrap: anywhere;
 }
 
 .player-artist {
-  color: #7b747d;
+  color: #777;
 
-  font-size: 0.94rem;
+  margin-top: 8px;
 }
 
 .shuffle-status {
@@ -806,15 +701,15 @@ a {
 
   margin-top: 20px;
 
-  padding: 7px 11px;
+  padding: 8px 12px;
 
-  border-radius: 8px;
+  border-radius: 20px;
 
-  background: #f0ece6;
+  background: #f0eee8;
 
-  color: #716975;
+  color: #657d68;
 
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 
   font-weight: 700;
 }
@@ -824,353 +719,339 @@ a {
 
   padding: 20px;
 
-  background: #f4f0f5;
+  border-left: 3px solid #a9b7a9;
 
-  border-left: 3px solid #8c7ba4;
+  background: #f5f3ed;
 
-  border-radius: 8px;
+  border-radius: 0 12px 12px 0;
 }
 
 .player-reason h3 {
-  font-size: 0.9rem;
-
-  color: #5f5273;
-
   margin-bottom: 7px;
+
+  font-size: 0.95rem;
 }
 
 .player-reason p {
-  color: #6e6870;
+  color: #686868;
 
-  font-size: 0.88rem;
-
-  line-height: 1.65;
+  font-size: 0.92rem;
 }
 
 .player-actions {
   display: flex;
 
-  gap: 10px;
+  flex-wrap: wrap;
 
-  margin-top: 25px;
+  gap: 12px;
+
+  margin-top: 28px;
 }
 
 .listen-button-large,
 .next-song-button {
-  border-radius: 9px;
+  min-height: 48px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 10px;
 
   padding: 12px 18px;
 
   font-weight: 700;
-
-  font-size: 0.88rem;
 }
 
 .listen-button-large {
-  background: #7566a8;
+  background: #657d68;
 
   color: white;
 
-  border: 1px solid #7566a8;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .listen-button-large:hover {
-  background: #675895;
+  background: #536956;
+
+  transform: translateY(-2px);
 }
 
 .next-song-button {
-  background: #ebe6de;
+  border: 1px solid #d7d3cb;
 
-  color: #514b55;
+  background: #f8f6f1;
 
-  border: 1px solid #ddd5ca;
-}
-
-.next-song-button:hover {
-  background: #e1dbd2;
+  color: #333;
 }
 
 .reshuffle-button {
   width: 100%;
 
-  margin-top: 12px;
+  margin-top: 14px;
 
-  padding: 11px;
+  padding: 12px;
 
-  border-radius: 9px;
+  border: 1px solid #d7d3cb;
+
+  border-radius: 10px;
 
   background: transparent;
 
-  border: 1px solid #ddd5ca;
-
-  color: #706977;
+  color: #657d68;
 
   font-weight: 700;
-
-  font-size: 0.85rem;
 }
-
-.reshuffle-button:hover {
-  background: #f0ece6;
-}
-
-
-/* =========================================================
-   15. QUEUE
-   ========================================================= */
 
 .queue-panel h2 {
-  font-size: 1.3rem;
-
-  color: #322e36;
-
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 #queue-list {
+  margin-top: 25px;
+
   display: flex;
 
   flex-direction: column;
 
-  gap: 6px;
-
-  margin-top: 25px;
-
-  max-height: 500px;
-
-  overflow-y: auto;
+  gap: 7px;
 }
 
 .queue-item {
   width: 100%;
 
-  display: flex;
+  display: grid;
 
-  align-items: center;
+  grid-template-columns: 35px minmax(0, 1fr);
 
-  gap: 13px;
-
-  padding: 11px;
-
-  border-radius: 9px;
-
-  border: 1px solid transparent;
-
-  background: transparent;
+  gap: 10px;
 
   text-align: left;
 
-  color: #37323a;
+  padding: 12px;
+
+  border: 1px solid transparent;
+
+  border-radius: 10px;
+
+  background: #f6f4ef;
 }
 
 .queue-item:hover {
-  background: #f3efe9;
+  border-color: #c6d0c5;
 }
 
 .queue-item.current-song {
-  background: #eee9f2;
+  background: #e9eee8;
 
-  border-color: #d8ccdf;
+  border-color: #b8c6b7;
 }
 
 .queue-number {
-  color: #9a8da3;
+  color: #888;
 
-  font-size: 0.75rem;
+  font-size: 0.78rem;
 
   font-weight: 800;
 }
 
 .queue-info {
+  min-width: 0;
+
   display: flex;
 
   flex-direction: column;
 }
 
-.queue-info strong {
-  font-size: 0.84rem;
+.queue-info strong,
+.queue-info small {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
 }
 
 .queue-info small {
-  color: #827b83;
+  color: #777;
 
-  font-size: 0.75rem;
+  font-size: 0.78rem;
 }
 
 
 /* =========================================================
-   16. FEEDBACK
+   12. FEEDBACK
    ========================================================= */
 
 .feedback-form {
-  max-width: 720px;
+  width: min(720px, calc(100% - 40px));
 
-  margin: 0 auto;
+  margin: 0 auto 100px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+
+  padding: clamp(25px, 5vw, 45px);
 
   background: #fffdf9;
 
-  border: 1px solid #e5ded5;
+  border: 1px solid #e2ded6;
 
-  border-radius: 18px;
-
-  padding: 35px;
+  border-radius: 20px;
 
   box-shadow:
-    0 5px 18px rgba(50, 43, 38, 0.04);
+    0 8px 28px rgba(50, 45, 35, 0.05);
 }
 
 .feedback-form > label,
 .feedback-question {
-  display: block;
+  display: flex;
 
-  margin-bottom: 24px;
+  flex-direction: column;
 
-  color: #49434d;
+  gap: 8px;
 
-  font-weight: 650;
+  color: #444;
 
-  font-size: 0.9rem;
+  font-weight: 600;
 }
 
-.feedback-form input[type="text"],
+.feedback-form input,
 .feedback-form select,
 .feedback-form textarea {
   width: 100%;
 
-  margin-top: 8px;
+  border: 1px solid #d9d5cc;
 
-  padding: 12px 13px;
+  border-radius: 10px;
 
-  background: #faf7f1;
+  padding: 13px 14px;
 
-  border: 1px solid #ddd6cc;
+  background: #fbfaf6;
 
-  border-radius: 8px;
-
-  color: #38333b;
+  color: #252525;
 
   outline: none;
-}
 
-.feedback-form input[type="text"]:focus,
-.feedback-form select:focus,
-.feedback-form textarea:focus {
-  border-color: #9b8bb0;
-
-  box-shadow:
-    0 0 0 3px rgba(117, 102, 168, 0.08);
-}
-
-.feedback-form textarea {
   resize: vertical;
 }
 
-.feedback-question p {
-  margin-bottom: 10px;
+.feedback-form input:focus,
+.feedback-form select:focus,
+.feedback-form textarea:focus {
+  border-color: #879c89;
+
+  box-shadow:
+    0 0 0 3px rgba(101, 125, 104, 0.1);
 }
 
 .feedback-question label {
-  display: inline-flex;
+  display: flex;
+
+  flex-direction: row;
 
   align-items: center;
 
-  gap: 7px;
+  gap: 8px;
 
-  margin-right: 20px;
+  font-weight: 400;
+}
 
-  color: #6e6870;
-
-  font-weight: 500;
+.feedback-question input {
+  width: auto;
 }
 
 .submit-feedback {
   border: none;
 
-  background: #7566a8;
+  border-radius: 10px;
+
+  padding: 14px 20px;
+
+  background: #657d68;
 
   color: white;
 
-  padding: 12px 20px;
-
-  border-radius: 9px;
-
   font-weight: 700;
 
-  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .submit-feedback:hover {
-  background: #675895;
+  background: #536956;
+
+  transform: translateY(-2px);
 }
 
 #feedback-success {
-  margin-top: 15px;
+  padding: 12px;
 
-  color: #587a64;
+  border-radius: 10px;
 
-  font-size: 0.9rem;
+  background: #edf2eb;
 
-  font-weight: 650;
+  color: #4f6652;
 }
 
 
 /* =========================================================
-   17. INSIGHTS
+   13. INSIGHTS
    ========================================================= */
 
 .insights-container {
-  max-width: 1100px;
+  width: min(1180px, calc(100% - 40px));
 
-  margin: 0 auto;
+  margin: 0 auto 100px;
 
   display: grid;
 
   grid-template-columns:
-    repeat(2, 1fr);
+    repeat(2, minmax(0, 1fr));
 
-  gap: 18px;
+  gap: 20px;
 }
 
-.insights-container .story-card h2 {
-  margin-top: 0;
+.insights-container .story-card {
+  min-width: 0;
 }
 
 .date-row {
   display: flex;
 
-  justify-content: space-between;
-
   align-items: center;
 
-  gap: 20px;
+  justify-content: space-between;
+
+  gap: 15px;
 
   padding: 13px 0;
 
-  border-bottom: 1px solid #e7e0d8;
-
-  color: #514b54;
+  border-bottom: 1px solid #e6e2da;
 }
 
 .date-row:last-child {
   border-bottom: none;
 }
 
-.date-row p {
-  margin-top: 3px;
-}
-
 .empty-insights {
-  color: #8a838a;
+  color: #888;
 
-  font-size: 0.88rem;
-
-  padding: 10px 0;
+  font-size: 0.9rem;
 }
 
 .feedback-result {
-  padding: 15px 0;
+  padding: 16px 0;
 
-  border-bottom: 1px solid #e7e0d8;
+  border-bottom: 1px solid #e6e2da;
 }
 
 .feedback-result:last-child {
@@ -1180,25 +1061,27 @@ a {
 .feedback-result-top {
   display: flex;
 
+  align-items: center;
+
   justify-content: space-between;
 
-  gap: 15px;
+  gap: 10px;
 
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .feedback-result-top span {
-  color: #7566a8;
+  color: #657d68;
 
-  font-size: 0.82rem;
+  font-size: 0.85rem;
 
   font-weight: 700;
 }
 
 .feedback-result p {
-  margin-top: 7px;
+  margin-top: 8px;
 
-  font-size: 0.86rem;
+  font-size: 0.9rem;
 }
 
 .feedback-result small {
@@ -1206,43 +1089,43 @@ a {
 
   margin-top: 10px;
 
-  color: #948d94;
+  color: #999;
 
-  font-size: 0.73rem;
+  font-size: 0.75rem;
 }
 
 
 /* =========================================================
-   18. FOOTER
+   14. FOOTER
    ========================================================= */
 
 footer {
-  border-top: 1px solid #e2dcd4;
-
-  background: #eee9e1;
-
-  padding: 45px 7%;
+  width: 100%;
 
   display: grid;
 
   grid-template-columns:
-    1fr 1fr 1fr;
+    1.2fr 1fr 1.2fr;
 
   gap: 30px;
 
-  color: #666069;
+  padding:
+    45px clamp(20px, 5vw, 70px);
+
+  background: #292d29;
+
+  color: #eeeeea;
 }
 
 .footer-brand strong {
-  color: #342f38;
-
-  font-size: 1.15rem;
+  font-size: 1.25rem;
 }
 
-.footer-brand p {
-  margin-top: 5px;
+.footer-brand p,
+.footer-credit p {
+  color: #b8bbb6;
 
-  font-size: 0.84rem;
+  font-size: 0.88rem;
 }
 
 .footer-links {
@@ -1250,90 +1133,83 @@ footer {
 
   flex-wrap: wrap;
 
-  gap: 5px;
+  gap: 12px 20px;
 
-  align-content: start;
+  align-content: flex-start;
 }
 
 .footer-links button {
-  padding: 5px 8px;
+  border: none;
 
-  font-size: 0.8rem;
+  background: transparent;
+
+  color: #d5d8d3;
+
+  padding: 0;
+
+  font-size: 0.9rem;
+}
+
+.footer-links button:hover {
+  color: white;
 }
 
 .footer-credit {
   text-align: right;
-
-  font-size: 0.78rem;
-
-  line-height: 1.6;
 }
 
 .footer-credit strong {
-  color: #4d4652;
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 0.85rem;
+
+  color: #dfe2dd;
 }
 
 
 /* =========================================================
-   19. SELECTION
+   15. TABLETS / iPADS
    ========================================================= */
 
-::selection {
-  background: #dcd2e5;
-  color: #332d39;
-}
-
-
-/* =========================================================
-   20. SCROLLBAR
-   ========================================================= */
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1ede7;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #c9c0cb;
-
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #afa3b5;
-}
-
-
-/* =========================================================
-   21. RESPONSIVE — TABLET
-   ========================================================= */
-
-@media (max-width: 950px) {
+@media (max-width: 900px) {
 
   .nav {
-    padding: 0 4%;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 
-  .page {
-    padding: 65px 5%;
+  .nav-links {
+    gap: 14px;
+  }
+
+  .nav-links button {
+    font-size: 0.88rem;
   }
 
   .emotion-grid {
     grid-template-columns:
-      repeat(2, 1fr);
+      repeat(2, minmax(0, 1fr));
   }
 
   .story-grid {
     grid-template-columns:
-      1fr;
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .feature-row {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
   .player-layout {
     grid-template-columns:
       1fr;
+  }
+
+  .queue-panel {
+    order: 2;
   }
 
   .insights-container {
@@ -1349,88 +1225,248 @@ footer {
   .footer-credit {
     text-align: left;
   }
-
 }
 
 
 /* =========================================================
-   22. RESPONSIVE — MOBILE
+   16. PHONES
    ========================================================= */
 
 @media (max-width: 650px) {
 
+  body {
+    font-size: 15px;
+  }
+
   .nav {
+    position: relative;
+
     min-height: auto;
 
-    padding: 15px 5%;
+    padding:
+      16px 18px;
+
+    align-items: flex-start;
 
     flex-direction: column;
 
-    gap: 12px;
+    gap: 13px;
   }
 
   .nav-links {
     width: 100%;
 
-    justify-content: center;
+    display: flex;
 
-    flex-wrap: wrap;
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding-bottom: 4px;
+
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
   }
 
   .nav-links button {
-    font-size: 0.78rem;
+    flex: 0 0 auto;
 
-    padding: 6px 8px;
+    white-space: nowrap;
+
+    font-size: 0.82rem;
+
+    padding: 6px 5px;
   }
 
-  .page {
-    padding: 50px 5%;
+  .hero,
+  .page-hero,
+  .emotion-page-hero,
+  .songs-section,
+  .story-grid,
+  .feature-row,
+  .process,
+  .feedback-form,
+  .insights-container,
+  .player-layout {
+    width: min(100% - 28px, 1180px);
   }
 
   .hero {
-    padding-top: 20px;
+    padding-top: 55px;
+
+    padding-bottom: 60px;
   }
 
-  .hero h1 {
-    font-size: 3.2rem;
+  .page-hero {
+    padding-top: 50px;
+
+    padding-bottom: 35px;
+  }
+
+  .hero h1,
+  .page-hero h1 {
+    font-size: clamp(2.5rem, 14vw, 4rem);
+
+    letter-spacing: -0.06em;
+  }
+
+  .intro,
+  .page-hero p {
+    font-size: 0.96rem;
+
+    line-height: 1.65;
   }
 
   .emotion-grid {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
 
-    margin-top: 35px;
+    gap: 12px;
+
+    margin-top: 38px;
   }
 
   .emotion-card {
-    min-height: 210px;
+    padding: 22px;
+
+    border-radius: 15px;
+  }
+
+  .emotion-card .emoji {
+    font-size: 1.9rem;
+
+    margin-bottom: 13px;
+  }
+
+  .emotion-card h2 {
+    font-size: 1.2rem;
+  }
+
+  .emotion-card p {
+    margin-bottom: 13px;
+  }
+
+  .story-grid,
+  .feature-row {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .story-card {
+    padding: 22px;
   }
 
   .feature-row {
-    grid-template-columns:
-      1fr;
+    margin-top: 35px;
 
-    gap: 30px;
+    margin-bottom: 65px;
+  }
+
+  .process {
+    margin-bottom: 65px;
+
+    gap: 12px;
   }
 
   .process-step {
-    grid-template-columns:
-      45px 1fr;
+    grid-template-columns: 45px 1fr;
 
-    gap: 15px;
+    gap: 12px;
+
+    padding: 22px;
+  }
+
+  .step-number {
+    font-size: 0.9rem;
+  }
+
+  .step-content h2 {
+    font-size: 1.15rem;
+  }
+
+  .emotion-page-hero {
+    padding-top: 30px;
+
+    padding-bottom: 30px;
+  }
+
+  .back-button {
+    margin-bottom: 22px;
+  }
+
+  .large-emoji {
+    font-size: 2.8rem;
+  }
+
+  .emotion-page-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .songs-section {
+    padding-bottom: 60px;
   }
 
   .song-card {
     grid-template-columns:
-      32px 1fr 20px;
+      32px minmax(0, 1fr) 20px;
 
     gap: 10px;
 
-    padding: 15px;
+    padding: 15px 12px;
+
+    border-radius: 12px;
+  }
+
+  .song-details strong {
+    font-size: 0.93rem;
+  }
+
+  .song-details small {
+    font-size: 0.78rem;
   }
 
   .song-why {
-    display: none;
+    font-size: 0.76rem;
+
+    line-height: 1.45;
+  }
+
+  .song-arrow {
+    font-size: 1rem;
+  }
+
+  .player-layout {
+    padding-top: 30px;
+
+    padding-bottom: 65px;
+
+    gap: 12px;
+  }
+
+  .now-playing-panel,
+  .queue-panel {
+    padding: 22px;
+
+    border-radius: 16px;
+  }
+
+  .player-emoji {
+    font-size: 3rem;
+
+    margin: 15px 0;
+  }
+
+  .player-layout h1 {
+    font-size: 2.2rem;
+  }
+
+  .player-reason {
+    padding: 16px;
+
+    margin-top: 22px;
   }
 
   .player-actions {
@@ -1440,23 +1476,162 @@ footer {
   .listen-button-large,
   .next-song-button {
     width: 100%;
-
-    text-align: center;
   }
 
   .feedback-form {
-    padding: 24px 20px;
+    margin-bottom: 65px;
+
+    padding: 22px;
+
+    border-radius: 16px;
+  }
+
+  .insights-container {
+    margin-bottom: 65px;
+
+    gap: 12px;
+  }
+
+  .date-row {
+    align-items: flex-start;
   }
 
   footer {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
 
-    padding: 35px 5%;
+    gap: 25px;
+
+    padding:
+      35px 20px;
   }
 
   .footer-credit {
     text-align: left;
+  }
+
+}
+
+
+/* =========================================================
+   17. VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .nav {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .logo {
+    font-size: 1.35rem;
+  }
+
+  .hero,
+  .page-hero,
+  .emotion-page-hero,
+  .songs-section,
+  .story-grid,
+  .feature-row,
+  .process,
+  .feedback-form,
+  .insights-container,
+  .player-layout {
+    width: calc(100% - 22px);
+  }
+
+  .hero h1,
+  .page-hero h1 {
+    font-size: 2.35rem;
+  }
+
+  .emotion-card {
+    padding: 18px;
+  }
+
+  .song-card {
+    grid-template-columns:
+      25px minmax(0, 1fr) 15px;
+
+    gap: 7px;
+  }
+
+  .song-why {
+    font-size: 0.72rem;
+  }
+
+  .player-layout h1 {
+    font-size: 1.9rem;
+  }
+
+}
+
+
+/* =========================================================
+   18. LANDSCAPE PHONES
+   ========================================================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+  .hero {
+    padding-top: 45px;
+  }
+
+  .emotion-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   19. LARGE DESKTOPS
+   ========================================================= */
+
+@media (min-width: 1400px) {
+
+  .hero,
+  .page-hero,
+  .emotion-page-hero,
+  .songs-section,
+  .story-grid,
+  .feature-row,
+  .insights-container,
+  .player-layout {
+    max-width: 1250px;
+  }
+
+}
+
+
+/* =========================================================
+   20. ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(101, 125, 104, 0.35);
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   21. REDUCE MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    transition: none !important;
   }
 
 }
