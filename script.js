@@ -1,1698 +1,2916 @@
-# SoundSpace `script.js`
+# SoundSpace — Natural, Enticing & Intriguing `style.css`
 
 
-/* =========================================================
-   SOUNDSPACE — COMPLETE WORKING VERSION
-   Matches your current index.html
-   ========================================================= */
+/* =========================================
+   SOUNDSPACE
+   NATURAL • ENTICING • INTRIGUING DESIGN
+   Matches the current index.html + script.js
+   ========================================= */
 
 
-/* =========================================================
-   SUPABASE
-   ========================================================= */
+/* =========================================
+   ROOT + RESET
+   ========================================= */
 
-const SUPABASE_URL =
-  "https://bjfmlknorxlztxkxlebd.supabase.co";
+:root {
 
-const SUPABASE_KEY =
-  "sb_publishable_NDHWFaIHfs6IqvmbZiHrCg_0H2ZXZbU";
+    --background:
+        #f4f1ea;
 
+    --background-deep:
+        #e8e3d8;
 
-/* =========================================================
-   DEVELOPER MODE
-   ========================================================= */
+    --surface:
+        rgba(255, 255, 255, 0.82);
 
-const DEVELOPER_MODE_KEY =
-  "soundspace_developer_mode";
+    --surface-solid:
+        #ffffff;
 
-const params =
-  new URLSearchParams(window.location.search);
+    --text:
+        #252a24;
 
-if (params.get("developer") === "on") {
+    --muted:
+        #70776d;
 
-  localStorage.setItem(
-    DEVELOPER_MODE_KEY,
-    "true"
-  );
+    --border:
+        rgba(77, 91, 73, 0.14);
 
-  window.history.replaceState(
-    {},
-    document.title,
-    window.location.pathname
-  );
+    --purple:
+        #7564a8;
 
-}
+    --purple-light:
+        #ebe6f5;
 
-if (params.get("developer") === "off") {
+    --sage:
+        #9caf88;
 
-  localStorage.removeItem(
-    DEVELOPER_MODE_KEY
-  );
+    --sage-light:
+        #e6eddf;
 
-  window.history.replaceState(
-    {},
-    document.title,
-    window.location.pathname
-  );
+    --gold:
+        #d5ad63;
 
-}
+    --blue:
+        #7897a6;
 
-const IS_DEVELOPER =
-  localStorage.getItem(
-    DEVELOPER_MODE_KEY
-  ) === "true";
+    --rose:
+        #c98585;
 
+    --orange:
+        #cf9565;
 
-/* =========================================================
-   SESSION ID
-   ========================================================= */
+    --shadow:
+        0 20px 60px rgba(
+            54,
+            64,
+            49,
+            0.12
+        );
 
-let SOUNDSPACE_SESSION_ID =
-  sessionStorage.getItem(
-    "soundspace_session_id"
-  );
-
-if (!SOUNDSPACE_SESSION_ID) {
-
-  SOUNDSPACE_SESSION_ID =
-    "ss_" +
-    Date.now() +
-    "_" +
-    Math.random()
-      .toString(36)
-      .slice(2, 10);
-
-  sessionStorage.setItem(
-    "soundspace_session_id",
-    SOUNDSPACE_SESSION_ID
-  );
+    --soft-shadow:
+        0 10px 30px rgba(
+            54,
+            64,
+            49,
+            0.07
+        );
 
 }
 
 
-/* =========================================================
-   ANALYTICS
-   ========================================================= */
+* {
 
-async function trackSoundSpaceEvent(
-  eventType,
-  mood = null,
-  song = null,
-  helpful = null,
-  feedbackText = null
+    box-sizing:
+        border-box;
+
+}
+
+
+html {
+
+    scroll-behavior:
+        smooth;
+
+}
+
+
+body {
+
+    margin:
+        0;
+
+    min-height:
+        100vh;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7f4ed 0%,
+            #f1eee6 45%,
+            #e8eee3 100%
+        );
+
+    color:
+        var(--text);
+
+    font-family:
+        "DM Sans",
+        sans-serif;
+
+    overflow-x:
+        hidden;
+
+}
+
+
+body::before {
+
+    content:
+        "";
+
+    position:
+        fixed;
+
+    width:
+        500px;
+
+    height:
+        500px;
+
+    top:
+        -220px;
+
+    right:
+        -150px;
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                156,
+                175,
+                136,
+                0.25
+            ),
+            transparent 70%
+        );
+
+    pointer-events:
+        none;
+
+    z-index:
+        -1;
+
+}
+
+
+body::after {
+
+    content:
+        "";
+
+    position:
+        fixed;
+
+    width:
+        550px;
+
+    height:
+        550px;
+
+    bottom:
+        -280px;
+
+    left:
+        -220px;
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                213,
+                173,
+                99,
+                0.16
+            ),
+            transparent 70%
+        );
+
+    pointer-events:
+        none;
+
+    z-index:
+        -1;
+
+}
+
+
+/* =========================================
+   BUTTON RESET
+   ========================================= */
+
+button {
+
+    font:
+        inherit;
+
+}
+
+
+button,
+a {
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.site-header {
+
+    width:
+        100%;
+
+    min-height:
+        82px;
+
+    padding:
+        16px clamp(
+            20px,
+            6vw,
+            90px
+        );
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        25px;
+
+    background:
+        rgba(
+            247,
+            244,
+            237,
+            0.78
+        );
+
+    border-bottom:
+        1px solid
+        rgba(
+            77,
+            91,
+            73,
+            0.1
+        );
+
+    position:
+        sticky;
+
+    top:
+        0;
+
+    z-index:
+        100;
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+}
+
+
+.logo {
+
+    position:
+        relative;
+
+    flex-shrink:
+        0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(
+            1.5rem,
+            2.3vw,
+            2rem
+        );
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        -0.04em;
+
+}
+
+
+.logo::after {
+
+    content:
+        "";
+
+    display:
+        block;
+
+    width:
+        35%;
+
+    height:
+        3px;
+
+    margin-top:
+        2px;
+
+    border-radius:
+        20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--sage),
+            var(--gold)
+        );
+
+}
+
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+.main-nav {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        6px;
+
+    flex-wrap:
+        wrap;
+
+}
+
+
+.nav-btn {
+
+    border:
+        1px solid
+        transparent;
+
+    background:
+        transparent;
+
+    color:
+        var(--muted);
+
+    padding:
+        10px 15px;
+
+    border-radius:
+        999px;
+
+    cursor:
+        pointer;
+
+    font-size:
+        0.9rem;
+
+    font-weight:
+        600;
+
+    transition:
+        0.25s ease;
+
+}
+
+
+.nav-btn:hover {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.7
+        );
+
+    color:
+        var(--text);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.nav-btn.active {
+
+    background:
+        var(--text);
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0 6px 18px rgba(
+            37,
+            42,
+            36,
+            0.18
+        );
+
+}
+
+
+/* =========================================
+   MAIN STRUCTURE
+   ========================================= */
+
+main {
+
+    width:
+        min(
+            1180px,
+            calc(100% - 40px)
+        );
+
+    margin:
+        0 auto;
+
+    padding:
+        clamp(
+            55px,
+            8vw,
+            100px
+        )
+        0;
+
+}
+
+
+/* =========================================
+   HERO
+   ========================================= */
+
+.hero {
+
+    position:
+        relative;
+
+    max-width:
+        850px;
+
+    margin:
+        0 auto;
+
+    padding:
+        clamp(
+            40px,
+            8vw,
+            95px
+        )
+        0
+        clamp(
+            55px,
+            9vw,
+            100px
+        );
+
+    text-align:
+        center;
+
+}
+
+
+.hero::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        180px;
+
+    height:
+        180px;
+
+    top:
+        20px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                156,
+                175,
+                136,
+                0.22
+            ),
+            transparent 70%
+        );
+
+    z-index:
+        -1;
+
+}
+
+
+.eyebrow {
+
+    margin:
+        0 0 20px;
+
+    color:
+        #758465;
+
+    font-size:
+        0.72rem;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.18em;
+
+}
+
+
+.hero h1,
+.information-hero h1,
+.insights-header h1,
+.emotion-header h1 {
+
+    margin:
+        0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(
+            2.7rem,
+            7vw,
+            5.7rem
+        );
+
+    line-height:
+        1.03;
+
+    letter-spacing:
+        -0.05em;
+
+}
+
+
+.hero h1 {
+
+    background:
+        linear-gradient(
+            120deg,
+            #293126,
+            #596c50,
+            #8b7047
+        );
+
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
+
+    color:
+        transparent;
+
+}
+
+
+.hero-description {
+
+    max-width:
+        680px;
+
+    margin:
+        26px auto 0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        clamp(
+            1rem,
+            2vw,
+            1.15rem
+        );
+
+    line-height:
+        1.9;
+
+}
+
+
+/* =========================================
+   EMOTION SECTION
+   ========================================= */
+
+.emotion-section h2 {
+
+    margin:
+        0 0 35px;
+
+    text-align:
+        center;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(
+            2rem,
+            4vw,
+            2.8rem
+        );
+
+}
+
+
+.emotion-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(210px, 1fr)
+        );
+
+    gap:
+        18px;
+
+}
+
+
+/* =========================================
+   EMOTION CARDS
+   ========================================= */
+
+.emotion-card {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    min-height:
+        260px;
+
+    padding:
+        28px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        flex-start;
+
+    text-align:
+        left;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        26px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.72
+        );
+
+    color:
+        var(--text);
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        var(--soft-shadow);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+
+}
+
+
+.emotion-card::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        180px;
+
+    height:
+        180px;
+
+    border-radius:
+        50%;
+
+    top:
+        -95px;
+
+    right:
+        -80px;
+
+    opacity:
+        0.65;
+
+    transition:
+        transform 0.5s ease;
+
+}
+
+
+.emotion-card:hover {
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.emotion-card:hover::before {
+
+    transform:
+        scale(1.35);
+
+}
+
+
+.emotion-card:active {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* Happiness */
+
+.happiness-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                255,
+                253,
+                244,
+                0.95
+            ),
+            rgba(
+                248,
+                238,
+                198,
+                0.72
+            )
+        );
+
+}
+
+
+.happiness-card::before {
+
+    background:
+        rgba(
+            226,
+            190,
+            91,
+            0.32
+        );
+
+}
+
+
+.happiness-card:hover {
+
+    border-color:
+        #d6b45e;
+
+}
+
+
+/* Sadness */
+
+.sadness-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                247,
+                250,
+                251,
+                0.95
+            ),
+            rgba(
+                216,
+                229,
+                235,
+                0.8
+            )
+        );
+
+}
+
+
+.sadness-card::before {
+
+    background:
+        rgba(
+            111,
+            151,
+            171,
+            0.22
+        );
+
+}
+
+
+.sadness-card:hover {
+
+    border-color:
+        var(--blue);
+
+}
+
+
+/* Anger */
+
+.anger-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                255,
+                248,
+                245,
+                0.95
+            ),
+            rgba(
+                242,
+                213,
+                205,
+                0.82
+            )
+        );
+
+}
+
+
+.anger-card::before {
+
+    background:
+        rgba(
+            201,
+            116,
+            100,
+            0.22
+        );
+
+}
+
+
+.anger-card:hover {
+
+    border-color:
+        var(--rose);
+
+}
+
+
+/* Anxiety */
+
+.anxiety-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                249,
+                247,
+                253,
+                0.95
+            ),
+            rgba(
+                228,
+                220,
+                242,
+                0.82
+            )
+        );
+
+}
+
+
+.anxiety-card::before {
+
+    background:
+        rgba(
+            117,
+            100,
+            168,
+            0.2
+        );
+
+}
+
+
+.anxiety-card:hover {
+
+    border-color:
+        var(--purple);
+
+}
+
+
+/* Irritation */
+
+.irritation-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                252,
+                249,
+                242,
+                0.95
+            ),
+            rgba(
+                239,
+                221,
+                198,
+                0.82
+            )
+        );
+
+}
+
+
+.irritation-card::before {
+
+    background:
+        rgba(
+            207,
+            149,
+            101,
+            0.22
+        );
+
+}
+
+
+.irritation-card:hover {
+
+    border-color:
+        var(--orange);
+
+}
+
+
+.emotion-icon {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    font-size:
+        2.7rem;
+
+    margin-bottom:
+        22px;
+
+    filter:
+        drop-shadow(
+            0 6px 8px
+            rgba(
+                0,
+                0,
+                0,
+                0.08
+            )
+        );
+
+}
+
+
+.emotion-name {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-size:
+        1.4rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.emotion-description {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    margin-top:
+        8px;
+
+    color:
+        #697065;
+
+    font-size:
+        0.93rem;
+
+    line-height:
+        1.65;
+
+}
+
+
+.card-explore {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    margin-top:
+        auto;
+
+    padding-top:
+        25px;
+
+    color:
+        #4c5b46;
+
+    font-size:
+        0.88rem;
+
+    font-weight:
+        700;
+
+}
+
+
+/* =========================================
+   EMOTION PAGE HEADER
+   ========================================= */
+
+.emotion-header {
+
+    max-width:
+        780px;
+
+    margin:
+        0 auto;
+
+    text-align:
+        center;
+
+}
+
+
+.back-button {
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        var(--muted);
+
+    padding:
+        9px 2px;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        600;
+
+    transition:
+        0.25s ease;
+
+}
+
+
+.back-button:hover {
+
+    color:
+        var(--text);
+
+    transform:
+        translateX(-4px);
+
+}
+
+
+.large-emotion-icon {
+
+    margin:
+        32px 0 15px;
+
+    font-size:
+        clamp(
+            4rem,
+            9vw,
+            6rem
+        );
+
+}
+
+
+#selected-emotion-description {
+
+    max-width:
+        650px;
+
+    margin:
+        22px auto 0;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.85;
+
+}
+
+
+/* =========================================
+   SONG SECTION
+   ========================================= */
+
+.songs-section {
+
+    margin-top:
+        clamp(
+            55px,
+            9vw,
+            95px
+        );
+
+}
+
+
+.songs-heading {
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        space-between;
+
+    gap:
+        25px;
+
+    margin-bottom:
+        30px;
+
+}
+
+
+.songs-heading h2 {
+
+    margin:
+        7px 0 8px;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(
+            2.1rem,
+            4vw,
+            3.2rem
+        );
+
+}
+
+
+.songs-heading p:not(.eyebrow) {
+
+    margin:
+        0;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.75;
+
+}
+
+
+.surprise-button {
+
+    flex-shrink:
+        0;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.3
+        );
+
+    border-radius:
+        999px;
+
+    padding:
+        14px 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #58684f,
+            #8a9a78
+        );
+
+    color:
+        #ffffff;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        700;
+
+    box-shadow:
+        0 10px 25px
+        rgba(
+            86,
+            104,
+            79,
+            0.22
+        );
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+.surprise-button:hover {
+
+    transform:
+        translateY(-3px)
+        rotate(-1deg);
+
+    box-shadow:
+        0 15px 30px
+        rgba(
+            86,
+            104,
+            79,
+            0.3
+        );
+
+}
+
+
+/* =========================================
+   QUEUE CONTROLS
+   ========================================= */
+
+.queue-controls {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        10px;
+
+    margin:
+        0 0 30px;
+
+}
+
+
+.queue-button {
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.7
+        );
+
+    color:
+        var(--text);
+
+    border-radius:
+        999px;
+
+    padding:
+        11px 18px;
+
+    cursor:
+        pointer;
+
+    font-size:
+        0.9rem;
+
+    font-weight:
+        600;
+
+    box-shadow:
+        0 4px 15px
+        rgba(
+            50,
+            60,
+            45,
+            0.05
+        );
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.queue-button:hover {
+
+    background:
+        var(--sage-light);
+
+    border-color:
+        var(--sage);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.queue-button:active {
+
+    transform:
+        scale(0.97);
+
+}
+
+
+/* =========================================
+   SONG LIST
+   ========================================= */
+
+.song-list {
+
+    display:
+        grid;
+
+    gap:
+        14px;
+
+}
+
+
+.song-card {
+
+    width:
+        100%;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        50px
+        1fr
+        auto;
+
+    align-items:
+        center;
+
+    gap:
+        18px;
+
+    padding:
+        19px 22px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.75
+        );
+
+    color:
+        var(--text);
+
+    text-align:
+        left;
+
+    box-shadow:
+        0 5px 20px
+        rgba(
+            54,
+            64,
+            49,
+            0.04
+        );
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+
+}
+
+
+.song-card:hover {
+
+    transform:
+        translateX(6px);
+
+    border-color:
+        rgba(
+            117,
+            132,
+            101,
+            0.4
+        );
+
+    box-shadow:
+        var(--soft-shadow);
+
+}
+
+
+.song-number {
+
+    width:
+        40px;
+
+    height:
+        40px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--sage-light);
+
+    color:
+        #667557;
+
+    font-size:
+        0.85rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.song-details {
+
+    min-width:
+        0;
+
+}
+
+
+.song-details strong {
+
+    display:
+        block;
+
+    font-size:
+        1rem;
+
+}
+
+
+.song-details small {
+
+    display:
+        block;
+
+    margin-top:
+        4px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.88rem;
+
+}
+
+
+.song-why {
+
+    margin:
+        9px 0 0;
+
+    color:
+        #73796f;
+
+    font-size:
+        0.84rem;
+
+    line-height:
+        1.65;
+
+}
+
+
+.listen-song-button {
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        999px;
+
+    padding:
+        9px 15px;
+
+    background:
+        #ffffff;
+
+    color:
+        #56634d;
+
+    cursor:
+        pointer;
+
+    font-size:
+        0.84rem;
+
+    font-weight:
+        700;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+.listen-song-button:hover {
+
+    background:
+        var(--text);
+
+    border-color:
+        var(--text);
+
+    color:
+        #ffffff;
+
+}
+
+
+/* =========================================
+   PLAYER
+   ========================================= */
+
+.player-section {
+
+    margin-top:
+        35px;
+
+    padding:
+        clamp(
+            30px,
+            6vw,
+            55px
+        );
+
+    border-radius:
+        30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #293027,
+            #485443
+        );
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.player-content {
+
+    max-width:
+        760px;
+
+    margin:
+        0 auto;
+
+    text-align:
+        center;
+
+}
+
+
+.player-label {
+
+    margin:
+        0 0 14px;
+
+    color:
+        #bfcfb4;
+
+    font-size:
+        0.72rem;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.16em;
+
+}
+
+
+#player-song-title {
+
+    margin:
+        0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(
+            2rem,
+            4vw,
+            3rem
+        );
+
+}
+
+
+#player-song-artist {
+
+    margin:
+        10px 0 0;
+
+    color:
+        #d5dbd1;
+
+}
+
+
+.player-reason {
+
+    max-width:
+        660px;
+
+    margin:
+        25px auto;
+
+    color:
+        #d3dbce;
+
+    line-height:
+        1.8;
+
+}
+
+
+/* =========================================
+   PLAYER CONTROLS
+   ========================================= */
+
+.player-controls {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    margin:
+        22px 0;
+
+}
+
+
+.player-control-button {
+
+    width:
+        48px;
+
+    height:
+        48px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.22
+        );
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    color:
+        #ffffff;
+
+    cursor:
+        pointer;
+
+    font-size:
+        1rem;
+
+    transition:
+        0.25s ease;
+
+}
+
+
+.player-control-button:hover {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.2
+        );
+
+    transform:
+        scale(1.08);
+
+}
+
+
+.listen-button {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin-top:
+        10px;
+
+    padding:
+        14px 24px;
+
+    border-radius:
+        999px;
+
+    background:
+        #f4efe3;
+
+    color:
+        #354033;
+
+    text-decoration:
+        none;
+
+    font-weight:
+        700;
+
+    box-shadow:
+        0 8px 20px
+        rgba(
+            0,
+            0,
+            0,
+            0.15
+        );
+
+    transition:
+        0.25s ease;
+
+}
+
+
+.listen-button:hover {
+
+    transform:
+        translateY(-3px);
+
+    background:
+        #ffffff;
+
+}
+
+
+/* =========================================
+   INFORMATION PAGES
+   ========================================= */
+
+.information-hero,
+.insights-header {
+
+    max-width:
+        800px;
+
+    margin:
+        0 auto;
+
+    text-align:
+        center;
+
+}
+
+
+.information-hero p:not(.eyebrow),
+.insights-header > p:last-child {
+
+    max-width:
+        670px;
+
+    margin:
+        22px auto 0;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.85;
+
+}
+
+
+.information-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+        );
+
+    gap:
+        20px;
+
+    margin-top:
+        65px;
+
+}
+
+
+.information-card,
+.about-card {
+
+    padding:
+        30px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        24px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.72
+        );
+
+    box-shadow:
+        var(--soft-shadow);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+.information-card:hover,
+.about-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.information-icon {
+
+    font-size:
+        2.2rem;
+
+    margin-bottom:
+        16px;
+
+}
+
+
+.information-card h2,
+.about-card h2 {
+
+    margin:
+        0 0 13px;
+
+    font-family:
+        "Outfit",
+        sans-serif;
+
+    font-size:
+        1.3rem;
+
+}
+
+
+.information-card p,
+.about-card p {
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.85;
+
+}
+
+
+.about-content {
+
+    display:
+        grid;
+
+    gap:
+        20px;
+
+    max-width:
+        880px;
+
+    margin:
+        65px auto 0;
+
+}
+
+
+/* =========================================
+   FEEDBACK
+   ========================================= */
+
+.feedback-page-card {
+
+    max-width:
+        820px;
+
+    margin:
+        65px auto 0;
+
+    padding:
+        clamp(
+            28px,
+            6vw,
+            55px
+        );
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        30px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.76
+        );
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.feedback-page-card h2 {
+
+    margin:
+        0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(
+            1.8rem,
+            4vw,
+            2.4rem
+        );
+
+}
+
+
+.feedback-page-card > p {
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.75;
+
+}
+
+
+.feedback-question {
+
+    margin-top:
+        34px;
+
+}
+
+
+.feedback-question label {
+
+    display:
+        block;
+
+    margin-bottom:
+        13px;
+
+    font-weight:
+        700;
+
+}
+
+
+.feedback-question select,
+.feedback-question textarea {
+
+    width:
+        100%;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        14px;
+
+    padding:
+        15px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.9
+        );
+
+    color:
+        var(--text);
+
+    font:
+        inherit;
+
+    outline:
+        none;
+
+    resize:
+        vertical;
+
+}
+
+
+.feedback-question select:focus,
+.feedback-question textarea:focus {
+
+    border-color:
+        var(--sage);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            156,
+            175,
+            136,
+            0.15
+        );
+
+}
+
+
+.feedback-choice-row {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        10px;
+
+}
+
+
+.choice-button,
+.helpful-choice {
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        999px;
+
+    padding:
+        11px 18px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.7
+        );
+
+    color:
+        var(--text);
+
+    cursor:
+        pointer;
+
+    font-weight:
+        600;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+.choice-button:hover,
+.helpful-choice:hover {
+
+    border-color:
+        var(--sage);
+
+    background:
+        var(--sage-light);
+
+}
+
+
+.choice-button.selected,
+.helpful-choice.selected {
+
+    background:
+        #627357;
+
+    border-color:
+        #627357;
+
+    color:
+        #ffffff;
+
+}
+
+
+.submit-feedback {
+
+    width:
+        100%;
+
+    margin-top:
+        35px;
+
+    padding:
+        16px;
+
+    border:
+        none;
+
+    border-radius:
+        999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3e4a3a,
+            #69795f
+        );
+
+    color:
+        #ffffff;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        700;
+
+    box-shadow:
+        0 10px 25px
+        rgba(
+            62,
+            74,
+            58,
+            0.18
+        );
+
+    transition:
+        0.25s ease;
+
+}
+
+
+.submit-feedback:hover {
+
+    transform:
+        translateY(-3px);
+
+}
+
+
+.feedback-message {
+
+    min-height:
+        24px;
+
+    margin:
+        20px 0 0;
+
+    text-align:
+        center;
+
+    color:
+        #647357;
+
+    font-weight:
+        600;
+
+}
+
+
+/* =========================================
+   INSIGHTS
+   ========================================= */
+
+.insights-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:
+        18px;
+
+    margin-top:
+        60px;
+
+}
+
+
+.insight-card {
+
+    padding:
+        32px 25px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        24px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.74
+        );
+
+    text-align:
+        center;
+
+    box-shadow:
+        var(--soft-shadow);
+
+}
+
+
+.insight-card h3 {
+
+    margin:
+        0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.9rem;
+
+}
+
+
+.insight-card p {
+
+    margin:
+        16px 0 0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        2.3rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.emotion-statistics,
+.usage-history {
+
+    margin-top:
+        55px;
+
+    padding:
+        clamp(
+            22px,
+            5vw,
+            35px
+        );
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        26px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.74
+        );
+
+    box-shadow:
+        var(--soft-shadow);
+
+}
+
+
+.emotion-statistics h2,
+.usage-history h2 {
+
+    margin:
+        0 0 22px;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+}
+
+
+#emotion-statistics-list,
+#usage-history-list {
+
+    display:
+        grid;
+
+    gap:
+        11px;
+
+}
+
+
+.emotion-stat-row,
+.usage-history-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        15px;
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(
+            244,
+            241,
+            234,
+            0.8
+        );
+
+}
+
+
+#emotion-statistics-list p,
+#usage-history-list p {
+
+    margin:
+        0;
+
+    padding:
+        14px;
+
+    border-radius:
+        14px;
+
+    background:
+        var(--sage-light);
+
+    color:
+        var(--muted);
+
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.site-footer {
+
+    position:
+        relative;
+
+    margin-top:
+        50px;
+
+    padding:
+        55px 20px;
+
+    border-top:
+        1px solid
+        var(--border);
+
+    background:
+        rgba(
+            232,
+            227,
+            216,
+            0.55
+        );
+
+    text-align:
+        center;
+
+    color:
+        var(--muted);
+
+}
+
+
+.site-footer p {
+
+    margin:
+        7px 0;
+
+}
+
+
+.site-footer strong {
+
+    color:
+        var(--text);
+
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (
+    max-width:
+    850px
 ) {
 
-  if (IS_DEVELOPER) {
-    return;
-  }
+    .site-header {
 
-  try {
+        align-items:
+            flex-start;
 
-    await fetch(
-      `${SUPABASE_URL}/rest/v1/usage_events`,
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-
-          "apikey": SUPABASE_KEY,
-
-          "Authorization":
-            `Bearer ${SUPABASE_KEY}`,
-
-          "Prefer": "return=minimal"
-        },
-
-        body: JSON.stringify({
-
-          event_type: eventType,
-
-          session_id:
-            SOUNDSPACE_SESSION_ID,
-
-          page:
-            window.location.pathname,
-
-          mood: mood,
-
-          song: song,
-
-          helpful: helpful,
-
-          feedback_text:
-            feedbackText
-
-        })
-
-      }
-    );
-
-  } catch (error) {
-
-    console.error(
-      "SoundSpace analytics error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   SONG DATA
-   ========================================================= */
-
-const moodData = {
-
-  happiness: {
-
-    title: "Happiness",
-
-    emoji: "😊",
-
-    description:
-      "Keep the good feeling going with upbeat, energetic and positive music.",
-
-    songs: [
-
-      {
-        title: "Happy",
-        artist: "Pharrell Williams",
-        why:
-          "Its upbeat rhythm and positive energy make it suitable for maintaining a joyful mood."
-      },
-
-      {
-        title: "Can't Stop the Feeling!",
-        artist: "Justin Timberlake",
-        why:
-          "Its lively tempo and danceable rhythm create an energetic listening experience."
-      },
-
-      {
-        title: "Levitating",
-        artist: "Dua Lipa",
-        why:
-          "Its energetic disco-inspired production gives it a playful and uplifting character."
-      },
-
-      {
-        title: "Uptown Funk",
-        artist: "Mark Ronson ft. Bruno Mars",
-        why:
-          "Its strong groove and energetic tempo make it highly stimulating and danceable."
-      },
-
-      {
-        title: "Good as Hell",
-        artist: "Lizzo",
-        why:
-          "Its confident message and upbeat production encourage positivity."
-      },
-
-      {
-        title: "Lush Life",
-        artist: "Zara Larsson",
-        why:
-          "Its bright pop production creates a lively and carefree atmosphere."
-      },
-
-      {
-        title: "APT.",
-        artist: "ROSÉ & Bruno Mars",
-        why:
-          "Its catchy rhythm and energetic production suit an upbeat mood."
-      },
-
-      {
-        title: "Golden",
-        artist:
-          "HUNTR/X, EJAE, Audrey Nuna & REI AMI",
-        why:
-          "Its energetic production and confident delivery give it an uplifting direction."
-      },
-
-      {
-        title: "Flowers",
-        artist: "Miley Cyrus",
-        why:
-          "Its confident message can reinforce feelings of empowerment."
-      },
-
-      {
-        title: "Roar",
-        artist: "Katy Perry",
-        why:
-          "Its energetic chorus and empowering message make it motivating."
-      }
-
-    ]
-
-  },
-
-
-  sadness: {
-
-    title: "Sadness",
-
-    emoji: "😢",
-
-    description:
-      "Find comfort, emotional connection and gentle warmth through reflective music.",
-
-    songs: [
-
-      {
-        title: "Beautiful Things",
-        artist: "Benson Boone"
-      },
-
-      {
-        title: "Someone You Loved",
-        artist: "Lewis Capaldi"
-      },
-
-      {
-        title: "The Night We Met",
-        artist: "Lord Huron"
-      },
-
-      {
-        title: "When We Were Young",
-        artist: "Adele"
-      },
-
-      {
-        title: "Iris",
-        artist: "Goo Goo Dolls"
-      },
-
-      {
-        title: "Lovely",
-        artist: "Billie Eilish & Khalid"
-      },
-
-      {
-        title: "What Was I Made For?",
-        artist: "Billie Eilish"
-      },
-
-      {
-        title: "Ocean Eyes",
-        artist: "Billie Eilish"
-      },
-
-      {
-        title: "Die With A Smile",
-        artist: "Lady Gaga & Bruno Mars"
-      },
-
-      {
-        title: "Back To Friends",
-        artist: "sombr"
-      }
-
-    ]
-
-  },
-
-
-  anger: {
-
-    title: "Anger",
-
-    emoji: "😡",
-
-    description:
-      "Use powerful music as a structured way to release energy and shift your emotional direction.",
-
-    songs: [
-
-      {
-        title: "Believer",
-        artist: "Imagine Dragons"
-      },
-
-      {
-        title: "Stronger",
-        artist: "Kelly Clarkson"
-      },
-
-      {
-        title: "Titanium",
-        artist: "David Guetta ft. Sia"
-      },
-
-      {
-        title: "Unstoppable",
-        artist: "Sia"
-      },
-
-      {
-        title: "Roar",
-        artist: "Katy Perry"
-      },
-
-      {
-        title: "Shake It Off",
-        artist: "Taylor Swift"
-      },
-
-      {
-        title: "Flowers",
-        artist: "Miley Cyrus"
-      },
-
-      {
-        title: "I Will Survive",
-        artist: "Gloria Gaynor"
-      },
-
-      {
-        title: "Since U Been Gone",
-        artist: "Kelly Clarkson"
-      },
-
-      {
-        title: "The Man",
-        artist: "The Killers"
-      }
-
-    ]
-
-  },
-
-
-  anxiety: {
-
-    title: "Anxiety",
-
-    emoji: "😰",
-
-    description:
-      "Explore slower, familiar and emotionally gentle songs that may help create a calmer atmosphere.",
-
-    songs: [
-
-      {
-        title: "A Thousand Years",
-        artist: "Christina Perri"
-      },
-
-      {
-        title: "Perfect",
-        artist: "Ed Sheeran"
-      },
-
-      {
-        title: "Photograph",
-        artist: "Ed Sheeran"
-      },
-
-      {
-        title: "Yellow",
-        artist: "Coldplay"
-      },
-
-      {
-        title: "Ocean Eyes",
-        artist: "Billie Eilish"
-      },
-
-      {
-        title: "Lovely",
-        artist: "Billie Eilish & Khalid"
-      },
-
-      {
-        title: "Until I Found You",
-        artist: "Stephen Sanchez"
-      },
-
-      {
-        title: "Adore You",
-        artist: "Harry Styles"
-      },
-
-      {
-        title: "Sunflower",
-        artist: "Post Malone & Swae Lee"
-      },
-
-      {
-        title: "What Was I Made For?",
-        artist: "Billie Eilish"
-      }
-
-    ]
-
-  },
-
-
-  irritation: {
-
-    title: "Irritation",
-
-    emoji: "😤",
-
-    description:
-      "Take a musical reset with lighter, warmer and more relaxed songs.",
-
-    songs: [
-
-      {
-        title: "Sunday Best",
-        artist: "Surfaces"
-      },
-
-      {
-        title: "Put Your Records On",
-        artist: "Corinne Bailey Rae"
-      },
-
-      {
-        title: "Lovely Day",
-        artist: "Bill Withers"
-      },
-
-      {
-        title: "Sunflower",
-        artist: "Post Malone & Swae Lee"
-      },
-
-      {
-        title: "Adore You",
-        artist: "Harry Styles"
-      },
-
-      {
-        title: "Best Part",
-        artist: "Daniel Caesar ft. H.E.R."
-      },
-
-      {
-        title: "Location",
-        artist: "Khalid"
-      },
-
-      {
-        title: "Golden Hour",
-        artist: "JVKE"
-      },
-
-      {
-        title: "Sweet Creature",
-        artist: "Harry Styles"
-      },
-
-      {
-        title: "So Easy (To Fall in Love)",
-        artist: "Olivia Dean"
-      }
-
-    ]
-
-  }
-
-};
-
-
-/* =========================================================
-   APP STATE
-   ========================================================= */
-
-let currentEmotion = "";
-
-let currentSongIndex = -1;
-
-let currentQueue = [];
-
-
-/* =========================================================
-   PAGE SWITCHING
-   ========================================================= */
-
-function hideAllPages() {
-
-  const pages = [
-
-    "home-page",
-
-    "emotion-page",
-
-    "why-page",
-
-    "about-page",
-
-    "feedback-page",
-
-    "insights-page"
-
-  ];
-
-  pages.forEach(
-    function(pageId) {
-
-      const page =
-        document.getElementById(pageId);
-
-      if (page) {
-        page.style.display = "none";
-      }
+        flex-direction:
+            column;
 
     }
-  );
-
-}
 
 
-function showPage(pageId) {
+    .main-nav {
 
-  hideAllPages();
+        width:
+            100%;
 
-  const page =
-    document.getElementById(pageId);
-
-  if (page) {
-    page.style.display = "block";
-  }
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-}
-
-
-/* =========================================================
-   EMOTION
-   ========================================================= */
-
-function displayEmotion(emotion) {
-
-  const data =
-    moodData[emotion];
-
-  if (!data) {
-    return;
-  }
-
-  currentEmotion = emotion;
-
-  currentQueue =
-    [...data.songs];
-
-  currentSongIndex = -1;
-
-
-  document.getElementById(
-    "selected-emotion-icon"
-  ).textContent =
-    data.emoji;
-
-
-  document.getElementById(
-    "selected-emotion-title"
-  ).textContent =
-    data.title;
-
-
-  document.getElementById(
-    "selected-emotion-description"
-  ).textContent =
-    data.description;
-
-
-  document.getElementById(
-    "player-section"
-  ).style.display =
-    "none";
-
-
-  displaySongs();
-
-  showPage("emotion-page");
-
-}
-
-
-/* =========================================================
-   DISPLAY SONGS
-   ========================================================= */
-
-function displaySongs() {
-
-  const songList =
-    document.getElementById(
-      "song-list"
-    );
-
-  if (!songList) {
-    return;
-  }
-
-  songList.innerHTML = "";
-
-
-  currentQueue.forEach(
-    function(song, index) {
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "song-card";
-
-
-      card.innerHTML = `
-
-        <div class="song-number">
-          ${String(index + 1).padStart(2, "0")}
-        </div>
-
-        <div class="song-details">
-
-          <strong>
-            ${song.title}
-          </strong>
-
-          <small>
-            ${song.artist}
-          </small>
-
-        </div>
-
-        <button
-          type="button"
-          class="listen-song-button"
-        >
-          🎵 Listen
-        </button>
-
-      `;
-
-
-      card.addEventListener(
-        "click",
-        function(event) {
-
-          if (
-            event.target.tagName !==
-            "BUTTON"
-          ) {
-
-            playSongAtIndex(index);
-
-          }
-
-        }
-      );
-
-
-      const listenButton =
-        card.querySelector(
-          ".listen-song-button"
-        );
-
-
-      listenButton.addEventListener(
-        "click",
-        function() {
-
-          playSongAtIndex(index);
-
-        }
-      );
-
-
-      songList.appendChild(card);
+        justify-content:
+            flex-start;
 
     }
-  );
+
+
+    .songs-heading {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .insights-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
 
 }
 
 
-/* =========================================================
-   PLAY SONG
-   ========================================================= */
-
-function playSongAtIndex(index) {
-
-  if (
-    index < 0 ||
-    index >= currentQueue.length
-  ) {
-    return;
-  }
-
-  currentSongIndex = index;
-
-  const song =
-    currentQueue[index];
-
-
-  trackSoundSpaceEvent(
-    "song_selected",
-    currentEmotion,
-    `${song.title} — ${song.artist}`
-  );
-
-
-  document.getElementById(
-    "player-song-title"
-  ).textContent =
-    song.title;
-
-
-  document.getElementById(
-    "player-song-artist"
-  ).textContent =
-    song.artist;
-
-
-  document.getElementById(
-    "player-song-reason"
-  ).textContent =
-    song.why ||
-    "Selected to match the emotional atmosphere you chose.";
-
-
-  const searchQuery =
-    encodeURIComponent(
-      `${song.title} ${song.artist}`
-    );
-
-
-  document.getElementById(
-    "listen-link"
-  ).href =
-    "https://open.spotify.com/search/" +
-    searchQuery;
-
-
-  document.getElementById(
-    "player-section"
-  ).style.display =
-    "block";
-
-
-  document.getElementById(
-    "player-section"
-  ).scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-
-}
-
-
-/* =========================================================
-   NEXT SONG
-   ========================================================= */
-
-function nextSong() {
-
-  if (!currentQueue.length) {
-    return;
-  }
-
-  if (
-    currentSongIndex === -1
-  ) {
-
-    playSongAtIndex(0);
-
-    return;
-
-  }
-
-  currentSongIndex =
-    (currentSongIndex + 1) %
-    currentQueue.length;
-
-
-  playSongAtIndex(
-    currentSongIndex
-  );
-
-}
-
-
-/* =========================================================
-   PREVIOUS SONG
-   ========================================================= */
-
-function previousSong() {
-
-  if (!currentQueue.length) {
-    return;
-  }
-
-  if (
-    currentSongIndex === -1
-  ) {
-
-    playSongAtIndex(
-      currentQueue.length - 1
-    );
-
-    return;
-
-  }
-
-  currentSongIndex =
-    (
-      currentSongIndex - 1 +
-      currentQueue.length
-    ) %
-    currentQueue.length;
-
-
-  playSongAtIndex(
-    currentSongIndex
-  );
-
-}
-
-
-/* =========================================================
-   SHUFFLE
-   Plays a random next song
-   ========================================================= */
-
-function shuffleSong() {
-
-  if (!currentQueue.length) {
-    return;
-  }
-
-  let randomIndex =
-    Math.floor(
-      Math.random() *
-      currentQueue.length
-    );
-
-
-  if (
-    currentQueue.length > 1 &&
-    randomIndex === currentSongIndex
-  ) {
-
-    randomIndex =
-      (
-        randomIndex + 1
-      ) %
-      currentQueue.length;
-
-  }
-
-
-  playSongAtIndex(
-    randomIndex
-  );
-
-}
-
-
-/* =========================================================
-   RESHUFFLE
-   Rearranges the entire queue
-   ========================================================= */
-
-function reshuffleQueue() {
-
-  if (!currentQueue.length) {
-    return;
-  }
-
-  for (
-    let i =
-      currentQueue.length - 1;
-
-    i > 0;
-
-    i--
-  ) {
-
-    const randomIndex =
-      Math.floor(
-        Math.random() *
-        (i + 1)
-      );
-
-
-    [
-      currentQueue[i],
-      currentQueue[randomIndex]
-
-    ] = [
-
-      currentQueue[randomIndex],
-      currentQueue[i]
-
-    ];
-
-  }
-
-
-  currentSongIndex = -1;
-
-  displaySongs();
-
-}
-
-
-/* =========================================================
-   SURPRISE ME
-   ========================================================= */
-
-function surpriseMe() {
-
-  shuffleSong();
-
-}
-
-
-/* =========================================================
-   FEEDBACK
-   ========================================================= */
-
-function setupFeedback() {
-
-  let selectedFit = "";
-  let selectedHelpful = "";
-
-
-  document
-    .querySelectorAll(
-      ".choice-button"
-    )
-    .forEach(
-      function(button) {
-
-        button.addEventListener(
-          "click",
-          function() {
-
-            document
-              .querySelectorAll(
-                ".choice-button"
-              )
-              .forEach(
-                function(other) {
-
-                  other.classList.remove(
-                    "selected"
-                  );
-
-                }
-              );
-
-
-            button.classList.add(
-              "selected"
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (
+    max-width:
+    600px
+) {
+
+    main {
+
+        width:
+            min(
+                100% - 28px,
+                1180px
             );
 
-
-            selectedFit =
-              button.dataset.value;
-
-
-            document.getElementById(
-              "feedback-fit"
-            ).value =
-              selectedFit;
-
-          }
-        );
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      ".helpful-choice"
-    )
-    .forEach(
-      function(button) {
-
-        button.addEventListener(
-          "click",
-          function() {
-
-            document
-              .querySelectorAll(
-                ".helpful-choice"
-              )
-              .forEach(
-                function(other) {
-
-                  other.classList.remove(
-                    "selected"
-                  );
-
-                }
-              );
-
-
-            button.classList.add(
-              "selected"
-            );
-
-
-            selectedHelpful =
-              button.dataset.value;
-
-
-            document.getElementById(
-              "feedback-helpful"
-            ).value =
-              selectedHelpful;
-
-          }
-        );
-
-      }
-    );
-
-
-  const form =
-    document.getElementById(
-      "feedback-form"
-    );
-
-
-  if (!form) {
-    return;
-  }
-
-
-  form.addEventListener(
-    "submit",
-    function(event) {
-
-      event.preventDefault();
-
-
-      const emotion =
-        document.getElementById(
-          "feedback-emotion"
-        ).value;
-
-
-      const improvement =
-        document.getElementById(
-          "feedback-improvement"
-        ).value;
-
-
-      const liked =
-        document.getElementById(
-          "feedback-liked"
-        ).value;
-
-
-      trackSoundSpaceEvent(
-        "feedback",
-        emotion || null,
-        null,
-        selectedHelpful || null,
-        `Fit: ${selectedFit}. Improvement: ${improvement}. Liked: ${liked}`
-      );
-
-
-      const message =
-        document.getElementById(
-          "full-feedback-message"
-        );
-
-
-      if (message) {
-
-        message.textContent =
-          "✨ Thank you! Your feedback has been received.";
-
-      }
-
-
-      form.reset();
-
-
-      selectedFit = "";
-      selectedHelpful = "";
-
-
-      document
-        .querySelectorAll(
-          ".choice-button, .helpful-choice"
-        )
-        .forEach(
-          function(button) {
-
-            button.classList.remove(
-              "selected"
-            );
-
-          }
-        );
+        padding:
+            50px 0;
 
     }
-  );
+
+
+    .site-header {
+
+        padding:
+            14px;
+
+    }
+
+
+    .main-nav {
+
+        flex-wrap:
+            nowrap;
+
+        overflow-x:
+            auto;
+
+        padding-bottom:
+            5px;
+
+        scrollbar-width:
+            none;
+
+    }
+
+
+    .main-nav::-webkit-scrollbar {
+
+        display:
+            none;
+
+    }
+
+
+    .nav-btn {
+
+        flex:
+            0 0 auto;
+
+        padding:
+            9px 13px;
+
+        font-size:
+            0.84rem;
+
+    }
+
+
+    .emotion-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .emotion-card {
+
+        min-height:
+            225px;
+
+    }
+
+
+    .queue-controls {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        width:
+            100%;
+
+    }
+
+
+    .queue-button {
+
+        width:
+            100%;
+
+        padding:
+            12px 8px;
+
+        font-size:
+            0.8rem;
+
+    }
+
+
+    .song-card {
+
+        grid-template-columns:
+            42px
+            1fr;
+
+        padding:
+            16px;
+
+        gap:
+            12px;
+
+    }
+
+
+    .listen-song-button {
+
+        grid-column:
+            2;
+
+        justify-self:
+            start;
+
+        margin-top:
+            5px;
+
+    }
+
+
+    .song-why {
+
+        font-size:
+            0.8rem;
+
+    }
+
+
+    .feedback-page-card {
+
+        padding:
+            25px 18px;
+
+    }
+
+
+    .emotion-statistics,
+    .usage-history {
+
+        padding:
+            22px;
+
+    }
 
 }
 
 
-/* =========================================================
-   INSIGHTS
-   ========================================================= */
-
-async function displayInsights() {
-
-  const totalUses =
-    document.getElementById(
-      "total-uses"
-    );
-
-  const helpfulCount =
-    document.getElementById(
-      "helpful-count"
-    );
-
-  const mostUsedEmotion =
-    document.getElementById(
-      "most-used-emotion"
-    );
-
-  const emotionList =
-    document.getElementById(
-      "emotion-statistics-list"
-    );
-
-  const historyList =
-    document.getElementById(
-      "usage-history-list"
-    );
-
-
-  if (IS_DEVELOPER) {
-
-    totalUses.textContent = "—";
-    helpfulCount.textContent = "—";
-
-    mostUsedEmotion.textContent =
-      "Developer Mode";
-
-    return;
-
-  }
-
-
-  try {
-
-    const response =
-      await fetch(
-        `${SUPABASE_URL}/rest/v1/usage_events?select=*`,
-        {
-          headers: {
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              `Bearer ${SUPABASE_KEY}`
-
-          }
-        }
-      );
-
-
-    const events =
-      await response.json();
-
-
-    const sessions =
-      new Set();
-
-
-    events.forEach(
-      function(event) {
-
-        if (
-          event.session_id
-        ) {
-
-          sessions.add(
-            event.session_id
-          );
-
-        }
-
-      }
-    );
-
-
-    totalUses.textContent =
-      sessions.size;
-
-
-    const helpfulResponses =
-      events.filter(
-        function(event) {
-
-          return (
-            event.event_type ===
-              "feedback" &&
-            event.helpful ===
-              "yes"
-          );
-
-        }
-      );
-
-
-    helpfulCount.textContent =
-      helpfulResponses.length;
-
-
-    const counts = {
-
-      happiness: 0,
-      sadness: 0,
-      anger: 0,
-      anxiety: 0,
-      irritation: 0
-
-    };
-
-
-    events.forEach(
-      function(event) {
-
-        if (
-          event.event_type ===
-            "emotion_selected" &&
-          counts[event.mood] !==
-            undefined
-        ) {
-
-          counts[event.mood]++;
-
-        }
-
-      }
-    );
-
-
-    let mostUsed = null;
-    let highestCount = 0;
-
-
-    Object.keys(counts)
-      .forEach(
-        function(emotion) {
-
-          if (
-            counts[emotion] >
-            highestCount
-          ) {
-
-            highestCount =
-              counts[emotion];
-
-            mostUsed =
-              emotion;
-
-          }
-
-        }
-      );
-
-
-    mostUsedEmotion.textContent =
-      mostUsed
-        ? mostUsed.charAt(0)
-            .toUpperCase() +
-          mostUsed.slice(1)
-        : "—";
-
-
-    emotionList.innerHTML = "";
-
-
-    Object.keys(counts)
-      .forEach(
-        function(emotion) {
-
-          const row =
-            document.createElement("div");
-
-          row.className =
-            "emotion-stat-row";
-
-
-          row.innerHTML = `
-            <strong>
-              ${moodData[emotion].emoji}
-              ${moodData[emotion].title}
-            </strong>
-
-            <span>
-              ${counts[emotion]}
-            </span>
-          `;
-
-
-          emotionList.appendChild(
-            row
-          );
-
-        }
-      );
-
-
-    const pageViews =
-      events.filter(
-        function(event) {
-
-          return (
-            event.event_type ===
-            "page_view"
-          );
-
-        }
-      );
-
-
-    historyList.innerHTML = "";
-
-
-    if (
-      pageViews.length === 0
-    ) {
-
-      historyList.innerHTML =
-        "<p>No visitor activity yet.</p>";
-
-    } else {
-
-      pageViews
-        .slice()
-        .reverse()
-        .slice(0, 20)
-        .forEach(
-          function(event) {
-
-            const row =
-              document.createElement(
-                "div"
-              );
-
-
-            row.className =
-              "usage-history-row";
-
-
-            row.textContent =
-              new Date(
-                event.created_at
-              ).toLocaleString();
-
-
-            historyList.appendChild(
-              row
-            );
-
-          }
-        );
+/* =========================================
+   SMALL PHONES
+   ========================================= */
+
+@media (
+    max-width:
+    380px
+) {
+
+    .queue-controls {
+
+        grid-template-columns:
+            1fr;
 
     }
 
-  } catch (error) {
 
-    console.error(
-      "Could not load insights:",
-      error
-    );
+    .feedback-choice-row {
 
-  }
+        flex-direction:
+            column;
+
+    }
+
+
+    .choice-button,
+    .helpful-choice {
+
+        width:
+            100%;
+
+    }
+
+
+    .hero h1 {
+
+        font-size:
+            2.55rem;
+
+    }
 
 }
-
-
-/* =========================================================
-   START WEBSITE
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-
-    /* EMOTION CARDS */
-
-    document
-      .querySelectorAll(
-        ".emotion-card"
-      )
-      .forEach(
-        function(card) {
-
-          card.addEventListener(
-            "click",
-            function() {
-
-              const emotion =
-                card.dataset.emotion
-                  .toLowerCase();
-
-
-              trackSoundSpaceEvent(
-                "emotion_selected",
-                emotion
-              );
-
-
-              displayEmotion(
-                emotion
-              );
-
-            }
-          );
-
-        }
-      );
-
-
-    /* HOME */
-
-    document
-      .getElementById(
-        "home-nav"
-      )
-      ?.addEventListener(
-        "click",
-        function() {
-
-          showPage(
-            "home-page"
-          );
-
-        }
-      );
-
-
-    /* WHY IT WORKS */
-
-    document
-      .getElementById(
-        "why-nav"
-      )
-      ?.addEventListener(
-        "click",
-        function() {
-
-          showPage(
-            "why-page"
-          );
-
-        }
-      );
-
-
-    /* ABOUT */
-
-    document
-      .getElementById(
-        "about-nav"
-      )
-      ?.addEventListener(
-        "click",
-        function() {
-
-          showPage(
-            "about-page"
-          );
-
-        }
-      );
-
-
-    /* FEEDBACK */
-
-    document
-      .getElementById(
-        "feedback-nav"
-      )
-      ?.addEventListener(
-        "click",
-        function() {
-
-          showPage(
-            "feedback-page"
-          );
-
-        }
-      );
-
-
-    /* INSIGHTS */
-
-    document
-      .getElementById(
-        "insights-nav"
-      )
-      ?.addEventListener(
-        "click",
-        function() {
-
-          showPage(
-            "insights-page"
-          );
-
-          displayInsights();
-
-        }
-      );
-
-
-    /* BACK */
-
-    document
-      .getElementById(
-        "back-button"
-      )
-      ?.addEventListener(
-        "click",
-        function() {
-
-          showPage(
-            "home-page"
-          );
-
-        }
-      );
-
-
-    /* SURPRISE */
-
-    document
-      .getElementById(
-        "surprise-button"
-      )
-      ?.addEventListener(
-        "click",
-        surpriseMe
-      );
-
-
-    /* QUEUE CONTROLS */
-
-    document
-      .getElementById(
-        "next-song"
-      )
-      ?.addEventListener(
-        "click",
-        nextSong
-      );
-
-
-    document
-      .getElementById(
-        "previous-song"
-      )
-      ?.addEventListener(
-        "click",
-        previousSong
-      );
-
-
-    document
-      .getElementById(
-        "shuffle-button"
-      )
-      ?.addEventListener(
-        "click",
-        shuffleSong
-      );
-
-
-    document
-      .getElementById(
-        "reshuffle-button"
-      )
-      ?.addEventListener(
-        "click",
-        reshuffleQueue
-      );
-
-
-    /* PLAYER CONTROLS */
-
-    document
-      .getElementById(
-        "player-next"
-      )
-      ?.addEventListener(
-        "click",
-        nextSong
-      );
-
-
-    document
-      .getElementById(
-        "player-previous"
-      )
-      ?.addEventListener(
-        "click",
-        previousSong
-      );
-
-
-    /* FEEDBACK */
-
-    setupFeedback();
-
-
-    /* TRACK VISIT */
-
-    if (!IS_DEVELOPER) {
-
-      trackSoundSpaceEvent(
-        "page_view"
-      );
-
-    }
-
-
-    console.log(
-      "SoundSpace loaded successfully!"
-    );
-
-  }
-);
