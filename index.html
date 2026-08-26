@@ -78,7 +78,6 @@
 </header>
 
 
-
 <!-- =====================================================
      HOME
      ===================================================== -->
@@ -103,7 +102,6 @@
     </section>
 
 
-
     <section class="emotion-section">
 
         <h2>
@@ -114,6 +112,7 @@
 
 
             <button
+                type="button"
                 class="emotion-card happiness-card"
                 data-emotion="Happiness"
             >
@@ -137,8 +136,8 @@
             </button>
 
 
-
             <button
+                type="button"
                 class="emotion-card sadness-card"
                 data-emotion="Sadness"
             >
@@ -162,8 +161,8 @@
             </button>
 
 
-
             <button
+                type="button"
                 class="emotion-card anger-card"
                 data-emotion="Anger"
             >
@@ -187,8 +186,8 @@
             </button>
 
 
-
             <button
+                type="button"
                 class="emotion-card anxiety-card"
                 data-emotion="Anxiety"
             >
@@ -212,8 +211,8 @@
             </button>
 
 
-
             <button
+                type="button"
                 class="emotion-card irritation-card"
                 data-emotion="Irritation"
             >
@@ -243,7 +242,6 @@
 </main>
 
 
-
 <!-- =====================================================
      EMOTION PAGE
      ===================================================== -->
@@ -256,6 +254,7 @@
     <section class="emotion-header">
 
         <button
+            type="button"
             id="back-button"
             class="back-button"
         >
@@ -274,6 +273,9 @@
     </section>
 
 
+    <!-- =================================================
+         SONGS
+         ================================================= -->
 
     <section class="songs-section">
 
@@ -290,12 +292,15 @@
                 </h2>
 
                 <p>
-                    Explore music selected to fit the feeling you're experiencing.
+                    Explore music selected to fit the feeling
+                    you're experiencing.
                 </p>
 
             </div>
 
+
             <button
+                type="button"
                 id="surprise-button"
                 class="surprise-button"
             >
@@ -305,6 +310,57 @@
         </div>
 
 
+        <!-- =================================================
+             QUEUE CONTROLS
+             ================================================= -->
+
+        <div
+            class="queue-controls"
+            aria-label="Music queue controls"
+        >
+
+            <button
+                type="button"
+                id="previous-song"
+                class="queue-button"
+            >
+                ⏮ Previous
+            </button>
+
+
+            <button
+                type="button"
+                id="shuffle-button"
+                class="queue-button"
+            >
+                🔀 Shuffle
+            </button>
+
+
+            <button
+                type="button"
+                id="reshuffle-button"
+                class="queue-button"
+            >
+                🔄 Reshuffle
+            </button>
+
+
+            <button
+                type="button"
+                id="next-song"
+                class="queue-button"
+            >
+                Next ⏭
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             SONG LIST
+             ================================================= -->
+
         <div
             id="song-list"
             class="song-list"
@@ -313,6 +369,9 @@
     </section>
 
 
+    <!-- =================================================
+         PLAYER / SELECTED SONG
+         ================================================= -->
 
     <section
         id="player-section"
@@ -326,14 +385,40 @@
                 SELECTED FOR YOU
             </p>
 
+
             <h3 id="player-song-title"></h3>
 
+
             <p id="player-song-artist"></p>
+
 
             <p
                 id="player-song-reason"
                 class="player-reason"
             ></p>
+
+
+            <div class="player-controls">
+
+                <button
+                    type="button"
+                    id="player-previous"
+                    class="player-control-button"
+                >
+                    ⏮
+                </button>
+
+
+                <button
+                    type="button"
+                    id="player-next"
+                    class="player-control-button"
+                >
+                    ⏭
+                </button>
+
+            </div>
+
 
             <a
                 id="listen-link"
@@ -342,7 +427,7 @@
                 rel="noopener noreferrer"
                 class="listen-button"
             >
-                🎵 Listen to this song
+                🎵 Listen to this song on Spotify
             </a>
 
         </div>
@@ -350,7 +435,6 @@
     </section>
 
 </main>
-
 
 
 <!-- =====================================================
@@ -381,7 +465,6 @@
     </section>
 
 
-
     <section class="information-grid">
 
 
@@ -405,7 +488,6 @@
         </article>
 
 
-
         <article class="information-card">
 
             <div class="information-icon">
@@ -426,7 +508,6 @@
         </article>
 
 
-
         <article class="information-card">
 
             <div class="information-icon">
@@ -445,7 +526,6 @@
             </p>
 
         </article>
-
 
 
         <article class="information-card">
@@ -469,7 +549,6 @@
         </article>
 
 
-
         <article class="information-card">
 
             <div class="information-icon">
@@ -488,7 +567,6 @@
             </p>
 
         </article>
-
 
 
         <article class="information-card">
@@ -513,7 +591,6 @@
     </section>
 
 </main>
-
 
 
 <!-- =====================================================
@@ -542,7 +619,6 @@
         </p>
 
     </section>
-
 
 
     <section class="about-content">
@@ -574,7 +650,6 @@
         </article>
 
 
-
         <article class="about-card">
 
             <div class="information-icon">
@@ -597,7 +672,6 @@
             </p>
 
         </article>
-
 
 
         <article class="about-card">
@@ -624,7 +698,6 @@
         </article>
 
 
-
         <article class="about-card">
 
             <div class="information-icon">
@@ -649,7 +722,6 @@
             </p>
 
         </article>
-
 
 
         <article class="about-card">
@@ -680,7 +752,6 @@
 </main>
 
 
-
 <!-- =====================================================
      FEEDBACK
      ===================================================== -->
@@ -707,7 +778,6 @@
         </p>
 
     </section>
-
 
 
     <section class="feedback-page-card">
@@ -768,7 +838,6 @@
             </div>
 
 
-
             <div class="feedback-question">
 
                 <label>
@@ -809,7 +878,6 @@
                 >
 
             </div>
-
 
 
             <div class="feedback-question">
@@ -854,7 +922,6 @@
             </div>
 
 
-
             <div class="feedback-question">
 
                 <label>
@@ -870,7 +937,6 @@
             </div>
 
 
-
             <div class="feedback-question">
 
                 <label>
@@ -884,7 +950,6 @@
                 ></textarea>
 
             </div>
-
 
 
             <button
@@ -905,7 +970,6 @@
     </section>
 
 </main>
-
 
 
 <!-- =====================================================
@@ -932,7 +996,6 @@
         </p>
 
     </section>
-
 
 
     <section class="insights-grid">
@@ -978,7 +1041,6 @@
     </section>
 
 
-
     <section class="emotion-statistics">
 
         <h2>
@@ -988,7 +1050,6 @@
         <div id="emotion-statistics-list"></div>
 
     </section>
-
 
 
     <section class="usage-history">
@@ -1002,7 +1063,6 @@
     </section>
 
 </main>
-
 
 
 <!-- =====================================================
@@ -1028,5 +1088,6 @@
 
 
 <script src="script.js"></script>
+
 </body>
 </html>
