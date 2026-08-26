@@ -1,6 +1,6 @@
 /* =========================================================
-   SOUNDSPACE — COMPLETE SCRIPT
-   SHARED SUPABASE ANALYTICS
+   SOUNDSPACE — COMPLETE CLEAN SCRIPT
+   50 SONGS + SUPABASE ANALYTICS + FEEDBACK
    ========================================================= */
 
 
@@ -22,11 +22,14 @@ const SUPABASE_KEY =
 const SOUNDSPACE_SESSION_ID =
   sessionStorage.getItem("soundspace_session_id") ||
   (() => {
+
     const id =
       "ss_" +
       Date.now() +
       "_" +
-      Math.random().toString(36).substring(2, 10);
+      Math.random()
+        .toString(36)
+        .substring(2, 10);
 
     sessionStorage.setItem(
       "soundspace_session_id",
@@ -34,487 +37,12 @@ const SOUNDSPACE_SESSION_ID =
     );
 
     return id;
+
   })();
 
 
 /* =========================================================
-   3. SUPABASE EVENT TRACKING
-   ========================================================= */
-
-async function displayInsights() {
-
-  const events =
-    await getSharedInsights();
-
-
-  /* =====================================
-     UNIQUE VISITORS
-  ===================================== */
-
-  const sessions =
-    new Set();
-
-  events.forEach(function(event) {
-
-    if (event.session_id) {
-
-      sessions.add(
-        event.session_id
-      );
-
-    }
-
-  });
-
-
-  const totalElement =
-    document.querySelector(
-      "#insight-total"
-    );
-
-
-  if (totalElement) {
-
-    totalElement.textContent =
-      sessions.size;
-
-  }
-
-
-
-  /* =====================================
-     EMOTION COUNTS
-  ===================================== */
-
-  const emotionCounts = {
-
-    happiness: 0,
-    sadness: 0,
-    anger: 0,
-    anxiety: 0,
-    irritation: 0
-
-  };
-
-
-  events.forEach(function(event) {
-
-    if (
-      event.event_type ===
-      "emotion_selected"
-    ) {
-
-      const mood =
-        String(
-          event.mood || ""
-        ).toLowerCase();
-
-
-      if (
-        emotionCounts[mood] !==
-        undefined
-      ) {
-
-        emotionCounts[mood]++;
-
-      }
-
-    }
-
-  });
-
-
-  Object.keys(
-    emotionCounts
-  ).forEach(function(emotion) {
-
-    const element =
-      document.querySelector(
-        "#stat-" + emotion
-      );
-
-
-    if (element) {
-
-      element.textContent =
-        emotionCounts[emotion];
-
-    }
-
-  });
-
-
-
-  /* =====================================
-     HELPFULNESS RESULTS
-  ===================================== */
-
-  let yes = 0;
-  let no = 0;
-
-
-  events.forEach(function(event) {
-
-    if (
-      event.event_type ===
-      "feedback"
-    ) {
-
-      if (event.helpful === "Yes") {
-
-        yes++;
-
-      }
-
-
-      if (event.helpful === "No") {
-
-        no++;
-
-      }
-
-    }
-
-  });
-
-
-  const yesElement =
-    document.querySelector(
-      "#insight-yes"
-    );
-
-
-  const noElement =
-    document.querySelector(
-      "#insight-no"
-    );
-
-
-  if (yesElement) {
-
-    yesElement.textContent =
-      yes;
-
-  }
-
-
-  if (noElement) {
-
-    noElement.textContent =
-      no;
-
-  }
-
-
-
-  /* =====================================
-     GROUP VISITS BY DATE
-  ===================================== */
-
-  const datesContainer =
-    document.querySelector(
-      "#insight-dates"
-    );
-
-
-  if (datesContainer) {
-
-    const visits =
-      events.filter(function(event) {
-
-        return (
-          event.event_type ===
-          "page_view"
-        );
-
-      });
-
-
-    if (!visits.length) {
-
-      datesContainer.innerHTML = `
-
-        <p class="empty-insights">
-          No visits recorded yet.
-        </p>
-
-      `;
-
-    } else {
-
-      const groupedDates = {};
-
-
-      visits.forEach(function(event) {
-
-        if (!event.created_at) {
-
-          return;
-
-        }
-
-
-        const date =
-          new Date(
-            event.created_at
-          );
-
-
-        const dateKey =
-          date.toLocaleDateString(
-            undefined,
-            {
-              year: "numeric",
-              month: "long",
-              day: "numeric"
-            }
-          );
-
-
-        if (!groupedDates[dateKey]) {
-
-          groupedDates[dateKey] = {
-
-            count: 0,
-
-            latest:
-              date
-
-          };
-
-        }
-
-
-        groupedDates[dateKey].count++;
-
-
-        if (
-          date >
-          groupedDates[dateKey].latest
-        ) {
-
-          groupedDates[dateKey].latest =
-            date;
-
-        }
-
-      });
-
-
-      const sortedDates =
-        Object.entries(
-          groupedDates
-        ).sort(function(a, b) {
-
-          return (
-            b[1].latest -
-            a[1].latest
-          );
-
-        });
-
-
-      datesContainer.innerHTML =
-        sortedDates
-          .map(function(entry) {
-
-            const date =
-              entry[0];
-
-            const data =
-              entry[1];
-
-
-            const visitText =
-              data.count === 1
-                ? "visit"
-                : "visits";
-
-
-            return `
-
-              <div class="date-row">
-
-                <div>
-
-                  <strong>
-                    📅 ${date}
-                  </strong>
-
-                  <p>
-                    SoundSpace was used
-                    ${data.count}
-                    ${visitText}.
-                  </p>
-
-                </div>
-
-
-                <strong>
-                  ${data.count}
-                </strong>
-
-              </div>
-
-            `;
-
-          })
-          .join("");
-
-    }
-
-  }
-
-
-
-  /* =====================================
-     VISITOR FEEDBACK
-  ===================================== */
-
-  const feedbackContainer =
-    document.querySelector(
-      "#insight-feedback"
-    );
-
-
-  if (feedbackContainer) {
-
-    const feedback =
-      events
-        .filter(function(event) {
-
-          return (
-            event.event_type ===
-            "feedback"
-          );
-
-        })
-        .reverse();
-
-
-    if (!feedback.length) {
-
-      feedbackContainer.innerHTML = `
-
-        <p class="empty-insights">
-          No feedback submitted yet.
-        </p>
-
-      `;
-
-    } else {
-
-      feedbackContainer.innerHTML =
-        feedback
-          .map(function(item) {
-
-            return `
-
-              <article
-                class="feedback-result"
-              >
-
-                <div
-                  class="feedback-result-top"
-                >
-
-                  <strong>
-
-                    ${
-                      escapeHTML(
-                        item.mood ||
-                        "No emotion selected"
-                      )
-                    }
-
-                  </strong>
-
-
-                  <span>
-
-                    ${
-                      escapeHTML(
-                        item.helpful ||
-                        "No answer"
-                      )
-                    }
-
-                  </span>
-
-                </div>
-
-
-                ${
-                  item.song
-                    ? `
-
-                      <p>
-
-                        <b>
-                          Song:
-                        </b>
-
-                        <br>
-
-                        ${escapeHTML(item.song)}
-
-                      </p>
-
-                    `
-                    : ""
-                }
-
-
-                ${
-                  item.feedback_text
-                    ? `
-
-                      <p>
-
-                        <b>
-                          Feedback:
-                        </b>
-
-                        <br>
-
-                        ${escapeHTML(
-                          item.feedback_text
-                        )}
-
-                      </p>
-
-                    `
-                    : ""
-                }
-
-
-                <small>
-
-                  ${
-                    item.created_at
-                      ? new Date(
-                          item.created_at
-                        ).toLocaleString()
-                      : ""
-                  }
-
-                </small>
-
-              </article>
-
-            `;
-
-          })
-          .join("");
-
-    }
-
-  }
-
-}
-
-/* =========================================================
-   4. ALL 50 SONGS
+   3. ALL 50 SONGS
    ========================================================= */
 
 const moodData = {
@@ -601,6 +129,7 @@ const moodData = {
       }
 
     ]
+
   },
 
 
@@ -686,6 +215,7 @@ const moodData = {
       }
 
     ]
+
   },
 
 
@@ -771,6 +301,7 @@ const moodData = {
       }
 
     ]
+
   },
 
 
@@ -856,6 +387,7 @@ const moodData = {
       }
 
     ]
+
   },
 
 
@@ -941,19 +473,108 @@ const moodData = {
       }
 
     ]
+
   }
 
 };
 
 
 /* =========================================================
-   5. APP STATE
+   4. APP STATE
    ========================================================= */
 
 let currentEmotion = "";
 let currentSong = null;
 let shuffleQueue = [];
 let currentSongIndex = 0;
+
+
+/* =========================================================
+   5. SUPABASE EVENT TRACKING
+   ========================================================= */
+
+async function trackSoundSpaceEvent(
+  eventType,
+  mood = null,
+  song = null,
+  extraData = {}
+) {
+
+  try {
+
+    const eventData = {
+
+      event_type: eventType,
+
+      session_id:
+        SOUNDSPACE_SESSION_ID,
+
+      page:
+        window.location.pathname,
+
+      mood:
+        mood || null,
+
+      song:
+        song || null,
+
+      ...extraData
+
+    };
+
+
+    const response =
+      await fetch(
+        `${SUPABASE_URL}/rest/v1/usage_events`,
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              `Bearer ${SUPABASE_KEY}`,
+
+            "Prefer":
+              "return=minimal"
+
+          },
+
+          body:
+            JSON.stringify(eventData)
+
+        }
+      );
+
+
+    if (!response.ok) {
+
+      const errorText =
+        await response.text();
+
+      console.error(
+        "SoundSpace tracking failed:",
+        errorText
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "SoundSpace tracking error:",
+      error
+    );
+
+  }
+
+}
 
 
 /* =========================================================
@@ -964,6 +585,7 @@ function showPage(pageId) {
 
   const pages =
     document.querySelectorAll(".page");
+
 
   pages.forEach(function(page) {
 
@@ -1003,11 +625,19 @@ function showPage(pageId) {
 function displayEmotion(emotion) {
 
   if (!moodData[emotion]) {
+
+    console.error(
+      "Unknown emotion:",
+      emotion
+    );
+
     return;
+
   }
 
 
-  currentEmotion = emotion;
+  currentEmotion =
+    emotion;
 
 
   const data =
@@ -1074,7 +704,13 @@ function displaySongs() {
 
 
   if (!songList) {
+
+    console.error(
+      "Song list element not found."
+    );
+
     return;
+
   }
 
 
@@ -1104,7 +740,9 @@ function displaySongs() {
         );
 
 
-      songCard.type = "button";
+      songCard.type =
+        "button";
+
 
       songCard.className =
         "song-card";
@@ -1119,11 +757,11 @@ function displaySongs() {
         <span class="song-details">
 
           <strong>
-            ${song.title}
+            ${escapeHTML(song.title)}
           </strong>
 
           <small>
-            ${song.artist}
+            ${escapeHTML(song.artist)}
           </small>
 
           <span class="song-why">
@@ -1132,7 +770,7 @@ function displaySongs() {
               ✨ Why this song fits:
             </b>
 
-            ${song.why}
+            ${escapeHTML(song.why)}
 
           </span>
 
@@ -1149,7 +787,9 @@ function displaySongs() {
         "click",
         function() {
 
-          startSongSession(song);
+          startSongSession(
+            song
+          );
 
         }
       );
@@ -1183,7 +823,8 @@ function shuffleSongs(array) {
 
     const j =
       Math.floor(
-        Math.random() * (i + 1)
+        Math.random() *
+        (i + 1)
       );
 
 
@@ -1224,8 +865,6 @@ function startSongSession(song) {
     song;
 
 
-  /* Track song selection in Supabase */
-
   trackSoundSpaceEvent(
     "song_selected",
     currentEmotion,
@@ -1239,20 +878,28 @@ function startSongSession(song) {
       .filter(function(item) {
 
         return !(
-          item.title === song.title &&
-          item.artist === song.artist
+          item.title ===
+            song.title &&
+          item.artist ===
+            song.artist
         );
 
       });
 
 
   shuffleQueue = [
+
     song,
-    ...shuffleSongs(otherSongs)
+
+    ...shuffleSongs(
+      otherSongs
+    )
+
   ];
 
 
-  currentSongIndex = 0;
+  currentSongIndex =
+    0;
 
 
   displayPlayer();
@@ -1272,12 +919,16 @@ function startSongSession(song) {
 function displayPlayer() {
 
   if (!shuffleQueue.length) {
+
     return;
+
   }
 
 
   currentSong =
-    shuffleQueue[currentSongIndex];
+    shuffleQueue[
+      currentSongIndex
+    ];
 
 
   const playerTitle =
@@ -1395,7 +1046,9 @@ function displayQueue() {
 
 
   if (!queueList) {
+
     return;
+
   }
 
 
@@ -1411,14 +1064,17 @@ function displayQueue() {
         );
 
 
-      queueItem.type = "button";
+      queueItem.type =
+        "button";
+
 
       queueItem.className =
         "queue-item";
 
 
       if (
-        index === currentSongIndex
+        index ===
+        currentSongIndex
       ) {
 
         queueItem.classList.add(
@@ -1437,11 +1093,11 @@ function displayQueue() {
         <span class="queue-info">
 
           <strong>
-            ${song.title}
+            ${escapeHTML(song.title)}
           </strong>
 
           <small>
-            ${song.artist}
+            ${escapeHTML(song.artist)}
           </small>
 
         </span>
@@ -1482,7 +1138,9 @@ function displayQueue() {
 function nextSong() {
 
   if (!shuffleQueue.length) {
+
     return;
+
   }
 
 
@@ -1494,7 +1152,8 @@ function nextSong() {
     shuffleQueue.length
   ) {
 
-    currentSongIndex = 0;
+    currentSongIndex =
+      0;
 
     shuffleQueue =
       shuffleSongs(
@@ -1537,7 +1196,8 @@ function reshuffleSongs() {
     );
 
 
-  currentSongIndex = 0;
+  currentSongIndex =
+    0;
 
 
   currentSong =
@@ -1550,7 +1210,7 @@ function reshuffleSongs() {
 
 
 /* =========================================================
-   15. SHARED SUPABASE INSIGHTS
+   15. GET SHARED SUPABASE INSIGHTS
    ========================================================= */
 
 async function getSharedInsights() {
@@ -1561,13 +1221,19 @@ async function getSharedInsights() {
       await fetch(
         `${SUPABASE_URL}/rest/v1/usage_events?select=*`,
         {
+
           method: "GET",
 
           headers: {
-            "apikey": SUPABASE_KEY,
+
+            "apikey":
+              SUPABASE_KEY,
+
             "Authorization":
               `Bearer ${SUPABASE_KEY}`
+
           }
+
         }
       );
 
@@ -1604,7 +1270,7 @@ async function getSharedInsights() {
 
 
 /* =========================================================
-   16. DISPLAY SHARED INSIGHTS
+   16. DISPLAY INSIGHTS
    ========================================================= */
 
 async function displayInsights() {
@@ -1614,7 +1280,7 @@ async function displayInsights() {
 
 
   /* -----------------------------------------
-     UNIQUE USERS / SESSIONS
+     UNIQUE VISITORS
      ----------------------------------------- */
 
   const sessions =
@@ -1667,26 +1333,34 @@ async function displayInsights() {
 
     if (
       event.event_type ===
-        "emotion_selected" &&
-      event.mood &&
-      emotionCounts[event.mood]
-        !== undefined
+      "emotion_selected"
     ) {
 
-      emotionCounts[event.mood]++;
+      const mood =
+        String(
+          event.mood || ""
+        ).toLowerCase();
+
+
+      if (
+        Object.prototype.hasOwnProperty.call(
+          emotionCounts,
+          mood
+        )
+      ) {
+
+        emotionCounts[mood]++;
+
+      }
 
     }
 
   });
 
 
-  [
-    "happiness",
-    "sadness",
-    "anger",
-    "anxiety",
-    "irritation"
-  ].forEach(function(emotion) {
+  Object.keys(
+    emotionCounts
+  ).forEach(function(emotion) {
 
     const element =
       document.querySelector(
@@ -1705,11 +1379,10 @@ async function displayInsights() {
 
 
   /* -----------------------------------------
-     HELPFUL RESPONSES
+     HELPFULNESS
      ----------------------------------------- */
 
   let yes = 0;
-  let little = 0;
   let no = 0;
 
 
@@ -1725,16 +1398,23 @@ async function displayInsights() {
     }
 
 
-    if (event.helpful === "Yes") {
+    if (
+      event.helpful ===
+      "Yes"
+    ) {
+
       yes++;
+
     }
 
-    if (event.helpful === "A little") {
-      little++;
-    }
 
-    if (event.helpful === "No") {
+    if (
+      event.helpful ===
+      "No"
+    ) {
+
       no++;
+
     }
 
   });
@@ -1746,12 +1426,6 @@ async function displayInsights() {
     );
 
 
-  const littleElement =
-    document.querySelector(
-      "#insight-little"
-    );
-
-
   const noElement =
     document.querySelector(
       "#insight-no"
@@ -1759,84 +1433,167 @@ async function displayInsights() {
 
 
   if (yesElement) {
-    yesElement.textContent = yes;
-  }
 
+    yesElement.textContent =
+      yes;
 
-  if (littleElement) {
-    littleElement.textContent = little;
   }
 
 
   if (noElement) {
-    noElement.textContent = no;
+
+    noElement.textContent =
+      no;
+
   }
 
 
   /* -----------------------------------------
-     ACTIVITY DATES
+     ACTIVITY BY DATE
      ----------------------------------------- */
 
-  const dates =
+  const datesContainer =
     document.querySelector(
       "#insight-dates"
     );
 
 
-  if (dates) {
+  if (datesContainer) {
 
-    const pageViews =
-      events
-        .filter(function(event) {
+    const visits =
+      events.filter(function(event) {
 
-          return (
-            event.event_type ===
-            "page_view"
-          );
+        return (
+          event.event_type ===
+          "page_view"
+        );
 
-        })
-        .reverse();
+      });
 
 
-    if (!pageViews.length) {
+    if (!visits.length) {
 
-      dates.innerHTML = `
+      datesContainer.innerHTML = `
+
         <p class="empty-insights">
           No activity recorded yet.
         </p>
+
       `;
 
     } else {
 
-      dates.innerHTML =
-        pageViews
-          .map(function(event) {
+      const groupedDates = {};
+
+
+      visits.forEach(function(event) {
+
+        if (!event.created_at) {
+
+          return;
+
+        }
+
+
+        const date =
+          new Date(
+            event.created_at
+          );
+
+
+        const dateKey =
+          date.toLocaleDateString(
+            undefined,
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            }
+          );
+
+
+        if (
+          !groupedDates[dateKey]
+        ) {
+
+          groupedDates[dateKey] = {
+
+            count: 0,
+
+            latest:
+              date
+
+          };
+
+        }
+
+
+        groupedDates[dateKey].count++;
+
+
+        if (
+          date >
+          groupedDates[dateKey].latest
+        ) {
+
+          groupedDates[dateKey].latest =
+            date;
+
+        }
+
+      });
+
+
+      const sortedDates =
+        Object.entries(
+          groupedDates
+        ).sort(function(a, b) {
+
+          return (
+            b[1].latest -
+            a[1].latest
+          );
+
+        });
+
+
+      datesContainer.innerHTML =
+        sortedDates
+          .map(function(entry) {
 
             const date =
-              event.created_at
-                ? new Date(
-                    event.created_at
-                  )
-                : new Date();
+              entry[0];
+
+            const data =
+              entry[1];
+
+
+            const visitText =
+              data.count === 1
+                ? "visit"
+                : "visits";
 
 
             return `
 
               <div class="date-row">
 
-                <span>
-                  📅
-                  ${date.toLocaleDateString()}
-                </span>
+                <div>
+
+                  <strong>
+                    📅 ${escapeHTML(date)}
+                  </strong>
+
+                  <p>
+                    SoundSpace was used
+                    ${data.count}
+                    ${visitText}.
+                  </p>
+
+                </div>
 
                 <strong>
-                  ${date.toLocaleTimeString(
-                    [],
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit"
-                    }
-                  )}
+                  ${data.count}
                 </strong>
 
               </div>
@@ -1879,9 +1636,11 @@ async function displayInsights() {
     if (!feedback.length) {
 
       feedbackContainer.innerHTML = `
+
         <p class="empty-insights">
           No feedback submitted yet.
         </p>
+
       `;
 
     } else {
@@ -1920,31 +1679,55 @@ async function displayInsights() {
 
                 </div>
 
+
                 ${
                   item.song
                     ? `
+
                       <p>
-                        <b>Song:</b><br>
-                        ${escapeHTML(item.song)}
+
+                        <b>
+                          Song:
+                        </b>
+
+                        <br>
+
+                        ${escapeHTML(
+                          item.song
+                        )}
+
                       </p>
+
                     `
                     : ""
                 }
+
 
                 ${
                   item.feedback_text
                     ? `
+
                       <p>
-                        <b>Feedback:</b><br>
+
+                        <b>
+                          Feedback:
+                        </b>
+
+                        <br>
+
                         ${escapeHTML(
                           item.feedback_text
                         )}
+
                       </p>
+
                     `
                     : ""
                 }
 
+
                 <small>
+
                   ${
                     item.created_at
                       ? new Date(
@@ -1952,6 +1735,7 @@ async function displayInsights() {
                         ).toLocaleString()
                       : ""
                   }
+
                 </small>
 
               </article>
@@ -2031,7 +1815,8 @@ function setupPageButtons() {
 
 
           if (
-            page === "insights"
+            page ===
+            "insights"
           ) {
 
             displayInsights();
@@ -2059,6 +1844,12 @@ function setupEmotionCards() {
     );
 
 
+  console.log(
+    "Emotion cards found:",
+    emotionCards.length
+  );
+
+
   emotionCards.forEach(
     function(card) {
 
@@ -2070,9 +1861,21 @@ function setupEmotionCards() {
             card.dataset.emotion;
 
 
+          console.log(
+            "Emotion clicked:",
+            emotion
+          );
+
+
           if (
+            !emotion ||
             !moodData[emotion]
           ) {
+
+            console.error(
+              "Invalid emotion:",
+              emotion
+            );
 
             return;
 
@@ -2083,7 +1886,7 @@ function setupEmotionCards() {
             emotion;
 
 
-          /* Shared Supabase tracking */
+          /* Track emotion */
 
           trackSoundSpaceEvent(
             "emotion_selected",
@@ -2091,10 +1894,14 @@ function setupEmotionCards() {
           );
 
 
+          /* Display the songs */
+
           displayEmotion(
             emotion
           );
 
+
+          /* Move to emotion page */
 
           showPage(
             "emotion-page"
@@ -2122,7 +1929,9 @@ function setupFeedback() {
 
 
   if (!feedbackForm) {
+
     return;
+
   }
 
 
@@ -2200,9 +2009,11 @@ function setupFeedback() {
           await fetch(
             `${SUPABASE_URL}/rest/v1/usage_events`,
             {
+
               method: "POST",
 
               headers: {
+
                 "Content-Type":
                   "application/json",
 
@@ -2214,6 +2025,7 @@ function setupFeedback() {
 
                 "Prefer":
                   "return=minimal"
+
               },
 
               body:
@@ -2364,7 +2176,9 @@ function setupBackButtons() {
       "click",
       function() {
 
-        showPage("home");
+        showPage(
+          "home"
+        );
 
       }
     );
@@ -2431,7 +2245,7 @@ document.addEventListener(
     setupBackButtons();
 
 
-    /* Count this visit */
+    /* Record this visit */
 
     trackSoundSpaceEvent(
       "page_view"
