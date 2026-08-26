@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -8,18 +9,13 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="theme-color"
-        content="#24141d"
-    >
-
     <title>SoundSpace — Music for How You Feel</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
@@ -29,65 +25,52 @@
 
 <body>
 
+
 <!-- =====================================================
      HEADER
-===================================================== -->
+     ===================================================== -->
 
 <header class="site-header">
 
-    <button
-        class="logo"
-        id="logo-home"
-        type="button"
-    >
+    <div class="logo">
         SoundSpace
-    </button>
-
+    </div>
 
     <nav class="main-nav">
 
         <button
             id="home-nav"
             class="nav-btn active"
-            type="button"
         >
             Home
         </button>
 
-
-        <button
-            id="insights-nav"
-            class="nav-btn"
-            type="button"
-        >
-            Insights
-        </button>
-
-
         <button
             id="why-nav"
             class="nav-btn"
-            type="button"
         >
             Why It Works
         </button>
 
-
         <button
             id="about-nav"
             class="nav-btn"
-            type="button"
         >
             About
         </button>
 
-
         <button
             id="feedback-nav"
             class="nav-btn"
-            type="button"
         >
             Feedback
+        </button>
+
+        <button
+            id="insights-nav"
+            class="nav-btn"
+        >
+            Insights
         </button>
 
     </nav>
@@ -98,84 +81,45 @@
 
 <!-- =====================================================
      HOME
-===================================================== -->
+     ===================================================== -->
 
-<main
-    id="home-page"
-    class="page"
->
+<main id="home-page">
 
     <section class="hero">
-
-        <div class="hero-orbit hero-orbit-one"></div>
-        <div class="hero-orbit hero-orbit-two"></div>
-
 
         <p class="eyebrow">
             YOUR MOOD • YOUR MOMENT • YOUR MUSIC
         </p>
 
-
         <h1>
-            Music for
-            <span>how you feel.</span>
+            Music for how you feel.
         </h1>
 
-
         <p class="hero-description">
-            SoundSpace connects your emotions with music chosen
-            to match the moment you're in.
+            Choose the emotion that best describes how you're feeling
+            and discover music selected to match your mood.
         </p>
-
-
-        <div class="hero-note">
-            <span>✦</span>
-            Choose an emotion to enter your SoundSpace.
-        </div>
 
     </section>
 
 
 
-    <!-- EMOTION CARDS -->
-
     <section class="emotion-section">
 
-        <div class="section-heading">
-
-            <p class="section-kicker">
-                FIND YOUR SOUND
-            </p>
-
-            <h2>
-                How are you feeling?
-            </h2>
-
-            <p>
-                There is no wrong emotion. Start with the one
-                that feels closest to where you are right now.
-            </p>
-
-        </div>
-
+        <h2>
+            How are you feeling?
+        </h2>
 
         <div class="emotion-grid">
 
 
             <button
-                class="emotion-card emotion-happiness"
+                class="emotion-card happiness-card"
                 data-emotion="Happiness"
-                type="button"
             >
-
-                <span class="emotion-card-glow"></span>
 
                 <span class="emotion-icon">
                     😊
-                </span>
-
-                <span class="emotion-number">
-                    01
                 </span>
 
                 <span class="emotion-name">
@@ -186,8 +130,8 @@
                     Bright, energetic and joyful
                 </span>
 
-                <span class="emotion-card-arrow">
-                    ↗
+                <span class="card-explore">
+                    Explore mood →
                 </span>
 
             </button>
@@ -195,19 +139,12 @@
 
 
             <button
-                class="emotion-card emotion-sadness"
+                class="emotion-card sadness-card"
                 data-emotion="Sadness"
-                type="button"
             >
 
-                <span class="emotion-card-glow"></span>
-
                 <span class="emotion-icon">
-                    😢
-                </span>
-
-                <span class="emotion-number">
-                    02
+                    😔
                 </span>
 
                 <span class="emotion-name">
@@ -218,8 +155,8 @@
                     Reflective, emotional and comforting
                 </span>
 
-                <span class="emotion-card-arrow">
-                    ↗
+                <span class="card-explore">
+                    Explore mood →
                 </span>
 
             </button>
@@ -227,19 +164,12 @@
 
 
             <button
-                class="emotion-card emotion-anger"
+                class="emotion-card anger-card"
                 data-emotion="Anger"
-                type="button"
             >
-
-                <span class="emotion-card-glow"></span>
 
                 <span class="emotion-icon">
                     😡
-                </span>
-
-                <span class="emotion-number">
-                    03
                 </span>
 
                 <span class="emotion-name">
@@ -250,8 +180,8 @@
                     Intense, powerful and energetic
                 </span>
 
-                <span class="emotion-card-arrow">
-                    ↗
+                <span class="card-explore">
+                    Explore mood →
                 </span>
 
             </button>
@@ -259,19 +189,12 @@
 
 
             <button
-                class="emotion-card emotion-anxiety"
+                class="emotion-card anxiety-card"
                 data-emotion="Anxiety"
-                type="button"
             >
 
-                <span class="emotion-card-glow"></span>
-
                 <span class="emotion-icon">
-                    😟
-                </span>
-
-                <span class="emotion-number">
-                    04
+                    😰
                 </span>
 
                 <span class="emotion-name">
@@ -282,8 +205,8 @@
                     Calming, grounding and reassuring
                 </span>
 
-                <span class="emotion-card-arrow">
-                    ↗
+                <span class="card-explore">
+                    Explore mood →
                 </span>
 
             </button>
@@ -291,19 +214,12 @@
 
 
             <button
-                class="emotion-card emotion-irritation"
+                class="emotion-card irritation-card"
                 data-emotion="Irritation"
-                type="button"
             >
-
-                <span class="emotion-card-glow"></span>
 
                 <span class="emotion-icon">
                     😤
-                </span>
-
-                <span class="emotion-number">
-                    05
                 </span>
 
                 <span class="emotion-name">
@@ -314,31 +230,12 @@
                     Release tension and reset
                 </span>
 
-                <span class="emotion-card-arrow">
-                    ↗
+                <span class="card-explore">
+                    Explore mood →
                 </span>
 
             </button>
 
-        </div>
-
-    </section>
-
-
-    <section class="home-bottom-note">
-
-        <div class="note-symbol">
-            ♪
-        </div>
-
-        <div>
-            <strong>
-                Your mood has a soundtrack.
-            </strong>
-
-            <p>
-                Let SoundSpace help you find it.
-            </p>
         </div>
 
     </section>
@@ -349,11 +246,10 @@
 
 <!-- =====================================================
      EMOTION PAGE
-===================================================== -->
+     ===================================================== -->
 
 <main
     id="emotion-page"
-    class="page"
     style="display:none;"
 >
 
@@ -362,43 +258,22 @@
         <button
             id="back-button"
             class="back-button"
-            type="button"
         >
-            ← Back to emotions
+            ← Back
         </button>
-
-
-        <div
-            id="emotion-header-accent"
-            class="emotion-header-accent"
-        ></div>
-
 
         <p
             id="selected-emotion-icon"
             class="large-emotion-icon"
         ></p>
 
+        <h1 id="selected-emotion-title"></h1>
 
-        <p class="section-kicker">
-            YOUR SOUNDSPACE
-        </p>
-
-
-        <h1
-            id="selected-emotion-title"
-        ></h1>
-
-
-        <p
-            id="selected-emotion-description"
-        ></p>
+        <p id="selected-emotion-description"></p>
 
     </section>
 
 
-
-    <!-- SONGS -->
 
     <section class="songs-section">
 
@@ -406,8 +281,8 @@
 
             <div>
 
-                <p class="section-kicker">
-                    YOUR PLAYLIST
+                <p class="eyebrow">
+                    YOUR SOUNDSPACE
                 </p>
 
                 <h2>
@@ -415,20 +290,16 @@
                 </h2>
 
                 <p>
-                    Explore each song and discover why it fits
-                    the emotion you selected.
+                    Explore music selected to fit the feeling you're experiencing.
                 </p>
 
             </div>
 
-
             <button
                 id="surprise-button"
                 class="surprise-button"
-                type="button"
             >
-                <span>✦</span>
-                Surprise Me
+                🎲 Surprise Me
             </button>
 
         </div>
@@ -443,185 +314,38 @@
 
 
 
-    <!-- PLAYER -->
-
     <section
         id="player-section"
         class="player-section"
         style="display:none;"
     >
 
-        <div class="player-inner">
+        <div class="player-content">
 
-            <div class="player-disc">
-                ♪
-            </div>
-
-
-            <div class="player-content">
-
-                <p class="player-label">
-                    NOW SELECTED
-                </p>
-
-
-                <h3
-                    id="player-song-title"
-                ></h3>
-
-
-                <p
-                    id="player-song-artist"
-                ></p>
-
-
-                <p
-                    id="player-song-reason"
-                    class="player-reason"
-                ></p>
-
-
-                <a
-                    id="listen-link"
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="listen-button"
-                >
-                    🎵 Listen to this song
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-
-<!-- =====================================================
-     INSIGHTS
-===================================================== -->
-
-<main
-    id="insights-page"
-    class="page"
-    style="display:none;"
->
-
-    <section class="inner-page-header">
-
-        <p class="section-kicker">
-            SOUNDSPACE INSIGHTS
-        </p>
-
-
-        <h1>
-            Your SoundSpace Insights
-        </h1>
-
-
-        <p>
-            See how SoundSpace has been explored and which
-            emotions people are connecting with.
-        </p>
-
-    </section>
-
-
-    <section class="insights-grid">
-
-        <div class="insight-card">
-
-            <span class="insight-icon">
-                ◉
-            </span>
-
-            <p>
-                TOTAL USES
+            <p class="player-label">
+                SELECTED FOR YOU
             </p>
 
-            <strong id="total-uses">
-                0
-            </strong>
+            <h3 id="player-song-title"></h3>
+
+            <p id="player-song-artist"></p>
+
+            <p
+                id="player-song-reason"
+                class="player-reason"
+            ></p>
+
+            <a
+                id="listen-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="listen-button"
+            >
+                🎵 Listen to this song
+            </a>
 
         </div>
-
-
-        <div class="insight-card">
-
-            <span class="insight-icon">
-                ✦
-            </span>
-
-            <p>
-                HELPFUL RESPONSES
-            </p>
-
-            <strong id="helpful-count">
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="insight-card">
-
-            <span class="insight-icon">
-                ♫
-            </span>
-
-            <p>
-                MOST SELECTED EMOTION
-            </p>
-
-            <strong id="most-used-emotion">
-                —
-            </strong>
-
-        </div>
-
-    </section>
-
-
-
-    <section class="insights-section">
-
-        <p class="section-kicker">
-            THE EMOTIONS
-        </p>
-
-        <h2>
-            Emotion Usage
-        </h2>
-
-
-        <div
-            id="emotion-statistics-list"
-            class="statistics-list"
-        ></div>
-
-    </section>
-
-
-
-    <section class="insights-section">
-
-        <p class="section-kicker">
-            ACTIVITY
-        </p>
-
-        <h2>
-            When SoundSpace Was Used
-        </h2>
-
-
-        <div
-            id="usage-history-list"
-            class="history-list"
-        ></div>
 
     </section>
 
@@ -631,208 +355,160 @@
 
 <!-- =====================================================
      WHY IT WORKS
-===================================================== -->
+     ===================================================== -->
 
 <main
     id="why-page"
-    class="page information-page"
+    class="information-page"
     style="display:none;"
 >
 
-    <section class="inner-page-header why-header">
+    <section class="information-hero">
 
-        <p class="section-kicker">
+        <p class="eyebrow">
             THE IDEA BEHIND SOUNDSPACE
         </p>
 
-
         <h1>
-            Why It <span>Works</span>
+            Why It Works
         </h1>
 
-
         <p>
-            SoundSpace is built around a simple idea:
-            when emotions change, the music we connect with
-            can change too.
+            SoundSpace starts with something simple:
+            the music we choose can influence the atmosphere we experience.
         </p>
 
     </section>
 
 
 
-    <section class="story-card featured-information">
-
-        <div class="story-number">
-            01
-        </div>
+    <section class="information-grid">
 
 
-        <div>
+        <article class="information-card">
+
+            <div class="information-icon">
+                🎧
+            </div>
 
             <h2>
-                Music already speaks to us.
+                Start with the feeling
             </h2>
 
-
             <p>
-                Music is often described as food for the soul,
-                and for many teenagers, it is already an important
-                part of everyday life. We listen to music when
-                we're celebrating, thinking, relaxing, travelling,
-                studying and simply trying to understand how we feel.
-            </p>
-
-
-            <p>
-                SoundSpace takes that existing connection with
-                music and turns it into a simple starting point:
-                <strong>begin with your emotion.</strong>
-            </p>
-
-        </div>
-
-    </section>
-
-
-
-    <section class="why-grid">
-
-        <article class="why-card">
-
-            <span class="why-card-number">
-                02
-            </span>
-
-            <div class="why-icon">
-                ♫
-            </div>
-
-            <h3>
-                Emotion comes first.
-            </h3>
-
-            <p>
-                Instead of asking you to search through endless
-                songs, SoundSpace begins with how you're feeling.
-                You choose the emotion that feels closest to your
-                current moment.
+                Instead of searching endlessly for a song,
+                SoundSpace begins by asking how you feel.
+                You choose the emotion that best represents
+                your current moment.
             </p>
 
         </article>
 
 
 
-        <article class="why-card">
+        <article class="information-card">
 
-            <span class="why-card-number">
-                03
-            </span>
-
-            <div class="why-icon">
-                ◌
+            <div class="information-icon">
+                🎵
             </div>
 
-            <h3>
-                The music follows.
-            </h3>
+            <h2>
+                Music meets emotion
+            </h2>
 
             <p>
-                Each emotion has a carefully selected collection
-                of songs. The songs are chosen for qualities such
-                as their rhythm, energy, atmosphere and emotional
-                direction.
+                Every emotion has its own collection of songs.
+                The selections consider qualities such as
+                tempo, energy, atmosphere, melody and the
+                emotional character of the music.
             </p>
 
         </article>
 
 
 
-        <article class="why-card">
+        <article class="information-card">
 
-            <span class="why-card-number">
-                04
-            </span>
-
-            <div class="why-icon">
-                ✦
+            <div class="information-icon">
+                🌿
             </div>
 
-            <h3>
-                The goal is a moment.
-            </h3>
+            <h2>
+                A moment to reset
+            </h2>
 
             <p>
-                SoundSpace isn't about promising an instant fix.
-                It is about creating a moment where someone can
-                pause, listen and hopefully feel a little calmer,
-                lighter or more understood.
+                SoundSpace is not designed to make an emotion
+                disappear instantly. Instead, it gives you a
+                simple musical space where you can pause,
+                listen and gradually shift your atmosphere.
             </p>
 
         </article>
 
-    </section>
 
 
+        <article class="information-card">
 
-    <section class="emotion-explanation">
-
-        <p class="section-kicker">
-            WHY THESE FIVE?
-        </p>
-
-        <h2>
-            Five emotions. Five different spaces.
-        </h2>
-
-
-        <div class="mini-emotion-list">
-
-            <div class="mini-emotion mini-happiness">
-                <span>😊</span>
-                <div>
-                    <strong>Happiness</strong>
-                    <p>A universal emotion worth celebrating.</p>
-                </div>
+            <div class="information-icon">
+                💭
             </div>
 
+            <h2>
+                Why these emotions?
+            </h2>
 
-            <div class="mini-emotion mini-sadness">
-                <span>😢</span>
-                <div>
-                    <strong>Sadness</strong>
-                    <p>A natural emotion that can call for reflection and comfort.</p>
-                </div>
+            <p>
+                Happiness represents positive emotional states,
+                while sadness, anger, anxiety and irritation
+                represent emotions teenagers may experience
+                when dealing with stress, pressure and difficult
+                moments.
+            </p>
+
+        </article>
+
+
+
+        <article class="information-card">
+
+            <div class="information-icon">
+                ✨
             </div>
 
+            <h2>
+                Simple by design
+            </h2>
 
-            <div class="mini-emotion mini-anger">
-                <span>😡</span>
-                <div>
-                    <strong>Anger</strong>
-                    <p>An intense emotion that can accompany stressful situations.</p>
-                </div>
+            <p>
+                SoundSpace keeps the experience simple.
+                You do not have to describe everything you're
+                going through. Choose a feeling, explore the
+                music and give yourself a moment.
+            </p>
+
+        </article>
+
+
+
+        <article class="information-card">
+
+            <div class="information-icon">
+                ❤️
             </div>
 
+            <h2>
+                Music as a companion
+            </h2>
 
-            <div class="mini-emotion mini-anxiety">
-                <span>😟</span>
-                <div>
-                    <strong>Anxiety</strong>
-                    <p>A feeling that can appear when pressure or uncertainty builds.</p>
-                </div>
-            </div>
+            <p>
+                Music cannot solve every problem, but it can
+                become a meaningful companion during difficult
+                moments. SoundSpace was created to make finding
+                that musical companion easier.
+            </p>
 
-
-            <div class="mini-emotion mini-irritation">
-                <span>😤</span>
-                <div>
-                    <strong>Irritation</strong>
-                    <p>A common reaction when everyday stress begins to build.</p>
-                </div>
-            </div>
-
-        </div>
+        </article>
 
     </section>
 
@@ -842,106 +518,57 @@
 
 <!-- =====================================================
      ABOUT
-===================================================== -->
+     ===================================================== -->
 
 <main
     id="about-page"
-    class="page information-page"
+    class="information-page"
     style="display:none;"
 >
 
-    <section class="inner-page-header about-header">
+    <section class="information-hero">
 
-        <p class="section-kicker">
-            THE STORY
+        <p class="eyebrow">
+            THE STORY OF SOUNDSPACE
         </p>
-
 
         <h1>
-            About <span>SoundSpace</span>
+            About SoundSpace
         </h1>
 
-
         <p>
-            A music-based project built from a simple question:
-            what if finding the right music could start with
-            how you feel?
+            A music-based idea created from a love for music
+            and a desire to help people navigate stressful moments.
         </p>
 
     </section>
 
 
 
-    <section class="about-story">
-
-        <div class="about-story-label">
-            THE BEGINNING
-        </div>
+    <section class="about-content">
 
 
-        <div class="about-story-content">
+        <article class="about-card">
+
+            <div class="information-icon">
+                💡
+            </div>
 
             <h2>
-                It started with a problem.
+                What inspired SoundSpace?
             </h2>
 
-
             <p>
-                SoundSpace began with thinking about a problem
-                teenagers can face every day: dealing with stress,
-                pressure and difficult emotions.
+                SoundSpace began with a simple question:
+                if teenagers experience stress and pressure,
+                could music become a simple way to help them
+                create a calmer and more positive moment?
             </p>
 
-
             <p>
-                I wanted to think beyond simply identifying the
-                problem. I wanted to find an effective and accessible
-                way to create a small moment of relief.
-            </p>
-
-
-            <p>
-                I considered creating a YouTube channel, but I
-                wanted something that felt more focused and
-                purposeful. I also love music, so I started asking
-                myself what would happen if I combined those two
-                ideas.
-            </p>
-
-
-            <p>
-                That question became <strong>SoundSpace</strong>:
-                a website where people can begin with their emotion
-                and discover music selected for that particular
-                emotional space.
-            </p>
-
-        </div>
-
-    </section>
-
-
-
-    <section class="about-grid">
-
-        <article class="about-card">
-
-            <span class="about-card-icon">
-                ◎
-            </span>
-
-            <p class="section-kicker">
-                WHO IT'S FOR
-            </p>
-
-            <h3>
-                Made for people who love music.
-            </h3>
-
-            <p>
-                SoundSpace is for anyone who connects with music,
-                especially teenagers and people moving through
-                stressful moments.
+                I love music, and I wanted to explore a practical
+                way of combining that interest with a problem
+                that many young people experience.
             </p>
 
         </article>
@@ -950,22 +577,23 @@
 
         <article class="about-card">
 
-            <span class="about-card-icon">
-                ♫
-            </span>
+            <div class="information-icon">
+                🎯
+            </div>
 
-            <p class="section-kicker">
-                WHAT MAKES IT DIFFERENT
-            </p>
-
-            <h3>
-                Start with the feeling.
-            </h3>
+            <h2>
+                Who is SoundSpace for?
+            </h2>
 
             <p>
-                Rather than searching for a song first, SoundSpace
-                puts your current emotion at the centre of the
-                experience and lets the music follow.
+                SoundSpace is for anyone who loves music or is
+                going through a stressful moment, but it is
+                especially designed with teenagers in mind.
+            </p>
+
+            <p>
+                It is also for people who simply want to discover
+                music that fits the feeling they are experiencing.
             </p>
 
         </article>
@@ -974,49 +602,78 @@
 
         <article class="about-card">
 
-            <span class="about-card-icon">
-                ✦
-            </span>
+            <div class="information-icon">
+                🌎
+            </div>
 
-            <p class="section-kicker">
-                THE VISION
-            </p>
-
-            <h3>
-                A place people remember.
-            </h3>
+            <h2>
+                What makes SoundSpace different?
+            </h2>
 
             <p>
-                The goal is for SoundSpace to become a place people
-                can reference when they need a musical moment to
-                help them pause, reset and move forward.
+                SoundSpace does not begin with a genre, artist or
+                random playlist. It begins with an emotion.
+            </p>
+
+            <p>
+                You tell SoundSpace how you feel, and the experience
+                takes you toward music that fits that emotional
+                atmosphere.
             </p>
 
         </article>
 
-    </section>
+
+
+        <article class="about-card">
+
+            <div class="information-icon">
+                🚀
+            </div>
+
+            <h2>
+                The bigger vision
+            </h2>
+
+            <p>
+                The goal is for SoundSpace to become something
+                people can remember and return to whenever they
+                need a musical moment of calm, reflection,
+                encouragement or energy.
+            </p>
+
+            <p>
+                Whether someone discovers an older favourite or
+                an updated song that fits their moment, SoundSpace
+                should make finding that music easier.
+            </p>
+
+        </article>
 
 
 
-    <section class="vision-card">
+        <article class="about-card">
 
-        <p class="section-kicker">
-            LOOKING AHEAD
-        </p>
+            <div class="information-icon">
+                🌱
+            </div>
 
+            <h2>
+                Where it started
+            </h2>
 
-        <h2>
-            I want SoundSpace to matter.
-        </h2>
+            <p>
+                SoundSpace started as a personal idea: identify a
+                problem, think of a practical solution and use
+                technology to bring that solution to life.
+            </p>
 
+            <p>
+                What began as an idea became a website that combines
+                music, emotions and technology in one place.
+            </p>
 
-        <p>
-            I don't want SoundSpace to simply be another website
-            people visit once. I want it to become something people
-            remember and return to—a place where someone can arrive
-            in a difficult moment, choose how they feel, find a song
-            that fits, and give themselves a little space to breathe.
-        </p>
+        </article>
 
     </section>
 
@@ -1026,411 +683,323 @@
 
 <!-- =====================================================
      FEEDBACK
-===================================================== -->
+     ===================================================== -->
 
 <main
     id="feedback-page"
-    class="page information-page"
+    class="information-page"
     style="display:none;"
 >
 
-    <section class="inner-page-header feedback-header">
+    <section class="information-hero">
 
-        <p class="section-kicker">
-            HELP SHAPE SOUNDSPACE
+        <p class="eyebrow">
+            HELP US IMPROVE SOUNDSPACE
         </p>
 
-
         <h1>
-            Tell us what you <span>think.</span>
+            Your Feedback
         </h1>
 
-
         <p>
-            Your experience matters. A few answers can help make
-            SoundSpace better for the next person.
+            Tell us about your experience. Your answers help
+            shape the future of SoundSpace.
         </p>
 
     </section>
 
 
 
-    <form
-        id="feedback-form"
-        class="feedback-form"
-    >
+    <section class="feedback-page-card">
 
-        <!-- QUESTION 1 -->
+        <div class="information-icon">
+            💬
+        </div>
 
-        <div class="question-card">
+        <h2>
+            Quick SoundSpace Check-In
+        </h2>
 
-            <span class="question-number">
-                01
-            </span>
+        <p>
+            Answer a few questions about your experience.
+        </p>
 
-            <h2>
-                Which emotion did you explore?
-            </h2>
 
-            <p>
-                Choose the emotion you explored on SoundSpace.
+        <form id="feedback-form">
+
+
+            <div class="feedback-question">
+
+                <label>
+                    1. Which emotion did you explore?
+                </label>
+
+                <select
+                    id="feedback-emotion"
+                    required
+                >
+
+                    <option value="">
+                        Choose an emotion
+                    </option>
+
+                    <option value="happiness">
+                        😊 Happiness
+                    </option>
+
+                    <option value="sadness">
+                        😔 Sadness
+                    </option>
+
+                    <option value="anger">
+                        😡 Anger
+                    </option>
+
+                    <option value="anxiety">
+                        😰 Anxiety
+                    </option>
+
+                    <option value="irritation">
+                        😤 Irritation
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <div class="feedback-question">
+
+                <label>
+                    2. Did the music fit how you were feeling?
+                </label>
+
+                <div class="feedback-choice-row">
+
+                    <button
+                        type="button"
+                        class="choice-button"
+                        data-value="yes"
+                    >
+                        Yes
+                    </button>
+
+                    <button
+                        type="button"
+                        class="choice-button"
+                        data-value="somewhat"
+                    >
+                        Somewhat
+                    </button>
+
+                    <button
+                        type="button"
+                        class="choice-button"
+                        data-value="no"
+                    >
+                        Not really
+                    </button>
+
+                </div>
+
+                <input
+                    type="hidden"
+                    id="feedback-fit"
+                >
+
+            </div>
+
+
+
+            <div class="feedback-question">
+
+                <label>
+                    3. Was SoundSpace helpful?
+                </label>
+
+                <div class="feedback-choice-row">
+
+                    <button
+                        type="button"
+                        class="helpful-choice"
+                        data-value="yes"
+                    >
+                        👍 Yes
+                    </button>
+
+                    <button
+                        type="button"
+                        class="helpful-choice"
+                        data-value="somewhat"
+                    >
+                        🙂 A little
+                    </button>
+
+                    <button
+                        type="button"
+                        class="helpful-choice"
+                        data-value="no"
+                    >
+                        👎 Not really
+                    </button>
+
+                </div>
+
+                <input
+                    type="hidden"
+                    id="feedback-helpful"
+                >
+
+            </div>
+
+
+
+            <div class="feedback-question">
+
+                <label>
+                    4. What could we improve?
+                </label>
+
+                <textarea
+                    id="feedback-improvement"
+                    placeholder="Tell us what you would change, add or improve..."
+                    rows="5"
+                ></textarea>
+
+            </div>
+
+
+
+            <div class="feedback-question">
+
+                <label>
+                    5. What did you like most about SoundSpace?
+                </label>
+
+                <textarea
+                    id="feedback-liked"
+                    placeholder="The songs, design, emotion cards, idea, etc..."
+                    rows="4"
+                ></textarea>
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="submit-feedback"
+            >
+                Send Feedback ✨
+            </button>
+
+
+            <p
+                id="full-feedback-message"
+                class="feedback-message"
+            ></p>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+
+<!-- =====================================================
+     INSIGHTS
+     ===================================================== -->
+
+<main
+    id="insights-page"
+    style="display:none;"
+>
+
+    <section class="insights-header">
+
+        <p class="eyebrow">
+            SOUNDSPACE INSIGHTS
+        </p>
+
+        <h1>
+            Your SoundSpace Insights
+        </h1>
+
+        <p>
+            See how SoundSpace has been used.
+        </p>
+
+    </section>
+
+
+
+    <section class="insights-grid">
+
+        <div class="insight-card">
+
+            <h3>
+                Total Uses
+            </h3>
+
+            <p id="total-uses">
+                0
             </p>
 
-
-            <div class="option-grid">
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="explored-emotion"
-                        value="Happiness"
-                        required
-                    >
-                    <span>😊 Happiness</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="explored-emotion"
-                        value="Sadness"
-                    >
-                    <span>😢 Sadness</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="explored-emotion"
-                        value="Anger"
-                    >
-                    <span>😡 Anger</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="explored-emotion"
-                        value="Anxiety"
-                    >
-                    <span>😟 Anxiety</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="explored-emotion"
-                        value="Irritation"
-                    >
-                    <span>😤 Irritation</span>
-                </label>
-
-            </div>
-
         </div>
 
 
+        <div class="insight-card">
 
-        <!-- QUESTION 2 -->
+            <h3>
+                Helpful Responses
+            </h3>
 
-        <div class="question-card">
-
-            <span class="question-number">
-                02
-            </span>
-
-            <h2>
-                Was SoundSpace helpful?
-            </h2>
-
-            <p>
-                Tell us how useful the experience was for you.
+            <p id="helpful-count">
+                0
             </p>
 
-
-            <div class="option-stack">
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="helpful"
-                        value="yes"
-                        required
-                    >
-                    <span>✨ Yes, very helpful</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="helpful"
-                        value="somewhat"
-                    >
-                    <span>It was somewhat helpful</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="helpful"
-                        value="no"
-                    >
-                    <span>Not really</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="helpful"
-                        value="not-at-all"
-                    >
-                    <span>Not at all</span>
-                </label>
-
-            </div>
-
         </div>
 
 
+        <div class="insight-card">
 
-        <!-- QUESTION 3 -->
+            <h3>
+                Most Selected Emotion
+            </h3>
 
-        <div class="question-card">
-
-            <span class="question-number">
-                03
-            </span>
-
-            <h2>
-                Did the songs fit your emotion?
-            </h2>
-
-
-            <div class="option-stack">
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="song-fit"
-                        value="yes"
-                        required
-                    >
-                    <span>Yes, they fit well</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="song-fit"
-                        value="somewhat"
-                    >
-                    <span>Somewhat</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="song-fit"
-                        value="no"
-                    >
-                    <span>No, they didn't</span>
-                </label>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- QUESTION 4 -->
-
-        <div class="question-card">
-
-            <span class="question-number">
-                04
-            </span>
-
-            <h2>
-                How was your overall experience?
-            </h2>
-
-
-            <div class="option-grid">
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="experience"
-                        value="excellent"
-                        required
-                    >
-                    <span>✦ Excellent</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="experience"
-                        value="good"
-                    >
-                    <span>Good</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="experience"
-                        value="okay"
-                    >
-                    <span>Okay</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="experience"
-                        value="needs-improvement"
-                    >
-                    <span>Needs improvement</span>
-                </label>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- QUESTION 5 -->
-
-        <div class="question-card">
-
-            <span class="question-number">
-                05
-            </span>
-
-            <h2>
-                What would you improve?
-            </h2>
-
-            <p>
-                Tell us anything you think could make SoundSpace
-                better.
+            <p id="most-used-emotion">
+                —
             </p>
 
-
-            <textarea
-                id="improvements"
-                name="improvements"
-                rows="5"
-                placeholder="I think SoundSpace could..."
-            ></textarea>
-
         </div>
 
-
-
-        <!-- QUESTION 6 -->
-
-        <div class="question-card">
-
-            <span class="question-number">
-                06
-            </span>
-
-            <h2>
-                What would you like to see in the future?
-            </h2>
-
-
-            <textarea
-                id="future-features"
-                name="future-features"
-                rows="5"
-                placeholder="I'd love to see..."
-            ></textarea>
-
-        </div>
+    </section>
 
 
 
-        <!-- QUESTION 7 -->
+    <section class="emotion-statistics">
 
-        <div class="question-card">
+        <h2>
+            Emotion Usage
+        </h2>
 
-            <span class="question-number">
-                07
-            </span>
+        <div id="emotion-statistics-list"></div>
 
-            <h2>
-                Would you recommend SoundSpace?
-            </h2>
-
-
-            <div class="option-stack">
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="recommend"
-                        value="definitely"
-                        required
-                    >
-                    <span>♡ Definitely</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="recommend"
-                        value="maybe"
-                    >
-                    <span>Maybe</span>
-                </label>
-
-
-                <label class="option-label">
-                    <input
-                        type="radio"
-                        name="recommend"
-                        value="no"
-                    >
-                    <span>No</span>
-                </label>
-
-            </div>
-
-        </div>
+    </section>
 
 
 
-        <button
-            type="submit"
-            class="submit-feedback"
-        >
-            Submit Feedback
-            <span>→</span>
-        </button>
+    <section class="usage-history">
 
+        <h2>
+            When SoundSpace Was Used
+        </h2>
 
-        <p
-            id="feedback-form-message"
-            class="feedback-form-message"
-        ></p>
+        <div id="usage-history-list"></div>
 
-    </form>
+    </section>
 
 </main>
 
@@ -1438,36 +1007,29 @@
 
 <!-- =====================================================
      FOOTER
-===================================================== -->
+     ===================================================== -->
 
 <footer class="site-footer">
 
-    <div class="footer-brand">
-        <span>SoundSpace</span>
-        <small>
-            Music for how you feel.
-        </small>
-    </div>
-
-
-    <div class="footer-line"></div>
-
+    <p>
+        <strong>@SoundSpace 2026</strong>
+    </p>
 
     <p>
-        <strong>@soundspace 2026</strong>
-        · Developed by
+        Developed by
         <strong>Amaechi-Orah Chimamanda Vanessa</strong>
+    </p>
+
+    <p>
+        Music for how you feel.
     </p>
 
 </footer>
 
 
 
-<!-- =====================================================
-     SCRIPT
-===================================================== -->
-
 <script src="script.js"></script>
 
 </body>
+
 </html>
