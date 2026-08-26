@@ -1,6 +1,10 @@
+# SoundSpace — Replacement `script.js`
+
+
 /* =========================================================
-   SOUNDSPACE — COMPLETE CLEAN SCRIPT
-   50 SONGS + SUPABASE ANALYTICS + FEEDBACK
+   SOUNDSPACE — COMPLETE SCRIPT
+   SHARED SUPABASE ANALYTICS
+   DEVELOPER ACTIVITY EXCLUSION
    ========================================================= */
 
 
@@ -16,11 +20,90 @@ const SUPABASE_KEY =
 
 
 /* =========================================================
-   2. SESSION ID
+   2. DEVELOPER MODE
+   ========================================================= */
+
+/*
+   IMPORTANT:
+
+   Your activity will NOT be tracked when developer mode
+   is enabled on your browser.
+
+   To enable developer mode, add:
+
+   ?developer=on
+
+   to the end of your SoundSpace website URL once.
+
+   Example:
+
+   https://vani32141.github.io/SoundSpace/?developer=on
+
+   After opening that link, developer mode is saved in
+   your browser using localStorage.
+
+   You can then use your normal SoundSpace URL afterwards.
+*/
+
+
+const DEVELOPER_MODE_KEY =
+  "soundspace_developer_mode";
+
+
+const urlParameters =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+if (
+  urlParameters.get("developer") ===
+  "on"
+) {
+
+  localStorage.setItem(
+    DEVELOPER_MODE_KEY,
+    "true"
+  );
+
+
+  /*
+     Remove ?developer=on from the address bar
+     after developer mode has been activated.
+  */
+
+  window.history.replaceState(
+    {},
+    document.title,
+    window.location.pathname
+  );
+
+}
+
+
+const IS_DEVELOPER =
+  localStorage.getItem(
+    DEVELOPER_MODE_KEY
+  ) === "true";
+
+
+if (IS_DEVELOPER) {
+
+  console.log(
+    "SoundSpace Developer Mode is ON. Your activity will not be tracked."
+  );
+
+}
+
+
+/* =========================================================
+   3. SESSION ID
    ========================================================= */
 
 const SOUNDSPACE_SESSION_ID =
-  sessionStorage.getItem("soundspace_session_id") ||
+  sessionStorage.getItem(
+    "soundspace_session_id"
+  ) ||
   (() => {
 
     const id =
@@ -31,10 +114,12 @@ const SOUNDSPACE_SESSION_ID =
         .toString(36)
         .substring(2, 10);
 
+
     sessionStorage.setItem(
       "soundspace_session_id",
       id
     );
+
 
     return id;
 
@@ -42,7 +127,108 @@ const SOUNDSPACE_SESSION_ID =
 
 
 /* =========================================================
-   3. ALL 50 SONGS
+   4. SUPABASE EVENT TRACKING
+   ========================================================= */
+
+async function trackSoundSpaceEvent(
+  eventType,
+  mood = null,
+  song = null,
+  helpful = null
+) {
+
+  /*
+     DO NOT TRACK THE DEVELOPER
+  */
+
+  if (IS_DEVELOPER) {
+
+    console.log(
+      "Developer activity ignored:",
+      eventType
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        `${SUPABASE_URL}/rest/v1/usage_events`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              `Bearer ${SUPABASE_KEY}`,
+
+            "Prefer":
+              "return=minimal"
+          },
+
+          body:
+            JSON.stringify({
+
+              event_type:
+                eventType,
+
+              session_id:
+                SOUNDSPACE_SESSION_ID,
+
+              page:
+                window.location.pathname,
+
+              mood:
+                mood,
+
+              song:
+                song,
+
+              helpful:
+                helpful
+
+            })
+
+        }
+      );
+
+
+    if (!response.ok) {
+
+      const errorText =
+        await response.text();
+
+
+      console.error(
+        "Supabase tracking failed:",
+        errorText
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "SoundSpace analytics error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   5. ALL 50 SONGS
    ========================================================= */
 
 const moodData = {
@@ -480,7 +666,7 @@ const moodData = {
 
 
 /* =========================================================
-   4. APP STATE
+   6. APP STATE
    ========================================================= */
 
 let currentEmotion = "";
@@ -490,95 +676,7 @@ let currentSongIndex = 0;
 
 
 /* =========================================================
-   5. SUPABASE EVENT TRACKING
-   ========================================================= */
-
-async function trackSoundSpaceEvent(
-  eventType,
-  mood = null,
-  song = null,
-  extraData = {}
-) {
-
-  try {
-
-    const eventData = {
-
-      event_type: eventType,
-
-      session_id:
-        SOUNDSPACE_SESSION_ID,
-
-      page:
-        window.location.pathname,
-
-      mood:
-        mood || null,
-
-      song:
-        song || null,
-
-      ...extraData
-
-    };
-
-
-    const response =
-      await fetch(
-        `${SUPABASE_URL}/rest/v1/usage_events`,
-        {
-
-          method: "POST",
-
-          headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              `Bearer ${SUPABASE_KEY}`,
-
-            "Prefer":
-              "return=minimal"
-
-          },
-
-          body:
-            JSON.stringify(eventData)
-
-        }
-      );
-
-
-    if (!response.ok) {
-
-      const errorText =
-        await response.text();
-
-      console.error(
-        "SoundSpace tracking failed:",
-        errorText
-      );
-
-    }
-
-  } catch (error) {
-
-    console.error(
-      "SoundSpace tracking error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   6. PAGE NAVIGATION
+   7. PAGE NAVIGATION
    ========================================================= */
 
 function showPage(pageId) {
@@ -608,6 +706,7 @@ function showPage(pageId) {
       "active-page"
     );
 
+
     window.scrollTo({
       top: 0,
       behavior: "smooth"
@@ -619,20 +718,13 @@ function showPage(pageId) {
 
 
 /* =========================================================
-   7. DISPLAY EMOTION
+   8. DISPLAY EMOTION
    ========================================================= */
 
 function displayEmotion(emotion) {
 
   if (!moodData[emotion]) {
-
-    console.error(
-      "Unknown emotion:",
-      emotion
-    );
-
     return;
-
   }
 
 
@@ -692,7 +784,7 @@ function displayEmotion(emotion) {
 
 
 /* =========================================================
-   8. DISPLAY SONGS
+   9. DISPLAY SONGS
    ========================================================= */
 
 function displaySongs() {
@@ -704,13 +796,7 @@ function displaySongs() {
 
 
   if (!songList) {
-
-    console.error(
-      "Song list element not found."
-    );
-
     return;
-
   }
 
 
@@ -740,9 +826,7 @@ function displaySongs() {
         );
 
 
-      songCard.type =
-        "button";
-
+      songCard.type = "button";
 
       songCard.className =
         "song-card";
@@ -757,11 +841,11 @@ function displaySongs() {
         <span class="song-details">
 
           <strong>
-            ${escapeHTML(song.title)}
+            ${song.title}
           </strong>
 
           <small>
-            ${escapeHTML(song.artist)}
+            ${song.artist}
           </small>
 
           <span class="song-why">
@@ -770,7 +854,7 @@ function displaySongs() {
               ✨ Why this song fits:
             </b>
 
-            ${escapeHTML(song.why)}
+            ${song.why}
 
           </span>
 
@@ -787,9 +871,7 @@ function displaySongs() {
         "click",
         function() {
 
-          startSongSession(
-            song
-          );
+          startSongSession(song);
 
         }
       );
@@ -806,7 +888,7 @@ function displaySongs() {
 
 
 /* =========================================================
-   9. SHUFFLE
+   10. SHUFFLE
    ========================================================= */
 
 function shuffleSongs(array) {
@@ -823,8 +905,7 @@ function shuffleSongs(array) {
 
     const j =
       Math.floor(
-        Math.random() *
-        (i + 1)
+        Math.random() * (i + 1)
       );
 
 
@@ -846,7 +927,7 @@ function shuffleSongs(array) {
 
 
 /* =========================================================
-   10. START SONG
+   11. START SONG
    ========================================================= */
 
 function startSongSession(song) {
@@ -878,28 +959,20 @@ function startSongSession(song) {
       .filter(function(item) {
 
         return !(
-          item.title ===
-            song.title &&
-          item.artist ===
-            song.artist
+          item.title === song.title &&
+          item.artist === song.artist
         );
 
       });
 
 
   shuffleQueue = [
-
     song,
-
-    ...shuffleSongs(
-      otherSongs
-    )
-
+    ...shuffleSongs(otherSongs)
   ];
 
 
-  currentSongIndex =
-    0;
+  currentSongIndex = 0;
 
 
   displayPlayer();
@@ -913,22 +986,18 @@ function startSongSession(song) {
 
 
 /* =========================================================
-   11. DISPLAY PLAYER
+   12. DISPLAY PLAYER
    ========================================================= */
 
 function displayPlayer() {
 
   if (!shuffleQueue.length) {
-
     return;
-
   }
 
 
   currentSong =
-    shuffleQueue[
-      currentSongIndex
-    ];
+    shuffleQueue[currentSongIndex];
 
 
   const playerTitle =
@@ -1034,7 +1103,7 @@ function displayPlayer() {
 
 
 /* =========================================================
-   12. DISPLAY QUEUE
+   13. DISPLAY QUEUE
    ========================================================= */
 
 function displayQueue() {
@@ -1046,9 +1115,7 @@ function displayQueue() {
 
 
   if (!queueList) {
-
     return;
-
   }
 
 
@@ -1064,17 +1131,14 @@ function displayQueue() {
         );
 
 
-      queueItem.type =
-        "button";
-
+      queueItem.type = "button";
 
       queueItem.className =
         "queue-item";
 
 
       if (
-        index ===
-        currentSongIndex
+        index === currentSongIndex
       ) {
 
         queueItem.classList.add(
@@ -1093,11 +1157,11 @@ function displayQueue() {
         <span class="queue-info">
 
           <strong>
-            ${escapeHTML(song.title)}
+            ${song.title}
           </strong>
 
           <small>
-            ${escapeHTML(song.artist)}
+            ${song.artist}
           </small>
 
         </span>
@@ -1132,15 +1196,13 @@ function displayQueue() {
 
 
 /* =========================================================
-   13. NEXT SONG
+   14. NEXT SONG
    ========================================================= */
 
 function nextSong() {
 
   if (!shuffleQueue.length) {
-
     return;
-
   }
 
 
@@ -1152,8 +1214,7 @@ function nextSong() {
     shuffleQueue.length
   ) {
 
-    currentSongIndex =
-      0;
+    currentSongIndex = 0;
 
     shuffleQueue =
       shuffleSongs(
@@ -1175,7 +1236,7 @@ function nextSong() {
 
 
 /* =========================================================
-   14. RESHUFFLE
+   15. RESHUFFLE
    ========================================================= */
 
 function reshuffleSongs() {
@@ -1196,8 +1257,7 @@ function reshuffleSongs() {
     );
 
 
-  currentSongIndex =
-    0;
+  currentSongIndex = 0;
 
 
   currentSong =
@@ -1210,7 +1270,7 @@ function reshuffleSongs() {
 
 
 /* =========================================================
-   15. GET SHARED SUPABASE INSIGHTS
+   16. GET SHARED INSIGHTS
    ========================================================= */
 
 async function getSharedInsights() {
@@ -1221,19 +1281,15 @@ async function getSharedInsights() {
       await fetch(
         `${SUPABASE_URL}/rest/v1/usage_events?select=*`,
         {
-
           method: "GET",
 
           headers: {
-
             "apikey":
               SUPABASE_KEY,
 
             "Authorization":
               `Bearer ${SUPABASE_KEY}`
-
           }
-
         }
       );
 
@@ -1243,10 +1299,12 @@ async function getSharedInsights() {
       const errorText =
         await response.text();
 
+
       console.error(
         "Could not load Supabase insights:",
         errorText
       );
+
 
       return [];
 
@@ -1262,6 +1320,7 @@ async function getSharedInsights() {
       error
     );
 
+
     return [];
 
   }
@@ -1270,7 +1329,7 @@ async function getSharedInsights() {
 
 
 /* =========================================================
-   16. DISPLAY INSIGHTS
+   17. DISPLAY SHARED INSIGHTS
    ========================================================= */
 
 async function displayInsights() {
@@ -1278,10 +1337,6 @@ async function displayInsights() {
   const events =
     await getSharedInsights();
 
-
-  /* -----------------------------------------
-     UNIQUE VISITORS
-     ----------------------------------------- */
 
   const sessions =
     new Set();
@@ -1314,10 +1369,6 @@ async function displayInsights() {
   }
 
 
-  /* -----------------------------------------
-     EMOTION COUNTS
-     ----------------------------------------- */
-
   const emotionCounts = {
 
     happiness: 0,
@@ -1333,34 +1384,26 @@ async function displayInsights() {
 
     if (
       event.event_type ===
-      "emotion_selected"
+        "emotion_selected" &&
+      event.mood &&
+      emotionCounts[event.mood]
+        !== undefined
     ) {
 
-      const mood =
-        String(
-          event.mood || ""
-        ).toLowerCase();
-
-
-      if (
-        Object.prototype.hasOwnProperty.call(
-          emotionCounts,
-          mood
-        )
-      ) {
-
-        emotionCounts[mood]++;
-
-      }
+      emotionCounts[event.mood]++;
 
     }
 
   });
 
 
-  Object.keys(
-    emotionCounts
-  ).forEach(function(emotion) {
+  [
+    "happiness",
+    "sadness",
+    "anger",
+    "anxiety",
+    "irritation"
+  ].forEach(function(emotion) {
 
     const element =
       document.querySelector(
@@ -1378,11 +1421,8 @@ async function displayInsights() {
   });
 
 
-  /* -----------------------------------------
-     HELPFULNESS
-     ----------------------------------------- */
-
   let yes = 0;
+  let little = 0;
   let no = 0;
 
 
@@ -1398,23 +1438,16 @@ async function displayInsights() {
     }
 
 
-    if (
-      event.helpful ===
-      "Yes"
-    ) {
-
+    if (event.helpful === "Yes") {
       yes++;
-
     }
 
+    if (event.helpful === "A little") {
+      little++;
+    }
 
-    if (
-      event.helpful ===
-      "No"
-    ) {
-
+    if (event.helpful === "No") {
       no++;
-
     }
 
   });
@@ -1426,6 +1459,12 @@ async function displayInsights() {
     );
 
 
+  const littleElement =
+    document.querySelector(
+      "#insight-little"
+    );
+
+
   const noElement =
     document.querySelector(
       "#insight-no"
@@ -1433,167 +1472,80 @@ async function displayInsights() {
 
 
   if (yesElement) {
+    yesElement.textContent = yes;
+  }
 
-    yesElement.textContent =
-      yes;
 
+  if (littleElement) {
+    littleElement.textContent = little;
   }
 
 
   if (noElement) {
-
-    noElement.textContent =
-      no;
-
+    noElement.textContent = no;
   }
 
 
-  /* -----------------------------------------
-     ACTIVITY BY DATE
-     ----------------------------------------- */
-
-  const datesContainer =
+  const dates =
     document.querySelector(
       "#insight-dates"
     );
 
 
-  if (datesContainer) {
+  if (dates) {
 
-    const visits =
-      events.filter(function(event) {
+    const pageViews =
+      events
+        .filter(function(event) {
 
-        return (
-          event.event_type ===
-          "page_view"
-        );
+          return (
+            event.event_type ===
+            "page_view"
+          );
 
-      });
+        })
+        .reverse();
 
 
-    if (!visits.length) {
+    if (!pageViews.length) {
 
-      datesContainer.innerHTML = `
-
+      dates.innerHTML = `
         <p class="empty-insights">
           No activity recorded yet.
         </p>
-
       `;
 
     } else {
 
-      const groupedDates = {};
-
-
-      visits.forEach(function(event) {
-
-        if (!event.created_at) {
-
-          return;
-
-        }
-
-
-        const date =
-          new Date(
-            event.created_at
-          );
-
-
-        const dateKey =
-          date.toLocaleDateString(
-            undefined,
-            {
-              year: "numeric",
-              month: "long",
-              day: "numeric"
-            }
-          );
-
-
-        if (
-          !groupedDates[dateKey]
-        ) {
-
-          groupedDates[dateKey] = {
-
-            count: 0,
-
-            latest:
-              date
-
-          };
-
-        }
-
-
-        groupedDates[dateKey].count++;
-
-
-        if (
-          date >
-          groupedDates[dateKey].latest
-        ) {
-
-          groupedDates[dateKey].latest =
-            date;
-
-        }
-
-      });
-
-
-      const sortedDates =
-        Object.entries(
-          groupedDates
-        ).sort(function(a, b) {
-
-          return (
-            b[1].latest -
-            a[1].latest
-          );
-
-        });
-
-
-      datesContainer.innerHTML =
-        sortedDates
-          .map(function(entry) {
+      dates.innerHTML =
+        pageViews
+          .map(function(event) {
 
             const date =
-              entry[0];
-
-            const data =
-              entry[1];
-
-
-            const visitText =
-              data.count === 1
-                ? "visit"
-                : "visits";
+              event.created_at
+                ? new Date(
+                    event.created_at
+                  )
+                : new Date();
 
 
             return `
 
               <div class="date-row">
 
-                <div>
-
-                  <strong>
-                    📅 ${escapeHTML(date)}
-                  </strong>
-
-                  <p>
-                    SoundSpace was used
-                    ${data.count}
-                    ${visitText}.
-                  </p>
-
-                </div>
+                <span>
+                  📅
+                  ${date.toLocaleDateString()}
+                </span>
 
                 <strong>
-                  ${data.count}
+                  ${date.toLocaleTimeString(
+                    [],
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    }
+                  )}
                 </strong>
 
               </div>
@@ -1607,10 +1559,6 @@ async function displayInsights() {
 
   }
 
-
-  /* -----------------------------------------
-     FEEDBACK
-     ----------------------------------------- */
 
   const feedbackContainer =
     document.querySelector(
@@ -1636,11 +1584,9 @@ async function displayInsights() {
     if (!feedback.length) {
 
       feedbackContainer.innerHTML = `
-
         <p class="empty-insights">
           No feedback submitted yet.
         </p>
-
       `;
 
     } else {
@@ -1651,13 +1597,9 @@ async function displayInsights() {
 
             return `
 
-              <article
-                class="feedback-result"
-              >
+              <article class="feedback-result">
 
-                <div
-                  class="feedback-result-top"
-                >
+                <div class="feedback-result-top">
 
                   <strong>
                     ${
@@ -1679,55 +1621,31 @@ async function displayInsights() {
 
                 </div>
 
-
                 ${
                   item.song
                     ? `
-
                       <p>
-
-                        <b>
-                          Song:
-                        </b>
-
-                        <br>
-
-                        ${escapeHTML(
-                          item.song
-                        )}
-
+                        <b>Song:</b><br>
+                        ${escapeHTML(item.song)}
                       </p>
-
                     `
                     : ""
                 }
-
 
                 ${
                   item.feedback_text
                     ? `
-
                       <p>
-
-                        <b>
-                          Feedback:
-                        </b>
-
-                        <br>
-
+                        <b>Feedback:</b><br>
                         ${escapeHTML(
                           item.feedback_text
                         )}
-
                       </p>
-
                     `
                     : ""
                 }
 
-
                 <small>
-
                   ${
                     item.created_at
                       ? new Date(
@@ -1735,7 +1653,6 @@ async function displayInsights() {
                         ).toLocaleString()
                       : ""
                   }
-
                 </small>
 
               </article>
@@ -1753,7 +1670,7 @@ async function displayInsights() {
 
 
 /* =========================================================
-   17. ESCAPE HTML
+   18. ESCAPE HTML
    ========================================================= */
 
 function escapeHTML(value) {
@@ -1789,7 +1706,7 @@ function escapeHTML(value) {
 
 
 /* =========================================================
-   18. PAGE BUTTONS
+   19. PAGE BUTTONS
    ========================================================= */
 
 function setupPageButtons() {
@@ -1815,8 +1732,7 @@ function setupPageButtons() {
 
 
           if (
-            page ===
-            "insights"
+            page === "insights"
           ) {
 
             displayInsights();
@@ -1833,7 +1749,7 @@ function setupPageButtons() {
 
 
 /* =========================================================
-   19. EMOTION CARDS
+   20. EMOTION CARDS
    ========================================================= */
 
 function setupEmotionCards() {
@@ -1842,12 +1758,6 @@ function setupEmotionCards() {
     document.querySelectorAll(
       ".emotion-card"
     );
-
-
-  console.log(
-    "Emotion cards found:",
-    emotionCards.length
-  );
 
 
   emotionCards.forEach(
@@ -1861,21 +1771,9 @@ function setupEmotionCards() {
             card.dataset.emotion;
 
 
-          console.log(
-            "Emotion clicked:",
-            emotion
-          );
-
-
           if (
-            !emotion ||
             !moodData[emotion]
           ) {
-
-            console.error(
-              "Invalid emotion:",
-              emotion
-            );
 
             return;
 
@@ -1886,22 +1784,16 @@ function setupEmotionCards() {
             emotion;
 
 
-          /* Track emotion */
-
           trackSoundSpaceEvent(
             "emotion_selected",
             emotion
           );
 
 
-          /* Display the songs */
-
           displayEmotion(
             emotion
           );
 
-
-          /* Move to emotion page */
 
           showPage(
             "emotion-page"
@@ -1917,7 +1809,7 @@ function setupEmotionCards() {
 
 
 /* =========================================================
-   20. FEEDBACK
+   21. FEEDBACK
    ========================================================= */
 
 function setupFeedback() {
@@ -1929,9 +1821,7 @@ function setupFeedback() {
 
 
   if (!feedbackForm) {
-
     return;
-
   }
 
 
@@ -2003,17 +1893,45 @@ function setupFeedback() {
         .join("\n");
 
 
+      /*
+         DO NOT SAVE DEVELOPER FEEDBACK
+      */
+
+      if (IS_DEVELOPER) {
+
+        const successMessage =
+          document.querySelector(
+            "#feedback-success"
+          );
+
+
+        if (successMessage) {
+
+          successMessage.textContent =
+            "Developer mode is on. This test feedback was not saved.";
+
+          successMessage.hidden =
+            false;
+
+        }
+
+
+        feedbackForm.reset();
+
+        return;
+
+      }
+
+
       try {
 
         const response =
           await fetch(
             `${SUPABASE_URL}/rest/v1/usage_events`,
             {
-
               method: "POST",
 
               headers: {
-
                 "Content-Type":
                   "application/json",
 
@@ -2025,7 +1943,6 @@ function setupFeedback() {
 
                 "Prefer":
                   "return=minimal"
-
               },
 
               body:
@@ -2065,10 +1982,12 @@ function setupFeedback() {
           const errorText =
             await response.text();
 
+
           console.error(
             "Feedback could not be saved:",
             errorText
           );
+
 
           return;
 
@@ -2094,7 +2013,6 @@ function setupFeedback() {
 
         feedbackForm.reset();
 
-
       } catch (error) {
 
         console.error(
@@ -2111,7 +2029,7 @@ function setupFeedback() {
 
 
 /* =========================================================
-   21. NEXT BUTTON
+   22. NEXT BUTTON
    ========================================================= */
 
 function setupNextButton() {
@@ -2135,7 +2053,7 @@ function setupNextButton() {
 
 
 /* =========================================================
-   22. RESHUFFLE BUTTON
+   23. RESHUFFLE BUTTON
    ========================================================= */
 
 function setupReshuffleButton() {
@@ -2159,7 +2077,7 @@ function setupReshuffleButton() {
 
 
 /* =========================================================
-   23. BACK BUTTONS
+   24. BACK BUTTONS
    ========================================================= */
 
 function setupBackButtons() {
@@ -2176,9 +2094,7 @@ function setupBackButtons() {
       "click",
       function() {
 
-        showPage(
-          "home"
-        );
+        showPage("home");
 
       }
     );
@@ -2220,7 +2136,7 @@ function setupBackButtons() {
 
 
 /* =========================================================
-   24. START SOUNDSPACE
+   25. START SOUNDSPACE
    ========================================================= */
 
 document.addEventListener(
@@ -2245,11 +2161,18 @@ document.addEventListener(
     setupBackButtons();
 
 
-    /* Record this visit */
+    /*
+       Count this visit only if the visitor
+       is NOT the developer.
+    */
 
-    trackSoundSpaceEvent(
-      "page_view"
-    );
+    if (!IS_DEVELOPER) {
+
+      trackSoundSpaceEvent(
+        "page_view"
+      );
+
+    }
 
   }
 );
