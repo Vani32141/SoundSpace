@@ -1000,7 +1000,7 @@ function playSong(song) {
 
 
         listenLink.href =
-            `https://www.youtube.com/results?search_query=${searchQuery}`;
+            `https://open.spotify.com/search/${searchQuery}`;`;
 
     }
 
