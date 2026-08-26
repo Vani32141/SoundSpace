@@ -13,7 +13,7 @@ const SUPABASE_URL =
     "https://bjfmlknorxlztxkxlebd.supabase.co";
 
 const SUPABASE_KEY =
-    "https://bjfmlknorxlztxkxlebd.supabase.co";
+    "sb_publishable_NDHWFaIHfs6IqvmbZiHrCg_0H2ZXZbU";
 
 
 /*
@@ -30,8 +30,8 @@ async function sendAnalytics(eventType, emotion = null, feedback = null) {
     try {
 
         if (
-            SUPABASE_URL.includes("YOUR-PROJECT") ||
-            SUPABASE_KEY.includes("YOUR-PUBLISHABLE")
+            SUPABASE_URL.includes("https://bjfmlknorxlztxkxlebd.supabase.co") ||
+            SUPABASE_KEY.includes("sb_publishable_NDHWFaIHfs6IqvmbZiHrCg_0H2ZXZbU")
         ) {
             return;
         }
