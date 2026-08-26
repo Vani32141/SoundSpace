@@ -1,1193 +1,296 @@
-/* =========================================
-   SOUNDSPACE
-   NATURAL CREAM + SAGE GREEN DESIGN
-   ========================================= */
-
-
-/* =========================================
-   RESET
-   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
-
 
 body {
-
-    min-height: 100vh;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    color: #2f3a2f;
-
-    background:
-
-        radial-gradient(
-            circle at top left,
-            rgba(199, 214, 184, 0.45),
-            transparent 35%
-        ),
-
-        radial-gradient(
-            circle at bottom right,
-            rgba(226, 216, 185, 0.45),
-            transparent 35%
-        ),
-
-        #f7f5ec;
-
+  font-family: 'DM Sans', sans-serif;
+  background: #fff7ed;
+  color: #3d2924;
+  min-height: 100vh;
+  line-height: 1.6;
 }
 
+/* HEADER */
 
-button,
-a {
-    font-family: inherit;
+header {
+  background: #6b2737;
+  color: #fff7ed;
+  padding: 22px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 18px rgba(80, 35, 30, 0.15);
 }
-
-
-/* =========================================
-   HEADER
-   ========================================= */
-
-.site-header {
-
-    position: sticky;
-
-    top: 0;
-
-    z-index: 100;
-
-    width: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding:
-
-        18px
-        clamp(20px, 6vw, 90px);
-
-    background:
-        rgba(247, 245, 236, 0.92);
-
-    backdrop-filter:
-        blur(12px);
-
-    border-bottom:
-        1px solid #dfe5d7;
-
-}
-
 
 .logo {
-
-    font-size:
-        clamp(1.4rem, 3vw, 1.8rem);
-
-    font-weight: 800;
-
-    letter-spacing: -1px;
-
-    color: #52634d;
-
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
-
 
 nav {
-
-    display: flex;
-
-    gap: 10px;
-
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-
-.nav-btn {
-
-    border: none;
-
-    background: transparent;
-
-    padding:
-
-        10px
-        16px;
-
-    border-radius: 999px;
-
-    color: #586552;
-
-    font-size: 0.95rem;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        0.25s ease;
-
+nav button {
+  border: none;
+  background: transparent;
+  color: #fff7ed;
+  padding: 9px 15px;
+  border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
 }
 
-
-.nav-btn:hover {
-
-    background: #e5eadc;
-
-    color: #344332;
-
+nav button:hover,
+nav button.active {
+  background: #d88952;
+  color: #fff;
 }
 
-
-/* =========================================
-   MAIN
-   ========================================= */
+/* MAIN */
 
 main {
-
-    width:
-        min(1100px, 90%);
-
-    margin: auto;
-
+  width: 100%;
+  max-width: 1150px;
+  margin: auto;
+  padding: 55px 6% 40px;
 }
-
-
-section {
-
-    padding:
-        clamp(55px, 8vw, 100px)
-        0;
-
-}
-
-
-/* =========================================
-   HERO
-   ========================================= */
 
 .hero {
-
-    min-height: 72vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
+  text-align: center;
+  padding: 25px 0 45px;
 }
-
-
-.eyebrow {
-
-    display: inline-block;
-
-    margin-bottom: 22px;
-
-    padding:
-
-        9px
-        16px;
-
-    border-radius: 999px;
-
-    background: #e7ecdf;
-
-    color: #66785d;
-
-    font-size: 0.72rem;
-
-    font-weight: 700;
-
-    letter-spacing: 1.5px;
-
-}
-
 
 .hero h1 {
-
-    max-width: 850px;
-
-    font-size:
-        clamp(3rem, 8vw, 6.5rem);
-
-    line-height: 0.95;
-
-    letter-spacing: -4px;
-
-    color: #394735;
-
+  font-family: 'Playfair Display', serif;
+  color: #6b2737;
+  font-size: clamp(2.4rem, 6vw, 4.7rem);
+  line-height: 1.1;
+  margin-bottom: 18px;
 }
 
-
-.hero-description {
-
-    max-width: 650px;
-
-    margin-top: 28px;
-
-    color: #687066;
-
-    font-size:
-        clamp(1rem, 2vw, 1.15rem);
-
-    line-height: 1.8;
-
+.hero p {
+  max-width: 650px;
+  margin: auto;
+  color: #70574f;
+  font-size: 1.05rem;
 }
 
-
-/* =========================================
-   EMOTIONS
-   ========================================= */
-
-.emotion-section {
-
-    text-align: center;
-
-}
-
-
-.emotion-section h2 {
-
-    margin-bottom: 40px;
-
-    font-size:
-        clamp(2rem, 4vw, 3rem);
-
-    color: #3f4e3b;
-
-}
-
+/* EMOTIONS */
 
 .emotion-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(5, 1fr);
-
-    gap: 18px;
-
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin: 30px 0 45px;
 }
 
+.emotion-button {
+  border: none;
+  padding: 22px 12px;
+  min-height: 110px;
+  border-radius: 20px;
+  background: #e7a66b;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(107, 39, 55, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
 
-.emotion-card {
+.emotion-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(107, 39, 55, 0.2);
+}
 
-    min-height: 230px;
+.emotion-button:nth-child(2) {
+  background: #8e4354;
+}
 
-    display: flex;
+.emotion-button:nth-child(3) {
+  background: #c75c3b;
+}
 
+.emotion-button:nth-child(4) {
+  background: #a36a45;
+}
+
+.emotion-button:nth-child(5) {
+  background: #b87945;
+}
+
+/* CONTENT SECTIONS */
+
+.page-section {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.page-section.active {
+  display: block;
+}
+
+.page-section h2 {
+  font-family: 'Playfair Display', serif;
+  color: #6b2737;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 20px;
+}
+
+.page-section p {
+  color: #604c45;
+  font-size: 1.03rem;
+  margin-bottom: 18px;
+}
+
+.info-card {
+  background: #fff;
+  border: 1px solid #efd8c4;
+  border-radius: 22px;
+  padding: 28px;
+  margin: 18px 0;
+  box-shadow: 0 8px 25px rgba(107, 39, 55, 0.07);
+}
+
+.info-card h3 {
+  font-family: 'Playfair Display', serif;
+  color: #8e4354;
+  margin-bottom: 8px;
+  font-size: 1.4rem;
+}
+
+/* MUSIC AREA */
+
+#music-section {
+  background: #fff;
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(107, 39, 55, 0.08);
+  margin-top: 20px;
+}
+
+#music-section h2 {
+  font-family: 'Playfair Display', serif;
+  color: #6b2737;
+  margin-bottom: 15px;
+}
+
+/* FOOTER */
+
+footer {
+  background: #6b2737;
+  color: #fff7ed;
+  text-align: center;
+  padding: 25px 15px;
+  margin-top: 60px;
+  font-size: 0.9rem;
+}
+
+footer strong {
+  color: #f0b46f;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* TABLETS */
+
+@media (max-width: 900px) {
+  .emotion-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  header {
+    padding: 18px 5%;
+  }
+
+  main {
+    padding: 40px 5% 30px;
+  }
+}
+
+/* PHONES */
+
+@media (max-width: 600px) {
+  header {
     flex-direction: column;
+    padding: 17px 15px;
+  }
 
-    align-items: center;
+  .logo {
+    font-size: 1.45rem;
+  }
 
+  nav {
     justify-content: center;
-
-    text-align: center;
-
-    padding: 25px 18px;
-
-    border:
-
-        1px solid
-        #dde4d4;
-
-    border-radius: 24px;
-
-    background:
-        rgba(255, 255, 250, 0.75);
-
-    color: #3d4939;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 10px 30px
-        rgba(71, 82, 61, 0.07);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-
-}
-
-
-.emotion-card:hover {
-
-    transform:
-        translateY(-8px);
-
-    border-color:
-        #aab99f;
-
-    box-shadow:
-        0 18px 40px
-        rgba(71, 82, 61, 0.13);
-
-}
-
-
-.emotion-icon {
-
-    display: block;
-
-    font-size: 3rem;
-
-    margin-bottom: 18px;
-
-}
-
-
-.emotion-name {
-
-    display: block;
-
-    font-size: 1.1rem;
-
-    font-weight: 700;
-
-    margin-bottom: 10px;
-
-}
-
-
-.emotion-description {
-
-    display: block;
-
-    color: #778071;
-
-    font-size: 0.87rem;
-
-    line-height: 1.5;
-
-}
-
-
-/* =========================================
-   EMOTION PAGE
-   ========================================= */
-
-.emotion-header {
-
-    text-align: center;
-
-}
-
-
-.back-button {
-
-    display: inline-block;
-
-    margin-bottom: 35px;
-
-    padding:
-
-        10px
-        18px;
-
-    border:
-
-        1px solid
-        #d5ddcd;
-
-    border-radius: 999px;
-
-    background:
-        #ffffff;
-
-    color: #53634d;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.back-button:hover {
-
-    transform:
-        translateX(-4px);
-
-    background:
-        #edf1e7;
-
-}
-
-
-.large-emotion-icon {
-
-    font-size:
-        clamp(4rem, 10vw, 6rem);
-
-    margin-bottom: 18px;
-
-}
-
-
-#selected-emotion-title {
-
-    font-size:
-        clamp(2.8rem, 7vw, 5rem);
-
-    color: #3d4b39;
-
-    margin-bottom: 18px;
-
-}
-
-
-#selected-emotion-description {
-
-    max-width: 700px;
-
-    margin: auto;
-
-    color: #697365;
-
-    font-size: 1.05rem;
-
-    line-height: 1.8;
-
-}
-
-
-/* =========================================
-   SONGS
-   ========================================= */
-
-.songs-section {
-
-    padding-top: 20px;
-
-}
-
-
-.songs-heading {
-
-    display: flex;
-
-    align-items: end;
-
-    justify-content: space-between;
-
-    gap: 25px;
-
-    margin-bottom: 35px;
-
-}
-
-
-.songs-heading h2 {
-
-    font-size:
-        clamp(2rem, 5vw, 3.5rem);
-
-    color: #3f4e3b;
-
-    margin-bottom: 10px;
-
-}
-
-
-.songs-heading p {
-
-    color: #737c6d;
-
-    line-height: 1.7;
-
-}
-
-
-.surprise-button {
-
-    flex-shrink: 0;
-
-    border: none;
-
-    border-radius: 999px;
-
-    padding:
-
-        13px
-        22px;
-
-    background: #75866b;
-
-    color: white;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.surprise-button:hover {
-
-    transform:
-        translateY(-3px);
-
-    background: #5f7056;
-
-}
-
-
-.song-list {
-
-    display: grid;
-
-    gap: 15px;
-
-}
-
-
-.song-card {
-
     width: 100%;
+  }
 
-    display: grid;
+  nav button {
+    font-size: 0.82rem;
+    padding: 8px 10px;
+  }
 
-    grid-template-columns:
+  main {
+    padding: 30px 16px;
+  }
 
-        50px
-        1fr
-        35px;
-
-    gap: 18px;
-
-    align-items: start;
-
-    padding: 22px;
-
-    border:
-
-        1px solid
-        #dde4d4;
-
-    border-radius: 20px;
-
-    background:
-        rgba(255, 255, 250, 0.78);
-
-    text-align: left;
-
-    color: #3d4939;
-
-    cursor: pointer;
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.song-card:hover {
-
-    transform:
-        translateX(6px);
-
-    border-color:
-        #aebba4;
-
-    box-shadow:
-        0 14px 30px
-        rgba(71, 82, 61, 0.1);
-
-}
-
-
-.song-number {
-
-    width: 38px;
-
-    height: 38px;
-
-    display: grid;
-
-    place-items: center;
-
-    border-radius: 50%;
-
-    background:
-        #dfe8d7;
-
-    color: #56674f;
-
-    font-weight: 700;
-
-}
-
-
-.song-details {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 6px;
-
-}
-
-
-.song-details strong {
-
-    font-size: 1.05rem;
-
-}
-
-
-.song-details small {
-
-    color: #778071;
-
-}
-
-
-.song-why {
-
-    margin-top: 10px;
-
+  .hero {
     padding-top: 10px;
+  }
 
-    border-top:
-
-        1px solid
-        #e5eadf;
-
-    color: #6e7768;
-
-    font-size: 0.88rem;
-
-    line-height: 1.6;
-
-}
-
-
-.song-why b {
-
-    color: #62745b;
-
-}
-
-
-.song-arrow {
-
-    align-self: center;
-
-    font-size: 1.4rem;
-
-    color: #74866a;
-
-}
-
-
-/* =========================================
-   PLAYER
-   ========================================= */
-
-.player-section {
-
-    padding-top: 10px;
-
-}
-
-
-.player-content {
-
-    max-width: 700px;
-
-    margin: auto;
-
-    padding:
-
-        40px
-        clamp(22px, 5vw, 50px);
-
-    text-align: center;
-
-    border:
-
-        1px solid
-        #dce4d3;
-
-    border-radius: 28px;
-
-    background:
-        #fffef9;
-
-    box-shadow:
-        0 20px 50px
-        rgba(71, 82, 61, 0.1);
-
-}
-
-
-.player-label {
-
-    color: #7b8c70;
-
-    font-size: 0.75rem;
-
-    font-weight: 700;
-
-    letter-spacing: 1.5px;
-
-    margin-bottom: 14px;
-
-}
-
-
-#player-song-title {
-
-    font-size:
-        clamp(1.8rem, 5vw, 3rem);
-
-    color: #3f4e3b;
-
-    margin-bottom: 10px;
-
-}
-
-
-#player-song-artist {
-
-    color: #737c6d;
-
-}
-
-
-.player-reason {
-
-    margin:
-
-        25px
-        0;
-
-    color: #697365;
-
-    line-height: 1.7;
-
-}
-
-
-.listen-button {
-
-    display: inline-block;
-
-    padding:
-
-        14px
-        25px;
-
-    border-radius: 999px;
-
-    background: #718268;
-
-    color: white;
-
-    text-decoration: none;
-
-    font-weight: 700;
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.listen-button:hover {
-
-    transform:
-        translateY(-3px);
-
-    background: #5e7055;
-
-}
-
-
-/* =========================================
-   FEEDBACK
-   ========================================= */
-
-.feedback-section {
-
-    text-align: center;
-
-}
-
-
-.feedback-section h2 {
-
-    font-size:
-        clamp(2rem, 4vw, 3rem);
-
-    color: #3f4e3b;
-
-    margin-bottom: 12px;
-
-}
-
-
-.feedback-section > p {
-
-    color: #717a6c;
-
-}
-
-
-.feedback-buttons {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 15px;
-
-    margin-top: 28px;
-
-}
-
-
-.feedback-button {
-
-    border:
-
-        1px solid
-        #d7dfce;
-
-    border-radius: 999px;
-
-    padding:
-
-        13px
-        24px;
-
-    background: #fffef9;
-
-    color: #4d5d48;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        0.25s ease;
-
-}
-
-
-.feedback-button:hover {
-
-    background: #e6ecdf;
-
-    transform:
-        translateY(-3px);
-
-}
-
-
-#feedback-message {
-
-    margin-top: 22px;
-
-    color: #62745b;
-
-    font-weight: 600;
-
-}
-
-
-/* =========================================
-   INSIGHTS
-   ========================================= */
-
-.insights-header {
-
-    text-align: center;
-
-}
-
-
-.insights-header h1 {
-
-    font-size:
-        clamp(2.8rem, 7vw, 5rem);
-
-    color: #3e4d3a;
-
-    margin-bottom: 18px;
-
-}
-
-
-.insights-header > p:last-child {
-
-    color: #70796a;
-
-}
-
-
-.insights-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-
-}
-
-
-.insight-card {
-
-    padding: 30px;
-
-    border:
-
-        1px solid
-        #dce4d3;
-
-    border-radius: 24px;
-
-    background:
-        rgba(255, 255, 250, 0.8);
-
-    text-align: center;
-
-}
-
-
-.insight-card h3 {
-
-    color: #697365;
-
-    font-size: 0.95rem;
-
-    margin-bottom: 16px;
-
-}
-
-
-.insight-card p {
-
-    font-size:
-        clamp(2rem, 5vw, 3.5rem);
-
-    font-weight: 800;
-
-    color: #617257;
-
-}
-
-
-.emotion-statistics h2,
-.usage-history h2 {
-
-    font-size:
-        clamp(1.8rem, 4vw, 2.6rem);
-
-    color: #3f4e3b;
-
-    margin-bottom: 25px;
-
-}
-
-
-#emotion-statistics-list,
-#usage-history-list {
-
-    display: grid;
-
+  .emotion-grid {
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+  }
 
-}
+  .emotion-button {
+    min-height: 95px;
+    padding: 16px 8px;
+    font-size: 0.9rem;
+  }
 
-
-.stat-row,
-.history-row {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 20px;
-
-    padding: 18px 20px;
-
-    border:
-
-        1px solid
-        #dde4d4;
-
+  #music-section,
+  .info-card {
+    padding: 22px;
     border-radius: 18px;
-
-    background:
-        rgba(255, 255, 250, 0.78);
-
-    color: #596552;
-
-}
-
-
-.empty-message {
-
-    color: #737c6d;
-
-}
-
-
-/* =========================================
-   RESPONSIVE DESIGN
-   ========================================= */
-
-@media (max-width: 1000px) {
-
-    .emotion-grid {
-
-        grid-template-columns:
-            repeat(3, 1fr);
-
-    }
-
-}
-
-
-@media (max-width: 750px) {
-
-    .site-header {
-
-        padding:
-            16px
-            5%;
-
-    }
-
-
-    main {
-
-        width: 92%;
-
-    }
-
-
-    .emotion-grid {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-
-    }
-
-
-    .songs-heading {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-    }
-
-
-    .insights-grid {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .hero h1 {
-
-        letter-spacing: -3px;
-
-    }
-
-}
-
-
-@media (max-width: 450px) {
-
-    .site-header {
-
-        flex-direction: column;
-
-        gap: 10px;
-
-    }
-
-
-    nav {
-
-        width: 100%;
-
-    }
-
-
-    .nav-btn {
-
-        flex: 1;
-
-    }
-
-
-    .emotion-grid {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .song-card {
-
-        grid-template-columns:
-
-            40px
-            1fr;
-
-    }
-
-
-    .song-arrow {
-
-        display: none;
-
-    }
-
-
-    .feedback-buttons {
-
-        flex-direction: column;
-
-    }
-
+  }
+
+  footer {
+    font-size: 0.8rem;
+    padding: 22px 12px;
+  }
 }
