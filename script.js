@@ -100,12 +100,10 @@ async function trackSoundSpaceEvent(
 ) {
 
     if (IS_DEVELOPER) {
-
         console.log(
             "[Developer Mode] Not tracked:",
             eventType
         );
-
         return false;
     }
 
@@ -121,30 +119,20 @@ async function trackSoundSpaceEvent(
             feedback_text: feedbackText
         };
 
-        const response =
-            await fetch(
-                `${SUPABASE_URL}/rest/v1/usage_events`,
-                {
-                    method: "POST",
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/usage_events`,
+            {
+                method: "POST",
 
-                    headers: {
-                        "Content-Type":
-                            "application/json",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_KEY,
+                    "Prefer": "return=minimal"
+                },
 
-                        "apikey":
-                            SUPABASE_KEY,
-
-                        "Authorization":
-                            `Bearer ${SUPABASE_KEY}`,
-
-                        "Prefer":
-                            "return=minimal"
-                    },
-
-                    body:
-                        JSON.stringify(payload)
-                }
-            );
+                body: JSON.stringify(payload)
+            }
+        );
 
         if (!response.ok) {
 
@@ -159,6 +147,11 @@ async function trackSoundSpaceEvent(
 
             return false;
         }
+
+        console.log(
+            "SoundSpace analytics saved:",
+            eventType
+        );
 
         return true;
 
@@ -1540,29 +1533,19 @@ function setupFeedback() {
 async function displayInsights() {
 
     const totalUses =
-        document.getElementById(
-            "total-uses"
-        );
+        document.getElementById("total-uses");
 
     const helpfulCount =
-        document.getElementById(
-            "helpful-count"
-        );
+        document.getElementById("helpful-count");
 
     const mostUsedEmotion =
-        document.getElementById(
-            "most-used-emotion"
-        );
+        document.getElementById("most-used-emotion");
 
     const emotionList =
-        document.getElementById(
-            "emotion-statistics-list"
-        );
+        document.getElementById("emotion-statistics-list");
 
     const historyList =
-        document.getElementById(
-            "usage-history-list"
-        );
+        document.getElementById("usage-history-list");
 
 
     if (IS_DEVELOPER) {
@@ -1576,8 +1559,7 @@ async function displayInsights() {
         }
 
         if (mostUsedEmotion) {
-            mostUsedEmotion.textContent =
-                "Developer Mode";
+            mostUsedEmotion.textContent = "Developer Mode";
         }
 
         if (emotionList) {
@@ -1607,21 +1589,16 @@ async function displayInsights() {
 
     try {
 
-        const response =
-            await fetch(
-                `${SUPABASE_URL}/rest/v1/usage_events?select=*&order=created_at.asc`,
-                {
-                    method: "GET",
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/usage_events?select=*&order=created_at.asc`,
+            {
+                method: "GET",
 
-                    headers: {
-                        "apikey":
-                            SUPABASE_KEY,
-
-                        "Authorization":
-                            `Bearer ${SUPABASE_KEY}`
-                    }
+                headers: {
+                    "apikey": SUPABASE_KEY
                 }
-            );
+            }
+        );
 
 
         if (!response.ok) {
@@ -1629,10 +1606,15 @@ async function displayInsights() {
             const errorText =
                 await response.text();
 
+            console.error(
+                "Insights Supabase error:",
+                response.status,
+                errorText
+            );
+
             throw new Error(
                 `Supabase returned ${response.status}: ${errorText}`
             );
-
         }
 
 
@@ -1640,28 +1622,26 @@ async function displayInsights() {
             await response.json();
 
 
-        /*
-           TOTAL USES
-           Count unique sessions instead of
-           counting every event.
-        */
+        console.log(
+            "SoundSpace Insights events:",
+            events
+        );
+
+
+        /* =========================================
+           TOTAL UNIQUE USERS / SESSIONS
+        ========================================= */
 
         const sessions =
             new Set();
 
-        events.forEach(
-            event => {
+        events.forEach(event => {
 
-                if (event.session_id) {
-
-                    sessions.add(
-                        event.session_id
-                    );
-
-                }
-
+            if (event.session_id) {
+                sessions.add(event.session_id);
             }
-        );
+
+        });
 
 
         if (totalUses) {
@@ -1672,19 +1652,21 @@ async function displayInsights() {
         }
 
 
-        /*
-           HELPFUL RESPONSES
-        */
+        /* =========================================
+           HELPFUL FEEDBACK
+        ========================================= */
 
         const helpfulResponses =
-            events.filter(
-                event =>
-                    event.event_type ===
-                        "feedback" &&
+            events.filter(event => {
+
+                return (
+                    event.event_type === "feedback" &&
                     String(event.helpful)
-                        .toLowerCase() ===
-                        "yes"
-            );
+                        .toLowerCase()
+                        .trim() === "yes"
+                );
+
+            });
 
 
         if (helpfulCount) {
@@ -1695,9 +1677,9 @@ async function displayInsights() {
         }
 
 
-        /*
+        /* =========================================
            EMOTION COUNTS
-        */
+        ========================================= */
 
         const counts = {
 
@@ -1710,137 +1692,137 @@ async function displayInsights() {
         };
 
 
-        events.forEach(
-            event => {
+        events.forEach(event => {
 
-                if (
-                    event.event_type ===
-                    "emotion_selected"
-                ) {
+            if (
+                event.event_type !==
+                "emotion_selected"
+            ) {
+                return;
+            }
 
-                    const emotion =
-                        String(
-                            event.mood || ""
-                        ).toLowerCase();
 
-                    if (
-                        Object.prototype.hasOwnProperty.call(
-                            counts,
-                            emotion
-                        )
-                    ) {
+            const emotion =
+                String(event.mood || "")
+                    .toLowerCase()
+                    .trim();
 
-                        counts[emotion]++;
 
-                    }
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    counts,
+                    emotion
+                )
+            ) {
 
-                }
+                counts[emotion]++;
 
             }
-        );
+
+        });
 
 
-        /*
+        /* =========================================
            MOST USED EMOTION
-        */
+        ========================================= */
 
         let mostUsed = null;
-
         let highestCount = 0;
 
 
-        Object.keys(counts).forEach(
-            emotion => {
+        Object.keys(counts).forEach(emotion => {
 
-                if (
-                    counts[emotion] >
-                    highestCount
-                ) {
+            if (
+                counts[emotion] >
+                highestCount
+            ) {
 
-                    highestCount =
-                        counts[emotion];
+                highestCount =
+                    counts[emotion];
 
-                    mostUsed =
-                        emotion;
-
-                }
+                mostUsed =
+                    emotion;
 
             }
-        );
+
+        });
 
 
         if (mostUsedEmotion) {
 
-            mostUsedEmotion.textContent =
-                mostUsed
-                    ? `${moodData[mostUsed].emoji} ${moodData[mostUsed].title}`
-                    : "—";
+            if (
+                mostUsed &&
+                moodData[mostUsed]
+            ) {
+
+                mostUsedEmotion.textContent =
+                    `${moodData[mostUsed].emoji} ${moodData[mostUsed].title}`;
+
+            } else {
+
+                mostUsedEmotion.textContent =
+                    "No data yet";
+
+            }
 
         }
 
 
-        /*
+        /* =========================================
            EMOTION STATISTICS
-        */
+        ========================================= */
 
         if (emotionList) {
 
             emotionList.innerHTML = "";
 
-            Object.keys(counts).forEach(
-                emotion => {
 
-                    const row =
-                        document.createElement(
-                            "div"
-                        );
+            Object.keys(counts).forEach(emotion => {
 
-                    row.className =
-                        "emotion-stat-row";
+                const row =
+                    document.createElement("div");
 
-                    const label =
-                        document.createElement(
-                            "strong"
-                        );
+                row.className =
+                    "emotion-stat-row";
 
-                    label.textContent =
-                        `${moodData[emotion].emoji} ${moodData[emotion].title}`;
 
-                    const count =
-                        document.createElement(
-                            "span"
-                        );
+                const label =
+                    document.createElement("strong");
 
-                    count.textContent =
-                        counts[emotion];
+                label.textContent =
+                    `${moodData[emotion].emoji} ${moodData[emotion].title}`;
 
-                    row.appendChild(label);
 
-                    row.appendChild(count);
+                const count =
+                    document.createElement("span");
 
-                    emotionList.appendChild(row);
+                count.textContent =
+                    counts[emotion];
 
-                }
-            );
+
+                row.appendChild(label);
+                row.appendChild(count);
+
+                emotionList.appendChild(row);
+
+            });
 
         }
 
 
-        /*
+        /* =========================================
            USAGE HISTORY
-
-           Shows actual page visits with dates.
-        */
+        ========================================= */
 
         if (historyList) {
 
             historyList.innerHTML = "";
 
+
             const pageViews =
-                events.filter(
-                    event =>
-                        event.event_type ===
-                        "page_view"
+                events.filter(event =>
+                    event.event_type ===
+                    "page_view"
                 );
 
 
@@ -1855,33 +1837,30 @@ async function displayInsights() {
                     .slice()
                     .reverse()
                     .slice(0, 20)
-                    .forEach(
-                        event => {
+                    .forEach(event => {
 
-                            const row =
-                                document.createElement(
-                                    "div"
-                                );
+                        const row =
+                            document.createElement("div");
 
-                            row.className =
-                                "usage-history-row";
+                        row.className =
+                            "usage-history-row";
 
-                            const date =
-                                event.created_at
-                                    ? new Date(
-                                        event.created_at
-                                      ).toLocaleString()
-                                    : "Unknown date";
 
-                            row.textContent =
-                                date;
+                        const date =
+                            event.created_at
+                                ? new Date(
+                                    event.created_at
+                                ).toLocaleString()
+                                : "Unknown date";
 
-                            historyList.appendChild(
-                                row
-                            );
 
-                        }
-                    );
+                        row.textContent =
+                            date;
+
+
+                        historyList.appendChild(row);
+
+                    });
 
             }
 
@@ -1897,15 +1876,16 @@ async function displayInsights() {
 
 
         if (totalUses) {
-            totalUses.textContent = "—";
+            totalUses.textContent = "0";
         }
 
         if (helpfulCount) {
-            helpfulCount.textContent = "—";
+            helpfulCount.textContent = "0";
         }
 
         if (mostUsedEmotion) {
-            mostUsedEmotion.textContent = "—";
+            mostUsedEmotion.textContent =
+                "No data yet";
         }
 
         if (emotionList) {
@@ -1925,7 +1905,6 @@ async function displayInsights() {
     }
 
 }
-
 
 /* =========================================================
    DOM READY
