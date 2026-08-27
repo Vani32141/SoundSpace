@@ -176,7 +176,7 @@ async function trackSoundSpaceEvent(
    ========================================================= */
 
 const moodData = {
-# SoundSpace — Happiness: Relatable “Why This Song Fits”
+// SoundSpace — Happiness: Relatable “Why This Song Fits”
 
 
 happiness: {
@@ -366,7 +366,7 @@ happiness: {
   ]
 }
 
-# SoundSpace — Sadness Songs with Relatable Explanations
+//SoundSpace — Sadness Songs with Relatable Explanations
 
 
 sadness: {
@@ -428,7 +428,7 @@ sadness: {
         "This song can fit moments when you are questioning yourself, your direction or where you belong. Its gentle sound gives you space to slow down and reflect without needing to have every answer immediately."
     },
 
-    {p
+    {
       title: "Ocean Eyes",
       artist: "Billie Eilish",
       why:
@@ -558,7 +558,7 @@ sadness: {
 }
 
 
-# SoundSpace — Anger Songs with Relatable Explanations
+//SoundSpace — Anger Songs with Relatable Explanations
 
 
 anger: {
@@ -725,7 +725,7 @@ anger: {
 }
 
 
-# SoundSpace — Anxiety Songs with Relatable Explanations
+//SoundSpace — Anxiety Songs with Relatable Explanations
 
 anxiety: {
   title: "Anxiety",
@@ -890,7 +890,7 @@ anxiety: {
   ]
 }
 
-# SoundSpace — Irritation Songs with Relatable Explanations
+// SoundSpace — Irritation Songs with Relatable Explanations
 
 
 irritation: {
