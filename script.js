@@ -109,6 +109,7 @@ async function trackSoundSpaceEvent(
         return false;
     }
 
+
     try {
 
         const payload = {
@@ -120,6 +121,7 @@ async function trackSoundSpaceEvent(
             helpful: helpful,
             feedback_text: feedbackText
         };
+
 
         const response =
             await fetch(
@@ -146,6 +148,7 @@ async function trackSoundSpaceEvent(
                 }
             );
 
+
         if (!response.ok) {
 
             const errorText =
@@ -159,6 +162,7 @@ async function trackSoundSpaceEvent(
 
             return false;
         }
+
 
         return true;
 
@@ -181,7 +185,9 @@ async function trackSoundSpaceEvent(
 const moodData = {
 
     happiness: {
+
         title: "Happiness",
+
         emoji: "😊",
 
         description:
@@ -369,7 +375,9 @@ const moodData = {
 
 
     sadness: {
+
         title: "Sadness",
+
         emoji: "😢",
 
         description:
@@ -557,7 +565,9 @@ const moodData = {
 
 
     anger: {
+
         title: "Anger",
+
         emoji: "😡",
 
         description:
@@ -745,7 +755,9 @@ const moodData = {
 
 
     anxiety: {
+
         title: "Anxiety",
+
         emoji: "😟",
 
         description:
@@ -933,7 +945,9 @@ const moodData = {
 
 
     irritation: {
+
         title: "Irritation",
+
         emoji: "😤",
 
         description:
@@ -1145,33 +1159,46 @@ let soundSpaceInitialized = false;
    ========================================================= */
 
 function getPage(id) {
+
     return document.getElementById(id);
+
 }
 
+
+/* =========================================================
+   SHOW PAGE
+   ========================================================= */
 
 function showPage(pageName) {
 
     const pageIds = [
+
         "home-page",
         "emotion-page",
         "why-page",
         "about-page",
         "feedback-page",
         "insights-page"
+
     ];
 
-    pageIds.forEach(id => {
 
-        const page =
-            document.getElementById(id);
+    pageIds.forEach(
+        id => {
 
-        if (page) {
+            const page =
+                document.getElementById(id);
 
-            page.style.display = "none";
+
+            if (page) {
+
+                page.style.display =
+                    "none";
+
+            }
 
         }
-
-    });
+    );
 
 
     const pageMap = {
@@ -1202,13 +1229,15 @@ function showPage(pageName) {
 
     document
         .querySelectorAll(".nav-btn")
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.classList.remove(
-                "active"
-            );
+                button.classList.remove(
+                    "active"
+                );
 
-        });
+            }
+        );
 
 
     const navButton =
@@ -1230,6 +1259,7 @@ function showPage(pageName) {
         top: 0,
         behavior: "smooth"
     });
+
 }
 
 
@@ -1238,22 +1268,30 @@ function showPage(pageName) {
    ========================================================= */
 
 function showHomePage() {
+
     showPage("home");
+
 }
 
 
 function showWhyPage() {
+
     showPage("why");
+
 }
 
 
 function showAboutPage() {
+
     showPage("about");
+
 }
 
 
 function showFeedbackPage() {
+
     showPage("feedback");
+
 }
 
 
@@ -1262,6 +1300,7 @@ async function showInsightsPage() {
     showPage("insights");
 
     await displayInsights();
+
 }
 
 
@@ -1272,7 +1311,9 @@ async function showInsightsPage() {
 function resetQueue(emotion) {
 
     if (!moodData[emotion]) {
+
         return;
+
     }
 
 
@@ -1305,6 +1346,7 @@ function resetQueue(emotion) {
 
 
     updateQueueButton();
+
 }
 
 
@@ -1319,11 +1361,15 @@ function displayEmotion(emotion) {
 
 
     if (!data) {
+
         return;
+
     }
 
 
-    resetQueue(emotion);
+    resetQueue(
+        emotion
+    );
 
 
     const icon =
@@ -1331,15 +1377,18 @@ function displayEmotion(emotion) {
             "selected-emotion-icon"
         );
 
+
     const title =
         document.getElementById(
             "selected-emotion-title"
         );
 
+
     const description =
         document.getElementById(
             "selected-emotion-description"
         );
+
 
     const player =
         document.getElementById(
@@ -1348,32 +1397,41 @@ function displayEmotion(emotion) {
 
 
     if (icon) {
+
         icon.textContent =
             data.emoji;
+
     }
 
 
     if (title) {
+
         title.textContent =
             data.title;
+
     }
 
 
     if (description) {
+
         description.textContent =
             data.description;
+
     }
 
 
     if (player) {
+
         player.style.display =
             "none";
+
     }
 
 
     displaySongs();
 
     showPage("emotion");
+
 }
 
 
@@ -1384,11 +1442,27 @@ function displayEmotion(emotion) {
 function escapeHTML(value) {
 
     return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
 
 
@@ -1405,11 +1479,14 @@ function displaySongs() {
 
 
     if (!songList) {
+
         return;
+
     }
 
 
-    songList.innerHTML = "";
+    songList.innerHTML =
+        "";
 
 
     queueSongs.forEach(
@@ -1472,8 +1549,10 @@ function displaySongs() {
 
                         event.stopPropagation();
 
+
                         currentSongIndex =
                             index;
+
 
                         playCurrentSong();
 
@@ -1490,6 +1569,7 @@ function displaySongs() {
                     currentSongIndex =
                         index;
 
+
                     playCurrentSong();
 
                 }
@@ -1505,6 +1585,7 @@ function displaySongs() {
 
 
     highlightCurrentSong();
+
 }
 
 
@@ -1530,6 +1611,7 @@ function highlightCurrentSong() {
 
         }
     );
+
 }
 
 
@@ -1544,48 +1626,46 @@ function createSpotifySearchURL(song) {
             `${song.title} ${song.artist}`
         );
 
+
     return (
         "https://open.spotify.com/search/" +
         searchQuery
     );
+
 }
 
 
 /* =========================================================
-   PLAY CURRENT SONG
+   SPOTIFY EMBED URL
    ========================================================= */
 
-function playCurrentSong() {
+function createSpotifyEmbedURL(song) {
 
-    if (!queueSongs.length) {
-        return;
-    }
-
-
-    if (
-        currentSongIndex < 0 ||
-        currentSongIndex >= queueSongs.length
-    ) {
-
-        currentSongIndex = 0;
-
-    }
+    const searchQuery =
+        encodeURIComponent(
+            `${song.title} ${song.artist}`
+        );
 
 
-    const song =
-        queueSongs[currentSongIndex];
+    return (
+        "https://open.spotify.com/embed/search/" +
+        searchQuery
+    );
 
+}
+
+
+/* =========================================================
+   UPDATE PLAYER
+   ========================================================= */
+
+function updatePlayer(song) {
 
     if (!song) {
+
         return;
+
     }
-
-
-    trackSoundSpaceEvent(
-        "song_selected",
-        currentEmotion,
-        `${song.title} — ${song.artist}`
-    );
 
 
     const player =
@@ -1593,20 +1673,24 @@ function playCurrentSong() {
             "player-section"
         );
 
+
     const title =
         document.getElementById(
             "player-song-title"
         );
+
 
     const artist =
         document.getElementById(
             "player-song-artist"
         );
 
+
     const reason =
         document.getElementById(
             "player-song-reason"
         );
+
 
     const listenLink =
         document.getElementById(
@@ -1653,6 +1737,45 @@ function playCurrentSong() {
     }
 
 
+    /* =========================================
+       OPTIONAL SPOTIFY PLAYER
+    ========================================= */
+
+    const spotifyPlayer =
+        document.getElementById(
+            "spotify-player"
+        );
+
+
+    if (spotifyPlayer) {
+
+        spotifyPlayer.innerHTML = `
+
+            <iframe
+                src="${createSpotifyEmbedURL(song)}"
+                width="100%"
+                height="152"
+                frameborder="0"
+                allowtransparency="true"
+                allow="
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    fullscreen;
+                    picture-in-picture
+                "
+                loading="lazy"
+                style="
+                    border-radius:12px;
+                    border:0;
+                "
+            ></iframe>
+
+        `;
+
+    }
+
+
     if (player) {
 
         player.style.display =
@@ -1660,8 +1783,63 @@ function playCurrentSong() {
 
     }
 
+}
+
+
+/* =========================================================
+   PLAY CURRENT SONG
+   ========================================================= */
+
+function playCurrentSong() {
+
+    if (!queueSongs.length) {
+
+        return;
+
+    }
+
+
+    if (
+        currentSongIndex < 0 ||
+        currentSongIndex >= queueSongs.length
+    ) {
+
+        currentSongIndex =
+            0;
+
+    }
+
+
+    const song =
+        queueSongs[currentSongIndex];
+
+
+    if (!song) {
+
+        return;
+
+    }
+
+
+    trackSoundSpaceEvent(
+        "song_selected",
+        currentEmotion,
+        `${song.title} — ${song.artist}`
+    );
+
+
+    updatePlayer(
+        song
+    );
+
 
     highlightCurrentSong();
+
+
+    const player =
+        document.getElementById(
+            "player-section"
+        );
 
 
     if (player) {
@@ -1672,6 +1850,7 @@ function playCurrentSong() {
         });
 
     }
+
 }
 
 
@@ -1682,31 +1861,46 @@ function playCurrentSong() {
 function nextSong() {
 
     if (!queueSongs.length) {
+
         return;
+
     }
 
 
     if (currentSongIndex === -1) {
 
-        currentSongIndex = 0;
+        currentSongIndex =
+            0;
 
     } else {
 
         currentSongIndex++;
+
 
         if (
             currentSongIndex >=
             queueSongs.length
         ) {
 
-            currentSongIndex = 0;
+            currentSongIndex =
+                0;
 
         }
 
     }
 
 
+    trackSoundSpaceEvent(
+        "next_song",
+        currentEmotion,
+        queueSongs[currentSongIndex]
+            ? `${queueSongs[currentSongIndex].title} — ${queueSongs[currentSongIndex].artist}`
+            : null
+    );
+
+
     playCurrentSong();
+
 }
 
 
@@ -1717,7 +1911,9 @@ function nextSong() {
 function previousSong() {
 
     if (!queueSongs.length) {
+
         return;
+
     }
 
 
@@ -1730,6 +1926,7 @@ function previousSong() {
 
         currentSongIndex--;
 
+
         if (currentSongIndex < 0) {
 
             currentSongIndex =
@@ -1740,12 +1937,22 @@ function previousSong() {
     }
 
 
+    trackSoundSpaceEvent(
+        "previous_song",
+        currentEmotion,
+        queueSongs[currentSongIndex]
+            ? `${queueSongs[currentSongIndex].title} — ${queueSongs[currentSongIndex].artist}`
+            : null
+    );
+
+
     playCurrentSong();
+
 }
 
 
 /* =========================================================
-   SHUFFLE
+   SHUFFLE ARRAY
    ========================================================= */
 
 function shuffleArray(array) {
@@ -1780,13 +1987,20 @@ function shuffleArray(array) {
 
 
     return result;
+
 }
 
+
+/* =========================================================
+   SHUFFLE SONGS
+   ========================================================= */
 
 function shuffleSongs() {
 
     if (!queueSongs.length) {
+
         return;
+
     }
 
 
@@ -1815,12 +2029,14 @@ function shuffleSongs() {
 
     } else {
 
-        currentSongIndex = -1;
+        currentSongIndex =
+            -1;
 
     }
 
 
-    isShuffleOn = true;
+    isShuffleOn =
+        true;
 
 
     displaySongs();
@@ -1832,6 +2048,7 @@ function shuffleSongs() {
         "shuffle",
         currentEmotion
     );
+
 }
 
 
@@ -1842,7 +2059,9 @@ function shuffleSongs() {
 function reshuffleSongs() {
 
     if (!currentEmotion) {
+
         return;
+
     }
 
 
@@ -1852,9 +2071,12 @@ function reshuffleSongs() {
         );
 
 
-    currentSongIndex = -1;
+    currentSongIndex =
+        -1;
 
-    isShuffleOn = true;
+
+    isShuffleOn =
+        true;
 
 
     displaySongs();
@@ -1866,6 +2088,7 @@ function reshuffleSongs() {
         "reshuffle",
         currentEmotion
     );
+
 }
 
 
@@ -1882,7 +2105,9 @@ function updateQueueButton() {
 
 
     if (!button) {
+
         return;
+
     }
 
 
@@ -1890,6 +2115,7 @@ function updateQueueButton() {
         isShuffleOn
             ? "🔀 Shuffled"
             : "🔀 Shuffle";
+
 }
 
 
@@ -1900,7 +2126,9 @@ function updateQueueButton() {
 function surpriseMe() {
 
     if (!queueSongs.length) {
+
         return;
+
     }
 
 
@@ -1929,14 +2157,19 @@ function surpriseMe() {
         randomIndex;
 
 
+    const song =
+        queueSongs[randomIndex];
+
+
     trackSoundSpaceEvent(
         "surprise_me",
         currentEmotion,
-        `${queueSongs[randomIndex].title} — ${queueSongs[randomIndex].artist}`
+        `${song.title} — ${song.artist}`
     );
 
 
     playCurrentSong();
+
 }
 
 
@@ -2061,7 +2294,9 @@ function setupFeedback() {
 
 
     if (!form) {
+
         return;
+
     }
 
 
@@ -2077,15 +2312,18 @@ function setupFeedback() {
                     "feedback-emotion"
                 );
 
+
             const improvementElement =
                 document.getElementById(
                     "feedback-improvement"
                 );
 
+
             const likedElement =
                 document.getElementById(
                     "feedback-liked"
                 );
+
 
             const message =
                 document.getElementById(
@@ -2125,6 +2363,7 @@ function setupFeedback() {
                 }
 
                 return;
+
             }
 
 
@@ -2177,9 +2416,11 @@ function setupFeedback() {
             form.reset();
 
 
-            selectedFit = "";
+            selectedFit =
+                "";
 
-            selectedHelpful = "";
+            selectedHelpful =
+                "";
 
 
             choiceButtons.forEach(
@@ -2205,6 +2446,7 @@ function setupFeedback() {
 
         }
     );
+
 }
 
 
@@ -2219,20 +2461,24 @@ async function displayInsights() {
             "total-uses"
         );
 
+
     const helpfulCount =
         document.getElementById(
             "helpful-count"
         );
+
 
     const mostUsedEmotion =
         document.getElementById(
             "most-used-emotion"
         );
 
+
     const emotionList =
         document.getElementById(
             "emotion-statistics-list"
         );
+
 
     const historyList =
         document.getElementById(
@@ -2242,35 +2488,73 @@ async function displayInsights() {
 
     if (IS_DEVELOPER) {
 
-        if (totalUses)
-            totalUses.textContent = "—";
+        if (totalUses) {
 
-        if (helpfulCount)
-            helpfulCount.textContent = "—";
+            totalUses.textContent =
+                "—";
 
-        if (mostUsedEmotion)
+        }
+
+
+        if (helpfulCount) {
+
+            helpfulCount.textContent =
+                "—";
+
+        }
+
+
+        if (mostUsedEmotion) {
+
             mostUsedEmotion.textContent =
                 "Developer Mode";
 
-        if (emotionList)
+        }
+
+
+        if (emotionList) {
+
             emotionList.innerHTML =
                 "<p>Analytics disabled in Developer Mode.</p>";
 
-        if (historyList)
-            historyList.innerHTML = "";
+        }
+
+
+        if (historyList) {
+
+            historyList.innerHTML =
+                "";
+
+        }
+
 
         return;
+
     }
 
 
-    if (totalUses)
-        totalUses.textContent = "Loading...";
+    if (totalUses) {
 
-    if (helpfulCount)
-        helpfulCount.textContent = "Loading...";
+        totalUses.textContent =
+            "Loading...";
 
-    if (mostUsedEmotion)
-        mostUsedEmotion.textContent = "Loading...";
+    }
+
+
+    if (helpfulCount) {
+
+        helpfulCount.textContent =
+            "Loading...";
+
+    }
+
+
+    if (mostUsedEmotion) {
+
+        mostUsedEmotion.textContent =
+            "Loading...";
+
+    }
 
 
     try {
@@ -2282,11 +2566,13 @@ async function displayInsights() {
                     method: "GET",
 
                     headers: {
+
                         "apikey":
                             SUPABASE_KEY,
 
                         "Authorization":
                             `Bearer ${SUPABASE_KEY}`
+
                     }
                 }
             );
@@ -2300,6 +2586,7 @@ async function displayInsights() {
             throw new Error(
                 `Supabase returned ${response.status}: ${errorText}`
             );
+
         }
 
 
@@ -2314,7 +2601,7 @@ async function displayInsights() {
 
 
         /* =========================================
-           TOTAL UNIQUE USERS / SESSIONS
+           TOTAL UNIQUE SESSIONS
         ========================================= */
 
         const sessions =
@@ -2356,7 +2643,9 @@ async function displayInsights() {
                         event.event_type !==
                         "feedback"
                     ) {
+
                         return false;
+
                     }
 
 
@@ -2406,7 +2695,9 @@ async function displayInsights() {
                     event.event_type !==
                     "emotion_selected"
                 ) {
+
                     return;
+
                 }
 
 
@@ -2437,9 +2728,12 @@ async function displayInsights() {
            MOST USED EMOTION
         ========================================= */
 
-        let mostUsed = null;
+        let mostUsed =
+            null;
 
-        let highestCount = 0;
+
+        let highestCount =
+            0;
 
 
         Object.keys(counts).forEach(
@@ -2488,7 +2782,8 @@ async function displayInsights() {
 
         if (emotionList) {
 
-            emotionList.innerHTML = "";
+            emotionList.innerHTML =
+                "";
 
 
             Object.keys(counts).forEach(
@@ -2524,11 +2819,19 @@ async function displayInsights() {
                         counts[emotion];
 
 
-                    row.appendChild(label);
+                    row.appendChild(
+                        label
+                    );
 
-                    row.appendChild(count);
 
-                    emotionList.appendChild(row);
+                    row.appendChild(
+                        count
+                    );
+
+
+                    emotionList.appendChild(
+                        row
+                    );
 
                 }
             );
@@ -2542,7 +2845,8 @@ async function displayInsights() {
 
         if (historyList) {
 
-            historyList.innerHTML = "";
+            historyList.innerHTML =
+                "";
 
 
             const pageViews =
@@ -2563,7 +2867,10 @@ async function displayInsights() {
                 pageViews
                     .slice()
                     .reverse()
-                    .slice(0, 20)
+                    .slice(
+                        0,
+                        20
+                    )
                     .forEach(
                         event => {
 
@@ -2620,7 +2927,6 @@ async function displayInsights() {
 
         }
 
-
     } catch (error) {
 
         console.error(
@@ -2629,25 +2935,47 @@ async function displayInsights() {
         );
 
 
-        if (totalUses)
-            totalUses.textContent = "0";
+        if (totalUses) {
 
-        if (helpfulCount)
-            helpfulCount.textContent = "0";
+            totalUses.textContent =
+                "0";
 
-        if (mostUsedEmotion)
+        }
+
+
+        if (helpfulCount) {
+
+            helpfulCount.textContent =
+                "0";
+
+        }
+
+
+        if (mostUsedEmotion) {
+
             mostUsedEmotion.textContent =
                 "No data yet";
 
-        if (emotionList)
+        }
+
+
+        if (emotionList) {
+
             emotionList.innerHTML =
                 "<p>Analytics data could not be loaded.</p>";
 
-        if (historyList)
+        }
+
+
+        if (historyList) {
+
             historyList.innerHTML =
                 "<p>Analytics history could not be loaded.</p>";
 
+        }
+
     }
+
 }
 
 
@@ -2655,10 +2983,15 @@ async function displayInsights() {
    SAFE CLICK HANDLER
    ========================================================= */
 
-function onClick(id, handler) {
+function onClick(
+    id,
+    handler
+) {
 
     const element =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
 
 
     if (!element) {
@@ -2691,6 +3024,82 @@ function onClick(id, handler) {
 
         }
     );
+
+}
+
+
+/* =========================================================
+   EMOTION CARD INITIALIZATION
+   ========================================================= */
+
+function initializeEmotionCards() {
+
+    const cards =
+        document.querySelectorAll(
+            ".emotion-card"
+        );
+
+
+    cards.forEach(
+        card => {
+
+            if (
+                card.dataset.soundspaceBound ===
+                "true"
+            ) {
+
+                return;
+
+            }
+
+
+            card.dataset.soundspaceBound =
+                "true";
+
+
+            card.addEventListener(
+                "click",
+                function() {
+
+                    const emotion =
+                        String(
+                            card.dataset.emotion ||
+                            ""
+                        )
+                            .toLowerCase()
+                            .trim();
+
+
+                    if (
+                        !moodData[emotion]
+                    ) {
+
+                        console.error(
+                            "Unknown SoundSpace emotion:",
+                            emotion
+                        );
+
+                        return;
+
+                    }
+
+
+                    trackSoundSpaceEvent(
+                        "emotion_selected",
+                        emotion
+                    );
+
+
+                    displayEmotion(
+                        emotion
+                    );
+
+                }
+            );
+
+        }
+    );
+
 }
 
 
@@ -2701,11 +3110,14 @@ function onClick(id, handler) {
 function initializeSoundSpace() {
 
     if (soundSpaceInitialized) {
+
         return;
+
     }
 
 
-    soundSpaceInitialized = true;
+    soundSpaceInitialized =
+        true;
 
 
     console.log(
@@ -2717,54 +3129,7 @@ function initializeSoundSpace() {
        EMOTION CARDS
     ========================================= */
 
-    document
-        .querySelectorAll(
-            ".emotion-card"
-        )
-        .forEach(
-            card => {
-
-                card.addEventListener(
-                    "click",
-                    function() {
-
-                        const emotion =
-                            String(
-                                card.dataset.emotion ||
-                                ""
-                            )
-                                .toLowerCase()
-                                .trim();
-
-
-                        if (
-                            !moodData[emotion]
-                        ) {
-
-                            console.error(
-                                "Unknown SoundSpace emotion:",
-                                emotion
-                            );
-
-                            return;
-                        }
-
-
-                        trackSoundSpaceEvent(
-                            "emotion_selected",
-                            emotion
-                        );
-
-
-                        displayEmotion(
-                            emotion
-                        );
-
-                    }
-                );
-
-            }
-        );
+    initializeEmotionCards();
 
 
     /* =========================================
@@ -2776,20 +3141,24 @@ function initializeSoundSpace() {
         showHomePage
     );
 
+
     onClick(
         "why-nav",
         showWhyPage
     );
+
 
     onClick(
         "about-nav",
         showAboutPage
     );
 
+
     onClick(
         "feedback-nav",
         showFeedbackPage
     );
+
 
     onClick(
         "insights-nav",
@@ -2808,7 +3177,7 @@ function initializeSoundSpace() {
 
 
     /* =========================================
-       SURPRISE
+       SURPRISE ME
     ========================================= */
 
     onClick(
@@ -2818,7 +3187,7 @@ function initializeSoundSpace() {
 
 
     /* =========================================
-       QUEUE
+       QUEUE CONTROLS
     ========================================= */
 
     onClick(
@@ -2826,15 +3195,18 @@ function initializeSoundSpace() {
         previousSong
     );
 
+
     onClick(
         "next-song",
         nextSong
     );
 
+
     onClick(
         "shuffle-button",
         shuffleSongs
     );
+
 
     onClick(
         "reshuffle-button",
@@ -2850,6 +3222,7 @@ function initializeSoundSpace() {
         "player-previous",
         previousSong
     );
+
 
     onClick(
         "player-next",
@@ -2880,6 +3253,7 @@ function initializeSoundSpace() {
     console.log(
         "SoundSpace initialized successfully."
     );
+
 }
 
 
@@ -2914,7 +3288,8 @@ window.addEventListener(
 
         console.error(
             "SoundSpace JavaScript error:",
-            event.error || event.message
+            event.error ||
+            event.message
         );
 
     }
